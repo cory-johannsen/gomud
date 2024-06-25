@@ -28,10 +28,7 @@ func NewClient(conn net.Conn) *Client {
 
 func (c *Client) Connect() {
 	log.Printf("Serving client %s\n", c.Connection.RemoteAddr().String())
-	err := c.Handler.R.Loop()
-	if err != nil {
-		c.Connection.Close()
-	}
+	c.Connection.Write([]byte(fmt.Sprintf("\n%s", c.Handler.Prompt())))
 	for {
 		netData, err := bufio.NewReader(c.Connection).ReadString('\n')
 		if err != nil {
@@ -39,7 +36,7 @@ func (c *Client) Connect() {
 			return
 		}
 
-		result := c.Handler.Eval(netData)
+		result := fmt.Sprintf("%s\n", c.Handler.Eval(netData))
 		written, err := c.Connection.Write([]byte(result))
 		if err != nil {
 			panic(err)
@@ -47,6 +44,7 @@ func (c *Client) Connect() {
 		if written != len(result) {
 			panic("Expected to write the result")
 		}
+		c.Connection.Write([]byte(fmt.Sprintf("\n%s", c.Handler.Prompt())))
 	}
 	c.Connection.Close()
 }
@@ -64,16 +62,14 @@ func NewServer(config *Config) *Server {
 func (s *Server) Start() {
 	l, err := net.Listen("tcp4", fmt.Sprintf(":%s", s.port))
 	if err != nil {
-		fmt.Println(err)
-		return
+		panic(err)
 	}
 	defer l.Close()
 
 	for {
 		c, err := l.Accept()
 		if err != nil {
-			fmt.Println(err)
-			return
+			panic(err)
 		}
 		client := NewClient(c)
 		go client.Connect()
