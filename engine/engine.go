@@ -52,11 +52,17 @@ func (c *Client) Connect() {
 }
 
 type Server struct {
-	Port string
+	port string
+}
+
+func NewServer(config *Config) *Server {
+	return &Server{
+		port: config.Port,
+	}
 }
 
 func (s *Server) Start() {
-	l, err := net.Listen("tcp4", fmt.Sprintf(":%s", s.Port))
+	l, err := net.Listen("tcp4", fmt.Sprintf(":%s", s.port))
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -75,5 +81,13 @@ func (s *Server) Start() {
 }
 
 type Engine struct {
+	Config *Config
 	Server *Server
+}
+
+func NewEngine(config *Config, server *Server) *Engine {
+	return &Engine{
+		Config: config,
+		Server: server,
+	}
 }
