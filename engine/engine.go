@@ -28,7 +28,15 @@ func NewClient(conn net.Conn) *Client {
 
 func (c *Client) Connect() {
 	log.Printf("Serving client %s\n", c.Connection.RemoteAddr().String())
-	c.Connection.Write([]byte(fmt.Sprintf("\n%s", c.Handler.Prompt())))
+	prompt := fmt.Sprintf("\n%s", c.Handler.Prompt())
+	written, err := c.Connection.Write([]byte(prompt))
+	if err != nil {
+		panic(err)
+	}
+	if written != len(prompt) {
+		log.Printf("Expected to write %d bytes, wrote %d", len(c.Handler.Prompt()), written)
+		return
+	}
 	for {
 		netData, err := bufio.NewReader(c.Connection).ReadString('\n')
 		if err != nil {
@@ -39,23 +47,36 @@ func (c *Client) Connect() {
 		result := fmt.Sprintf("%s\n", c.Handler.Eval(netData))
 		written, err := c.Connection.Write([]byte(result))
 		if err != nil {
-			panic(err)
+			log.Println(err)
+			return
 		}
 		if written != len(result) {
-			panic("Expected to write the result")
+			log.Printf("Expected to write %d bytes, wrote %d", len(result), written)
+			return
 		}
-		c.Connection.Write([]byte(fmt.Sprintf("\n%s", c.Handler.Prompt())))
+		prompt = fmt.Sprintf("\n%s", c.Handler.Prompt())
+		written, err = c.Connection.Write([]byte(prompt))
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		if written != len(result) {
+			log.Printf("Expected to write %d bytes, wrote %d", len(prompt), written)
+			return
+		}
 	}
 	c.Connection.Close()
 }
 
 type Server struct {
 	port string
+	db   *Database
 }
 
-func NewServer(config *Config) *Server {
+func NewServer(config *Config, db *Database) *Server {
 	return &Server{
 		port: config.Port,
+		db:   db,
 	}
 }
 

@@ -17,7 +17,11 @@ func InitializeEngine() (*engine.Engine, error) {
 	if err != nil {
 		return nil, err
 	}
-	server := engine.NewServer(config)
+	database, err := engine.NewDatabase(config)
+	if err != nil {
+		return nil, err
+	}
+	server := engine.NewServer(config, database)
 	engineEngine := engine.NewEngine(config, server)
 	return engineEngine, nil
 }

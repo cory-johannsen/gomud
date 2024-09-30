@@ -7,6 +7,6 @@ import "github.com/google/wire"
 import "github.com/cory-johannsen/gomud/engine"
 
 func InitializeEngine() (*engine.Engine, error) {
-	wire.Build(engine.NewConfigFromEnv, engine.NewServer, engine.NewEngine)
+	wire.Build(engine.NewConfigFromEnv, engine.NewDatabase, engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil
 }
