@@ -1,0 +1,12 @@
+weapon:
+  category: "Ranged"
+  level: "Simple"
+  type: "Piercing"
+  name: "Janky .38"
+  description: "A janky old .38 revolver.  It's seen better days, but it still works."
+  handling: "One-Handed"
+  distance: "3 + [PB] Meters"
+  qualities:
+    - "Volatile"
+    - "Fast"
+    - "Ammo: 6"

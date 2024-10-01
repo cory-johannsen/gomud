@@ -1,0 +1,26 @@
+name: {{ .name }}
+professions:
+{{- range .professions }}
+  - {{ .name }}:
+      name: "{{ .name }}"
+      profession: "{{ .profession }}"
+      traits:
+      {{- range .traits }}
+      - {{ .name }}:
+          name: "{{ .name }}"
+          description: "{{ .description }}"
+          effect: "{{ .effect }}"
+      {{- end }}
+      drawbacks:
+      {{- range .drawbacks }}
+      - {{ .name }}:
+          name: "{{ .name }}"
+          description: "{{ .description }}"
+          effect: "{{ .effect }}"
+      {{- end }}
+      equipment:
+      {{- range .equipment }}
+        - {{ . }}
+      {{- end }}
+      money: {{ .money }}
+  {{- end }}

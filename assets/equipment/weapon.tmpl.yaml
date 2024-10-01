@@ -1,0 +1,12 @@
+weapon:
+  category: {{ .category }}
+  level: {{ .level }}
+  type:  {{ .type }}
+  name: {{ .name }}
+  description: {{ .description }}
+  handling: {{ .handling }}
+  distance: {{ .distance }}
+  qualities:
+  {{- range .skills }}
+    - {{ . }}
+  {{- end }}
