@@ -1,0 +1,9 @@
+name: "Exterminator"
+archetype: "Normie"
+description: "Exterminators are the bane of all vermin.  They are skilled at hunting down and killing rats, roaches, and other pests. This makes them poor companions and friends, they don't exactly have a lot to talk about."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Gutterspeak"
+  description: "Maintaining congress with mangy dogs, wild rodents and tending to other varmints, Rat Catchers are often seen talking to themselves. However, they are in fact conversing to the animals they catch and hunt alongside with. They often reply to each squeak, chirp or hiss they hear. Having spent years in tunnels and warrens, they interpret them just as if they were talking to any other person."
+  effect: "You may use any Fellowship-based Skill to directly communicate with Small Animals (specifically moles, rats, rabbits, rodents, snakes, weasels and dogs). This interaction is not always beneficial: many creatures are skittish, ignorant, confused, cunningly deceptive or even openly aggressive. This empathy acts as an all but supernatural type of communication; the complexity determined by the GM. In addition, you are immune to specific Diseases such as Filth Fever and Grey Plague."

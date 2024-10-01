@@ -1,0 +1,9 @@
+name: "Thief"
+archetype: "Criminal"
+description: "The cheapest and fastest to path to what a Thief wants is to just take it, preferably without anyone noticing."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Nimble Fingers"
+  description: "A Burglar’s hands are precious tools and most spend years honing their innate dexterity."
+  effect: "You drastically reduce the time required to use Skulduggery Tests, taking no more than a minute for complex actions (examples include picking locks, pilfering goods, etc.). In addition, you may flip the results to succeed at Skill Tests to steal."

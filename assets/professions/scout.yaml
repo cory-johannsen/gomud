@@ -1,0 +1,9 @@
+name: "Scout"
+archetype: "Drifter"
+description: "Scouts are the expendable masses deployed into the streets to collect information before anyone risks their more valuable assets."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Situational Awareness"
+  description: "Your road-weariness has turned into a wariness unseen amongst others. You have attuned yourself to the smallest of sounds in the wilds and can react quickly and efficiently."
+  effect: "When you fail an Awareness or Stealth Test, you may re-roll to generate a better result, but must accept the outcome."

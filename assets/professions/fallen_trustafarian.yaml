@@ -1,0 +1,13 @@
+name: "Fallen Trustafarian"
+archetype: "Influencer"
+description: "Born into decadence, now living at the bottom, the Fallen Trustafarian is surrounded by their former peers and serves as an example to them about how important it is to stay rich."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Magnificent Bastard"
+  description: "A Rake lives a riotous life, rubbing elbows with miscreants of all stripe. As the threat of violence rears its ugly head, a vicious punch to the kidney may buy you some time to get away."
+  effect: "Select one foe in combat. That foe is left Defenseless to all Perilous Stunts you make until they are defeated. You may select another foe afterwards."
+drawback:
+  name: "Washed Up"
+  description: "Leaving behind the life they once lived, the Rake is now forced to rub elbows with the friends they’ve got, as opposed to the ones they had."
+  effect: "When you enter this Profession, immediately change your Social Class to Lowborn."

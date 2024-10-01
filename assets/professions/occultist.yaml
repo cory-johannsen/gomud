@@ -1,0 +1,18 @@
+name: "Occultist"
+archetype: "Nerd"
+description: "Obsessed with the dark arts, Occultists devote themselves to achieving power through evil means, assisted by modern technology."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Winds of Change"
+  description: "The Æther is a powerful, but fickle force. It exists closer in relation to the powers of corruption than most would care to admit. However, as a Diabolist, you have learned to control the emergent chaos, reshaping it into a controlled, orderly force of power."
+  effect: "When you would potentially invoke a Chaos Manifestation, you must roll two or more face ‘6s’ on the Chaos Dice to invoke it. Otherwise, ignore the results. You also understand how to use the Ritual of Magick Circle."
+special_trait:
+  name: "Arcane Magick"
+  description: "Combing the Æther into energies through sheer force of will and formula, you can harness Magick with but an utterance of a few words."
+  effect: "You are solely a practitioner of Arcane Magick. As a consequence, you may never adopt a Profession which has Divine Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells whenever you enter this Profession. If you gained Arcane Magick from a previous Profession, you learn an additional Generalist Magick spell instead."
+drawback:
+  name: "Lure of Power"
+  description: "The wellspring of Magickal power is immeasurable. It woefully draws its practitioners deeper and deeper into its embrace, corrupting both the soul and the world around them."
+  effect: "Whenever you generate face ‘6’ with Chaos Dice, you invoke a Chaos Manifestation."
+

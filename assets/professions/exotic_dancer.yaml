@@ -1,0 +1,9 @@
+name: "Exotic Dancer"
+archetype: "Influencer"
+description: "Exotic Dancers make their money using what they got.  They are experts at getting their customers to reveal information.  They are not, in fact, saving up for beauty school."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Alfred Pfennigworth"
+  description: "Valets embody impeccable grace and confidence, attending to their duties with professional charm while galvanizing the presence of those whom they serve. Their presence mollifies reputation, lends credit to business dealings and ensures seamless social maneuvering."
+  effect: "When you Assist others with Skill Tests, they gain two Assist Dice instead, choosing the better of the two to use. In addition, when you Assist them, they may ignore any Critical Failures they roll, treating them as regular failures instead."

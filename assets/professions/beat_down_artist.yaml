@@ -1,0 +1,9 @@
+name: "Beat Down Artist"
+archetype: "Aggressor"
+description: "Beat Down Artists punch people in the face for a living.  It's not a hard job but not very many folks qualify."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Mortal Combat"
+  description: "Pugilists rarely know one end of a sword from the other, but they can rely on their fists and feet to get the job done. Brutal palm strikes, ferocious kicks to the groin and bone-shattering headbutts make up their fighting style."
+  effect: "You ignore the Pummeling and Weak Qualities when fighting with Brawling type of weapons. In addition, you may refer to [BB] or [CB] when inflicting Damage with this type of weapon, whichever is more favorable."

@@ -1,0 +1,9 @@
+name: "Hired Help"
+archetype: "Normie"
+description: "The Help are [aid by their betters to do the tasks befitting proper people.  They are the invisible hands that keep the world turning, and are often privy to the most intimate secrets of their employers.  They probably have names, but their employers don't know them."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Town Gossip"
+  description: "The Servant is an invisible presence, able to blend into the background around their employers and less reputable members of society. This provides them ample opportunity to eavesdrop, covertly observing others while picking up juicy rumors."
+  effect: "When you fail an Eavesdrop or Rumor Test, you may re-roll to generate a better result, but must accept the outcome."

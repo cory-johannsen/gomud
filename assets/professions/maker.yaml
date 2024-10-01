@@ -1,0 +1,9 @@
+name: "Maker"
+archetype: "Normie"
+description: "Makers build the things that everybody needs.  Their level of skill and the reliability of the manufactured goods is another subject."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Guild Privilege"
+  description: "The Artisan’s pursuit of perfection is unparalleled. Whenever they pick up a new trade, it comes easier to them than others."
+  effect: "Whenever you purchase a Focus in the Tradecraft Skill, you instead gain three Focuses. This means you may exceed the normal limits for Focuses set by your [IB], but for Tradecraft only."

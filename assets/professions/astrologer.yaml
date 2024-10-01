@@ -1,0 +1,18 @@
+name: "Astrologer"
+archetype: "Nerd"
+description: "Where everyone else simply gazes up at the same night sky and stares in awe at the majesty of the stars, the Astrologer makes the heavens their bread-and-butter. They not only mark the passage of the stars, the sun, the moon and other celestial bodies, they also assign important meaning to them. Zodiacs, movements of tides, divine providence and even your future can all be divined through the erudite interpretation of these pinpricks of light. The Astrologer is not just speaking hearsay; the heavens are indeed Magickal, and the year of your birth has just as much effect on your life as your profession will. Rarely respected, often labeled crackpots or fringe scientists, Astrologers simply ignore such jibes and put their faith in their telescopes, star charts, tarot cards and astrolabes.  Astrologers often attest that ancient civilizations had greater knowledge of the heavens and the soul, so are prepared to explore abandoned libraries or dark crypts in search of charts of heavenly bodies long lost to time. Highly intelligent and inquisitive, Astrologers often jump to conclusions and apply meaning to things that have no meaning. Reading too much into these meanings sometimes ends with the Astrologer dead or missing, having wandered wide-eyed into a parlay with Skrzzak or allowing the whispers of an Abyssal host lead them astray. More often than not, an Astrologer’s love for Magick and the heavens is their undoing."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Eldritch Signs"
+  description: "You have peered towards the skies in hope of answers, both earthly and sorcerous. In that, the mysteries of the zodiac reveal their terrible truths."
+  effect: "You automatically gain all of the following Focuses in the Incantation Skill whenever you enter this Profession: Astrology, Card Reading, Dream Interpretation, Hypnotize, Palmistry, Scapulimancy and Scrying. You also understand how to use the Ritual of Magick Circle."
+special_trait:
+  name: "Arcane Magick"
+  description: "Combing the Æther into energies through sheer force of will and formula, you can harness Magick with but an utterance of a few words."
+  effect: "You are solely a practitioner of Arcane Magick. As a consequence, you may never adopt a Profession which has Divine Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells whenever you enter this Profession. If you gained Arcane Magick from a previous Profession, you learn an additional Generalist Magick spell instead."
+drawback:
+  name: "Lure of Power"
+  description: "The lust for Magickal power corrupts all, indistinct from its most brazen or conservative practitioners."
+  effect: "Whenever you generate face ‘6’ with Chaos Dice, you invoke a Chaos Manifestation."
+

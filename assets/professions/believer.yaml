@@ -1,0 +1,17 @@
+name: "Believer"
+archetype: "Nerd"
+description: "Believers place their belief in a higher power (or powers) above the reality around them."
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Turn the Other Cheek"
+  description: "So as long as an Believer makes no attempt to harm another, they are above reproach. But those who walk in blood-stained clothes with a sword at their waist may send the wrong message, allowing others to ignore the Adherent’s pacifist ways."
+  effect: "You can read, write and speak the language of any creature that is classified as a Humanoid (including player Ancestries). In addition, whenever you suffer Corruption, decrease the number you gain by 1 (to a minimum of one). This means that if you suffer 3 Corruption, you gain 2 instead."
+special_trait:
+  name: "Divine Magick"
+  description: "You are a proxy to a distant god, calling for divine intervention  with the utterance of sacred prayers."
+  effect: "You are solely a practitioner of Divine Magick. As a consequence, you may never adopt a Profession which has Arcane Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells when you enter this Profession. If you gained Divine Magick from a previous Profession, you learn an additional Generalist Magick spell instead."
+drawback:
+  name: "Lure of Power"
+  description: "The lust for Magickal power corrupts all, indistinct from its most brazen or conservative practitioners."
+  effect: "Whenever you generate face ‘6’ with Chaos Dice, you invoke a Chaos Manifestation."

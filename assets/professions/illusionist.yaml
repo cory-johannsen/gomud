@@ -1,0 +1,17 @@
+name: "Illusionist"
+archetype: "Drifter"
+description: "Illusionists are the masters of deception and trickery. They use their skills to manipulate the perceptions of others to their advantage.  Their nor magic tricks, Michael, they're Illusions"
+tier: "Basic"
+reward_point_cost: 100
+profession_trait:
+  name: "Hedgewizardry"
+  description: "The Hedgewise can harness the simplest of the ever-changing Winds of Magick far more naturally than their studiously, wizardly counterparts. They exhibit mastery over the smallest of spells, but maintain an ignorance towards others beyond their understanding."
+  effect: "When casting Generalist Magick – at your option – you may automatically succeed at the Incantation Test, but move one step down the Peril Condition Track negatively. You also understand how to use the Ritual of Magick Circle."
+special_trait:
+  name: "Arcane Magick"
+  description: "Combing the Æther into energies through sheer force of will and formula, you can harness Magick with but an utterance of a few words."
+  effect: "You are solely a practitioner of Arcane Magick. As a consequence, you may never adopt a Profession which has Divine Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells when you enter this Profession. If you gained Arcane Magick from a previous Profession, you learn an additional Generalist Magick spell instead."
+drawback:
+  name: "Cruel Tutelage"
+  description: "As Hedgewise are wholly self-taught in the ways of Magick, the practice of their spells is messy and chaotic. Hedgewise and their ilk make easy prey, leading them down a path towards the blackest and most soul-corrupting of Magicks."
+  effect: "When you generate face ‘1’ or ‘6’ with Chaos Dice, you invoke a Chaos Manifestation."
