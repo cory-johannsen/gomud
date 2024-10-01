@@ -3,7 +3,7 @@ package engine
 import (
 	"bufio"
 	"fmt"
-	"github.com/cory-johannsen/gomud/cli"
+	"github.com/cory-johannsen/gomud/internal/cli"
 	"github.com/openengineer/go-repl"
 	"log"
 	"net"

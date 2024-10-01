@@ -7,7 +7,7 @@
 package gomud
 
 import (
-	"github.com/cory-johannsen/gomud/engine"
+	"github.com/cory-johannsen/gomud/internal/engine"
 )
 
 // Injectors from wire.go:
