@@ -1,0 +1,28 @@
+name: Gun
+professions:
+  - Libertarian:
+    name: "Libertarian"
+    profession: "Anarchist"
+    traits:
+      - Don't Give a Fuck:
+          name: "Don't Give a Fuck"
+          description: "You are correct about everything and nobody can question that.  You don't give any fucks.  Not even one."
+          effect: "When you are attempting Persuasion with anyone (even other Libertarians) you must flip the results to Fail."
+    drawbacks:
+      - Wanted:
+        name: "Wanted"
+        description: "You are wanted by the authorities for your role in fomenting rebellion and causing chaos.  You are a known troublemaker and are likely to be arrested on sight."
+        effect: "You are wanted by the authorities.  If you are recognized, you will be arrested and taken to jail.  You must make a Resolve Test (DN 3) to resist being recognized.  If you fail, you are arrested and taken to jail."
+  - Boot:
+    name: "Boot"
+    profession: "Grunt"
+    traits:
+      - Guns Are Tools:
+          name: "Guns Are Tools"
+          description: "Your constant companions, guns are also incredible tools for solving problems."
+          effect: "When firing a weapon, you may flip the results to succeed at the test. When you succeed, it is always considered a Critical Success. When you fail, it is always considered a Critical Failure."
+    drawbacks:
+      - Bullet Lust:
+        name: "Bullet Lust"
+        description: "You have a deep and abiding love for firearms.  You can't resist the urge to pick up and play with any gun you see, and you have a tendency to shoot first and ask questions later."
+        effect: "Whenever you see a new gun, you must make a Resolve Test (DN 3) to resist picking it up and playing with it.  If you fail, you must make a Willpower Test (DN 3) to resist firing it.  If you fail that, you must make a Coordination Test (DN 3) to avoid shooting someone with it."

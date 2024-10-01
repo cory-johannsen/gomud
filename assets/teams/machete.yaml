@@ -1,0 +1,28 @@
+name: Machete
+professions:
+  - Antifa:
+    name: "Antifa"
+    profession: "Anarchist"
+    traits:
+      - Don't Give a Fuck:
+          name: "I Give a Fuck!"
+          description: "Your passion for anarchy and violence is fueled by your genuine desire to improve the world."
+          effect: "When "
+    drawbacks:
+      - Wanted:
+        name: "Wanted"
+        description: "You are wanted by the authorities for your role in fomenting rebellion and causing chaos.  You are a known troublemaker and are likely to be arrested on sight."
+        effect: "You are wanted by the authorities.  If you are recognized, you will be arrested and taken to jail.  You must make a Resolve Test (DN 3) to resist being recognized.  If you fail, you are arrested and taken to jail."
+  - Boot:
+    name: "Boot"
+    profession: "Grunt"
+    traits:
+      - Guns Are Tools:
+          name: "Weapons Are Tools"
+          description: "Your constant companions, blades and other melee weapons are also incredible tools for solving problems."
+          effect: "When swinging a weapon, you may flip the results to succeed at the test. When you succeed, it is always considered a Critical Success. When you fail, it is always considered a Critical Failure."
+    drawbacks:
+      - Everything Is A Nail:
+        name: "Everything Is A Nail"
+        description: "You have a deep and abiding love for all melee weapons.  You can't resist the urge to pick up and play with them and use them to solve tasks that could be solved more easily with other tools."
+        effect: "Whenever you see a melee new weapon, you must make a Resolve Test (DN 3) to resist picking it up and playing with it.  If you fail, you must make a Willpower Test (DN 3) to resist swinging it.  If you fail that, you must make a Coordination Test (DN 3) to avoid hitting someone with it."

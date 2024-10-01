@@ -1,6 +1,6 @@
-name: "Monk"
+name: "Grease Monkey"
 archetype: "Nerd"
-description: "Monks dedicate their lives to worship and study.  They are the keepers of ancient knowledge and the protectors of the faith. Not the most thrilling conversationalists."
+description: "Grease Monkeys specialize in the repair and maintenance of specific types of mechanical devices.  Diesel mechanic, rocket scientist, or nuclear technician are all examples of Grease Monkeys. They really love talking about their work, to the exclusion of pretty much everything else."
 tier: "Basic"
 reward_point_cost: 100
 profession_trait:
