@@ -10,9 +10,9 @@ type Config struct {
 	Port             string `env:"PORT" envDefault:"7000"`
 	DatabaseHost     string `env:"DATABASE_HOST" envDefault:"localhost"`
 	DatabasePort     string `env:"DATABASE_PORT" envDefault:"5432"`
-	DatabaseName     string `env:"DATABASE_NAME" envDefault:"postgres"`
+	DatabaseName     string `env:"DATABASE_NAME" envDefault:"mud"`
 	DatabaseUser     string `env:"DATABASE_USER" envDefault:"postgres"`
-	DatabasePassword string `env:"DATABASE_PASSWORD" envDefault:"password"`
+	DatabasePassword string `env:"DATABASE_PASSWORD" envDefault:"postgres"`
 }
 
 func NewConfigFromEnv() (*Config, error) {
