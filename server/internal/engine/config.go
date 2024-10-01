@@ -1,34 +1,33 @@
 package engine
 
-import "os"
-
-const DefaultPort = "7000"
+import (
+	"github.com/caarlos0/env/v6"
+	"os"
+	"strings"
+)
 
 type Config struct {
-	Port             string `json:"port"`
-	DatabaseHost     string `json:"database_host" default:"localhost"`
-	DatabasePort     string `json:"database_port" default:"5432"`
-	DatabaseName     string `json:"database_name" default:"postgres"`
-	DatabaseUser     string `json:"database_user" default:"postgres"`
-	DatabasePassword string `json:"database_password" default:"password"`
+	Port             string `env:"PORT" envDefault:"7000"`
+	DatabaseHost     string `env:"DATABASE_HOST" envDefault:"localhost"`
+	DatabasePort     string `env:"DATABASE_PORT" envDefault:"5432"`
+	DatabaseName     string `env:"DATABASE_NAME" envDefault:"postgres"`
+	DatabaseUser     string `env:"DATABASE_USER" envDefault:"postgres"`
+	DatabasePassword string `env:"DATABASE_PASSWORD" envDefault:"password"`
 }
 
 func NewConfigFromEnv() (*Config, error) {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = DefaultPort
+	opts := env.Options{
+		Environment: make(map[string]string),
 	}
-	dbHost := os.Getenv("DATABASE_HOST")
-	dbPort := os.Getenv("DATABASE_PORT")
-	dbName := os.Getenv("DATABASE_NAME")
-	dbUser := os.Getenv("DATABASE_USER")
-	dbPassword := os.Getenv("DATABASE_PASSWORD")
-	return &Config{
-		Port:             port,
-		DatabaseHost:     dbHost,
-		DatabasePort:     dbPort,
-		DatabaseName:     dbName,
-		DatabaseUser:     dbUser,
-		DatabasePassword: dbPassword,
-	}, nil
+	for _, existingEnv := range os.Environ() {
+		envVar := strings.Split(existingEnv, "=")
+		opts.Environment[envVar[0]] = os.Getenv(envVar[0])
+	}
+	cfg := Config{}
+	err := env.Parse(&cfg, opts)
+	if err != nil {
+		panic(err)
+	}
+
+	return &cfg, nil
 }

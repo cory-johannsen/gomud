@@ -3,6 +3,7 @@ module github.com/cory-johannsen/gomud
 go 1.22.4
 
 require (
+	github.com/caarlos0/env/v6 v6.10.1 // indirect
 	github.com/google/subcommands v1.2.0 // indirect
 	github.com/google/wire v0.6.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
