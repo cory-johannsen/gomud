@@ -1,28 +1,19 @@
 package cli
 
-import (
-	"github.com/openengineer/go-repl"
-)
-
-var helpMessage = `help              display this message
-quit              quit this program`
-
 type Handler interface {
 	Handle(args []string) (string, error)
+	Help(args []string) string
 }
 
-type HelpHandler struct{}
-
-func (h *HelpHandler) Handle([]string) (string, error) {
-	// todo: implement per-command help
-	return helpMessage, nil
-}
+const QuitMessage = "peace out"
 
 type QuitHandler struct {
-	R *repl.Repl
 }
 
 func (h *QuitHandler) Handle([]string) (string, error) {
-	h.R.Quit()
-	return "peace out", nil
+	return QuitMessage, nil
+}
+
+func (h *QuitHandler) Help([]string) string {
+	return "abandon your dawgs to the streets"
 }

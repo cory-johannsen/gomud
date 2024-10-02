@@ -10,6 +10,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/storage"
 	"log"
 	"net"
+	"strings"
 )
 
 type State struct {
@@ -31,14 +32,11 @@ func NewClient(conn net.Conn) *Client {
 func (c *Client) Connect() {
 	log.Printf("Serving client %s\n", c.Connection.RemoteAddr().String())
 	prompt := fmt.Sprintf("\n%s", c.Dispatcher.Prompt())
-	written, err := c.Connection.Write([]byte(prompt))
+	_, err := c.Connection.Write([]byte(prompt))
 	if err != nil {
 		panic(err)
 	}
-	if written != len(prompt) {
-		log.Printf("Expected to write %d bytes, wrote %d", len(c.Dispatcher.Prompt()), written)
-		return
-	}
+
 	for {
 		netData, err := bufio.NewReader(c.Connection).ReadString('\n')
 		if err != nil {
@@ -47,26 +45,22 @@ func (c *Client) Connect() {
 		}
 
 		result := fmt.Sprintf("%s\n", c.Dispatcher.Eval(netData))
-		written, err := c.Connection.Write([]byte(result))
+		_, err = c.Connection.Write([]byte(result))
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		if written != len(result) {
-			log.Printf("Expected to write %d bytes, wrote %d", len(result), written)
-			return
+		if strings.TrimSuffix(result, "\n") == cli.QuitMessage {
+			break
 		}
 		prompt = fmt.Sprintf("\n%s", c.Dispatcher.Prompt())
-		written, err = c.Connection.Write([]byte(prompt))
+		_, err = c.Connection.Write([]byte(prompt))
 		if err != nil {
 			log.Println(err)
-			return
-		}
-		if written != len(result) {
-			log.Printf("Expected to write %d bytes, wrote %d", len(prompt), written)
 			return
 		}
 	}
+	log.Printf("Client %s disconnected\n", c.Connection.RemoteAddr().String())
 	c.Connection.Close()
 }
 

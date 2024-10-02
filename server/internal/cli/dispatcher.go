@@ -13,12 +13,10 @@ type Dispatcher struct {
 
 func NewDispatcher() *Dispatcher {
 	dispatcher := &Dispatcher{
-		handlers: map[string]Handler{
-			"help": &HelpHandler{},
-		},
+		handlers: make(map[string]Handler),
 	}
 	dispatcher.Repl = repl.NewRepl(dispatcher)
-	dispatcher.handlers["quit"] = &QuitHandler{R: dispatcher.Repl}
+	dispatcher.handlers["quit"] = &QuitHandler{}
 	return dispatcher
 }
 
@@ -41,6 +39,22 @@ func (d *Dispatcher) Eval(buffer string) string {
 		return ""
 	} else {
 		cmd := fields[0]
+
+		if cmd == "help" {
+			if len(fields) == 1 {
+				commands := make([]string, 0)
+				for k := range d.handlers {
+					commands = append(commands, k)
+				}
+				return "available commands: " + strings.Join(commands, ", ")
+			}
+			cmd = fields[1]
+			handler, ok := d.handlers[cmd]
+			if !ok {
+				return fmt.Sprintf("unrecognized command \"%s\"", cmd)
+			}
+			return handler.Help(fields[2:])
+		}
 
 		handler, ok := d.handlers[cmd]
 		if !ok {
