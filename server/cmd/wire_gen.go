@@ -9,6 +9,8 @@ package main
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/engine"
+	"github.com/cory-johannsen/gomud/internal/generator"
+	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 )
 
@@ -24,7 +26,9 @@ func InitializeEngine() (*engine.Engine, error) {
 		return nil, err
 	}
 	players := storage.NewPlayers(database)
-	server := engine.NewServer(configConfig, database, players)
+	appearanceLoader := loader.NewAppearanceLoader(configConfig)
+	playerGenerator := generator.NewPlayerGenerator(appearanceLoader)
+	server := engine.NewServer(configConfig, database, players, appearanceLoader, playerGenerator)
 	engineEngine := engine.NewEngine(configConfig, server)
 	return engineEngine, nil
 }
