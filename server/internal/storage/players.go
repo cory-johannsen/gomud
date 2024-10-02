@@ -1,16 +1,16 @@
-package db
+package storage
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/cory-johannsen/gomud/internal/domain"
-	"github.com/cory-johannsen/gomud/internal/engine"
 )
 
 type Players struct {
-	database *engine.Database
+	database *Database
 }
 
-func NewPlayers(database *engine.Database) *Players {
+func NewPlayers(database *Database) *Players {
 	return &Players{database: database}
 }
 
@@ -39,4 +39,16 @@ func (p *Players) Exists(ctx context.Context, name string) (bool, error) {
 		return false, err
 	}
 	return count > 0, nil
+}
+
+func (p *Players) StorePlayer(ctx context.Context, player *domain.Player) error {
+	encoded, err := json.Marshal(player.Data)
+	if err != nil {
+		return err
+	}
+	_, err = p.database.Conn.Exec(ctx, "UPDATE players SET data = ? WHERE id = ?", encoded, player.Id)
+	if err != nil {
+		return err
+	}
+	return nil
 }

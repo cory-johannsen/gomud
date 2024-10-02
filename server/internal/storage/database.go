@@ -1,9 +1,10 @@
-package engine
+package storage
 
 import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -15,7 +16,7 @@ type Database struct {
 	Conn *pgx.Conn
 }
 
-func NewDatabase(config *Config) (*Database, error) {
+func NewDatabase(config *config.Config) (*Database, error) {
 	conn, err := pgx.Connect(
 		context.Background(),
 		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",

@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/cli"
+	"github.com/cory-johannsen/gomud/internal/config"
+	"github.com/cory-johannsen/gomud/internal/storage"
 	"github.com/openengineer/go-repl"
 	"log"
 	"net"
@@ -69,14 +71,16 @@ func (c *Client) Connect() {
 }
 
 type Server struct {
-	port string
-	db   *Database
+	port    string
+	db      *storage.Database
+	players *storage.Players
 }
 
-func NewServer(config *Config, db *Database) *Server {
+func NewServer(config *config.Config, db *storage.Database, players *storage.Players) *Server {
 	return &Server{
-		port: config.Port,
-		db:   db,
+		port:    config.Port,
+		db:      db,
+		players: players,
 	}
 }
 
@@ -98,11 +102,11 @@ func (s *Server) Start() {
 }
 
 type Engine struct {
-	Config *Config
+	Config *config.Config
 	Server *Server
 }
 
-func NewEngine(config *Config, server *Server) *Engine {
+func NewEngine(config *config.Config, server *Server) *Engine {
 	return &Engine{
 		Config: config,
 		Server: server,
