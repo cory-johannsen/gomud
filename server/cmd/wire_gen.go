@@ -7,21 +7,24 @@
 package main
 
 import (
+	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/engine"
+	"github.com/cory-johannsen/gomud/internal/storage"
 )
 
 // Injectors from wire.go:
 
 func InitializeEngine() (*engine.Engine, error) {
-	config, err := engine.NewConfigFromEnv()
+	configConfig, err := config.NewConfigFromEnv()
 	if err != nil {
 		return nil, err
 	}
-	database, err := engine.NewDatabase(config)
+	database, err := storage.NewDatabase(configConfig)
 	if err != nil {
 		return nil, err
 	}
-	server := engine.NewServer(config, database)
-	engineEngine := engine.NewEngine(config, server)
+	players := storage.NewPlayers(database)
+	server := engine.NewServer(configConfig, database, players)
+	engineEngine := engine.NewEngine(configConfig, server)
 	return engineEngine, nil
 }

@@ -12,7 +12,7 @@ import (
 )
 
 type Database struct {
-	conn *pgx.Conn
+	Conn *pgx.Conn
 }
 
 func NewDatabase(config *Config) (*Database, error) {
@@ -44,5 +44,5 @@ func NewDatabase(config *Config) (*Database, error) {
 		return nil, err
 	}
 
-	return &Database{conn: conn}, nil
+	return &Database{Conn: conn}, nil
 }
