@@ -4,7 +4,7 @@ professions:
     name: "Antifa"
     profession: "Anarchist"
     traits:
-      - Don't Give a Fuck:
+      - Give a Fuck:
           name: "I Give a Fuck!"
           description: "Your passion for anarchy and violence is fueled by your genuine desire to improve the world."
           effect: "When "

@@ -10,3 +10,6 @@ weapon:
     - "Volatile"
     - "Fast"
     - "Ammo: 6"
+    - "Reload: 1 AP"
+  effects:
+    - "1d6 ballistic damage"

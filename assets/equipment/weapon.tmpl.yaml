@@ -10,3 +10,7 @@ weapon:
   {{- range .skills }}
     - {{ . }}
   {{- end }}
+  effects:
+  {{- range .effects }}
+    - {{ . }}
+  {{- end }}

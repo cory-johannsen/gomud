@@ -8,3 +8,5 @@ weapon:
   distance: "Close"
   qualities:
     - "Defensive"
+  effects:
+    - "1d10 slashing damage"
