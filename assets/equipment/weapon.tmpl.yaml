@@ -6,6 +6,8 @@ weapon:
   description: {{ .description }}
   handling: {{ .handling }}
   distance: {{ .distance }}
+  skill: {{ .skill }}
+  target: {{ .target }}
   qualities:
   {{- range .skills }}
     - {{ . }}

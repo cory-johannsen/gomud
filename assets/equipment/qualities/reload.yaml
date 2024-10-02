@@ -1,0 +1,9 @@
+name: Reload
+description: The weapon can be reloaded after it is empty.
+conditions:
+  - "Empty"
+targets:
+  - "Self"
+effects:
+  - "6 rounds"
+  - "1 Standard Action"

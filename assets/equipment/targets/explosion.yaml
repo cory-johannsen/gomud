@@ -1,0 +1,4 @@
+name: Explosion
+description: "Radiates outward in a circle with a diameter of 10 meters centered on a point which is visible."
+effects:
+  - "5 meter radius"

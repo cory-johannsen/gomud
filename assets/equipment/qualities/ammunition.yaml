@@ -1,0 +1,8 @@
+name: Ammunition
+description: The weapon requires ammunition.
+conditions:
+  - "Attack"
+targets:
+  - "Self"
+effects:
+  - "6 rounds"

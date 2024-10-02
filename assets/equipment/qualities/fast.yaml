@@ -1,0 +1,9 @@
+name: Fast
+description: The weapon is fast to use, slowing the opponent's response.
+conditions:
+  - "Hit"
+targets:
+  - "Opponent"
+effects:
+  - "-10 to Parry"
+  - "-10 to Dodge"

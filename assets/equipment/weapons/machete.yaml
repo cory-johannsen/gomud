@@ -6,7 +6,10 @@ weapon:
   description: "A machete is a large, heavy knife with a broad blade, used for cutting through dense vegetation.  It is also a very effective weapon in close combat, and works great for dismembering bodies."
   handling: "One-Handed"
   distance: "Close"
+  skill: "Martial Melee"
+  target: "Single Target"
   qualities:
     - "Defensive"
   effects:
-    - "1d10 slashing damage"
+    - "-10 to Attack"
+    - "+10 to Margin of Success"

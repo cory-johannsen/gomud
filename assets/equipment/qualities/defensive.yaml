@@ -1,0 +1,8 @@
+name: Defensive
+description: Increased chance to Parry
+conditions:
+  - "Parry"
+targets:
+  - "Self"
+effects:
+  - "+10 to Parry"

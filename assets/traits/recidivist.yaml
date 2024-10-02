@@ -1,0 +1,4 @@
+name: "Recidivist"
+description: "You solve problems with crime."
+effects:
+  - "When performing an Illegal Act to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure."

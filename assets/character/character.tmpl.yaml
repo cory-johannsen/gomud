@@ -1,0 +1,44 @@
+name: {{ .name }}
+statistics:
+  - fighting:
+    value: { .combat.value }}
+    modifiers:
+      {{- range .combat.modifiers }}
+      - {{ . }}
+      {{- end }}
+  - muscle:
+    value: { .muscle.value }}
+    modifiers:
+      {{- range .muscle.modifiers }}
+      - {{ . }}
+      {{- end }}
+  - speed:
+    value: { .speed.value }}
+    modifiers:
+      {{- range .speed.modifiers }}
+      - {{ . }}
+      {{- end }}
+  - savvy:
+    value: { .savvy.value }}
+    modifiers:
+      {{- range .savvy.modifiers }}
+      - {{ . }}
+      {{- end }}
+  - smarts:
+    value: { .smarts.value }}
+    modifiers:
+      {{- range .smarts.modifiers }}
+      - {{ . }}
+      {{- end }}
+  - grit:
+    value: { .grit.value }}
+    modifiers:
+      {{- range .grit.modifiers }}
+      - {{ . }}
+      {{- end }}
+  - flair:
+    value: { .flair.value }}
+    modifiers:
+      {{- range .flair.modifiers }}
+      - {{ . }}
+      {{- end }}

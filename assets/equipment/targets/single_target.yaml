@@ -1,0 +1,4 @@
+name: Single Target
+description: "This weapon targets a single enemy."
+effects:
+  - "1 target"

@@ -1,0 +1,5 @@
+name: Cone
+description: "Extends straight in a 15 meter long line from where you are standing, starting at 1 meter wide and extending to 5 meters wide at its end point."
+effects:
+  - "15 meter cone"
+  - "Awareness test to avoid hitting allies"

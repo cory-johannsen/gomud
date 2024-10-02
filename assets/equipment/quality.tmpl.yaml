@@ -1,0 +1,14 @@
+name: {{ .name }}
+description: {{ .description }}
+conditions:
+  {{ range .conditions }}
+  - {{ . }}
+  {{ end }}
+targets:
+  {{ range .targets }}
+  - {{ . }}
+  {{ end }}
+effects:
+  {{ range .effects }}
+  - {{ . }}
+  {{ end }}

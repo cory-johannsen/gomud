@@ -6,10 +6,13 @@ weapon:
   description: "A janky old .38 revolver.  It's seen better days, but it still works."
   handling: "One-Handed"
   distance: "3 + [PB] Meters"
+  skill: "Martial Ranged"
+  target: "Single Target"
   qualities:
     - "Volatile"
     - "Fast"
-    - "Ammo: 6"
-    - "Reload: 1 AP"
+    - "Ammunition"
+    - "Reload"
   effects:
-    - "1d6 ballistic damage"
+    - "-10 to Attack"
+    - "+10 to Margin of Success"

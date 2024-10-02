@@ -1,0 +1,10 @@
+name: Volatile
+description: The weapon has a chance to explode on Critical Failure.
+conditions:
+  - "Critical Failure"
+targets:
+  - "Self"
+effects:
+  - "Burst"
+  - "Fire"
+  - "Shrapnel"
