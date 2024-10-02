@@ -8,7 +8,6 @@ import (
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
-	"github.com/openengineer/go-repl"
 	"log"
 	"net"
 )
@@ -18,27 +17,26 @@ type State struct {
 
 type Client struct {
 	Connection net.Conn
-	Handler    *cli.CommandHandler
+	Dispatcher *cli.Dispatcher
 }
 
 func NewClient(conn net.Conn) *Client {
-	handler := &cli.CommandHandler{}
-	handler.R = repl.NewRepl(handler)
+	dispatcher := cli.NewDispatcher()
 	return &Client{
 		Connection: conn,
-		Handler:    handler,
+		Dispatcher: dispatcher,
 	}
 }
 
 func (c *Client) Connect() {
 	log.Printf("Serving client %s\n", c.Connection.RemoteAddr().String())
-	prompt := fmt.Sprintf("\n%s", c.Handler.Prompt())
+	prompt := fmt.Sprintf("\n%s", c.Dispatcher.Prompt())
 	written, err := c.Connection.Write([]byte(prompt))
 	if err != nil {
 		panic(err)
 	}
 	if written != len(prompt) {
-		log.Printf("Expected to write %d bytes, wrote %d", len(c.Handler.Prompt()), written)
+		log.Printf("Expected to write %d bytes, wrote %d", len(c.Dispatcher.Prompt()), written)
 		return
 	}
 	for {
@@ -48,7 +46,7 @@ func (c *Client) Connect() {
 			return
 		}
 
-		result := fmt.Sprintf("%s\n", c.Handler.Eval(netData))
+		result := fmt.Sprintf("%s\n", c.Dispatcher.Eval(netData))
 		written, err := c.Connection.Write([]byte(result))
 		if err != nil {
 			log.Println(err)
@@ -58,7 +56,7 @@ func (c *Client) Connect() {
 			log.Printf("Expected to write %d bytes, wrote %d", len(result), written)
 			return
 		}
-		prompt = fmt.Sprintf("\n%s", c.Handler.Prompt())
+		prompt = fmt.Sprintf("\n%s", c.Dispatcher.Prompt())
 		written, err = c.Connection.Write([]byte(prompt))
 		if err != nil {
 			log.Println(err)
@@ -78,6 +76,7 @@ type Server struct {
 	players          *storage.Players
 	appearanceLoader *loader.AppearanceLoader
 	playerGenerator  *generator.PlayerGenerator
+	dispatcher       *cli.Dispatcher
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, appearanceLoader *loader.AppearanceLoader,
