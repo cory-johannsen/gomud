@@ -4,7 +4,7 @@
 //go:build !wireinject
 // +build !wireinject
 
-package gomud
+package main
 
 import (
 	"github.com/cory-johannsen/gomud/internal/engine"

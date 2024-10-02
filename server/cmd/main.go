@@ -1,12 +1,11 @@
 package main
 
 import (
-	"github.com/cory-johannsen/gomud"
 	"log"
 )
 
 func main() {
-	mud, err := gomud.InitializeEngine()
+	mud, err := InitializeEngine()
 	if err != nil {
 		panic(err)
 	}

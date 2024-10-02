@@ -7,12 +7,13 @@ import (
 )
 
 type Config struct {
-	Port             string `env:"PORT" envDefault:"7000"`
-	DatabaseHost     string `env:"DATABASE_HOST" envDefault:"localhost"`
-	DatabasePort     string `env:"DATABASE_PORT" envDefault:"5432"`
-	DatabaseName     string `env:"DATABASE_NAME" envDefault:"mud"`
-	DatabaseUser     string `env:"DATABASE_USER" envDefault:"postgres"`
-	DatabasePassword string `env:"DATABASE_PASSWORD" envDefault:"postgres"`
+	Port                   string `env:"PORT" envDefault:"7000"`
+	DatabaseHost           string `env:"DATABASE_HOST" envDefault:"localhost"`
+	DatabasePort           string `env:"DATABASE_PORT" envDefault:"5432"`
+	DatabaseName           string `env:"DATABASE_NAME" envDefault:"mud"`
+	DatabaseUser           string `env:"DATABASE_USER" envDefault:"postgres"`
+	DatabasePassword       string `env:"DATABASE_PASSWORD" envDefault:"postgres"`
+	DatabaseMigrationsPath string `env:"DATABASE_MIGRATIONS_PATH" envDefault:"migrations"`
 }
 
 func NewConfigFromEnv() (*Config, error) {
