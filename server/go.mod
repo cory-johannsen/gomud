@@ -8,6 +8,7 @@ require (
 	github.com/google/wire v0.6.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/openengineer/go-repl v0.2.2
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (

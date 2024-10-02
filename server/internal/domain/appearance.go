@@ -12,11 +12,11 @@ const (
 type DistinguishingMark string
 type DistinguishingMarks []DistinguishingMark
 
-type Dooming struct {
+type Tattoo struct {
 	Description string
 	Season      Season
 }
-type Doomings []Dooming
+type Tattoos []Tattoo
 
 type Drawback struct {
 	Name        string

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/cli"
 	"github.com/cory-johannsen/gomud/internal/config"
+	"github.com/cory-johannsen/gomud/internal/generator"
+	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	"github.com/openengineer/go-repl"
 	"log"
@@ -71,16 +73,21 @@ func (c *Client) Connect() {
 }
 
 type Server struct {
-	port    string
-	db      *storage.Database
-	players *storage.Players
+	port             string
+	db               *storage.Database
+	players          *storage.Players
+	appearanceLoader *loader.AppearanceLoader
+	playerGenerator  *generator.PlayerGenerator
 }
 
-func NewServer(config *config.Config, db *storage.Database, players *storage.Players) *Server {
+func NewServer(config *config.Config, db *storage.Database, players *storage.Players, appearanceLoader *loader.AppearanceLoader,
+	playerGenerator *generator.PlayerGenerator) *Server {
 	return &Server{
-		port:    config.Port,
-		db:      db,
-		players: players,
+		port:             config.Port,
+		db:               db,
+		players:          players,
+		appearanceLoader: appearanceLoader,
+		playerGenerator:  playerGenerator,
 	}
 }
 
