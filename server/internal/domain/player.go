@@ -8,6 +8,12 @@ import (
 
 const PropertyNotFound = "property not found"
 
+const (
+	BackgroundProperty = "background"
+	TeamProperty       = "team"
+	StatsProperty      = "stats"
+)
+
 type Player struct {
 	Id       int
 	Name     string

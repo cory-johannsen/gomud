@@ -25,7 +25,6 @@ func (l *TeamLoader) LoadTeams() (domain.Teams, error) {
 	if l.teams != nil && len(l.teams) > 0 {
 		return l.teams, nil
 	}
-	teams := make(domain.Teams, 0)
 	items, err := os.ReadDir(l.config.AssetPath + "/teams")
 	if err != nil {
 		return nil, err
@@ -47,8 +46,7 @@ func (l *TeamLoader) LoadTeams() (domain.Teams, error) {
 		if err != nil {
 			return nil, err
 		}
-		teams = append(teams, team)
+		l.teams = append(l.teams, team)
 	}
-	l.teams = teams
-	return teams, nil
+	return l.teams, nil
 }

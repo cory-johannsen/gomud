@@ -8,6 +8,12 @@ type Effect struct {
 }
 type Effects []*Effect
 
+type TraitSpec struct {
+	Name        string   `yaml:"name"`
+	Description string   `yaml:"description"`
+	Effects     []string `yaml:"effects"`
+}
+
 type Trait struct {
 	Name        string
 	Description string

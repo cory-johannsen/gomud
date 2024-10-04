@@ -26,3 +26,8 @@ jobs:
         name: "Bullet Lust"
         description: "You have a deep and abiding love for firearms.  You can't resist the urge to pick up and play with any gun you see, and you have a tendency to shoot first and ask questions later."
         effect: "Whenever you see a new gun, you must make a Resolve Test (DN 3) to resist picking it up and playing with it.  If you fail, you must make a Willpower Test (DN 3) to resist firing it.  If you fail that, you must make a Coordination Test (DN 3) to avoid shooting someone with it."
+traits:
+  Gun Nut:
+    name: Gun Nut
+    description: You absolutely love guns.  You can't resist the urge to pick up and play with any gun you see, and you have a tendency to shoot first and ask questions later.
+    effect: Whenever you see a new gun, you must make a Resolve Test (DN 3) to resist picking it up and playing with it.  If you fail, you must make a Willpower Test (DN 3) to resist firing it.  If you fail that, you must make a Coordination Test (DN 3) to avoid shooting someone with it.

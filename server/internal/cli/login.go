@@ -151,7 +151,7 @@ func (h *LoginHandler) selectTeam(teams domain.Teams) (*domain.Team, error) {
 	return t, nil
 }
 
-func (h *LoginHandler) Help(args []string) string {
+func (h *LoginHandler) Help([]string) string {
 	return "login to the system.  Usage: login <username>"
 }
 

@@ -27,9 +27,11 @@ func InitializeEngine() (*engine.Engine, error) {
 	}
 	players := storage.NewPlayers(database)
 	appearanceLoader := loader.NewAppearanceLoader(configConfig)
+	traitLoader := loader.NewTraitLoader(configConfig)
+	backgroundLoader := loader.NewBackgroundLoader(configConfig, traitLoader)
 	teamLoader := loader.NewTeamLoader(configConfig)
-	loaders := loader.NewLoaders(appearanceLoader, teamLoader)
-	playerGenerator := generator.NewPlayerGenerator(appearanceLoader)
+	loaders := loader.NewLoaders(appearanceLoader, backgroundLoader, traitLoader, teamLoader)
+	playerGenerator := generator.NewPlayerGenerator(appearanceLoader, backgroundLoader)
 	server := engine.NewServer(configConfig, database, players, loaders, playerGenerator)
 	engineEngine := engine.NewEngine(configConfig, server)
 	return engineEngine, nil

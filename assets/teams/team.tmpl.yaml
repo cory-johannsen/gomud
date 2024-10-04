@@ -24,3 +24,7 @@ jobs:
       {{- end }}
       money: {{ .money }}
   {{- end }}
+traits:
+{{- range .traits }}
+  - {{ .name }}
+{{- end }}

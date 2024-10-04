@@ -7,17 +7,26 @@ import (
 
 type PlayerGenerator struct {
 	appearanceLoader *loader.AppearanceLoader
+	backgroundLoader *loader.BackgroundLoader
 }
 
-func NewPlayerGenerator(al *loader.AppearanceLoader) *PlayerGenerator {
+func NewPlayerGenerator(al *loader.AppearanceLoader, bl *loader.BackgroundLoader) *PlayerGenerator {
 	return &PlayerGenerator{
 		appearanceLoader: al,
+		backgroundLoader: bl,
 	}
 }
 
-func (pg *PlayerGenerator) Generate(name string, pw string, team *domain.Team) (*domain.Player, error) {
+func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team) (*domain.Player, error) {
 	player := domain.NewPlayer(nil, name, pw)
-	player.Data["team"] = team.Name
-
+	player.Data[domain.TeamProperty] = team
+	player.Data[domain.StatsProperty] = domain.NewStats()
+	// generate background
+	background, err := g.backgroundLoader.RandomBackground()
+	if err != nil {
+		return nil, err
+	}
+	player.Data[domain.BackgroundProperty] = background
+	// Generate appearance
 	return player, nil
 }

@@ -1,0 +1,30 @@
+name: Middle Class
+description: "You were born in the mediocre middle class, neither rich nor poor. You have a good education and a stable job, but you are not wealthy. You have a good understanding of the world and how it works."
+modifiers:
+  - fighting:
+      bonus: 1
+  - muscle:
+      bonus: 0
+  - speed:
+      bonus: -1
+  - savvy:
+      bonus: 1
+  - smarts:
+      bonus: 1
+  - grit:
+      bonus: -1
+  - flair:
+      bonus: -1
+traits:
+  - Blessing in Disguise
+  - Danger Sense
+  - Dauntless
+  - Esoteric Memory
+  - Fortune's Wheel
+  - Grim Resolve
+  - Manifest Destiny
+  - Mixed Family
+  - Mountain Amongst Men
+  - Natural Selection
+  - Noble Savage
+  - Seventh Sense

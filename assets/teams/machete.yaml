@@ -26,3 +26,8 @@ jobs:
         name: "Everything Is A Nail"
         description: "You have a deep and abiding love for all melee weapons.  You can't resist the urge to pick up and play with them and use them to solve tasks that could be solved more easily with other tools."
         effect: "Whenever you see a melee new weapon, you must make a Resolve Test (DN 3) to resist picking it up and playing with it.  If you fail, you must make a Willpower Test (DN 3) to resist swinging it.  If you fail that, you must make a Coordination Test (DN 3) to avoid hitting someone with it."
+traits:
+  Everything Is a Nail:
+    name: Gun Nut
+    description: You absolutely love melee weapons.  You can't resist the urge to pick up and play with any melee weapon you see, and you have a tendency to swing first and ask questions later.
+    effect: Whenever you see a new melee weapon, you must make a Resolve Test (DN 3) to resist picking it up and playing with it.  If you fail, you must make a Willpower Test (DN 3) to resist swinging it.  If you fail that, you must make a Coordination Test (DN 3) to avoid hitting someone with it.
