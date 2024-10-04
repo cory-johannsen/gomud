@@ -1,0 +1,13 @@
+name: "Shaman"
+archetype: "Drifter"
+description: "Shamans combine folk medicine, traditional healing practices, and heavy drugs to attempt to solve problems.  The outcomes aren't really all that important."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "White Witchery"
+  description: "You are able to call forth strange, eerie powers from beyond the Æther. Although you do not have a true understanding of where they come from, you pay tribute to older gods nonetheless for such miracles."
+  effect: "Select any one Generalist Magick spell (providing that it does not cause harm to another). When you attempt to cast this Magick, you do not need to roll percentile dice to make a Skill Test. Instead, you Critically Succeed at the Incantation Test you intended to make. Furthermore, you may select one additional Generalist Magick spell at both Intermediate and Advanced Tier with the aforementioned limitations."
+drawback:
+  name: "Abstain From Violence"
+  description: "You have given yourself to the god’s mercy, taking no part in the selfish passions nor acts of violence. You are a pacifist at heart and it brings you great sorrow when you do hurt another – even if they would intend to kill you."
+  effect: "Should you intentionally bring harm upon a creature classified as a Humanoid (including player Ancestries), you are unable to call upon your White Witchery abilities for three days."

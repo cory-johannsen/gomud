@@ -1,0 +1,9 @@
+name: "Specialist"
+archetype: "Aggressor"
+description: "Specialists are trained operators of technology or machinery.  This could be a nuclear reactor, drone controller, or a tank cannon.  The Specialist knows how to do their job, but beyond that they are a hot mess, since their training rarely includes how to deal with the shit they see."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Here Comes The Cavalry"
+  description: "Whether on parade, participating in competitive sports or during times of war, you have mastered the art of equestrianism. This mastery is unparalleled, dwarfed only by your contemporaries who taught you to ride."
+  effect: "When you fail a Handle Animal or Ride Test, you may re-roll to generate a better result, but must accept the outcome. In addition, when using the Movement subtype of Ride, you do not have to add the additional 1 AP cost."

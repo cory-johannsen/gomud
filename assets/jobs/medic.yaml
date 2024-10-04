@@ -1,0 +1,9 @@
+name: "Medic"
+archetype: "Normie"
+description: "The Medic has attained some skill in healing others.  Not necessarily very much."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Pliers... Scalpel... Bonesaw"
+  description: "With an assortment of bizarre and frightening instruments, the Barber Surgeon sees to ‘curing’ the wounded. Where bonesaws fail, the machete can hack through all that sinew and bone to remove a patient’s bothersome, gangrenous limb."
+  effect: "Whenever you successfully bind wounds to heal Damage, your patient moves one additional step up the Damage Condition Track positively. In addition, you always succeed at Heal Tests to prepare bandages."

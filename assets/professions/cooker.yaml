@@ -1,9 +1,0 @@
-name: "Cooker"
-archetype: "Nerd"
-description: "The Cooker is master of all chemical concoctions.  How they attained this knowledge is a mystery, but they can make anything.  They might even share some with you."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Nostrum Remedium"
-  description: "Sometimes, the old ways are best. The Apothecary’s understanding of natural medicines and country remedies produces pure, undiluted concoctions that yield impressive results. You are trusted by wives and husbands as being a medical Doktor in your own right. But a canny chirurgeon may see through any deceptions should you try to ply quackery or fraudulent medicinal potions."
-  effect: "You may flip the results to succeed at Alchemy Tests. When you succeed, it is always considered a Critical Success. In addition, you never suffer Peril as a result of failed or Critically Failed Alchemy Tests."

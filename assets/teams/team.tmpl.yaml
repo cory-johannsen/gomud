@@ -1,6 +1,6 @@
 name: {{ .name }}
-professions:
-{{- range .professions }}
+jobs:
+{{- range .jobs }}
   - {{ .name }}:
       name: "{{ .name }}"
       profession: "{{ .profession }}"

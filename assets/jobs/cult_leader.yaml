@@ -1,0 +1,13 @@
+name: "Cult Leader"
+archetype: "Normie"
+description: "The Cult Leader is a charismatic freak that has amassed a following that they intend to abuse in some way.  They definitely have a god complex.  The Cult Leader wants all the money they can get from their followers, and probably some creepy sex stuff, too."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Holy Roller"
+  description: "Doomsayers ritually flog themselves, forging their faith in the crucible of suffering and hardship. Their back may bear many scars, but a Doomsayer knows that the pain they’ve endured guarantees them a place in the afterlife at their god’s side."
+  effect: "Adjust your Damage Threshold by +3, but only when you aren’t wearing armor."
+drawback:
+  name: "The End Is Nigh"
+  description: "Unfortunately, the process of ritual scarification has led its votaries toward the brink of madness."
+  effect: "You can never be restored to Unharmed on your Damage Condition Track, only to Lightly Wounded."

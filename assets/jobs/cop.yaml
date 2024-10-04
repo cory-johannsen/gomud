@@ -1,0 +1,9 @@
+name: "Cop"
+archetype: "Drifter"
+description: "Cops are supposed to uphold the law and capture criminals, but they are usually self-serving bastards that abuse their power to get ahead.  ACAB."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "I Am The Law!"
+  description: "The Reeve is so cold, they bleed ice – when they speak, they never need to repeat themselves. There are times when patrolling the roads over windswept moor and through dark forest, when a distinct show of force is necessary to cow a brigand or highwaymen, all it takes is a flash of their badge."
+  effect: "You may flip the results to succeed at Intimidate Tests. When you succeed, it is always considered a Critical Success. Furthermore, you always influence a number of people with the Intimidate Skill equal to three times your [BB] – this includes use of Litany of Hatred during combat."

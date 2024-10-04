@@ -1,9 +1,0 @@
-name: "Car Jacker"
-archetype: "Criminal"
-description: "Car Jackers are the bane of the city streets, stealing cars and selling them to chop shops.  It's lucrative work, but nobody respects it."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Stand And Deliver"
-  description: "Whether robbing from the rich to exact for the poor, or simply robbing for their own gain, Highwaymen always find purchase for their quips where they can be bought or afforded when defending themselves."
-  effect: "At your option, you may substitute the Charm Skill in place of Intimidate. In addition, you may substitute Charm in place of any Skill required to Parry melee weapons."

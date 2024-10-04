@@ -1,9 +1,0 @@
-name: "Karen"
-archetype: "Influencer"
-description: "Karens have somehow managed to make everyone around them OK with their nonstop asinine chatter.  They are the life of the party, as far as they are concerned. They solve problems by yelling louder."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Banter and Jibe"
-  description: "Royal court jester, a slave to humor. Monarch’s entertainer, I’m his consumer. I can only entertain, where my voice can’t be heard. A clown, a joke, a fool – as I am often referred!"
-  effect: "You may flip the results to succeed at Coordination Tests. When you succeed, it is always considered a Critical Success. In addition, you always succeed at Coordination Tests to perform acrobatics."

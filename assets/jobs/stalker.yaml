@@ -1,0 +1,9 @@
+name: "Stalker"
+archetype: "Drifter"
+description: "Stalkers specialize in obsessively tracking down and capturing or killing their prey. They probably take trophies."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "For A Few Shillings More"
+  description: "The Bounty Hunter is an inscrutable and enigmatic hunter, undeterred by danger. Dogged in their pursuit, they always get their quarry."
+  effect: "In combat, whenever you make your first Attack Action with a ranged weapon, you never miss. In addition, your intended target cannot Dodge, Parry or Resist the attack. You also add an additional 1D6 Fury Die to the same attack."

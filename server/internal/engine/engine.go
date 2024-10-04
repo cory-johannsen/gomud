@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/cli"
 	"github.com/cory-johannsen/gomud/internal/config"
+	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
@@ -14,6 +15,54 @@ import (
 )
 
 type State struct {
+	player *domain.Player
+	vars   map[string]interface{}
+}
+
+func (s *State) Player() *domain.Player {
+	return s.player
+}
+
+func (s *State) Property(key string) interface{} {
+	return s.vars[key]
+}
+
+func NewState(player *domain.Player) cli.State {
+	return &State{
+		player: player,
+		vars:   make(map[string]interface{}),
+	}
+}
+
+type ClientConnection struct {
+	Connection net.Conn
+}
+
+func NewClientConnection(conn net.Conn) *ClientConnection {
+	return &ClientConnection{
+		Connection: conn,
+	}
+}
+
+func (c *ClientConnection) Read() string {
+	netData, err := bufio.NewReader(c.Connection).ReadString('\n')
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	return strings.TrimSuffix(netData, "\r\n")
+}
+
+func (c *ClientConnection) Write(data string) int {
+	written, err := c.Connection.Write([]byte(data))
+	if err != nil {
+		log.Println(err)
+	}
+	return written
+}
+
+func (c *ClientConnection) Writeln(data string) int {
+	return c.Write(fmt.Sprintf("%s\n", data))
 }
 
 type Client struct {
@@ -21,8 +70,8 @@ type Client struct {
 	Dispatcher *cli.Dispatcher
 }
 
-func NewClient(conn net.Conn) *Client {
-	dispatcher := cli.NewDispatcher()
+func NewClient(players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, conn net.Conn) *Client {
+	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, NewClientConnection(conn))
 	return &Client{
 		Connection: conn,
 		Dispatcher: dispatcher,
@@ -32,7 +81,11 @@ func NewClient(conn net.Conn) *Client {
 func (c *Client) Connect() {
 	log.Printf("Serving client %s\n", c.Connection.RemoteAddr().String())
 	prompt := fmt.Sprintf("\n%s", c.Dispatcher.Prompt())
-	_, err := c.Connection.Write([]byte(prompt))
+	_, err := c.Connection.Write([]byte(cli.WelcomeMessage))
+	if err != nil {
+		panic(err)
+	}
+	_, err = c.Connection.Write([]byte(prompt))
 	if err != nil {
 		panic(err)
 	}
@@ -65,22 +118,22 @@ func (c *Client) Connect() {
 }
 
 type Server struct {
-	port             string
-	db               *storage.Database
-	players          *storage.Players
-	appearanceLoader *loader.AppearanceLoader
-	playerGenerator  *generator.PlayerGenerator
-	dispatcher       *cli.Dispatcher
+	port            string
+	db              *storage.Database
+	players         *storage.Players
+	loaders         *loader.Loaders
+	playerGenerator *generator.PlayerGenerator
+	dispatcher      *cli.Dispatcher
 }
 
-func NewServer(config *config.Config, db *storage.Database, players *storage.Players, appearanceLoader *loader.AppearanceLoader,
+func NewServer(config *config.Config, db *storage.Database, players *storage.Players, loaders *loader.Loaders,
 	playerGenerator *generator.PlayerGenerator) *Server {
 	return &Server{
-		port:             config.Port,
-		db:               db,
-		players:          players,
-		appearanceLoader: appearanceLoader,
-		playerGenerator:  playerGenerator,
+		port:            config.Port,
+		db:              db,
+		players:         players,
+		loaders:         loaders,
+		playerGenerator: playerGenerator,
 	}
 }
 
@@ -96,7 +149,7 @@ func (s *Server) Start() {
 		if err != nil {
 			panic(err)
 		}
-		client := NewClient(c)
+		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, c)
 		go client.Connect()
 	}
 }

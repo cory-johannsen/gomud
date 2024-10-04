@@ -1,9 +1,0 @@
-name: "Tomb Raider"
-archetype: "Criminal"
-description: "Tomb Raiders have figured out that dead people tend to have stuff worth stealing.  They have no friends and never will."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "I Sell the Dead"
-  description: "A Graverobber has heard and seen their share of strange things over the years; the dead rattling in their coffins, corpses reanimating upon their own accord, the wailing of banshees from crypts and the clanking of a revenant’s chains deep below the earth."
-  effect: "When facing Supernatural creatures, you always succeed at Resolve Tests to save yourself from Stress and Fear provoked by them. In addition, you are immune to specific Diseases such as Red Death and Tomb Rot."

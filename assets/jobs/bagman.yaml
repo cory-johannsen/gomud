@@ -1,0 +1,9 @@
+name: "Bagman"
+archetype: "Drifter"
+description: "The Bagman is mutually hated by everyone except their boss, for whom they collect whatever needs collected."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Pay the Piper"
+  description: "When the tax collector makes his demand for recompense, those debts are always paid in full (at the pain of a beating, or worse)."
+  effect: "Whenever you fail a Bargain or Intimidate Test, you may re-roll to generate a better result, but must accept the outcome."

@@ -1,0 +1,9 @@
+name: "Rancher"
+archetype: "Drifter"
+description: "Ranchers have spent their lives raising animals, and they smell like it."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Beastmaster"
+  description: "While the stench of manure and musk cling to their clothes, the Animal Trainer seems to be akin to the creatures they train. They may even emulate some of their more unusual behaviors, but only for the sake of befriending those same creatures."
+  effect: "You can use your Handle Animal Skill to not only tame and train creatures which are classified as Animals, but also those which are classified as Beasts. Whenever you attempt to tame and train Animals and Beasts, you may flip the results to succeed at Handle Animal Tests. When you succeed, it is always considered a Critical Success."

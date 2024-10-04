@@ -17,15 +17,10 @@ type Database struct {
 }
 
 func NewDatabase(config *config.Config) (*Database, error) {
+	connectionString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable&search_path=%s", config.DatabaseUser, config.DatabasePassword, config.DatabaseHost, config.DatabasePort, config.DatabaseName, config.DatabaseSchema)
 	conn, err := pgx.Connect(
 		context.Background(),
-		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-			config.DatabaseHost,
-			config.DatabasePort,
-			config.DatabaseUser,
-			config.DatabasePassword,
-			config.DatabaseName,
-		),
+		connectionString,
 	)
 	if err != nil {
 		return nil, err
@@ -35,7 +30,6 @@ func NewDatabase(config *config.Config) (*Database, error) {
 	log.Println("running migrations")
 
 	url := fmt.Sprintf("file://%s", config.DatabaseMigrationsPath)
-	connectionString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", config.DatabaseUser, config.DatabasePassword, config.DatabaseHost, config.DatabasePort, config.DatabaseName)
 	migration, err := migrate.New(url, connectionString)
 	if err != nil {
 		return nil, err

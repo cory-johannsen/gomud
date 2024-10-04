@@ -1,9 +1,0 @@
-name: "Freegan"
-archetype: "Drifter"
-description: "Freegans are the ultimate scavengers, living off the waste of others. Literally nobody finds them charming."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Swagger Wagon"
-  description: "With a sly smirk, you are not belabored by heavy loads, able to nearly drive a cart or wagon without the aid of an animal. Your friends may even liken you to a donkey or mule, both stubborn to convince, but with a verve and aplomb that others cannot step up to."
-  effect: "Add 3 to your Encumbrance Limit. In addition, you may optionally substitute your Brawn in place of your Willpower when it comes to determining your Peril Threshold."

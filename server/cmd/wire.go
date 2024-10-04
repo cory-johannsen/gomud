@@ -14,7 +14,8 @@ import (
 
 func InitializeEngine() (*engine.Engine, error) {
 	wire.Build(config.NewConfigFromEnv, storage.NewDatabase, storage.NewPlayers,
-		loader.NewAppearanceLoader, generator.NewPlayerGenerator,
+		loader.NewAppearanceLoader, loader.NewTeamLoader, loader.NewLoaders,
+		generator.NewPlayerGenerator,
 		engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil
 }

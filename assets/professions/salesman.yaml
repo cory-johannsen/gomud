@@ -1,9 +1,0 @@
-name: "Salesman"
-archetype: "Normie"
-description: "The lowest of lows, the Salesman peddles whatever they can for more than it is worth to make a couple bucks.  Truly awful people."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Grease the Wheels"
-  description: "A Cheapjack knows all the right notes to hit when buying and selling goods. You also know people in the criminal world, and can fence goods fast and cheap."
-  effect: "Whenever you fail a Bargain or Counterfeit Test, you may re-roll to generate a better result, but must accept the outcome."

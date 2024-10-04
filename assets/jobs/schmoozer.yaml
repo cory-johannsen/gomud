@@ -1,0 +1,9 @@
+name: "Schmoozer"
+archetype: "Influencer"
+description: "The Schmoozer seeks to get what they want by leeching onto others.  They leave you feeling dirty just talking to them."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Fame & Fortune"
+  description: "Even when the chips are down, a Fop always seems to come out on top. Unlike others, they make their own luck."
+  effect: "When making any Skill Test, you never suffer the ill-effects of Critical Failures, instead treating it as a failed Skill Test."

@@ -1,0 +1,9 @@
+name: "Warden"
+archetype: "Drifter"
+description: "Wardens are loners who prefer the company of animals to people. People also prefer this because they tend to smells like the animals they keep."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Warden of the Wild"
+  description: "You much prefer the solitude of nature and creatures of the wilds than the cries and clamor of the big city. As a consequence, you’ve developed an aptitude to not only spot wild animals on the loose, but also to calm angry beasts when they act out of sorts."
+  effect: "When you fail an Awareness or Handle Animal Test, you may re-roll to generate a better result, but must accept the outcome."

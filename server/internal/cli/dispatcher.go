@@ -1,22 +1,26 @@
 package cli
 
 import (
+	"context"
 	"fmt"
-	"github.com/openengineer/go-repl"
+	"github.com/cory-johannsen/gomud/internal/generator"
+	"github.com/cory-johannsen/gomud/internal/loader"
+	"github.com/cory-johannsen/gomud/internal/storage"
 	"strings"
 )
 
 type Dispatcher struct {
-	Repl     *repl.Repl
 	handlers map[string]Handler
+	ctx      context.Context
 }
 
-func NewDispatcher() *Dispatcher {
+func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, conn Connection) *Dispatcher {
 	dispatcher := &Dispatcher{
 		handlers: make(map[string]Handler),
+		ctx:      context.Background(),
 	}
-	dispatcher.Repl = repl.NewRepl(dispatcher)
 	dispatcher.handlers["quit"] = &QuitHandler{}
+	dispatcher.handlers["login"] = NewLoginHandler(stateConstructor, players, generator, teams, conn)
 	return dispatcher
 }
 
@@ -61,7 +65,7 @@ func (d *Dispatcher) Eval(buffer string) string {
 			return fmt.Sprintf("unrecognized command \"%s\"", cmd)
 		}
 
-		result, err := handler.Handle(fields[1:])
+		result, err := handler.Handle(d.ctx, fields[1:])
 		if err != nil {
 			return fmt.Sprintf("error: %s", err)
 		} else {

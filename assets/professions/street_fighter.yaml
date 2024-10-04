@@ -1,9 +1,0 @@
-name: "Street Fighter"
-archetype: "Aggressor"
-description: "Street Fighters are paid to beat the living hell out of each other for the enjoyment of others."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Blood & Sand"
-  description: "The roar of the crowd inspires the Pit Fighter to greatness. Let the lavish spectacle of the sport begin and rally the people to your favor!"
-  effect: "Whenever you spend a Fortune Point, you move one step up the Damage & Peril Condition Tracks positively."

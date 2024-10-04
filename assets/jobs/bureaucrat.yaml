@@ -1,0 +1,9 @@
+name: "Bureaucrat"
+archetype: "Influencer"
+description: "Bureaucrats are the paper pushers of the world, able to navigate the complex web of laws and regulations to get what they want."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Don't Kill the Messenger"
+  description: "The timbre in your voice brings a certain comfort during exchanges, turning tense conversations into mutually beneficial ones. Your words are even-handed, appealing to all parties with gravitas and dignity."
+  effect: "When using Fellowship-based Skill Tests, you do not suffer any additional penalties due to differences in Social Class."

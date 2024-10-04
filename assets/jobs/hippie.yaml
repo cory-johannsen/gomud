@@ -1,0 +1,13 @@
+name: "Hippie"
+archetype: "Nerd"
+description: "You are a spiritual seeker, a free spirit, and a lover of all things natural. You are a child of the Earth, a wanderer of the cosmos, and a seeker of the divine. You smell like patchouli. You are a Hippie."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Sacred Mantra"
+  description: "Uttering the sacred ‘om’ numinous sound, you can tap into the divine vibrations of the Æthereal Veil. Deep within a spiritual trance, you are able to bend reality to restore vigor and mend your mind, healing both the spirit and the physical body, from within."
+  effect: "You may enter a sacred trance for one hour. If you succeed at a Resolve Test at the end of the trance, you expel all Intoxication and Poisons from your system."
+special_trait:
+  name: "Chakra Alignment"
+  description: "You are able to summon forth extra-planar healing powers through weird pseudo-science and the power of crystals. By aligning your chakras, you can channel the divine energies of the cosmos to heal yourself and others."
+  effect: "You are solely a practitioner of Divine Magick. As a consequence, you may never adopt a Job which has Arcane Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells when you enter this Job. If you gained Divine Magick from a previous Job, you learn an additional Generalist Magick spell instead."

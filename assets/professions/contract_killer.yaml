@@ -1,9 +1,0 @@
-name: "Contract Killer"
-archetype: "Aggressor"
-description: "Contract Killers are paid to kill people.  That's pretty much the extent of the job description."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Dogs of War"
-  description: "Every scar a Sellsword bears has a story behind it. Every disfigurement speaks to their history of violence. But war... war never changes. And every mercenary must debase themselves for survival, doling out barbarity with reckless abandon."
-  effect: "You never suffer Serious Injuries."

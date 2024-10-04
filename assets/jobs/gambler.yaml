@@ -1,0 +1,13 @@
+name: "Gambler"
+archetype: "Normie"
+description: "Gamblers take risks that nobody else would ever take because it just might pay off.  Don't loan them money."
+tier: "Basic"
+reward_point_cost: 100
+trait:
+  name: "Luck of the Draw"
+  description: "The Gambler feels the ticking of the clock. Being friends with those in the underworld – of many different stripes – does have its benefits. The cards tend to come up aces when needed most."
+  effect: "When you use Fortune Points, you do not need to roll percentile dice to make a Skill Test. Instead, you automatically Critically Succeed at the Skill Test you intended to make."
+drawback:
+  name: "When The Dealin’s Done"
+  description: "Living forever is boring and the Gambler will burn out before they fade away. And when you play the devil’s game, you eventually get the devil’s reward."
+  effect: "When you use a Fortune Point for Luck of the Draw, you move one step down the Peril Condition Track negatively."

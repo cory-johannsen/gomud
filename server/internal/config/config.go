@@ -11,10 +11,11 @@ type Config struct {
 	DatabaseHost           string `env:"DATABASE_HOST" envDefault:"localhost"`
 	DatabasePort           string `env:"DATABASE_PORT" envDefault:"5432"`
 	DatabaseName           string `env:"DATABASE_NAME" envDefault:"mud"`
+	DatabaseSchema         string `env:"DATABASE_SCHEMA" envDefault:"public"`
 	DatabaseUser           string `env:"DATABASE_USER" envDefault:"postgres"`
 	DatabasePassword       string `env:"DATABASE_PASSWORD" envDefault:"postgres"`
 	DatabaseMigrationsPath string `env:"DATABASE_MIGRATIONS_PATH" envDefault:"migrations"`
-	AssetPath              string `env:"ASSET_PATH" envDefault:"assets"`
+	AssetPath              string `env:"ASSET_PATH" envDefault:"../assets"`
 }
 
 func NewConfigFromEnv() (*Config, error) {

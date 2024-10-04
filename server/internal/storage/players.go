@@ -20,21 +20,34 @@ func (p *Players) CreatePlayer(ctx context.Context, name string, password string
 	if err != nil {
 		return nil, err
 	}
-	return domain.NewPlayer(id, name, password), nil
+	player := domain.NewPlayer(nil, name, password)
+	player.Id = id
+	return player, nil
 }
 
-func (p *Players) FetchPlayer(ctx context.Context, id int) (*domain.Player, error) {
+func (p *Players) FetchPlayerById(ctx context.Context, id int) (*domain.Player, error) {
 	var name, password string
-	err := p.database.Conn.QueryRow(ctx, "SELECT name, password FROM players WHERE id = ?", id).Scan(&name, &password)
+	err := p.database.Conn.QueryRow(ctx, "SELECT name, password FROM players WHERE id = $1", id).Scan(&name, &password)
 	if err != nil {
 		return nil, err
 	}
-	return domain.NewPlayer(id, name, password), nil
+	return domain.NewPlayer(&id, name, password), nil
+}
+
+func (p *Players) FetchPlayerByName(ctx context.Context, name string) (*domain.Player, error) {
+	var id int
+	var password string
+	err := p.database.Conn.QueryRow(ctx, "SELECT id, password FROM players WHERE name = $1", name).Scan(&id, &password)
+	if err != nil {
+		return nil, err
+	}
+	return domain.NewPlayer(&id, name, password), nil
 }
 
 func (p *Players) Exists(ctx context.Context, name string) (bool, error) {
 	var count int
-	err := p.database.Conn.QueryRow(ctx, "SELECT count(*) as count from FROM players WHERE name = ?", name).Scan(&count)
+	row := p.database.Conn.QueryRow(ctx, "SELECT count(*) FROM players WHERE name = $1", name)
+	err := row.Scan(&count)
 	if err != nil {
 		return false, err
 	}
@@ -46,7 +59,7 @@ func (p *Players) StorePlayer(ctx context.Context, player *domain.Player) error 
 	if err != nil {
 		return err
 	}
-	_, err = p.database.Conn.Exec(ctx, "UPDATE players SET data = ? WHERE id = ?", encoded, player.Id)
+	_, err = p.database.Conn.Exec(ctx, "UPDATE players SET data = $1 WHERE id = $2", encoded, player.Id)
 	if err != nil {
 		return err
 	}

@@ -1,9 +1,0 @@
-name: "Street Preacher"
-archetype: "Drifter"
-description: "Street Preachers wander the urban landscape screaming semi-coherently about their weird beliefs to everyone around them.  As a result, they are exclusively loners."
-tier: "Basic"
-reward_point_cost: 100
-profession_trait:
-  name: "Road to Enlightenment"
-  description: "The Pilgrim is a spiritual aspirant whose faith secures them a place at the side of those they revere in the afterlife. However, this spirituality can be compromised by the unwanted attentions of Abyssal terrors. Fortunately, their shield of faith safeguards them at opportune times."
-  effect: "When you suffer 1 to 3 Corruption, make a (Routine +10%) Resolve Test. If you suffer 4 to 6 Corruption, make a (Standard +/-0%) Resolve Test. If you suffer 7 to 9 Corruption, make a (Challenging -10%) Resolve Test. If successful, you suffer no Corruption."
