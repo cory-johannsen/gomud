@@ -1,0 +1,30 @@
+name: Mountains
+description: "You were born in the remote mountains."
+modifiers:
+  - fighting:
+      bonus: 1
+  - muscle:
+      bonus: 1
+  - speed:
+      bonus: -1
+  - savvy:
+      bonus: -1
+  - smarts:
+      bonus: 1
+  - grit:
+      bonus: 1
+  - flair:
+      bonus: -1
+traits:
+  - Cavesight
+  - Children of the Earth
+  - Consume Alcohol
+  - Mountain Warfare
+  - Grudgebearer
+  - Ironclad
+  - Oathkeeper
+  - Physical Prowess
+  - Rune-Marked Glory
+  - Stentorian Voice
+  - Stoneheaded
+  - Strength of the Mountain

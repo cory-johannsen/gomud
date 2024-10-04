@@ -1,0 +1,30 @@
+name: Northeast
+description: "You were born in the great industrial Northeast."
+modifiers:
+  - fighting:
+      bonus: -1
+  - muscle:
+      bonus: -1
+  - speed:
+      bonus: 1
+  - savvy:
+      bonus: 0
+  - smarts:
+      bonus: 1
+  - grit:
+      bonus: 1
+  - flair:
+      bonus: -1
+traits:
+  - Clockworks of War
+  - Crag Fighting
+  - Denizen of Stone
+  - Dungeons Deep
+  - Escape Artist
+  - Goldbergian
+  - Hocus Pocus
+  - Metropolitan
+  - Thieving Ways
+  - Tunnel Vision
+  - Underfoot
+  - Wretched Prankster

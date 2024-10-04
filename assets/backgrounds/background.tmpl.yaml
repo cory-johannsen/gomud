@@ -1,0 +1,21 @@
+name: {{ .name}}
+description: "{{ .description }}"
+modifiers:
+  - fighting:
+      bonus: {{ .modifiers.fighting }}
+  - muscle:
+      bonus: {{ .modifiers.muscle }}
+  - speed:
+      bonus: {{ .modifiers.speed }}
+  - savvy:
+      bonus: {{ .modifiers.savvy }}
+  - smarts:
+      bonus: {{ .modifiers.smarts }}
+  - grit:
+      bonus: {{ .modifiers.grit }}
+  - flair:
+      bonus: {{ .modifiers.flair }}
+traits:
+  {{ range .traits}}
+  - {{ . }}
+  {{- end }}

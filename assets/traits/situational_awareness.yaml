@@ -1,0 +1,4 @@
+name: Situational Awareness
+description: Your road-weariness has turned into a wariness unseen amongst others. You have attuned yourself to the smallest of sounds in the wilds and can react quickly and efficiently.
+effects:
+  - When you fail an Awareness or Stealth Test, you may re-roll to generate a better result, but must accept the outcome.

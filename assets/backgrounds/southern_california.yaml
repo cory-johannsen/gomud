@@ -1,0 +1,28 @@
+name: Southern California
+description: "You were born in the land of blue skies and fakery, Southern California"
+modifiers:
+  - fighting:
+      bonus: 0
+  - muscle:
+      bonus: -1
+  - speed:
+      bonus: 1
+  - savvy:
+      bonus: 1
+  - smarts:
+      bonus: 1
+  - grit:
+      bonus: -1
+  - flair:
+      bonus: -1
+traits:
+  - Bewitching
+  - Beyond the Veil
+  - Deadly Aim
+  - Enduring Mortality
+  - In Crowd Treachery
+  - Firstborn
+  - Meditative Healing
+  - Nature's Own
+  - Nighteyes
+  - Warrior's Tattoo

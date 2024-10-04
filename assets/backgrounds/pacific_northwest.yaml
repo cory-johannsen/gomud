@@ -1,0 +1,29 @@
+name: Pacific Northwest
+description: "You were born in the glorious Pacific Northwest."
+modifiers:
+  - fighting:
+      bonus: -1
+  - muscle:
+      bonus: -1
+  - speed:
+      bonus: 1
+  - savvy:
+      bonus: 1
+  - smarts:
+      bonus: -1
+  - grit:
+      bonus: 0
+  - flair:
+      bonus: 1
+traits:
+  - Beguiler
+  - Cat-like Reflexes
+  - Craven
+  - Farsight
+  - Fettered Chaos
+  - Fieldwarden
+  - Hijinks
+  - Kleptomania
+  - Low Blow
+  - Memento
+  - Pintsized
