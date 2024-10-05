@@ -64,19 +64,37 @@ func (p *Player) GetProperty(key string) (Property, error) {
 func (p *Player) String() string {
 	msg := fmt.Sprintf("Name: %s\n", p.Name)
 	for k, v := range p.Data {
-		if k == StatsProperty {
-			msg += fmt.Sprintf("Stats - \n%s", v.String())
+		switch k {
+		case ArchetypeProperty:
+			msg += fmt.Sprintf("  Archetype - %s\n", v.(*Archetype).Name)
 			continue
-		}
-		if k == BackgroundProperty {
-			msg += fmt.Sprintf("Background - \n%s", v.String())
+		case BackgroundProperty:
+			msg += fmt.Sprintf("  Background - \n\t%s\n\t%s\n", v.(*Background).Name, v.(*Background).Description)
 			continue
-		}
-		if k == TeamProperty {
-			msg += fmt.Sprintf("Team - %s\n", v.String())
+		case BirthSeasonProperty:
+			msg += fmt.Sprintf("  Birth Season - %s\n", v.(Season))
 			continue
+		case DistinguishingMarkProperty:
+			msg += fmt.Sprintf("  Distinguishing Mark - %s\n", v.(DistinguishingMark))
+			continue
+		case DrawbackProperty:
+			msg += fmt.Sprintf("  Drawback - \n\t%s\n\t%s\n\t%s", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)
+			continue
+		case JobProperty:
+			msg += fmt.Sprintf("  Job - \n\t%s\n\t%s\n\t%s\n\t%d\n\t%s", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier, v.(*Job).ExperienceCost)
+			continue
+		case StatsProperty:
+			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
+			continue
+		case TattooProperty:
+			msg += fmt.Sprintf("  Tattoo - \n\t%s\n", v.(*Tattoo).Description)
+			continue
+		case TeamProperty:
+			msg += fmt.Sprintf("  Team - %s\n", v.(*Team).Name)
+			continue
+		default:
+			msg += fmt.Sprintf("  %s: %s\n", k, v)
 		}
-		msg += fmt.Sprintf("  %s: %s\n", k, v)
 	}
 	return msg
 }

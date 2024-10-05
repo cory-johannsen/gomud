@@ -41,3 +41,5 @@ func (j *Job) String() string {
 func (j *Job) Value() interface{} {
 	return j
 }
+
+var _ Property = &Job{}
