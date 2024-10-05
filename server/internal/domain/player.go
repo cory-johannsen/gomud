@@ -78,13 +78,13 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Distinguishing Mark - %s\n", v.(DistinguishingMark))
 			continue
 		case DrawbackProperty:
-			msg += fmt.Sprintf("  Drawback - \n\t%s\n\t%s\n\t%s", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)
+			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: %s\n", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)
 			continue
 		case JobProperty:
-			msg += fmt.Sprintf("  Job - \n\t%s\n\t%s\n\t%s\n\t%d\n\t%s", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier, v.(*Job).ExperienceCost)
+			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n\tExperience Cost: %d\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier, v.(*Job).ExperienceCost)
 			continue
 		case StatsProperty:
-			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
+			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d\n", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
 			continue
 		case TattooProperty:
 			msg += fmt.Sprintf("  Tattoo - \n\t%s\n", v.(*Tattoo).Description)
