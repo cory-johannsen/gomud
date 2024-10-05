@@ -19,7 +19,16 @@ func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, 
 		handlers: make(map[string]Handler),
 		ctx:      context.Background(),
 	}
-	dispatcher.handlers["quit"] = &QuitHandler{}
+	quit := &QuitHandler{}
+	quitAliases := CreateAliases(dispatcher.handlers["quit"], "exit", "q")
+	for _, alias := range quitAliases {
+		dispatcher.Register(alias.Alias, alias)
+	}
+	dispatcher.handlers["quit"] = quit
+	helpAliases := CreateAliases(dispatcher.handlers["help"], "?", "h")
+	for _, alias := range helpAliases {
+		dispatcher.Register(alias.Alias, alias)
+	}
 	dispatcher.handlers["login"] = NewLoginHandler(stateConstructor, players, generator, teams, conn)
 	return dispatcher
 }

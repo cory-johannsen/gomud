@@ -2,7 +2,6 @@ package cli
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/generator"
@@ -32,10 +31,16 @@ func NewLoginHandler(stateConstructor StateConstructor, players *storage.Players
 }
 
 func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error) {
+	var name string
 	if len(args) != 1 {
-		return "", errors.New("usage: login <username>")
+		read, err := h.readName()
+		if err != nil {
+			return "", err
+		}
+		name = read
+	} else {
+		name = args[0]
 	}
-	name := args[0]
 	exists, err := h.players.Exists(ctx, name)
 	if err != nil {
 		return "", err
@@ -88,6 +93,19 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	log.Printf("Created player %s", name)
 
 	return player, nil
+}
+
+func (h *LoginHandler) readName() (string, error) {
+	_ = h.conn.Write("Who dis?: ")
+	var name string
+	for {
+		name = h.conn.Read()
+		if name != "" {
+			break
+		}
+		_ = h.conn.Write("That ain't a name.  I said who dis?: ")
+	}
+	return name, nil
 }
 
 func (h *LoginHandler) enterPassword() (string, error) {
