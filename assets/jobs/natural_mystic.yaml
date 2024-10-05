@@ -6,7 +6,7 @@ reward_point_cost: 100
 trait:
   name: "Eldritch Signs"
   description: "You have peered towards the skies in hope of answers, both earthly and sorcerous. In that, the mysteries of the zodiac reveal their terrible truths."
-  effect: "You automatically gain all of the following Focuses in the Incantation Skill whenever you enter this Job: Astrology, Card Reading, Dream Interpretation, Hypnotize, Palmistry, Scapulimancy and Scrying. You also understand how to use the Ritual of Magick Circle."
+  effect: "You automatically gain all of the following Focuses in the Incantation Skill whenever you enter this Job - Astrology, Card Reading, Dream Interpretation, Hypnotize, Palmistry, Scapulimancy and Scrying. You also understand how to use the Ritual of Magick Circle."
 special_trait:
   name: "Arcane Magick"
   description: "Combing the Æther into energies through sheer force of will and formula, you can harness Magick with but an utterance of a few words."

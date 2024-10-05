@@ -46,15 +46,12 @@ func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error
 		if err != nil {
 			return "failed to create player", err
 		}
-		err = h.players.StorePlayer(ctx, player)
+		log.Printf("Storing player %s", name)
+		player, err = h.players.StorePlayer(ctx, player)
 		if err != nil {
 			return "failed to store player", err
 		}
-		msg := fmt.Sprintf("Created player %s\n", name)
-		for k, v := range player.Data {
-			msg += fmt.Sprintf("  %s: %s\n", k, v)
-		}
-		_ = h.conn.Write(msg)
+		_ = h.conn.Writeln(fmt.Sprintf("Created player \n%s", player.String()))
 	} else {
 		player = h.validatePassword(name)
 	}
@@ -151,10 +148,12 @@ func (h *LoginHandler) selectTeam(teams domain.Teams) (*domain.Team, error) {
 	return t, nil
 }
 
-func (h *LoginHandler) Help([]string) string {
+func (h *LoginHandler) Help(args []string) string {
 	return "login to the system.  Usage: login <username>"
 }
 
 func (h *LoginHandler) State() State {
 	return h.state
 }
+
+var _ Handler = &LoginHandler{}

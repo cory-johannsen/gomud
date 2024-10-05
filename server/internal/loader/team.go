@@ -50,3 +50,16 @@ func (l *TeamLoader) LoadTeams() (domain.Teams, error) {
 	}
 	return l.teams, nil
 }
+
+func (l *TeamLoader) GetTeam(name string) (*domain.Team, error) {
+	teams, err := l.LoadTeams()
+	if err != nil {
+		return nil, err
+	}
+	for _, team := range teams {
+		if team.Name == name {
+			return team, nil
+		}
+	}
+	return nil, nil
+}

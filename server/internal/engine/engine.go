@@ -16,21 +16,21 @@ import (
 
 type State struct {
 	player *domain.Player
-	vars   map[string]cli.Property
+	vars   map[string]domain.Property
 }
 
 func (s *State) Player() *domain.Player {
 	return s.player
 }
 
-func (s *State) Property(key string) cli.Property {
+func (s *State) Property(key string) domain.Property {
 	return s.vars[key]
 }
 
 func NewState(player *domain.Player) cli.State {
 	return &State{
 		player: player,
-		vars:   make(map[string]cli.Property),
+		vars:   make(map[string]domain.Property),
 	}
 }
 

@@ -15,9 +15,15 @@ type Stats struct {
 	Flair    int `json:"flair"`
 }
 
+func (s *Stats) Value() interface{} {
+	return s
+}
+
 func (s *Stats) String() string {
 	return fmt.Sprintf("Fighting: %d\nMuscle: %d\nSpeed: %d\nSavvy: %d\nSmarts: %d\nGrit: %d\nFlair: %d\n", s.Fighting, s.Muscle, s.Speed, s.Savvy, s.Smarts, s.Grit, s.Flair)
 }
+
+var _ Property = &Stats{}
 
 func NewStats() *Stats {
 	return &Stats{

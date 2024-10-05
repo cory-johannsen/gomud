@@ -5,14 +5,9 @@ import (
 	"github.com/cory-johannsen/gomud/internal/domain"
 )
 
-type Property interface {
-	Value() interface{}
-	String() string
-}
-
 type State interface {
 	Player() *domain.Player
-	Property(string) Property
+	Property(string) domain.Property
 }
 
 type StateConstructor func(player *domain.Player) State
