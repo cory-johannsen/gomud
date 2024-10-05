@@ -1,10 +1,7 @@
-name: "Detective"
-archetype: "Nerd"
-description: "Detectives use their keen perception to spot clues and track prey.  They are grizzled, hardened shells of the people they once were.  They are the best at what they do, but what they do isn't very nice."
-tier: "Basic"
+name: Detective
+archetype: Nerd
+description: Detectives use their keen perception to spot clues and track prey.  They are grizzled, hardened shells of the people they once were.  They are the best at what they do, but what they do isn't very nice.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "True Detective"
-  description: "The Investigator sometimes experiences visions, slivers of petty information which form a loose mosaic in the darkest recess of their mind. They possess the singular ability to disassociate reality and put the pieces of the puzzle back together in a way most don’t even comprehend. Investigators could be geniuses, but they will certainly appear to be lunatics."
-  effect: "When Intoxicated or underneath the effects of Deliriants, make a Scrutinize Test. If successful, you can ask for the GM to give you an important clue from your investigations you may not have already thought of or overlooked. This benefit cannot be gained more than once per day."
-
+traits:
+  - True Detective

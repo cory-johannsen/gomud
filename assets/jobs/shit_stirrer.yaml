@@ -1,9 +1,7 @@
-name: "Shit-stirrer"
-archetype: "Influencer"
-description: "Shit-Stirrers are exceptionally good at creating problems and inciting chaos.  Everybody needs to know one, but you never hang out with them outside work."
-tier: "Basic"
+name: Shit-stirrer
+archetype: Influencer
+description: Shit-Stirrers are exceptionally good at creating problems and inciting chaos.  Everybody needs to know one, but you never hang out with them outside work.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Shaken Not Stirred"
-  description: "Play it cool, hold your cards close to your chest and roll the dice only when you are absolutely certain you’ll win. But when all else fails, you always find another in-road for your ambitions."
-  effect: "When you fail a Charm or Eavesdrop Test, you may re-roll to generate a better result, but must accept the outcome."
+traits:
+  - Shaken Not Stirred

@@ -1,10 +1,7 @@
-name: "Engineer"
-archetype: "Nerd"
-description: "Engineers design and build complex things.  They have no social skills, and typically are zero fun to be around."
-tier: "Basic"
+name: Engineer
+archetype: Nerd
+description: Engineers design and build complex things.  They have no social skills, and typically are zero fun to be around.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Eureka!"
-  description: "Whether a crude affair or an extraordinarily complex apparatus, your contrivances are notoriously reliable. As a consequence, you possess an eye for finding the right materials for the job."
-  effect: "You may flip the results to succeed at Tradecraft Tests. When you succeed, it is always considered a Critical Success. In addition, you always succeed at Skill Tests to locate resources needed for construction."
-
+traits:
+  - Eureka!

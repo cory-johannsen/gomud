@@ -1,13 +1,7 @@
-name: "Vigilante"
-archetype: "Criminal"
-description: "Somebody has to do something about all the problems.  The Vigilant has decided that it will be them.  These people are nuts."
-tier: "Basic"
+name: Vigilante
+archetype: Criminal
+description: Somebody has to do something about all the problems.  The Vigilant has decided that it will be them.  These people are nuts.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Mortality Work"
-  description: "With the tools of murder, a Vigilante savors all the ‘little’ emotions of the kill. In their last moments, people show you who they really are, particularly when you have a knife pressed against their throat."
-  effect: "When you inflict an Injury with a weapon, your foe also suffers 2D10+your [WB] mental Peril."
-drawback:
-  name: "Altar Ego"
-  description: "The powers-above will not cast their favor upon you, until you don the mask of a Vigilante."
-  effect: "When in places where you may be recognized as anyone other than your moniker, you cannot use Fate Points."
+traits:
+  - Mortality Work

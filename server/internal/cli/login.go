@@ -78,7 +78,9 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	}
 	pw, err := h.enterPassword()
 
-	player, err := h.generator.Generate(name, pw, team)
+	takeDrawback := h.takeDrawback()
+
+	player, err := h.generator.Generate(name, pw, team, takeDrawback)
 	if err != nil {
 		return nil, err
 	}
@@ -146,6 +148,24 @@ func (h *LoginHandler) selectTeam(teams domain.Teams) (*domain.Team, error) {
 		_ = h.conn.Write("Invalid team.  Please select a valid team\n> ")
 	}
 	return t, nil
+}
+
+func (h *LoginHandler) takeDrawback() bool {
+	_ = h.conn.Write("Do you want to take a drawback? (y/n): ")
+	var takeDrawback bool
+	for {
+		drawback := h.conn.Read()
+		if drawback == "y" {
+			takeDrawback = true
+			break
+		}
+		if drawback == "n" {
+			takeDrawback = false
+			break
+		}
+		_ = h.conn.Write("Invalid response.  Please enter 'y' or 'n'\n> ")
+	}
+	return takeDrawback
 }
 
 func (h *LoginHandler) Help(args []string) string {

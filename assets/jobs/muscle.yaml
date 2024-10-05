@@ -1,9 +1,7 @@
-name: "Muscle"
-archetype: "Criminal"
-description: "Sometimes the only way to solve a problem is to beat the crap of out somebody. The Muscle is the one to do it."
-tier: "Basic"
+name: Muscle
+archetype: Criminal
+description: Sometimes the only way to solve a problem is to beat the crap of out somebody. The Muscle is the one to do it.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Sneak Attack"
-  description: "Canny, smart and devious, the Footpad can creep along quickly, and catch their victim off guard with a precision strike."
-  effect: "Whenever foes are Surprised or outnumbered 6:1 or more, add an additional 1D6 Fury Die to Damage you do against them. You must use a weapon with the Fast Quality. In addition, when using the Movement subtype of Stealth, you do not have to add the additional 1 AP cost."
+traits:
+  - Sneak Attack

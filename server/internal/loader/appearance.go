@@ -9,7 +9,7 @@ import (
 
 type AppearanceLoader struct {
 	config    *config.Config
-	tats      domain.Tattoos
+	tats      domain.SeasonalTattoos
 	drawbacks domain.Drawbacks
 	marks     domain.DistinguishingMarks
 }
@@ -20,18 +20,29 @@ func NewAppearanceLoader(cfg *config.Config) *AppearanceLoader {
 	}
 }
 
-func (l *AppearanceLoader) LoadTattoos() (domain.Tattoos, error) {
+func (l *AppearanceLoader) LoadTattoos() (domain.SeasonalTattoos, error) {
 	if l.tats != nil {
 		return l.tats, nil
 	}
-	tats := make(domain.Tattoos, 0)
-	data, err := os.ReadFile(l.config.AssetPath + "/appearance/tattoos.json")
+	tatsBySeason := make(map[domain.Season][]string)
+	data, err := os.ReadFile(l.config.AssetPath + "/appearance/tattoos.yaml")
 	if err != nil {
 		return nil, err
 	}
-	err = yaml.Unmarshal(data, &tats)
+	err = yaml.Unmarshal(data, &tatsBySeason)
 	if err != nil {
 		return nil, err
+	}
+	tats := make(domain.SeasonalTattoos)
+	for season, seasonTats := range tatsBySeason {
+		tats[season] = make(domain.Tattoos, 0)
+		for _, tatDescription := range seasonTats {
+			tat := domain.Tattoo{
+				Description: tatDescription,
+				Season:      season,
+			}
+			tats[season] = append(tats[season], tat)
+		}
 	}
 	l.tats = tats
 	return tats, nil
@@ -42,7 +53,7 @@ func (l *AppearanceLoader) LoadDrawbacks() (domain.Drawbacks, error) {
 		return l.drawbacks, nil
 	}
 	drawbacks := make(domain.Drawbacks, 0)
-	data, err := os.ReadFile(l.config.AssetPath + "/appearance/drawbacks.json")
+	data, err := os.ReadFile(l.config.AssetPath + "/appearance/drawbacks.yaml")
 	if err != nil {
 		return nil, err
 	}
@@ -54,12 +65,27 @@ func (l *AppearanceLoader) LoadDrawbacks() (domain.Drawbacks, error) {
 	return drawbacks, nil
 }
 
+func (l *AppearanceLoader) GetDrawback(name string) (*domain.Drawback, error) {
+	if l.drawbacks == nil {
+		_, err := l.LoadDrawbacks()
+		if err != nil {
+			return nil, err
+		}
+	}
+	for _, d := range l.drawbacks {
+		if d.Name == name {
+			return d, nil
+		}
+	}
+	return nil, nil
+}
+
 func (l *AppearanceLoader) LoadDistinguishingMarks() (domain.DistinguishingMarks, error) {
 	if l.marks != nil {
 		return l.marks, nil
 	}
 	marks := make(domain.DistinguishingMarks, 0)
-	data, err := os.ReadFile(l.config.AssetPath + "/appearance/distinguishing_marks.json")
+	data, err := os.ReadFile(l.config.AssetPath + "/appearance/distinguishing_marks.yaml")
 	if err != nil {
 		return nil, err
 	}

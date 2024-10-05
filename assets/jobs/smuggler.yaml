@@ -1,9 +1,7 @@
-name: "Smuggler"
-archetype: "Criminal"
-description: "Specialists in getting illegal things into places they shouldn't go, Smugglers are great to know and can make a lot of money if they take the right risks."
-tier: "Basic"
+name: Smuggler
+archetype: Criminal
+description: Specialists in getting illegal things into places they shouldn't go, Smugglers are great to know and can make a lot of money if they take the right risks.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Hans Shot First"
-  description: "Every Smuggler is ruthless at heart, resorting to villainy when the situation necessitates."
-  effect: "When combat begins, you gain 3 APs that must be used immediately at the top of the Initiative Order – even if you were Surprised. Once spent, determine your place in the Initiative Ladder and take your Turns normally. If more than two Smugglers are present, the one with the highest [PB] goes first."
+traits:
+  - Hans Shot First

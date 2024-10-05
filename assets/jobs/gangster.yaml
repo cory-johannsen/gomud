@@ -1,9 +1,7 @@
-name: "Gangster"
-archetype: "Aggressor"
-description: "All gangs have their soldiers, and the Gangster is the most common of them all. They are the muscle, the enforcers, the ones who get their hands dirty. They tend to be trained and good a general criminal activity in addition to be useful in a fight."
-tier: "Basic"
+name: Gangster
+archetype: Aggressor
+description: All gangs have their soldiers, and the Gangster is the most common of them all. They are the muscle, the enforcers, the ones who get their hands dirty. They tend to be trained and good a general criminal activity in addition to be useful in a fight.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Hue & Cry"
-  description: "A Watchman relies on preternatural instincts to sniff out danger. They are quick to rally in the face of lawlessness, vigilant and alert."
-  effect: "When combat begins, roll 2D10, instead of 1D10, to determine your place in the Initiative Order."
+traits:
+  - Hue & Cry

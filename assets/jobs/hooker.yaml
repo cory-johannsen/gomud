@@ -1,9 +1,7 @@
-name: "Hooker"
-archetype: "Criminal"
-description: "Hookers make their money the hard way.  Some are really good, and make a lot of money.  Others are really bad, but then again they tend to be inexpensive."
-tier: "Basic"
+name: Hooker
+archetype: Criminal
+description: Hookers make their money the hard way.  Some are really good, and make a lot of money.  Others are really bad, but then again they tend to be inexpensive.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "The Full Monty"
-  description: "Prostitutes use suggestive body language, risqué acts and innuendo to convince others to do their bidding."
-  effect: "All Skill Ranks you acquire in the Charm Skill modify your Base Chance by +20, instead of +10. In addition, when you perform acts of carnal knowledge with another, you both ‘get lucky’, gaining 1 Fortune Point each to personally use. This benefit cannot be given or gained more than once per day."
+traits:
+  - The Full Monty

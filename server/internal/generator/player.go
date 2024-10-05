@@ -7,29 +7,69 @@ import (
 )
 
 type PlayerGenerator struct {
-	appearanceLoader *loader.AppearanceLoader
-	backgroundLoader *loader.BackgroundLoader
+	loaders *loader.Loaders
 }
 
-func NewPlayerGenerator(al *loader.AppearanceLoader, bl *loader.BackgroundLoader) *PlayerGenerator {
+func NewPlayerGenerator(loaders *loader.Loaders) *PlayerGenerator {
 	return &PlayerGenerator{
-		appearanceLoader: al,
-		backgroundLoader: bl,
+		loaders: loaders,
 	}
 }
 
-func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team) (*domain.Player, error) {
+func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, takeDrawback bool) (*domain.Player, error) {
 	log.Printf("generating player %s", name)
 	player := domain.NewPlayer(nil, name, pw, nil)
 	player.Data[domain.TeamProperty] = team
 	player.Data[domain.StatsProperty] = domain.NewStats()
 	// generate background
-	background, err := g.backgroundLoader.RandomBackground()
+	background, err := g.loaders.BackgroundLoader.RandomBackground()
 	if err != nil {
 		log.Printf("failed to generate background for player %s: %s", name, err)
 		return nil, err
 	}
 	player.Data[domain.BackgroundProperty] = background
-	// Generate appearance
+	// generate birth season
+	season := domain.RandomSeason()
+	player.Data[domain.BirthSeasonProperty] = season
+	// generate appearance
+	marks, err := g.loaders.AppearanceLoader.LoadDistinguishingMarks()
+	if err != nil {
+		log.Printf("failed to load distinguishing marks: %s", err)
+		return nil, err
+	}
+	player.Data[domain.DistinguishingMarkProperty] = marks.Random()
+
+	tats, err := g.loaders.AppearanceLoader.LoadTattoos()
+	if err != nil {
+		log.Printf("failed to load tattoos: %s", err)
+		return nil, err
+	}
+	tat := tats[season].Random()
+	player.Data[domain.TattooProperty] = &tat
+
+	if takeDrawback {
+		drawbacks, err := g.loaders.AppearanceLoader.LoadDrawbacks()
+		if err != nil {
+			log.Printf("failed to load drawbacks: %s", err)
+			return nil, err
+		}
+		player.Data[domain.DrawbackProperty] = drawbacks.Random()
+	}
+
+	archetypes, err := g.loaders.ArchetypeLoader.LoadArchetypes()
+	if err != nil {
+		log.Printf("failed to load archetypes: %s", err)
+		return nil, err
+	}
+	archetype := archetypes.Random()
+	player.Data[domain.ArchetypeProperty] = archetype
+
+	job, err := g.loaders.JobLoader.RandomJob(archetype)
+	if err != nil {
+		log.Printf("failed to load jobs: %s", err)
+		return nil, err
+	}
+	player.Data[domain.JobProperty] = job
+
 	return player, nil
 }

@@ -1,9 +1,7 @@
-name: "Mall Ninja"
-archetype: "Aggressor"
-description: "Mall Ninjas believe that the fastest way to solve any problem is by cutting into smaller problems, preferably with the stupidest looking sword you've ever seen."
-tier: "Basic"
+name: Mall Ninja
+archetype: Aggressor
+description: Mall Ninjas believe that the fastest way to solve any problem is by cutting into smaller problems, preferably with the stupidest looking sword you've ever seen.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Vim & Vigor"
-  description: "You are a virtuoso when it comes to swordplay. It takes little effort for you to size up your opponent, and when the opportunity avails, you make your mark upon their clothing – a characteristic number or letter. This mark is how you and your fabled fencing skills will be known by in history."
-  effect: "Whenever you Parry a melee weapon, immediately make an Opportunity Attack against that same opponent. You may only make this attack if you are wielding a melee weapon possessing the Finesse Quality."
+traits:
+  - Vim & Vigor

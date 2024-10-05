@@ -1,9 +1,7 @@
-name: "Guard"
-archetype: "Normie"
-description: "Guards... guard things.  They are especially skilled at keeping other people in cages.  Not exactly the most glamorous job, but it pays the bills."
-tier: "Basic"
+name: Guard
+archetype: Normie
+description: Guards... guard things.  They are especially skilled at keeping other people in cages.  Not exactly the most glamorous job, but it pays the bills.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Tortuous Inquisition"
-  description: "A Jailer knows every trick necessary to pry information from others. Psychological intimidation is their primary tool; acid, scissors, pincers and thumbscrews are reserved only for the most unyielding of prisoners. Between the bleeding and the screams, the Jailer knows when a prisoner is telling the truth, or simply lying to escape further pain."
-  effect: "You may flip the results to succeed at Interrogation Tests. When you succeed, it is always considered a Critical Success. In addition, when you successfully interrogate someone, you may inflict any Moderate or Serious Injury of your choice or cause them to suffer from Stress or Fear."
+traits:
+  - Tortuous Inquisition

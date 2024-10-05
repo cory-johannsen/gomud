@@ -1,9 +1,7 @@
-name: "Tracker"
-archetype: "Drifter"
-description: "Trackers are skilled at finding, following, and trapping their targets.  They are often employed as bounty hunters or assassins, but can also be used to find lost children or pets.  They are often loners, and are not known for their social skills."
-tier: "Basic"
+name: Tracker
+archetype: Drifter
+description: Trackers are skilled at finding, following, and trapping their targets.  They are often employed as bounty hunters or assassins, but can also be used to find lost children or pets.  They are often loners, and are not known for their social skills.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "It;s a Trap!"
-  description: "With an eye for the minutest of details, traps cannot confound you."
-  effect: "You automatically spot hidden traps without having to make a Skill Test. Furthermore, you may flip the results to succeed at Skill Tests to create and disarm traps."
+traits:
+  - It;s a Trap!

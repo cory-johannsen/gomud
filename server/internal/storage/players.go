@@ -10,18 +10,16 @@ import (
 )
 
 type Players struct {
-	database         *Database
-	backgroundLoader *loader.BackgroundLoader
-	teamLoader       *loader.TeamLoader
-	players          map[string]*domain.Player
+	database *Database
+	loaders  *loader.Loaders
+	players  map[string]*domain.Player
 }
 
-func NewPlayers(database *Database, backgroundLoader *loader.BackgroundLoader, teamLoader *loader.TeamLoader) *Players {
+func NewPlayers(database *Database, loaders *loader.Loaders) *Players {
 	return &Players{
-		database:         database,
-		players:          make(map[string]*domain.Player),
-		backgroundLoader: backgroundLoader,
-		teamLoader:       teamLoader,
+		database: database,
+		players:  make(map[string]*domain.Player),
+		loaders:  loaders,
 	}
 }
 
@@ -124,18 +122,33 @@ func SpecFromPlayer(player *domain.Player) *PlayerSpec {
 func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 	data := make(map[string]interface{})
 	for k, v := range props {
-		// background needs to be serialized to a spec to remove the traits
-		if k == domain.BackgroundProperty {
+		switch k {
+		case domain.ArchetypeProperty:
+			data[k] = v.(*domain.Archetype).Name
+			continue
+		case domain.BackgroundProperty:
 			data[k] = domain.SpecFromBackground(v.(*domain.Background))
 			continue
-		}
-		// team needs to be serialized to a spec to remove the traits and jobs
-		if k == domain.TeamProperty {
+		case domain.DrawbackProperty:
+			data[k] = v.(*domain.Drawback).Name
+			continue
+		case domain.JobProperty:
+			data[k] = v.(*domain.Job).Name
+			continue
+		case domain.TeamProperty:
 			data[k] = domain.SpecFromTeam(v.(*domain.Team))
 			continue
+		case domain.TattooProperty:
+			fallthrough
+		case domain.DistinguishingMarkProperty:
+			fallthrough
+		case domain.BirthSeasonProperty:
+			fallthrough
+		case domain.StatsProperty:
+			fallthrough
+		default:
+			data[k] = v.Value()
 		}
-		// Stats is directly serializable
-		data[k] = v.Value()
 	}
 	return data
 }
@@ -144,8 +157,19 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 	props := make(map[string]domain.Property)
 	for k, v := range data {
 		switch k {
+		case domain.ArchetypeProperty:
+			archetype, err := p.loaders.ArchetypeLoader.GetArchetype(v.(string))
+			if err != nil {
+				log.Printf("failed to load archetype %s: %s", v.(string), err)
+				continue
+			}
+			if archetype == nil {
+				log.Printf("archetype %s not found", v.(string))
+				continue
+			}
+			props[k] = archetype
 		case domain.BackgroundProperty:
-			background, err := p.backgroundLoader.GetBackground(v.(string))
+			background, err := p.loaders.BackgroundLoader.GetBackground(v.(string))
 			if err != nil {
 				log.Printf("failed to load background %s: %s", v.(string), err)
 				continue
@@ -155,9 +179,35 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				continue
 			}
 			props[k] = background
+		case domain.BirthSeasonProperty:
+			props[k] = domain.Season(v.(string))
+		case domain.DistinguishingMarkProperty:
+			props[k] = domain.DistinguishingMark(v.(string))
+		case domain.DrawbackProperty:
+			drawback, err := p.loaders.AppearanceLoader.GetDrawback(v.(string))
+			if err != nil {
+				log.Printf("failed to load drawback %s: %s", v.(string), err)
+				continue
+			}
+			if drawback == nil {
+				log.Printf("drawback %s not found", v.(string))
+				continue
+			}
+			props[k] = drawback
+		case domain.JobProperty:
+			job, err := p.loaders.JobLoader.GetJob(v.(string))
+			if err != nil {
+				log.Printf("failed to load job %s: %s", v.(string), err)
+				continue
+			}
+			if job == nil {
+				log.Printf("job %s not found", v.(string))
+				continue
+			}
+			props[k] = job
 		case domain.TeamProperty:
 			teamName := v.(map[string]interface{})["name"].(string)
-			team, err := p.teamLoader.GetTeam(teamName)
+			team, err := p.loaders.TeamLoader.GetTeam(teamName)
 			if err != nil {
 				log.Printf("failed to load team %s: %s", v.(string), err)
 				continue
@@ -167,6 +217,12 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				continue
 			}
 			props[k] = team
+		case domain.TattooProperty:
+			tat := &domain.Tattoo{
+				Description: v.(map[string]interface{})["description"].(string),
+				Season:      domain.Season(v.(map[string]interface{})["season"].(string)),
+			}
+			props[k] = tat
 		case domain.StatsProperty:
 			stats := &domain.Stats{
 				Fighting: v.(map[string]interface{})["fighting"].(int),

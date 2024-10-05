@@ -1,17 +1,7 @@
-name: "Pastor"
-archetype: "Nerd"
-description: "Pastors lead others with a common shared belief, influencing them and controlling their views.  They are creep weirdos, and everybody knows it, but it's not polite to say it out loud."
-tier: "Basic"
+name: Pastor
+archetype: Nerd
+description: Pastors lead others with a common shared belief, influencing them and controlling their views.  They are creep weirdos, and everybody knows it, but it's not polite to say it out loud.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Fire and Brimstone"
-  description: "A Preacher’s sermons are filled with impassioned words, evoking vivid images of sinners in anguish and torment."
-  effect: "You may flip the results to succeed at Leadership Tests. When you succeed, it is always considered a Critical Success. Furthermore, you always influence a number of people with the Leadership Skill equal to three times your [FB] – this includes use of Inspiring Words during combat. You also understand how to use the Ritual of Blessed Sacrament."
-special_trait:
-  name: "Divine Magick"
-  description: "You are a proxy to a distant god, calling for divine intervention  with the utterance of sacred prayers."
-  effect: "You are solely a practitioner of Divine Magick. As a consequence, you may never adopt a Job which has Arcane Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells when you enter this Job. If you gained Divine Magick from a previous Job, you learn an additional Generalist Magick spell instead."
-drawback:
-  name: "Lure of Power"
-  description: "The wellspring of Magickal power is immeasurable. It woefully draws its practitioners deeper and deeper into its embrace, corrupting both the soul and the world around them."
-  effect: "Whenever you generate face ‘6’ with Chaos Dice, you invoke a Chaos Manifestation."
+traits:
+  - Fire and Brimstone

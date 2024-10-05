@@ -1,13 +1,28 @@
 package domain
 
-type Tier int
+type Tier string
 
 const (
-	Tier0 Tier = iota
-	Tier1
-	Tier2
-	Tier3
+	BasicTier        Tier = "Basic"
+	IntermediateTier Tier = "Intermediate"
+	AdvancedTier     Tier = "Advanced"
 )
+
+type JobSpec struct {
+	Name           string   `yaml:"name"`
+	Description    string   `yaml:"description"`
+	Archetype      string   `yaml:"archetype"`
+	Tier           Tier     `yaml:"tier"`
+	ExperienceCost int      `yaml:"experienceCost"`
+	Traits         []string `yaml:"traits"`
+}
+
+func (s *JobSpec) String() string {
+	return s.Name
+}
+func (s *JobSpec) Value() interface{} {
+	return s
+}
 
 type Job struct {
 	Name           string
@@ -15,5 +30,14 @@ type Job struct {
 	Archetype      *Archetype
 	Tier           Tier
 	ExperienceCost int
-	Trait          *Trait
+	Traits         Traits
+}
+type Jobs []*Job
+
+func (j *Job) String() string {
+	return j.Name
+}
+
+func (j *Job) Value() interface{} {
+	return j
 }

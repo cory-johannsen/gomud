@@ -1,9 +1,7 @@
-name: "Pilot"
-archetype: "Normie"
-description: "Pilots specialize in operating a non-road vehicle such as a boat or an aircraft."
-tier: "Basic"
+name: Pilot
+archetype: Normie
+description: Pilots specialize in operating a non-road vehicle such as a boat or an aircraft.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Batten Down the Hatches"
-  description: "A Boatman can steer a ship, boat, or barge safely through almost any passage."
-  effect: "You may flip the results to succeed at Pilot Tests. When you succeed, it is always considered a Critical Success. In addition, when using the Movement subtype of Swim, you do not have to add the additional 1 Action Point cost."
+traits:
+  - Batten Down the Hatches

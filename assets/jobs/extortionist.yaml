@@ -1,9 +1,7 @@
-name: "Extortionist"
-archetype: "Influencer"
-description: "Extortionists are shake-down masters.  They use violence to coerce others into giving them what they want."
-tier: "Basic"
+name: Extortionist
+archetype: Influencer
+description: Extortionists are shake-down masters.  They use violence to coerce others into giving them what they want.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Mastermind"
-  description: "You’re no fool when it comes to interpreting the letter of the law, as you take advantage of the sanctions that support the business and amnesties afforded to ‘lawful’ pursuits. However, when the law falls short, you lean on your lawless roots, resorting to bullying and threats to pave the way to largesse and lucre."
-  effect: "When you fail a Folklore or Intimidate Test, you may re-roll to generate a better result, but must accept the outcome."
+traits:
+  - Mastermind

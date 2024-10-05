@@ -92,9 +92,29 @@ effects:
 EOL
 }
 
+rewrite_job() {
+  filename=$1
+  job=$2
+  archetype=$3
+  description=$4
+  tier=$5
+  rewardPoints=$6
+  trait=$7
+  echo "  rewriting $job"
+cat <<EOL > "rw/$filename"
+name: $job
+archetype: $archetype
+description: $description
+ties: $tier
+reward_point_cost: $rewardPoints
+traits:
+  - $trait
+EOL
+}
+
 PROCESS_BACKGROUNDS="false"
-PROCESS_JOBS="false"
-PROCESS_TEAMS="true"
+PROCESS_JOBS="true"
+PROCESS_TEAMS="false"
 
 if [[ $PROCESS_BACKGROUNDS == "true" ]]; then
 echo "generating background traits"
@@ -110,10 +130,17 @@ echo "generating job traits"
 jobs=$(ls -l jobs/*.yaml | awk '{print $9}')
 for job in $jobs; do
   echo "processing $job"
+  jobName=$(yq .name < $job)
+  jobArechtype=$(yq .archetype < $job)
+  jobDescription=$(yq .description < $job)
+  jobTier=$(yq .tier < $job)
+  jobRewardPoints=$(yq .reward_point_cost < $job)
+
   traitName=$(yq .trait.name < $job)
   traitDescription=$(yq .trait.description < $job)
   traitEffect=$(yq .trait.effect < $job)
   create_job_trait "$traitName" "$traitDescription" "$traitEffect"
+  rewrite_job "$job" "$jobName" "$jobArechtype" "$jobDescription" "$jobTier" "$jobRewardPoints" "$traitName"
 done
 fi
 

@@ -1,9 +1,7 @@
-name: "Soldier"
-archetype: "Aggressor"
-description: "Soldiers are professional fighters, trained to fight in a specific way.  They focus on solving problems ith overwhelming force."
-tier: "Basic"
+name: Soldier
+archetype: Aggressor
+description: Soldiers are professional fighters, trained to fight in a specific way.  They focus on solving problems ith overwhelming force.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Guerilla Warfare"
-  description: "Not disciplined enough to withstand a straight engagement, the Militiaman is constantly on the move, using hit-and-run tactics to influence the outcome of any battle. They are able to move across the battlefield without sacrificing their defenses, strengthening themselves against the oncoming onslaught."
-  effect: "You never provoke Opportunity Attacks with Movement Actions or any other action you take. In addition, any Movement Action a foe takes while Engaged with you immediately provokes an Opportunity Attack from you."
+traits:
+  - Guerilla Warfare

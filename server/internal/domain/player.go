@@ -14,9 +14,15 @@ type Property interface {
 const PropertyNotFound = "property not found"
 
 const (
-	BackgroundProperty = "background"
-	TeamProperty       = "team"
-	StatsProperty      = "stats"
+	ArchetypeProperty          = "archetype"
+	BackgroundProperty         = "background"
+	BirthSeasonProperty        = "birthSeason"
+	DistinguishingMarkProperty = "distinguishingMark"
+	DrawbackProperty           = "drawback"
+	JobProperty                = "job"
+	TeamProperty               = "team"
+	TattooProperty             = "tattoo"
+	StatsProperty              = "stats"
 )
 
 type Player struct {

@@ -1,10 +1,7 @@
-name: "Journalist"
-archetype: "Nerd"
-description: "The Journalist uses the power of the printed word to influence the masses.  They are the voice of the people, and only occasionally act in their own self interest.  They are frequently employed to document private matters in addition to the public media."
-tier: "Basic"
+name: Journalist
+archetype: Nerd
+description: The Journalist uses the power of the printed word to influence the masses.  They are the voice of the people, and only occasionally act in their own self interest.  They are frequently employed to document private matters in addition to the public media.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Scrivener's Speed"
-  description: "You are trained to both to read and write at an alarmingly fast rate, which when combined with your lightning-quick intellect, means you understand the written word quickly and easily and are able to replicate just as quickly and accurately."
-  effect: "You reduce the time required to use Education Tests by half (examples include research, speed-reading, writing, etc.). In addition, you automatically succeed at all Skill Tests to decipher cryptographs in languages they understand."
-
+traits:
+  - Scrivener's Speed

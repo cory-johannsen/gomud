@@ -1,9 +1,7 @@
-name: "Driver"
-archetype: "Normie"
-description: "The best some can achieve is to operate a vehicle in order to transport others.  The Driver is that person."
-tier: "Basic"
+name: Driver
+archetype: Normie
+description: The best some can achieve is to operate a vehicle in order to transport others.  The Driver is that person.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Four-in-Hand"
-  description: "Coachmen establish a trusted bond with animals and beasts, pressing them onwards when the time is needed. For all they know, you may very well have been a champion cart racer in the past, exhibiting tight skills when in the driver’s seat."
-  effect: "You may flip the results to succeed at Drive Tests. When you succeed, it is always considered a Critical Success. In addition, when using the Movement subtype of Drive, you do not have to add the additional 1 AP cost."
+traits:
+  - Four-in-Hand

@@ -1,9 +1,7 @@
-name: "Hobo"
-archetype: "Criminal"
-description: "Hobos perpetually live on the streets, not through circumstance but because they want to."
-tier: "Basic"
+name: Hobo
+archetype: Criminal
+description: Hobos perpetually live on the streets, not through circumstance but because they want to.
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Artful Dodger"
-  description: "Guttersnipes were orphaned on the streets and thieve to eat and survive. Some even take up ‘trades’ – such as a chimneysweep or ragpicker– casing joints underneath the guise of an honestworking citizen."
-  effect: "You automatically gain every Focus in the Stealth Skill when you enter this Job. This means you may exceed the normal limits for Focuses set by your [IB], but for Stealth only."
+traits:
+  - Artful Dodger

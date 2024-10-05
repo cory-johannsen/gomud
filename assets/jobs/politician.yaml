@@ -1,9 +1,7 @@
-name: "Politician"
-archetype: "Influencer"
-description: "Politicians are widely regarded as the lowest form of life.  They want to believe they have dedicated their lives to creating a better society for others, but..."
-tier: "Basic"
+name: Politician
+archetype: Influencer
+description: Politicians are widely regarded as the lowest form of life.  They want to believe they have dedicated their lives to creating a better society for others, but...
+tier: Basic
 reward_point_cost: 100
-trait:
-  name: "Machiavellian Intrigue"
-  description: "Political jockeying and subtle manipulation within the higher social circles come second nature to the Courtier. Thus, they have learned to pick up on subtle tells and affectations which gives away true intentions."
-  effect: "Whenever you fail an Eavesdrop or Scrutinize Test, you may re-roll to generate a better result, but must accept the outcome."
+traits:
+  - Machiavellian Intrigue
