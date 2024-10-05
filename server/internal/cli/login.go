@@ -59,7 +59,7 @@ func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error
 	return fmt.Sprintf("Welcome %s", name), nil
 }
 
-func (h LoginHandler) createPlayer(name string) (*domain.Player, error) {
+func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	msg := fmt.Sprintf("creating new player %s", name)
 	_ = h.conn.Writeln(msg)
 

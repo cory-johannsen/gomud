@@ -156,7 +156,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 			props[k] = background
 		case domain.TeamProperty:
-			team, err := p.teamLoader.GetTeam(v.(string))
+			teamName := v.(map[string]interface{})["name"].(string)
+			team, err := p.teamLoader.GetTeam(teamName)
 			if err != nil {
 				log.Printf("failed to load team %s: %s", v.(string), err)
 				continue
