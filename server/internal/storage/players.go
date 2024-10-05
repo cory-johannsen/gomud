@@ -169,7 +169,7 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 			props[k] = archetype
 		case domain.BackgroundProperty:
-			background, err := p.loaders.BackgroundLoader.GetBackground(v.(string))
+			background, err := p.loaders.BackgroundLoader.GetBackground(v.(map[string]interface{})["Name"].(string))
 			if err != nil {
 				log.Printf("failed to load background %s: %s", v.(string), err)
 				continue
@@ -206,7 +206,7 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 			props[k] = job
 		case domain.TeamProperty:
-			teamName := v.(map[string]interface{})["name"].(string)
+			teamName := v.(map[string]interface{})["Name"].(string)
 			team, err := p.loaders.TeamLoader.GetTeam(teamName)
 			if err != nil {
 				log.Printf("failed to load team %s: %s", v.(string), err)
@@ -218,20 +218,28 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 			props[k] = team
 		case domain.TattooProperty:
+			description := v.(map[string]interface{})["Description"].(string)
 			tat := &domain.Tattoo{
-				Description: v.(map[string]interface{})["description"].(string),
-				Season:      domain.Season(v.(map[string]interface{})["season"].(string)),
+				Description: description,
+				Season:      domain.Season(v.(map[string]interface{})["Season"].(string)),
 			}
 			props[k] = tat
 		case domain.StatsProperty:
+			fighting := int(v.(map[string]interface{})["fighting"].(float64))
+			muscle := int(v.(map[string]interface{})["muscle"].(float64))
+			speed := int(v.(map[string]interface{})["speed"].(float64))
+			savvy := int(v.(map[string]interface{})["savvy"].(float64))
+			smarts := int(v.(map[string]interface{})["smarts"].(float64))
+			grit := int(v.(map[string]interface{})["grit"].(float64))
+			flair := int(v.(map[string]interface{})["flair"].(float64))
 			stats := &domain.Stats{
-				Fighting: v.(map[string]interface{})["fighting"].(int),
-				Muscle:   v.(map[string]interface{})["muscle"].(int),
-				Speed:    v.(map[string]interface{})["speed"].(int),
-				Savvy:    v.(map[string]interface{})["savvy"].(int),
-				Smarts:   v.(map[string]interface{})["smarts"].(int),
-				Grit:     v.(map[string]interface{})["grit"].(int),
-				Flair:    v.(map[string]interface{})["flair"].(int),
+				Fighting: fighting,
+				Muscle:   muscle,
+				Speed:    speed,
+				Savvy:    savvy,
+				Smarts:   smarts,
+				Grit:     grit,
+				Flair:    flair,
 			}
 			props[k] = stats
 		default:
