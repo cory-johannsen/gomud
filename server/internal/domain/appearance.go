@@ -1,6 +1,9 @@
 package domain
 
-import "math/rand"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type Season string
 
@@ -81,15 +84,19 @@ func (d DistinguishingMarks) Random(age int) DistinguishingMarks {
 	return []DistinguishingMark{d[rand.Intn(len(d))], d[rand.Intn(len(d))], d[rand.Intn(len(d))]}
 }
 
+type TattooLocation string
+type TattooLocations []TattooLocation
+
 type Tattoo struct {
 	Description string
+	Location    TattooLocation
 	Season      Season
 }
 type Tattoos []Tattoo
 type SeasonalTattoos map[Season]Tattoos
 
 func (t *Tattoo) String() string {
-	return t.Description
+	return fmt.Sprintf("%s on the %s", t.Description, t.Location)
 }
 
 func (t *Tattoo) Value() interface{} {
@@ -98,11 +105,17 @@ func (t *Tattoo) Value() interface{} {
 
 var _ Property = &Tattoo{}
 
-func (t Tattoos) Random() Tattoo {
+func (t Tattoos) Random(locations TattooLocations) Tattoo {
 	if len(t) == 0 {
 		return Tattoo{}
 	}
-	return t[rand.Intn(len(t))]
+	tat := t[rand.Intn(len(t))]
+	
+	return Tattoo{
+		Description: tat.Description,
+		Location:    locations[rand.Intn(len(locations))],
+		Season:      tat.Season,
+	}
 }
 
 type Drawback struct {

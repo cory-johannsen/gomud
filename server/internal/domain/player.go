@@ -155,7 +155,7 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d\n", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
 			continue
 		case TattooProperty:
-			msg += fmt.Sprintf("  Tattoo - \n\t%s\n", v.(*Tattoo).Description)
+			msg += fmt.Sprintf("  Tattoo - \n\t\"%s\" on your %s\n", v.(*Tattoo).Description, v.(*Tattoo).Location)
 			continue
 		case TeamProperty:
 			msg += fmt.Sprintf("  Team - %s\n", v.(*Team).Name)

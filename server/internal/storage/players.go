@@ -241,8 +241,10 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			props[k] = team
 		case domain.TattooProperty:
 			description := v.(map[string]interface{})["Description"].(string)
+			location := v.(map[string]interface{})["Location"].(string)
 			tat := &domain.Tattoo{
 				Description: description,
+				Location:    domain.TattooLocation(location),
 				Season:      domain.Season(v.(map[string]interface{})["Season"].(string)),
 			}
 			props[k] = tat

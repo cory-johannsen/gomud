@@ -44,12 +44,18 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 	}
 	player.Data[domain.DistinguishingMarkProperty] = marks.Random(age)
 
+	tatLocations, err := g.loaders.AppearanceLoader.LoadTattooLocations()
+	if err != nil {
+		log.Printf("failed to load tattoo locations: %s", err)
+		return nil, err
+	}
+
 	tats, err := g.loaders.AppearanceLoader.LoadTattoos()
 	if err != nil {
 		log.Printf("failed to load tattoos: %s", err)
 		return nil, err
 	}
-	tat := tats[season].Random()
+	tat := tats[season].Random(tatLocations)
 	player.Data[domain.TattooProperty] = &tat
 
 	if takeDrawback {

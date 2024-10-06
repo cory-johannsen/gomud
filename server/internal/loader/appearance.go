@@ -8,16 +8,32 @@ import (
 )
 
 type AppearanceLoader struct {
-	config    *config.Config
-	tats      domain.SeasonalTattoos
-	drawbacks domain.Drawbacks
-	marks     domain.DistinguishingMarks
+	config       *config.Config
+	tatLocations domain.TattooLocations
+	tats         domain.SeasonalTattoos
+	drawbacks    domain.Drawbacks
+	marks        domain.DistinguishingMarks
 }
 
 func NewAppearanceLoader(cfg *config.Config) *AppearanceLoader {
 	return &AppearanceLoader{
 		config: cfg,
 	}
+}
+
+func (l *AppearanceLoader) LoadTattooLocations() (domain.TattooLocations, error) {
+	if l.tatLocations != nil {
+		return l.tatLocations, nil
+	}
+	data, err := os.ReadFile(l.config.AssetPath + "/appearance/tattoo_locations.yaml")
+	if err != nil {
+		return nil, err
+	}
+	err = yaml.Unmarshal(data, &l.tatLocations)
+	if err != nil {
+		return nil, err
+	}
+	return l.tatLocations, nil
 }
 
 func (l *AppearanceLoader) LoadTattoos() (domain.SeasonalTattoos, error) {

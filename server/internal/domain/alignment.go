@@ -20,9 +20,11 @@ type Chaos struct {
 }
 
 type AlignmentSpec struct {
-	Order string `json:"order"`
-	Chaos string `json:"chaos"`
-	Rank  int    `json:"rank"`
+	Order     string `json:"order"`
+	OrderRank int    `json:"orderRank"`
+	Chaos     string `json:"chaos"`
+	ChaosRank int    `json:"chaosRank"`
+	Rank      int    `json:"rank"`
 }
 
 type Alignment struct {
@@ -50,8 +52,10 @@ func (a Alignments) Random() Alignment {
 
 func SpecFromAlignment(a *Alignment) *AlignmentSpec {
 	return &AlignmentSpec{
-		Order: a.Order.Name,
-		Chaos: a.Chaos.Name,
-		Rank:  a.Corruption,
+		Order:     a.Order.Name,
+		OrderRank: a.Order.Rank,
+		Chaos:     a.Chaos.Name,
+		ChaosRank: a.Chaos.Rank,
+		Rank:      a.Corruption,
 	}
 }
