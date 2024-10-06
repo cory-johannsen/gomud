@@ -32,6 +32,7 @@ type Job struct {
 	ExperienceCost int
 	Traits         Traits
 }
+
 type Jobs []*Job
 
 func (j *Job) String() string {

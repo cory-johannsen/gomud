@@ -1,6 +1,6 @@
 package domain
 
-type Applier func()
+type Applier func() interface{}
 
 type Effect struct {
 	Name    string
