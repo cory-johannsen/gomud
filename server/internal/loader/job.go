@@ -84,7 +84,11 @@ func (l *JobLoader) LoadJobs() (domain.Jobs, error) {
 }
 
 func (l *JobLoader) GetJob(name string) (*domain.Job, error) {
-	for _, job := range l.jobs {
+	jobs, err := l.LoadJobs()
+	if err != nil {
+		return nil, err
+	}
+	for _, job := range jobs {
 		if job.Name == name {
 			return job, nil
 		}

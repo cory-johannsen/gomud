@@ -14,6 +14,7 @@ type Property interface {
 const PropertyNotFound = "property not found"
 
 const (
+	AgeProperty                = "age"
 	ArchetypeProperty          = "archetype"
 	BackgroundProperty         = "background"
 	BirthSeasonProperty        = "birthSeason"
@@ -24,6 +25,19 @@ const (
 	TattooProperty             = "tattoo"
 	StatsProperty              = "stats"
 )
+
+type BaseProperty struct {
+	Val interface{}
+}
+
+func (p *BaseProperty) Value() interface{} {
+	return p.Val
+}
+func (p *BaseProperty) String() string {
+	return fmt.Sprintf("%v", p.Val)
+}
+
+var _ Property = &BaseProperty{}
 
 type Character struct {
 	Name string
@@ -81,7 +95,10 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Birth Season - %s\n", v.(Season))
 			continue
 		case DistinguishingMarkProperty:
-			msg += fmt.Sprintf("  Distinguishing Mark - %s\n", v.(DistinguishingMark))
+			msg += "  Distinguishing Marks: \n"
+			for _, mark := range v.(DistinguishingMarks) {
+				msg += fmt.Sprintf("\t%s\n", mark)
+			}
 			continue
 		case DrawbackProperty:
 			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: %s\n", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)

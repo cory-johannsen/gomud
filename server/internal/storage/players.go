@@ -157,6 +157,9 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 	props := make(map[string]domain.Property)
 	for k, v := range data {
 		switch k {
+		case domain.AgeProperty:
+			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
+			continue
 		case domain.ArchetypeProperty:
 			archetype, err := p.loaders.ArchetypeLoader.GetArchetype(v.(string))
 			if err != nil {
@@ -182,7 +185,11 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 		case domain.BirthSeasonProperty:
 			props[k] = domain.Season(v.(string))
 		case domain.DistinguishingMarkProperty:
-			props[k] = domain.DistinguishingMark(v.(string))
+			marks := make(domain.DistinguishingMarks, 0)
+			for _, mark := range v.([]interface{}) {
+				marks = append(marks, domain.DistinguishingMark(mark.(string)))
+			}
+			props[k] = marks
 		case domain.DrawbackProperty:
 			drawback, err := p.loaders.AppearanceLoader.GetDrawback(v.(string))
 			if err != nil {

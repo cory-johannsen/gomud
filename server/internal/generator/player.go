@@ -4,6 +4,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"log"
+	"math/rand"
 )
 
 type PlayerGenerator struct {
@@ -31,13 +32,17 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 	// generate birth season
 	season := domain.RandomSeason()
 	player.Data[domain.BirthSeasonProperty] = season
+
+	age := rand.Intn(80) + 18
+	player.Data[domain.AgeProperty] = &domain.BaseProperty{Val: age}
+
 	// generate appearance
 	marks, err := g.loaders.AppearanceLoader.LoadDistinguishingMarks()
 	if err != nil {
 		log.Printf("failed to load distinguishing marks: %s", err)
 		return nil, err
 	}
-	player.Data[domain.DistinguishingMarkProperty] = marks.Random()
+	player.Data[domain.DistinguishingMarkProperty] = marks.Random(age)
 
 	tats, err := g.loaders.AppearanceLoader.LoadTattoos()
 	if err != nil {

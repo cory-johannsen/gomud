@@ -39,6 +39,21 @@ var _ Property = Season("")
 type DistinguishingMark string
 type DistinguishingMarks []DistinguishingMark
 
+func (d DistinguishingMarks) Value() interface{} {
+	return d
+}
+
+func (d DistinguishingMarks) String() string {
+	msg := ""
+	for i, mark := range d {
+		if i > 0 {
+			msg += ", "
+		}
+		msg += string(mark)
+	}
+	return msg
+}
+
 func (d DistinguishingMark) String() string {
 	return string(d)
 }
@@ -48,12 +63,22 @@ func (d DistinguishingMark) Value() interface{} {
 }
 
 var _ Property = DistinguishingMark("")
+var _ Property = DistinguishingMarks{}
 
-func (d DistinguishingMarks) Random() DistinguishingMark {
+func (d DistinguishingMarks) Random(age int) DistinguishingMarks {
 	if len(d) == 0 {
-		return ""
+		return []DistinguishingMark{}
 	}
-	return d[rand.Intn(len(d))]
+	if age < 25 {
+		return []DistinguishingMark{}
+	}
+	if age < 35 {
+		return []DistinguishingMark{d[rand.Intn(len(d))]}
+	}
+	if age < 50 {
+		return []DistinguishingMark{d[rand.Intn(len(d))], d[rand.Intn(len(d))]}
+	}
+	return []DistinguishingMark{d[rand.Intn(len(d))], d[rand.Intn(len(d))], d[rand.Intn(len(d))]}
 }
 
 type Tattoo struct {
