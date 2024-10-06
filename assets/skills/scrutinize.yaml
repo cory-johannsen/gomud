@@ -1,0 +1,12 @@
+name: Scrutinize
+description: "This is a description of the skill."
+stat: Savvy
+type: Common
+focuses:
+  - Cryptography
+  - Detect
+  - Lics
+  - Memory
+  - Sense
+  - Social
+  - Class

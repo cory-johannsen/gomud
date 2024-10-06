@@ -1,0 +1,14 @@
+name: Guile
+description: "This is a description of the skill."
+stat: Flair
+type: Common
+focuses:
+  - Appear
+  - Innocent
+  - Blather
+  - Con
+  - Games
+  - Deception
+  - Innuendo
+  - Thieves'
+  - Cant

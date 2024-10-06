@@ -1,0 +1,11 @@
+name: Stealth
+description: "This is a description of the skill."
+stat: Speed
+type: Common
+focuses:
+  - Ambush
+  - Hide
+  - Scout
+  - Shadowing
+  - Silent
+  - Movement

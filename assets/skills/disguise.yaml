@@ -1,0 +1,11 @@
+name: Disguise
+description: "This is a description of the skill."
+stat: Flair
+type: Special
+focuses:
+  - Act
+  - Assume
+  - Identity
+  - Hide
+  - Social
+  - Class

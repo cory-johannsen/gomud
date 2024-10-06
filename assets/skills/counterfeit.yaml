@@ -1,0 +1,9 @@
+name: Counterfeit
+description: "This is a description of the skill."
+stat: Smarts
+type: Special
+focuses:
+  - Clip
+  - Coins
+  - Embezzle
+  - Forgery

@@ -5,3 +5,23 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Rabble-Rousing
+skillRanks:
+  - Eavesdrop
+  - Folklore
+  - Guile
+  - Interrogation
+  - Intimidate
+  - Leadership
+  - Resolve
+  - Scrutinize
+  - Simple Ranged
+bonusAdvances:
+  Muscle: 1
+  Flair: 1
+  Savvy: 2
+  Grit: 2
+talents:
+  - Forked Tongue
+  - Impervious Mind
+  - Long-winded
+

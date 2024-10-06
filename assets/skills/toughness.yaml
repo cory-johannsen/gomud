@@ -1,0 +1,19 @@
+name: Toughness
+description: "This is a description of the skill."
+stat: Muscle
+type: Common
+focuses:
+  - Consume
+  - Alcohol
+  - Resist
+  - Disease
+  - Resist
+  - Flames
+  - Resist
+  - Magick
+  - Resist
+  - Peril
+  - Resist
+  - Poison
+  - Resist
+  - Weather

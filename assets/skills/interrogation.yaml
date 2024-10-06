@@ -1,0 +1,9 @@
+name: Interrogation
+description: "This is a description of the skill."
+stat: Grit
+type: Special
+focuses:
+  - Mental
+  - Torture
+  - Physical
+  - Torture

@@ -5,3 +5,22 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Book Worm
+skillRanks:
+  - Bargain
+  - Education
+  - Folklore
+  - Interrogation
+  - Navigation
+  - Resolve
+  - Scrutinize
+  - Simple Melee
+  - Survival
+bonusAdvances:
+  Flair: 1
+  Smarts: 2
+  Savvy: 2
+  Grit: 2
+talents:
+  - Incredible Numeration
+  - Secret Signs
+  - Wordly

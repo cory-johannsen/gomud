@@ -5,3 +5,8 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Guild Privilege
+skillRanks:
+  -
+bonusAdvances:
+talents:
+  -

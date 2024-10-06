@@ -1,0 +1,12 @@
+name: Rumor
+description: "This is a description of the skill."
+stat: Flair
+type: Common
+focuses:
+  - Etiquette
+  - Gossip
+  - Linguistics
+  - Public
+  - Speaking
+  - Secret
+  - Language

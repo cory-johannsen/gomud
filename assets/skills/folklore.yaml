@@ -1,0 +1,11 @@
+name: Folklore
+description: "This is a description of the skill."
+stat: Smarts
+type: Common
+focuses:
+  - Creature
+  - Lore
+  - Foreign
+  - Lore
+  - Local
+  - Lore

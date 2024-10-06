@@ -1,0 +1,13 @@
+name: Resolve
+description: "This is a description of the skill."
+stat: Grit
+type: Common
+focuses:
+  - Resist
+  - Fear
+  - Resist
+  - Magick
+  - Resist
+  - Stress
+  - Resist
+  - Terror

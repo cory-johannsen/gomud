@@ -1,0 +1,8 @@
+name: Drive
+description: "This is a description of the skill."
+stat: Muscle
+type: Common
+focuses:
+  - Carting
+  - Coaching
+  - Wagoner

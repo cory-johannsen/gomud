@@ -1,0 +1,22 @@
+name: Incantation
+description: "This is a description of the skill."
+stat: Grit
+type: Special
+focuses:
+  - Astrology
+  - Card
+  - Reading
+  - Cast
+  - Runes
+  - Concentration
+  - Conduct
+  - Ritual
+  - Counterspell
+  - Dream
+  - Interpretation
+  - Hypnotize
+  - Learn
+  - Magick
+  - Palmistry
+  - Scapulimancy
+  - Scrying

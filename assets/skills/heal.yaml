@@ -1,0 +1,21 @@
+name: Heal
+description: "This is a description of the skill."
+stat: Smarts
+type: Special
+focuses:
+  - Bind
+  - Wounds
+  - Bloodletting
+  - Kiss
+  - of
+  - Life
+  - Perform
+  - Psychosurgery
+  - Perform
+  - Surgery
+  - Prepare
+  - Bandages
+  - Treat
+  - Disease
+  - Treat
+  - Injury

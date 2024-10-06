@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"strings"
 )
 
 type JobLoader struct {
@@ -37,7 +38,7 @@ func (l *JobLoader) LoadJobs() (domain.Jobs, error) {
 		if item.IsDir() {
 			continue
 		}
-		if item.Name() == "tmpl.yaml" {
+		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
 			continue
 		}
 		log.Printf("loading job %s", item.Name())

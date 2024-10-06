@@ -1,0 +1,12 @@
+name: Leadership
+description: "This is a description of the skill."
+stat: Flair
+type: Special
+focuses:
+  - Incite
+  - Rebellion
+  - Military
+  - Command
+  - Spiritual
+  - Leadership
+  - Stewardship

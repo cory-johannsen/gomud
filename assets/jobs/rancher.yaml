@@ -5,3 +5,24 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Beastmaster
+skillRanks:
+  - Athletics
+  - Drive
+  - Folklore
+  - Guile
+  - Handle Animal
+  - Resolve
+  - Ride
+  - Rumor
+  - Simple Melee
+  - Survival
+bonusAdvances:
+  Speed: 1
+  Muscle: 2
+  Flair: 2
+  Savvy: 1
+  Grit: 2
+talents:
+  - Carousing
+  - Clinch Fighter
+  - Gallows Humor

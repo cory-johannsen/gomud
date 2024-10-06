@@ -1,0 +1,11 @@
+name: Pilot
+description: "This is a description of the skill."
+stat: Speed
+type: Special
+focuses:
+  - Boating
+  - Ocean
+  - Lore
+  - River
+  - Lore
+  - Sailing

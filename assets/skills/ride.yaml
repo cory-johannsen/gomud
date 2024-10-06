@@ -1,0 +1,11 @@
+name: Ride
+description: "This is a description of the skill."
+stat: Speed
+type: Special
+focuses:
+  - Ride
+  - Animal
+  - Ride
+  - Beast
+  - Trick
+  - Riding

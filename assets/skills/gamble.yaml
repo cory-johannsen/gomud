@@ -1,0 +1,11 @@
+name: Gamble
+description: "This is a description of the skill."
+stat: Smarts
+type: Common
+focuses:
+  - Ball
+  - Games
+  - Cards
+  - Chess
+  - Cockfighting
+  - Dice

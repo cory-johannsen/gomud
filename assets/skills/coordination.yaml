@@ -1,0 +1,12 @@
+name: Coordination
+description: "This is a description of the skill."
+stat: Speed
+type: Common
+focuses:
+  - Acrobatics
+  - Balance
+  - Contortion
+  - Dance
+  - Dodge
+  - Attack
+  - Juggle

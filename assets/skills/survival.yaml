@@ -1,0 +1,16 @@
+name: Survival
+description: "This is a description of the skill."
+stat: Savvy
+type: Common
+focuses:
+  - Build
+  - Shelter
+  - Find
+  - Water
+  - Forage
+  - Game
+  - Hunting
+  - Plant
+  - Lore
+  - Survivalist
+  - Tracking

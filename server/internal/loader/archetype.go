@@ -5,6 +5,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"gopkg.in/yaml.v3"
 	"os"
+	"strings"
 )
 
 type ArchetypeLoader struct {
@@ -34,7 +35,7 @@ func (l *ArchetypeLoader) LoadArchetypes() (domain.Archetypes, error) {
 		if item.IsDir() {
 			continue
 		}
-		if item.Name() == "tmpl.yaml" {
+		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
 			continue
 		}
 		spec := &domain.ArchetypeSpec{}

@@ -1,0 +1,21 @@
+name: Tradecraft
+description: "This is a description of the skill."
+stat: Grit
+type: Special
+focuses:
+  - Artistry
+  - Brewing
+  - Carpentry
+  - Engineering
+  - Fine
+  - Smithery
+  - Gastronomy
+  - Gunsmithing
+  - Metallurgy
+  - Runesmith
+  - Shipwright
+  - Smithing
+  - Stoneworking
+  - Tailoring
+  - Tanning
+  - Weaponsmithing

@@ -1,0 +1,10 @@
+name: Athletics
+description: "This is a description of the skill."
+stat: Muscle
+type: Common
+focuses:
+  - Climb
+  - Lift
+  - Row
+  - Swim
+  - Wrestle

@@ -1,0 +1,8 @@
+name: Awareness
+description: "This is a description of the skill."
+stat: Savvy
+type: Common
+focuses:
+  - Count
+  - Discern
+  - Details

@@ -1,0 +1,17 @@
+name: Skulduggery
+description: "This is a description of the skill."
+stat: Speed
+type: Special
+focuses:
+  - Disable
+  - Trap
+  - Lock
+  - Picking
+  - Palm
+  - Object
+  - Pick
+  - Pocket
+  - Set
+  - Trap
+  - Window
+  - Fishing

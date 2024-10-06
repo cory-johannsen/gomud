@@ -5,3 +5,25 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Sacred Mantra
+skillRanks:
+  - Coordination
+  - Folklore
+  - Handle Animal
+  - Heal
+  - Resolve
+  - Scrutinize
+  - Simple Melee
+  - Simple Ranged
+  - Survival
+  - Toughness
+bonusAdvances:
+  Speed: 1
+  Muscle: 1
+  Fighting: 1
+  Smarts: 1
+  Savvy: 1
+  Grit: 2
+talents:
+  - Clinch Fighter
+  - Determination
+  - Impervious Mind

@@ -5,3 +5,24 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Nostrum Remedium
+skillRanks:
+  - Alchemy
+  - Awareness
+  - Bargain
+  - Coordination
+  - Education
+  - Folklore
+  - Rumor
+  - Simple Ranged
+  - Survival
+  - Tradecraft
+bonusAdvances:
+  Speed: 1
+  Flair: 1
+  Smarts: 2
+  Savvy: 2
+  Grit: 1
+talents:
+  - Ambidexterity
+  - Determination
+  - Nerves of Steel

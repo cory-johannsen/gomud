@@ -1,0 +1,9 @@
+name: Navigation
+description: "This is a description of the skill."
+stat: Smarts
+type: Special
+focuses:
+  - Guide
+  - Orientation
+  - Overland
+  - Travel

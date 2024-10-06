@@ -1,0 +1,13 @@
+name: Handle
+description: "This is a description of the skill."
+stat: Animal
+type: Flair
+focuses:
+  - Special
+  - Animal
+  - Care
+  - Calm
+  - Animal
+  - Rustling
+  - Teach
+  - Trick

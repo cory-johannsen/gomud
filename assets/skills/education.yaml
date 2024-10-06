@@ -1,0 +1,14 @@
+name: Education
+description: "This is a description of the skill."
+stat: Smarts
+type: Special
+focuses:
+  - Astronomy
+  - Cartography
+  - Geography
+  - Heraldry
+  - History
+  - Law
+  - Politics
+  - Science
+  - Theology

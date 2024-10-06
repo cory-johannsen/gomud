@@ -5,3 +5,8 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Pay the Piper
+skillRanks:
+  -
+bonusAdvances:
+talents:
+  -

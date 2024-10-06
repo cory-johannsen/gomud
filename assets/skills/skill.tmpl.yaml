@@ -1,0 +1,8 @@
+name: {{ .Name }}
+description: {{ .Description }}
+stat: {{ .Stat }}
+type: {{ .Type }}
+focuses:
+  {{ range .Focuses }}
+    - {{ . }}
+  {{ end -}}

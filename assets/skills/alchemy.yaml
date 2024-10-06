@@ -1,0 +1,9 @@
+name: Alchemy
+description: "This is a description of the skill."
+stat: Smarts
+type: Special
+focuses:
+  - Gunpowder
+  - Medicine
+  - Poison
+  - Wytchstone
