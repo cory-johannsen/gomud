@@ -53,7 +53,7 @@ func CreateAliases(handler Handler, aliases ...string) Aliases {
 
 var _ Handler = &Alias{}
 
-const WelcomeMessage = "-- Gunchete -->\n\nWelcome to Gunchete!  Type 'help' for a list of commands.\n"
+const WelcomeMessage = "\n<-- 🔫 Gunchete 🔪 -->\n\nWelcome to Gunchete!  Type 'help' for a list of commands.\n"
 const QuitMessage = "peace out"
 
 type QuitHandler struct {
