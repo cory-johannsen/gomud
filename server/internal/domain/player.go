@@ -113,9 +113,21 @@ func (p *Player) String() string {
 			continue
 		case ArchetypeProperty:
 			msg += fmt.Sprintf("  Archetype - %s\n", v.(*Archetype).Name)
+			for _, trait := range v.(*Archetype).Traits {
+				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n\t\tEffects:\n", trait.Name, trait.Description)
+				for _, effect := range trait.Effects {
+					msg += fmt.Sprintf("\t\t\t%s\n\t\t\t%s\n", effect.Name, effect.Description)
+				}
+			}
 			continue
 		case BackgroundProperty:
 			msg += fmt.Sprintf("  Background - \n\t%s\n\t%s\n", v.(*Background).Name, v.(*Background).Description)
+			for _, trait := range v.(*Background).Traits {
+				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n\t\tEffects:\n", trait.Name, trait.Description)
+				for _, effect := range trait.Effects {
+					msg += fmt.Sprintf("\t\t\t%s\n\t\t\t%s\n", effect.Name, effect.Description)
+				}
+			}
 			continue
 		case BirthSeasonProperty:
 			msg += fmt.Sprintf("  Birth Season - %s\n", v.(Season))
@@ -127,10 +139,17 @@ func (p *Player) String() string {
 			}
 			continue
 		case DrawbackProperty:
-			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: %s\n", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)
+			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s\n\t\tdesc\n\t\teffect\n", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)
+
 			continue
 		case JobProperty:
 			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n\tExperience Cost: %d\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier, v.(*Job).ExperienceCost)
+			for _, trait := range v.(*Job).Traits {
+				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n\t\tEffects:\n", trait.Name, trait.Description)
+				for _, effect := range trait.Effects {
+					msg += fmt.Sprintf("\t\t\t%s\n\t\t\t%s\n", effect.Name, effect.Description)
+				}
+			}
 			continue
 		case StatsProperty:
 			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d\n", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
