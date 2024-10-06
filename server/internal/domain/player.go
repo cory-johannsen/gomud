@@ -25,19 +25,25 @@ const (
 	StatsProperty              = "stats"
 )
 
+type Character struct {
+	Name string
+	Data map[string]Property
+}
+
 type Player struct {
+	Character
 	Id       *int
-	Name     string
 	Password string
-	Data     map[string]Property
 }
 
 func NewPlayer(id *int, name string, password string, data map[string]Property) *Player {
 	p := &Player{
+		Character: Character{
+			Name: name,
+			Data: data,
+		},
 		Id:       id,
-		Name:     name,
 		Password: password,
-		Data:     data,
 	}
 	if p.Data == nil {
 		p.Data = make(map[string]Property)
