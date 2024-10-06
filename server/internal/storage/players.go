@@ -123,6 +123,9 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 	data := make(map[string]interface{})
 	for k, v := range props {
 		switch k {
+		case domain.AlignmentProperty:
+			data[k] = domain.SpecFromAlignment(v.(*domain.Alignment))
+			continue
 		case domain.ArchetypeProperty:
 			data[k] = v.(*domain.Archetype).Name
 			continue
@@ -160,6 +163,18 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 		case domain.AgeProperty:
 			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
 			continue
+		case domain.AlignmentProperty:
+			alignmentMap := v.(map[string]interface{})
+			alignment, err := p.loaders.AlignmentLoader.GetAlignment(alignmentMap["order"].(string))
+			if err != nil {
+				log.Printf("failed to load alignment %s: %s", alignmentMap["order"].(string), err)
+				continue
+			}
+			if alignment == nil {
+				log.Printf("alignment %s not found", alignmentMap["order"].(string))
+				continue
+			}
+			props[k] = alignment
 		case domain.ArchetypeProperty:
 			archetype, err := p.loaders.ArchetypeLoader.GetArchetype(v.(string))
 			if err != nil {

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
+	"log"
 )
 
 type Property interface {
@@ -15,6 +16,7 @@ const PropertyNotFound = "property not found"
 
 const (
 	AgeProperty                = "age"
+	AlignmentProperty          = "alignment"
 	ArchetypeProperty          = "archetype"
 	BackgroundProperty         = "background"
 	BirthSeasonProperty        = "birthSeason"
@@ -83,8 +85,32 @@ func (p *Player) GetProperty(key string) (Property, error) {
 
 func (p *Player) String() string {
 	msg := fmt.Sprintf("Name: %s\n", p.Name)
-	for k, v := range p.Data {
+	// Enforce the ordering of the character properties
+	properties := []string{
+		StatsProperty,
+		AlignmentProperty,
+		BirthSeasonProperty,
+		AgeProperty,
+		BackgroundProperty,
+		DistinguishingMarkProperty,
+		TattooProperty,
+		DrawbackProperty,
+		ArchetypeProperty,
+		JobProperty,
+		TeamProperty}
+	for _, k := range properties {
+		v, ok := p.Data[k]
+		if !ok {
+			log.Printf("property %s not found", k)
+			continue
+		}
 		switch k {
+		case AgeProperty:
+			msg += fmt.Sprintf("  Age - %d\n", v.(*BaseProperty).Val.(int))
+			continue
+		case AlignmentProperty:
+			msg += fmt.Sprintf("  Alignment - %s/%s\n\tOrder: %s (rank: %d)\n\tChaos: %s (rank: %d)\n\tCorruption: %d\n", v.(*Alignment).Order.Name, v.(*Alignment).Chaos.Name, v.(*Alignment).Order.Name, v.(*Alignment).Order.Rank, v.(*Alignment).Chaos.Name, v.(*Alignment).Chaos.Rank, v.(*Alignment).Corruption)
+			continue
 		case ArchetypeProperty:
 			msg += fmt.Sprintf("  Archetype - %s\n", v.(*Archetype).Name)
 			continue

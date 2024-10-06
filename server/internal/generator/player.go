@@ -76,5 +76,13 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 	}
 	player.Data[domain.JobProperty] = job
 
+	alignments, err := g.loaders.AlignmentLoader.LoadAlignments()
+	if err != nil {
+		log.Printf("failed to load alignments: %s", err)
+		return nil, err
+	}
+	alignment := alignments.Random()
+	player.Data[domain.AlignmentProperty] = &alignment
+
 	return player, nil
 }

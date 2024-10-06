@@ -3,8 +3,9 @@ package domain
 type Applier func() interface{}
 
 type Effect struct {
-	Name    string
-	Applier Applier
+	Name        string
+	Description string
+	Applier     Applier
 }
 type Effects []*Effect
 
