@@ -90,5 +90,7 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 	alignment := alignments.Random()
 	player.Data[domain.AlignmentProperty] = &alignment
 
+	player.Data[domain.ExperienceProperty] = &domain.BaseProperty{Val: 900}
+
 	return player, nil
 }

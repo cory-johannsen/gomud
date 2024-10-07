@@ -132,14 +132,35 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 		case domain.BackgroundProperty:
 			data[k] = domain.SpecFromBackground(v.(*domain.Background))
 			continue
+		case domain.ConsumedAdvancesProperty:
+			data[k] = v
+			continue
 		case domain.DrawbackProperty:
 			data[k] = v.(*domain.Drawback).Name
 			continue
 		case domain.JobProperty:
 			data[k] = v.(*domain.Job).Name
 			continue
+		case domain.SkillRanksProperty:
+			skillRanks := make(map[string][]string)
+			for _, skill := range v.(domain.SkillRanks) {
+				jobName := skill.Job.Name
+				if _, ok := skillRanks[jobName]; !ok {
+					skillRanks[jobName] = make([]string, 0)
+				}
+				skillRanks[jobName] = append(skillRanks[jobName], skill.Skill.Name)
+			}
+			data[k] = skillRanks
+			continue
 		case domain.TeamProperty:
 			data[k] = domain.SpecFromTeam(v.(*domain.Team))
+			continue
+		case domain.TalentsProperty:
+			talents := make([]string, 0)
+			for _, talent := range v.(domain.Talents) {
+				talents = append(talents, talent.Name)
+			}
+			data[k] = talents
 			continue
 		case domain.TattooProperty:
 			fallthrough
@@ -199,6 +220,21 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			props[k] = background
 		case domain.BirthSeasonProperty:
 			props[k] = domain.Season(v.(string))
+		case domain.ConsumedAdvancesProperty:
+			consumedAdvances := make(domain.ConsumedAdvances)
+			for jobName, advances := range v.(map[string]interface{}) {
+				for statName, amount := range advances.(map[string]interface{}) {
+					if _, ok := consumedAdvances[jobName]; !ok {
+						consumedAdvances[jobName] = make([]domain.ConsumedAdvance, 0)
+					}
+					consumedAdvances[jobName] = append(consumedAdvances[jobName], domain.ConsumedAdvance{
+						Job:    jobName,
+						Stat:   statName,
+						Amount: int(amount.(float64)),
+					})
+				}
+			}
+			props[k] = consumedAdvances
 		case domain.DistinguishingMarkProperty:
 			marks := make(domain.DistinguishingMarks, 0)
 			for _, mark := range v.([]interface{}) {
@@ -227,6 +263,35 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				continue
 			}
 			props[k] = job
+		case domain.SkillRanksProperty:
+			skillRanks := make(domain.SkillRanks, 0)
+			for jobName, skills := range v.(map[string]interface{}) {
+				job, err := p.loaders.JobLoader.GetJob(jobName)
+				if err != nil {
+					log.Printf("failed to load job %s: %s", jobName, err)
+					continue
+				}
+				if job == nil {
+					log.Printf("job %s not found", jobName)
+					continue
+				}
+				for _, skillName := range skills.([]interface{}) {
+					skill, err := p.loaders.SkillLoader.GetSkill(skillName.(string))
+					if err != nil {
+						log.Printf("failed to load skill %s: %s", skillName.(string), err)
+						continue
+					}
+					if skill == nil {
+						log.Printf("skill %s not found", skillName.(string))
+						continue
+					}
+					skillRanks = append(skillRanks, &domain.SkillRank{
+						Job:   job,
+						Skill: skill,
+					})
+				}
+			}
+			props[k] = skillRanks
 		case domain.TeamProperty:
 			teamName := v.(map[string]interface{})["Name"].(string)
 			team, err := p.loaders.TeamLoader.GetTeam(teamName)
@@ -248,6 +313,21 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				Season:      domain.Season(v.(map[string]interface{})["Season"].(string)),
 			}
 			props[k] = tat
+		case domain.TalentsProperty:
+			talents := make(domain.Talents, 0)
+			for _, talentName := range v.([]interface{}) {
+				talent, err := p.loaders.TalentLoader.GetTalent(talentName.(string))
+				if err != nil {
+					log.Printf("failed to load talent %s: %s", talentName.(string), err)
+					continue
+				}
+				if talent == nil {
+					log.Printf("talent %s not found", talentName.(string))
+					continue
+				}
+				talents = append(talents, talent)
+			}
+			props[k] = talents
 		case domain.StatsProperty:
 			fighting := int(v.(map[string]interface{})["fighting"].(float64))
 			muscle := int(v.(map[string]interface{})["muscle"].(float64))

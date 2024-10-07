@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Turn the Other Cheek
+  - Divine Magick
+drawback:
+  - Lure of Power
+skillRanks:
+  - Charm
+  - Education
+  - Folklore
+  - Handle Animal
+  - Heal
+  - Incantation
+  - Resolve
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+bonusAdvances:
+  Flair: 2
+  Smarts: 2
+  Savvy: 1
+  Grit: 2
+talents:
+  - Impervious Mind
+  - Indifference
+  - Multilingual

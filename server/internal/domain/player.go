@@ -20,12 +20,16 @@ const (
 	ArchetypeProperty          = "archetype"
 	BackgroundProperty         = "background"
 	BirthSeasonProperty        = "birthSeason"
+	ConsumedAdvancesProperty   = "consumedAdvances"
 	DistinguishingMarkProperty = "distinguishingMark"
 	DrawbackProperty           = "drawback"
+	ExperienceProperty         = "experience"
 	JobProperty                = "job"
 	TeamProperty               = "team"
 	TattooProperty             = "tattoo"
+	SkillRanksProperty         = "skillRanks"
 	StatsProperty              = "stats"
+	TalentsProperty            = "talents"
 )
 
 type BaseProperty struct {
@@ -45,6 +49,61 @@ type Character struct {
 	Name string
 	Data map[string]Property
 }
+
+type ConsumedAdvance struct {
+	Job    string
+	Stat   string
+	Amount int
+}
+type ConsumedAdvances map[string][]ConsumedAdvance
+
+func (c ConsumedAdvances) String() string {
+	msg := ""
+	for job, advances := range c {
+		msg += fmt.Sprintf("%s\n", job)
+		for _, advance := range advances {
+			msg += fmt.Sprintf("\t%s: %d\n", advance.Stat, advance.Amount)
+		}
+	}
+	return msg
+}
+func (c ConsumedAdvances) Value() interface{} {
+	return c
+}
+
+func (c ConsumedAdvances) ConsumedAdvance(job string, stat string) int {
+	advances, ok := c[job]
+	if !ok {
+		return 0
+	}
+	for _, a := range advances {
+		if a.Stat == stat {
+			return a.Amount
+		}
+	}
+	return 0
+}
+
+var _ Property = &ConsumedAdvances{}
+
+type SkillRank struct {
+	Job   *Job
+	Skill *Skill
+}
+type SkillRanks []*SkillRank
+
+func (s SkillRanks) String() string {
+	msg := ""
+	for _, rank := range s {
+		msg += fmt.Sprintf("%s\n%s\n", rank.Skill.Name, rank.Skill.Description)
+	}
+	return msg
+}
+func (s SkillRanks) Value() interface{} {
+	return s
+}
+
+var _ Property = &SkillRanks{}
 
 type Player struct {
 	Character
@@ -88,6 +147,8 @@ func (p *Player) String() string {
 	// Enforce the ordering of the character properties
 	properties := []string{
 		StatsProperty,
+		ConsumedAdvancesProperty,
+		ExperienceProperty,
 		AlignmentProperty,
 		BirthSeasonProperty,
 		AgeProperty,
@@ -97,6 +158,8 @@ func (p *Player) String() string {
 		DrawbackProperty,
 		ArchetypeProperty,
 		JobProperty,
+		SkillRanksProperty,
+		TalentsProperty,
 		TeamProperty}
 	for _, k := range properties {
 		v, ok := p.Data[k]
@@ -132,6 +195,15 @@ func (p *Player) String() string {
 		case BirthSeasonProperty:
 			msg += fmt.Sprintf("  Birth Season - %s\n", v.(Season))
 			continue
+		case ConsumedAdvancesProperty:
+			msg += "  Consumed Advances: \n"
+			for job, advances := range v.(ConsumedAdvances) {
+				msg += fmt.Sprintf("\t%s\n", job)
+				for _, advance := range advances {
+					msg += fmt.Sprintf("\t\t%s: %d\n", advance.Stat, advance.Amount)
+				}
+			}
+			continue
 		case DistinguishingMarkProperty:
 			msg += "  Distinguishing Marks: \n"
 			for _, mark := range v.(DistinguishingMarks) {
@@ -154,9 +226,20 @@ func (p *Player) String() string {
 		case StatsProperty:
 			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d\n", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
 			continue
+		case SkillRanksProperty:
+			msg += "  Skill Ranks: \n"
+			for _, rank := range v.(SkillRanks) {
+				msg += fmt.Sprintf("\t%s (from %s)\n\t%s\n", rank.Skill.Name, rank.Job.Name, rank.Skill.Description)
+			}
+			continue
 		case TattooProperty:
 			msg += fmt.Sprintf("  Tattoo - \n\t\"%s\" on your %s\n", v.(*Tattoo).Description, v.(*Tattoo).Location)
 			continue
+		case TalentsProperty:
+			msg += "  Talents: \n"
+			for _, talent := range v.(Talents) {
+				msg += fmt.Sprintf("\t%s\n\t%s\n\t%s\n", talent.Name, talent.Description, talent.Effect.Name)
+			}
 		case TeamProperty:
 			msg += fmt.Sprintf("  Team - %s\n", v.(*Team).Name)
 			continue
@@ -165,4 +248,72 @@ func (p *Player) String() string {
 		}
 	}
 	return msg
+}
+
+func (p *Player) Experience() int {
+	return p.Data[ExperienceProperty].(*BaseProperty).Val.(int)
+}
+func (p *Player) AddExperience(exp int) {
+	p.Data[ExperienceProperty] = &BaseProperty{Val: p.Experience() + exp}
+}
+func (p *Player) DeductExperience(exp int) {
+	p.Data[ExperienceProperty] = &BaseProperty{Val: p.Experience() - exp}
+}
+
+func (p *Player) Job() *Job {
+	return p.Data[JobProperty].(*Job)
+}
+
+func (p *Player) PurchaseSkillRank(job *Job, skill *Skill, exp int) {
+	skillRanks := p.Data[SkillRanksProperty].(SkillRanks)
+	skillRanks = append(skillRanks, &SkillRank{
+		Job:   job,
+		Skill: skill,
+	})
+	p.DeductExperience(exp)
+}
+
+func (p *Player) ConsumedBonusAdvances() ConsumedAdvances {
+	return p.Data[ConsumedAdvancesProperty].(ConsumedAdvances)
+}
+func (p *Player) ConsumeBonusAdvance(job string, stat string, exp int) {
+	consumed := p.ConsumedBonusAdvances()
+	advances, ok := consumed[job]
+	if !ok {
+		advances = make([]ConsumedAdvance, 0)
+	}
+	var advance *ConsumedAdvance
+	for _, a := range advances {
+		if a.Stat == stat {
+			advance = &a
+			break
+		}
+	}
+	if advance == nil {
+		advance = &ConsumedAdvance{
+			Job:    job,
+			Stat:   stat,
+			Amount: 1,
+		}
+		advances = append(advances, *advance)
+	} else {
+		advance.Amount++
+	}
+
+	p.Data[ConsumedAdvancesProperty] = consumed
+	p.DeductExperience(exp)
+}
+
+func (p *Player) ConsumeTalent(job *Job, talent *Talent, exp int) {
+	var talents Talents
+	if _, ok := p.Data[TalentsProperty]; !ok {
+		talents = make(Talents, 0)
+		p.Data[TalentsProperty] = talents
+	}
+	talents = append(talents, talent)
+	p.DeductExperience(exp)
+}
+
+func (p *Player) SkillRanks() SkillRanks {
+	return p.Data[SkillRanksProperty].(SkillRanks)
 }

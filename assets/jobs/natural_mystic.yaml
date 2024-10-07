@@ -5,3 +5,25 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Eldritch Signs
+  - Arcane Magick
+skillRanks:
+  - Awareness
+  - Education
+  - Folklore
+  - Guile
+  - Incantation
+  - Navigation
+  - Rumor
+  - Scrutinize
+  - Simple Ranged
+  - Tradecraft
+bonusAdvances:
+  Flair: 1
+  Smarts: 2
+  Savvy: 2
+  Grit: 2
+talents:
+  - Azimuth
+  - Incredible Numeration
+  - Secret Signs
+

@@ -21,7 +21,7 @@ func NewSkillLoader(config *config.Config) *SkillLoader {
 	}
 }
 
-func (l *SkillLoader) Load() (domain.Skills, error) {
+func (l *SkillLoader) LoadSkills() (domain.Skills, error) {
 	if l.skills != nil && len(l.skills) > 0 {
 		return l.skills, nil
 	}
@@ -51,4 +51,16 @@ func (l *SkillLoader) Load() (domain.Skills, error) {
 		l.skills = append(l.skills, skill)
 	}
 	return l.skills, nil
+}
+func (l *SkillLoader) GetSkill(name string) (*domain.Skill, error) {
+	skills, err := l.LoadSkills()
+	if err != nil {
+		return nil, err
+	}
+	for _, skill := range skills {
+		if skill.Name == name {
+			return skill, nil
+		}
+	}
+	return nil, nil
 }
