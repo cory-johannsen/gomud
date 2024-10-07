@@ -6,7 +6,7 @@ import (
 	"errors"
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/loader"
-	"log"
+	log "github.com/sirupsen/logrus"
 )
 
 type Players struct {

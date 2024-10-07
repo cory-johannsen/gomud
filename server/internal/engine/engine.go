@@ -9,7 +9,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"net"
 	"strings"
 )

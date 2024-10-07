@@ -3,8 +3,8 @@ package domain
 import (
 	"errors"
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
-	"log"
 )
 
 type Property interface {
@@ -19,6 +19,7 @@ const (
 	AlignmentProperty          = "alignment"
 	ArchetypeProperty          = "archetype"
 	BackgroundProperty         = "background"
+	BackgroundTraitProperty    = "backgroundTrait"
 	BirthSeasonProperty        = "birthSeason"
 	ConsumedAdvancesProperty   = "consumedAdvances"
 	DistinguishingMarkProperty = "distinguishingMark"
@@ -160,11 +161,12 @@ func (p *Player) String() string {
 		JobProperty,
 		SkillRanksProperty,
 		TalentsProperty,
+		BackgroundTraitProperty,
 		TeamProperty}
 	for _, k := range properties {
 		v, ok := p.Data[k]
 		if !ok {
-			log.Printf("property %s not found", k)
+			log.Printf("property %s not found when displaying player", k)
 			continue
 		}
 		switch k {
@@ -192,6 +194,12 @@ func (p *Player) String() string {
 				}
 			}
 			continue
+		case BackgroundTraitProperty:
+			msg += fmt.Sprintf("  Background Trait - \n\t%s\n\t%s\n", v.(*Trait).Name, v.(*Trait).Description)
+			for _, effect := range v.(*Trait).Effects {
+				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n", effect.Name, effect.Description)
+			}
+			continue
 		case BirthSeasonProperty:
 			msg += fmt.Sprintf("  Birth Season - %s\n", v.(Season))
 			continue
@@ -215,13 +223,7 @@ func (p *Player) String() string {
 
 			continue
 		case JobProperty:
-			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n\tExperience Cost: %d\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier, v.(*Job).ExperienceCost)
-			for _, trait := range v.(*Job).Traits {
-				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n\t\tEffects:\n", trait.Name, trait.Description)
-				for _, effect := range trait.Effects {
-					msg += fmt.Sprintf("\t\t\t%s\n\t\t\t%s\n", effect.Name, effect.Description)
-				}
-			}
+			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier)
 			continue
 		case StatsProperty:
 			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d\n", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
@@ -316,4 +318,20 @@ func (p *Player) ConsumeTalent(job *Job, talent *Talent, exp int) {
 
 func (p *Player) SkillRanks() SkillRanks {
 	return p.Data[SkillRanksProperty].(SkillRanks)
+}
+
+func (p *Player) Talents() Talents {
+	return p.Data[TalentsProperty].(Talents)
+}
+
+func (p *Player) Stats() *Stats {
+	return p.Data[StatsProperty].(*Stats)
+}
+
+func (p *Player) Background() *Background {
+	return p.Data[BackgroundProperty].(*Background)
+}
+
+func (p *Player) BackgroundTrait() *Trait {
+	return p.Data[BackgroundTraitProperty].(*Trait)
 }

@@ -3,8 +3,8 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
-	"log"
 	"math/rand"
 	"os"
 	"strings"

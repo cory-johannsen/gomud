@@ -3,7 +3,7 @@ package generator
 import (
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/loader"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"math/rand"
 )
 
@@ -29,6 +29,7 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 		return nil, err
 	}
 	player.Data[domain.BackgroundProperty] = background
+	player.Data[domain.BackgroundTraitProperty] = background.Traits.Random()
 	// generate birth season
 	season := domain.RandomSeason()
 	player.Data[domain.BirthSeasonProperty] = season
