@@ -1,10 +1,26 @@
 name: Gamble
-description: "This is a description of the skill."
+description: |
+  Gambling represents a general know-how for common
+  games of chance with cards, dice and darts. Although anyone
+  can make wagers and play games, some are more adept at
+  spotting common mistakes and playing upon the weaknesses
+  of their opponents. Although this Skill does
+  not allow you to cheat, it does provide some
+  insight as to the outcome of the game.
+  Some GMs may simply prefer
+  Players to roll dice contests in order to
+  resolve high stakes gambling. Others
+  may require you and the other Players
+  around the table to play out an actual
+  game of cards or dice amongst each other. This
+  can be an exciting change of pace, presenting a
+  colorful distraction from your normal gaming schedule. Y o u
+  should feel encouraged to continue staying in-Character
+  during these sort of side games
 stat: Smarts
 type: Common
 focuses:
-  - Ball
-  - Games
+  - Ball Games
   - Cards
   - Chess
   - Cockfighting

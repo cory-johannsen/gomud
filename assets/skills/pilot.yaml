@@ -1,11 +1,18 @@
 name: Pilot
-description: "This is a description of the skill."
+description: |
+  Pilot represents the ability to sail or row water-going vessels,
+  from simple river rowing boats and barges to dinghies and
+  the triple-masted ships of the open seas. This Skill covers
+  vessels powered by paddle and sail. It also covers general
+  maintenance and upkeep of these boats; scrubbing decks,
+  unloading and reloading cargo, repairing broken oars,
+  patching holes, attending to torn sails and a host of other
+  repairs minor and major that are needed to keep a vessel
+  ship-shape and in top working order.
 stat: Speed
 type: Special
 focuses:
   - Boating
-  - Ocean
-  - Lore
-  - River
-  - Lore
+  - Ocean Lore
+  - River Lore
   - Sailing

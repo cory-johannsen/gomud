@@ -1,0 +1,16 @@
+name: Martial Ranged
+description: |
+  Martial Ranged Skill is used by most professional targeteers
+  and scouts. Archers, Dragoon, hunters, horse-borne
+  Berserkers and all manner of trained professionals proficient
+  in the martial arts have at least one Skill Rank in this Skill.
+  Besides enabling you to effectively fire missile weapons in
+  ranged combat, it also allows you to maintain the quality of
+  Martial Ranged weapons and perform general maintenance
+  to keep them in usable condition
+stat: Fighting
+type: Special
+focuses:
+  - Gunpowder
+  - Missile
+  - Explosives

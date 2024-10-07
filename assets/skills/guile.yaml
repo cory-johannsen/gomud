@@ -1,14 +1,18 @@
 name: Guile
-description: "This is a description of the skill."
+description: |
+  The Guile Skill represents general underhandedness in
+  conversation, using trickery and lies to get what you want.
+  It is oftentimes used to subtly manipulate others’ feelings
+  and emotions by sewing the seeds of doubt within their
+  mind. With this Skill, you can play word games or use irony
+  to confuse others and engage in political mind games with
+  kingmakers and run verbal circles around demagogues.
 stat: Flair
 type: Common
 focuses:
-  - Appear
-  - Innocent
+  - Appear Innocent
   - Blather
-  - Con
-  - Games
+  - Con Games
   - Deception
   - Innuendo
-  - Thieves'
-  - Cant
+  - Thieves' Cant

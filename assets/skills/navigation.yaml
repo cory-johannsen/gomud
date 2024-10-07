@@ -1,9 +1,19 @@
 name: Navigation
-description: "This is a description of the skill."
+description: |
+  Navigation represents the ability to accurately determine
+  distance, direction and routes across the world, orienteering
+  over land and sailing over the sea. This Skill relies on
+  landmarks and maps to find your way overland and the
+  movement and alignment of the stars and constellations as
+  the seasons pass, to help you find your way across the sea. You
+  can use this Skill to plot a course towards a destination, taking
+  into account the landscape, weather and roads so as to arrive
+  in a faster time. Even in unfamiliar lands or on unfamiliar
+  seas, you can chart a route should there be someone who can
+  tell you what to look for or indicate prominent landmarks.
 stat: Smarts
 type: Special
 focuses:
   - Guide
   - Orientation
-  - Overland
-  - Travel
+  - Overland Travel

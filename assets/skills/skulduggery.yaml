@@ -1,17 +1,27 @@
 name: Skulduggery
-description: "This is a description of the skill."
+description: |
+  There is nothing that is socially acceptable about the
+  Skulduggery Skill, since it encapsulates practically everything
+  larcenous or illegal that you might do using your hands. You
+  can use this Skill to bypass locked doors and chests without
+  a key to hand, disable security contrivances and complex
+  traps, use simple prestidigitation to palm small objects and
+  hide cards and conduct simple robberies, such as cutting coin
+  purses and snatching bracelets.
+  Skulduggery Tests are often tough to make if someone is
+  watching. While you may be able to use this Skill to make
+  small objects disappear in front of onlookers, it requires some
+  form of distraction to do so. This is particularly helpful when
+  attempting to cheat at cards! Similarly, using this Skill to
+  snatch coin purses or cut pockets can be difficult unless you
+  are amongst a crowd. Of course, there are simple techniques
+  you can use to draw your mark’s attention away from.
 stat: Speed
 type: Special
 focuses:
-  - Disable
-  - Trap
-  - Lock
-  - Picking
-  - Palm
-  - Object
-  - Pick
-  - Pocket
-  - Set
-  - Trap
-  - Window
-  - Fishing
+  - Disable Trap
+  - Lock Picking
+  - Palm Object
+  - Pick Pocket
+  - Set Trap
+  - Window Fishing

@@ -1,12 +1,17 @@
 name: Leadership
-description: "This is a description of the skill."
+description: |
+  Leadership is the ability to enlist the support of allies and
+  followers, unifying them under your guidance against a
+  common foe or cause. You can use this Skill to give tactical
+  orders to forces under your command, much like a general
+  does on the battlefield; to stir emotions and foment rebellion,
+  such as an Anarchist extolling a crowd to storm the barricades;
+  and to instill a belief in onlookers, such as a firebrand
+  inspiring people toward a higher plane of spirituality.
 stat: Flair
 type: Special
 focuses:
-  - Incite
-  - Rebellion
-  - Military
-  - Command
-  - Spiritual
-  - Leadership
+  - Incite Rebellion
+  - Military Command
+  - Spiritual Leadership
   - Stewardship

@@ -1,9 +1,21 @@
 name: Interrogation
-description: "This is a description of the skill."
+description: |
+  Interrogation is the ability to draw answers from an unwilling
+  subject using a variety of physical and emotional methods. It
+  allows you to cause duress in your subject, inflicting mental
+  fatigue upon them as you begin to get down to the heart of
+  the truth. Interrogation often relies on torture, as you inflict
+  bodily harm upon a subject to coerce them to speak the truth.
+  A nasty mix of hot tar, branding irons, a cat’s paw, red-hot
+  coals, thumbscrews, pliers and sharpened spoons to scoop
+  out eyes are the most common trappings of any worthy Jailer.
+  Torture devices such as the brazen bull, breaking wheels,
+  iron maiden and the pear of anguish are often used by royal
+  torturers. The only limit to what devices and methods you
+  use during an interrogation is how far you’re willing to go to
+  extract the desired information.
 stat: Grit
 type: Special
 focuses:
-  - Mental
-  - Torture
-  - Physical
-  - Torture
+  - Mental Torture
+  - Physical Torture

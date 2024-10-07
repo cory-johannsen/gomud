@@ -1,5 +1,16 @@
 name: Awareness
-description: "This is a description of the skill."
+description: |
+  Awareness represents the ability to visually notice minute
+  details and sounds, scents within the air, watch for ambushes,
+  find hidden objects and spot contrivances designed to trap or
+  kill. You’ll use Awareness not only to visually see, also to sense
+  using smell, taste and touch. You may also use Awareness to
+  estimate numbers and distances.
+  This Skill doesn’t allow you to see through lies, sense
+  motives or innuendo – refer to the Scrutinize Skill in those
+  cases. If you wish to listen in on a conversation or distinctly
+  make something out you heard, refer to the Eavesdrop Skill
+  instead.
 stat: Savvy
 type: Common
 focuses:

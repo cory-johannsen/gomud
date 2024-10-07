@@ -1,5 +1,14 @@
 name: Alchemy
-description: "This is a description of the skill."
+description: |
+  Alchemy’s practitioners spend years divining the hidden
+  secrets of true transmutation, although its everyday use tends
+  to consist of concocting serums, pain relievers, abortifacients
+  and other medicines. Alchemical compounds are created
+  through various processes of heating and cooling substances.
+  Drugs, poisons and other substances useful to adventurers can
+  be crafted using this Skill. An alchemist’s laboratory tends to
+  be a strange amalgam of scientific notes, erudite symbols of
+  Magick, smells and boiling baubles
 stat: Smarts
 type: Special
 focuses:

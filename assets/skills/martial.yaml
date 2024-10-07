@@ -1,8 +1,0 @@
-name: Martial
-description: "This is a description of the skill."
-stat: Ranged
-type: Fighting
-focuses:
-  - Special
-  - Gunpowder
-  - Missile

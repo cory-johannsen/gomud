@@ -1,0 +1,32 @@
+name: Warfare
+description: |
+  Warfare represents an understanding of warfare as it relates
+  to war machines. This Skill is used to arm and reload the
+  siege weapons intended to break down walls, smash doors,
+  crash through an army’s defenses and wreak havoc upon
+  an enemy’s supply lines; understand strategies utilized in
+  warfare (both mobile and ensconced within a fortification)
+  and how to erect appropriate defenses; and how to conduct
+  psychological warfare upon the enemy. It also includes
+  knowledge of how to construct siege towers, battering rams,
+  bolt throwers, trebuchets and a host of gunpowder-type
+  weapons. You can also use this Skill to identify wounded foes
+  in large groups, able to isolate and strike the same one over
+  and over amid an Engagement.
+  You can also use this Skill to arm, aim and fire war. Identifying
+  weakness in defenses is also another common use of this Skill.
+  Although you may not be a stoneworker, you can identify
+  where the strongest and weakest points are in a castle or other
+  fortification.
+  You can also use the Warfare Skill to commit military
+  investment and provisioning to the war effort, to understand
+  how to tactically deploy armies and to array artillery against a
+  mobile enemy. With this knowledge, you can rapidly change
+  the mode of conflict as necessary, adapting very quickly to
+  your opponent’s movements en masse
+stat: Grit
+type: Special
+focuses:
+  - Fortifications
+  - Military Tactics
+  - War Machines

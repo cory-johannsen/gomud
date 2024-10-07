@@ -1,5 +1,33 @@
 name: Tradecraft
-description: "This is a description of the skill."
+description: |
+  Tradecraft represents the practice of a particular craft and
+  the ability to run a business based off that craft. Although
+  anyone with a Skill Rank in Tradecraft has the potential to
+  practice any trade, Focuses give them a distinct advantage
+  over their peers in particular fields. It takes time to learn and
+  master such training.
+  Tradecraft is used to construct and create a wide variety
+  of things. Artistry can produce frescoes, paintings and
+  sculptures. Brewing creates alcohol and flavored drinks
+  such as teas and coffees. Carpentry can plank wood and
+  construct anything from carts and wagons, to carriages, to
+  multi-story houses and wooden fortifications. Engineering
+  can oversee the construction of stonework homes, bridges,
+  aqueducts, walls, towers, fortified manor homes and castles.
+  Fine Smithery can work with jewelry, clockwork parts and
+  even gunpowder weapons. Gastronomy is used to prepare
+  culturally-appropriate and exquisite meals, far more complex
+  than ones prepared using Survival. Metallurgy can be used
+  to recognize, extract and reforge ores into alloys with the
+  appropriate tools. A Shipwright can construct anything from
+  river-going rafts to sea-going vessels. Smithing can work with
+  practically any metal to create horseshoes, kettles, iron bands
+  and wire. Stoneworking can be used to cut stones to fit the
+  construction of larger buildings. Tailoring can work with cloth
+  and other rare materials to clothe both the drecks of society
+  as well as the cream. Tanning can produce rawhide, furs and
+  refined leather goods. And finally, Weaponsmithing can be
+  used to craft all manner of weapons.
 stat: Grit
 type: Special
 focuses:

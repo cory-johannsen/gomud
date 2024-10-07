@@ -1,12 +1,24 @@
 name: Eavesdrop
-description: "This is a description of the skill."
+description: |
+  Eavesdrop allows you to listen to and perceive low sounds,
+  usually conversations between two or more people. By
+  listening to them or watching the movement of their lips, you
+  can make out distinct sounds and determine the differences
+  between mumbling and actual words. With a clear view of the
+  people speaking, you can even pick up slight intonations and
+  body language, giving further indication as to what is being
+  said. You can also use it to hide the movement of your own
+  lips to prevent Eavesdrop attempts on your conversations.
+  Succeeding at an Eavesdrop Test doesn’t give you all of
+  the details of the conversation. Instead, you gain a general
+  impression of what was said. For example, you see two
+  courtiers in conversation, but do not hear exactly what they
+  are saying, though certain words suggest that they are plotting
+  an assassination attempt against a rival aristocrat.
 stat: Savvy
 type: Common
 focuses:
-  - Lip
-  - Reading
-  - Listen
-  - In
-  - Sign
-  - Language
+  - Lip Reading
+  - Listen In
+  - Sign Language
   - Ventriloquism

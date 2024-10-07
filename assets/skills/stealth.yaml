@@ -1,5 +1,21 @@
 name: Stealth
-description: "This is a description of the skill."
+description: |
+  Stealth represents the ability to use concealment, shadows,
+  foliage, people and other distractions, to move about without
+  being seen or heard, to hide and to lay in wait to ambush
+  others. It can also be used stalk a mark while moving among
+  crowds of others, and even to conceal large objects such as
+  encampments, horses and wagons.
+  When using the Stealth Skill to hide and conceal yourself,
+  you must be outside the line of sight of those you intend to
+  ambush or they must be pre-occupied with something else
+  (the distraction of close combat isn’t enough). To cause a
+  distraction, you may need to get creative. Whipping your
+  horse and having it storm through the battlefield away from
+  you is a good way to take everybody’s eyes off of you. Another
+  is to wait until dark or walk amongst the crowds during the
+  day, hiding in plain sight. Whenever you make a Stealth Test,
+  it is always treated as a Secret Test
 stat: Speed
 type: Common
 focuses:
@@ -7,5 +23,4 @@ focuses:
   - Hide
   - Scout
   - Shadowing
-  - Silent
-  - Movement
+  - Silent Movement

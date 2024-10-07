@@ -1,11 +1,29 @@
 name: Ride
-description: "This is a description of the skill."
+description: |
+  The Ride Skill is primarily used to mount and ride atop animals
+  trained to bear others, such as horses and ponies. The Skill is
+  to gallop and race, leap over hedges and fences, ride across
+  difficult terrain, leap atop your mount while running or jumping
+  from a window and to calm your mount when it is stressed.
+  Much like the Drive Skill, unless you’re doing something
+  out of the ordinary, a Test is not required to Ride an animal.
+  However, Ride Tests are required if you want to attempt a
+  difficult maneuver or race against others. Depending on the
+  severity and inherent challenge of the maneuver, you may
+  be required to roll multiple Ride Tests to successfully evade
+  debris or navigate tight corners.
+  Should you attempt to mount an untamed animal, you
+  must succeed at a Ride Test. If successful, you to gain control
+  of the creature for a number of minutes equal to your [AB].
+  A Ride Test may also be required if you’re atop a dray horse,
+  mule, palfrey horse or pony in tense situations. These animals
+  are not accustomed to the battlefield and will often spook or
+  attempt to bolt away when faced with the scent of blood or
+  the clang of steel against steel.
 stat: Speed
 type: Special
 focuses:
-  - Ride
-  - Animal
-  - Ride
-  - Beast
-  - Trick
-  - Riding
+  - Ride Animal
+  - Ride Beast
+  - Ride Machine
+  - Trick Riding

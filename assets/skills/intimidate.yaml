@@ -1,8 +1,16 @@
 name: Intimidate
-description: "This is a description of the skill."
+description: |
+  Intimidation is the power to bully others into doing
+  something you want. By using both physical appearance and
+  verbal commands, you try to cow others before you, posturing
+  aggressively like a dog ready to pounce. You attempt to terrify
+  others with your words and actions, suggesting that you’ll do
+  violence upon them should they not back down. Similarly,
+  you can use this Skill to cause others to back out of a fight,
+  causing them to either shrink away from you or to stand
+  proud but stay their hand
 stat: Muscle
 type: Common
 focuses:
-  - Physical
-  - Presence
+  - Physical Presence
   - Threaten

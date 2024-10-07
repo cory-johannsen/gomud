@@ -1,0 +1,25 @@
+name: Charm
+description: |
+  Charm is used to please others with flattery and pleasing
+  words. A kind word, a soft smile, a pleasant handshake or hug
+  may be used to illustrate your personal charms and enchant
+  others. This Skill can modify the mood of others, persuading
+  them towards your favor or causing them to change their
+  opinions about things they may not necessarily support. It
+  can be used to impress others with your affable nature or
+  seduce those who may find you attractive.
+  This Skill doesn’t allow you to produce lies, false accounts or
+  con games – refer to the Guile Skill in those cases.
+stat: Flair
+type: Common
+focuses:
+  - Acting
+  - Begging
+  - Comedy
+  - Mime
+  - Mimic
+  - Play Music
+  - Seduce
+  - Sing
+  - Storytelling
+  - Write Poetry

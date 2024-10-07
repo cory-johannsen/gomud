@@ -1,13 +1,21 @@
 name: Resolve
-description: "This is a description of the skill."
+description: |
+  Resolve is the ability to keep yourself calm under pressure.
+  It allows you to steel your mind, focusing on your inner
+  strength to maintain resolve when thrust into situations
+  that Test your will. When confronted by the supernatural or
+  horrifying situations, you use this Skill to let the fear wash
+  over you and through you – for fear is the ‘little death’, as
+  Adherents are wont to say. Stress and anger, trauma and hate
+  – these are the sorts of things you can attempt to withstand
+  with the Resolve Skill.
+  The most common use for the Resolve Skill is to resist the
+  effects of madness and shake off the effects of intimidation. It
+  also allows you to resist certain types of mind control Magick.
 stat: Grit
 type: Common
 focuses:
-  - Resist
-  - Fear
-  - Resist
-  - Magick
-  - Resist
-  - Stress
-  - Resist
-  - Terror
+  - Resist Fear
+  - Resist Magick
+  - Resist Stress
+  - Resist Terror

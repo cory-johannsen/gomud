@@ -1,5 +1,13 @@
 name: Coordination
-description: "This is a description of the skill."
+description: |
+  Coordination represents dexterity, flexibility, balance and
+  grace in movement. You can use this Skill to perform acrobatic
+  feats, slip out of bonds, avoid falling debris, manipulate
+  objects with delicacy and avoid oncoming attacks by leaping
+  out of the way. You generally use Coordination as a reaction
+  to something else. Its most common application is to evade
+  traps, avoid being pushed off your feet and weaseling out of
+  bonds and shackles.
 stat: Speed
 type: Common
 focuses:

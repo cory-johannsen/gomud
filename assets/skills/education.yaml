@@ -1,5 +1,17 @@
 name: Education
-description: "This is a description of the skill."
+description: |
+  Education represents both literacy and schooling, but it
+  extends far beyond merely being able to read and write. This
+  Skill lends significant insight into the histories and practices
+  of the world you live within. Education covers many different
+  fields of study, each representing the study of a body of
+  lore, possible academic research or ’rogue scholar’ pursuits.
+  Although anyone with a Skill Rank in Education will have
+  a basic understanding of various scholastic subjects, Focuses
+  give them a specific specialization in an area of knowledge.
+  While the Focuses above are the most commonly studied by
+  the educated in a grim & perilous world, you can work with
+  your GM to develop new ones.
 stat: Smarts
 type: Special
 focuses:

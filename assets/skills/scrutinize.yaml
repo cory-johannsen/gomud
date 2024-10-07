@@ -1,12 +1,20 @@
 name: Scrutinize
-description: "This is a description of the skill."
+description: |
+  The Scrutinize Skill represents the ability to understand
+  motives and underlying intentions in others. It relies on
+  hearing and vision to assess each participant’s part in a
+  conversation; the way they intone their words, whether they
+  fidget or look away as they speak and if their body language
+  is unusual. Note that you can also deduce tone and intention
+  from the written word, providing you possess the Education
+  Skill. Finally, it can be used to recall things from memory.
+  This Skill doesn’t allow you to see minute details, take
+  account of numbers or see through an ambush – refer to the
+  Awareness Skill in those cases.
 stat: Savvy
 type: Common
 focuses:
   - Cryptography
-  - Detect
-  - Lics
+  - Detect Lies
   - Memory
-  - Sense
-  - Social
-  - Class
+  - Sense Social Class

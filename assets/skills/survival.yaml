@@ -1,16 +1,21 @@
 name: Survival
-description: "This is a description of the skill."
+description: The Survival Skill represents the ability to live out in the
+  wilderness and live off the land. The Skill can be used to
+  forage for roots, hunt for food, find suitable shelter, follow
+  trails left behind by animals or people and locate somewhere
+  safe to lay your head. In addition, it allows you to prepare
+  simple meals, construct rudimentary weapons and build
+  simple traps to hunt with. Providing you can locate the
+  appropriate materials, you can construct rough items such
+  as a wattle and daub house, a well, ladders, fences and other
+  staples of peasant life.
 stat: Savvy
 type: Common
 focuses:
-  - Build
-  - Shelter
-  - Find
-  - Water
+  - Build Shelter
+  - Find Water
   - Forage
-  - Game
-  - Hunting
-  - Plant
-  - Lore
+  - Game Hunting
+  - Plant Lore
   - Survivalist
   - Tracking

@@ -1,0 +1,18 @@
+name: Simple Melee
+description: |
+  The Simple Melee Skill is employed when wielding common
+  weapons in hand-to-hand fights and battles. Simple Weapons,
+  such as a bullwhip, cudgel and woodsman’s axe are easy to
+  use, require little training and are commonly carried on a
+  belt. This Skill is gained by training with improvised weapons
+  taken from the battlefield left shattered and abandoned or
+  by being members of a militia. It also allows you to maintain
+  the quality of Simple Melee weapons and perform general
+  maintenance to keep them in usable condition.
+stat: Fighting
+type: Common
+focuses:
+  - Bladed
+  - Brawling
+  - Crushing
+  - Parry Attack

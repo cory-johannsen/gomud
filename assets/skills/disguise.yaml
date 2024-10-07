@@ -1,5 +1,21 @@
 name: Disguise
-description: "This is a description of the skill."
+description: |
+  The Disguise Skill represents the ability to masquerade as
+  someone else, hide your own identity in public or conceal
+  your true feelings from others. Theatrics and imitation are
+  the foundation of any good disguise. The more you know
+  about the people (or person) you’re trying to hide or mimic,
+  the more effective your disguise.
+  You can use this Skill in its most traditional way by
+  employing tools of the trade to change your appearance
+  – heavy cosmetics, appropriate clothing, different posture,
+  regional accent and different behavioral traits or personality
+  tics. Changing your appearance to look like that of another
+  group of people or race will be easier if you have the appropriate
+  clothes or know enough about their culture. Dressing as the
+  opposite sex can be tough. However, disguises to imitate
+  specific people can be much more difficult, particularly if you
+  intend to traffic among people they know.
 stat: Flair
 type: Special
 focuses:

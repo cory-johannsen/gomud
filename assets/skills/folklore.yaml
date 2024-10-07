@@ -1,11 +1,30 @@
 name: Folklore
-description: "This is a description of the skill."
+description: |
+  Folklore represents a general, broad knowledge of the
+  world around you. Unlike academic learning (such as per
+  the Education Skill), it represents both second-hand and
+  first person knowledge of the histories, traditions, faith and
+  notable figures of a particular region. Drawn from the stories
+  and oral traditions you’ve heard from merchants, troubadours
+  and family, it indicates an understanding of cultures other
+  than your own. Its knowledge can also include the socially-
+  accepted norms of both behavior and belief amongst the
+  different social classes, including the courtesies to adopt and
+  the proper forms of address to use.
+  Besides being used to gain knowledge about the law, local
+  history and institutions of your own culture, it can also be
+  used to represent knowledge about geography, taboos, famous
+  personalities, faith and even customs of people other than
+  your own. You may be able to identify landmarks, secret
+  signs left behind by other travelers, work out the movements
+  and migrations of people and seek to understand the basic
+  religious practices of your own region and others outside of
+  it. You may also know what grows in the area, which parts are
+  possibly dangerous and what the expected weather conditions
+  will be.
 stat: Smarts
 type: Common
 focuses:
-  - Creature
-  - Lore
-  - Foreign
-  - Lore
-  - Local
-  - Lore
+  - Creature Lore
+  - Foreign Lore
+  - Local Lore

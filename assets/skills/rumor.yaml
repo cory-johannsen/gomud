@@ -1,12 +1,21 @@
 name: Rumor
-description: "This is a description of the skill."
+description: |
+  Rumor is used to gather information from social circles,
+  stimulating conversation by being gregarious and talkative.
+  It can be used to interact with strangers and friends alike,
+  appealing to them with your personality or just chewing
+  the fat. Unlike other social Skills such as Charm, Guile and
+  Intimidate, this Skill is used to specifically appeal to larger
+  groups by being an extrovert. Rumor is a good way to get
+  the latest political or social news, dissect the latest gossip and
+  spread rumors all at the same time. There is invariably a kernel
+  of truth to be found in all of these and perhaps even particularly
+  harmful dirt or secrets that may be revealed by this Skill.
 stat: Flair
 type: Common
 focuses:
   - Etiquette
   - Gossip
   - Linguistics
-  - Public
-  - Speaking
-  - Secret
-  - Language
+  - Public Speaking
+  - Secret Language

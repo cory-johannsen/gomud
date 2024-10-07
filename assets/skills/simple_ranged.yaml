@@ -1,0 +1,15 @@
+name: Simple Ranged
+description: |
+  The Simple Ranged Skill is used when wielding common
+  weapons to fight with at a distance. Most are easy to use, such
+  as a shepherd’s sling or hunting bow. The Skill is typically
+  used by hunters turned peasant militiamen or irregular forces
+  and you likely gained training from one of these groups. It
+  also allows you to maintain the quality of Simple Ranged
+  weapons and perform general maintenance to keep them in
+  usable condition.
+stat: Fighting
+type: Common
+focuses:
+  - Gunpowder
+  - Missile

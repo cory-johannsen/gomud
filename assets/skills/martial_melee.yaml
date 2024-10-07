@@ -1,0 +1,14 @@
+name: Martial Melee
+description: |
+  Soldiers, mercenaries and all manner of trained professionals
+  proficient in the martial arts have a Skill Rank in Martial
+  Melee. Besides enabling you to effectively wield weapons
+  in hand-to-hand combat, it also allows you to maintain
+  the quality of Martial Melee weapons and perform general
+  maintenance to keep them in usable condition
+stat: Fighting
+type: Special
+focuses:
+  - Bladed
+  - Crushing
+  - Parry Attack

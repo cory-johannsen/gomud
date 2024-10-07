@@ -1,5 +1,18 @@
 name: Bargain
-description: "This is a description of the skill."
+description: |
+  Bargain allows you to interpret the underlying factors of a
+  commercial transaction, barter with trade goods, haggle over
+  prices, find a common ground with another party, grease the
+  wheels of commerce through use of bribery, appraise the
+  worth of objects d’art and even procure illegal contraband.
+  You can use this Skill in many different ways, but its most
+  common use is to haggle over the price of goods. You may
+  also use the Bargain Skill to appraise the worth of jewels,
+  trade goods and even priceless relics of an age long past. Your
+  Difficulty Rating may be improved if you have Skill Ranks in
+  other Skills that may be related to the object you’re attempting
+  to evaluate (such as having the Tradecraft Skill with a Focus
+  in Tailoring to determine the value of a bolt of silk).
 stat: Flair
 type: Common
 focuses:

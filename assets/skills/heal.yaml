@@ -1,21 +1,28 @@
 name: Heal
-description: "This is a description of the skill."
+description: |
+  The Heal Skill represents an acute understanding of the
+  significance in the four humours of the body, how they relate
+  to one another and how the wounded can be treated by
+  paying heed to these temperaments. With this Skill, you can
+  exercise this knowledge and how it relates to the excess of
+  fluids which cause miasma and sickness.
+  You can treat the ill and the healthy alike, tending to their
+  needs for aches and pains, act as midwife, render abortifacients
+  and even tend to the injured. You may adhere to a classical
+  school of thought, using emetics and bloodletting to cure illness
+  through humoralism. Or, you may prescribe to a mechanical
+  school of thought, seeing the body as a complex machine that
+  can be ’fixed’ with the right techniques. Regardless of which
+  school you adhere to, those who practice the healing arts always
+  pay some sort of lip service to the gods
 stat: Smarts
 type: Special
 focuses:
-  - Bind
-  - Wounds
+  - Bind Wounds
   - Bloodletting
-  - Kiss
-  - of
-  - Life
-  - Perform
-  - Psychosurgery
-  - Perform
-  - Surgery
-  - Prepare
-  - Bandages
-  - Treat
-  - Disease
-  - Treat
-  - Injury
+  - Kiss of Life
+  - Perform Psychosurgery
+  - Perform Surgery
+  - Prepare Bandages
+  - Treat Disease
+  - Treat Injury

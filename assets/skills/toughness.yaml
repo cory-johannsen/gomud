@@ -1,19 +1,17 @@
 name: Toughness
-description: "This is a description of the skill."
+description: |
+  This Skill represents stamina and endurance. It reflects the
+  ability to withstand pain and exposure to the elements, ignore
+  the effects of physical Peril, withstand the powerful effects of
+  chaos, endure a forced march, run for an extended period of
+  time, resist fatigue and hold your breath underwater.
 stat: Muscle
 type: Common
 focuses:
-  - Consume
-  - Alcohol
-  - Resist
-  - Disease
-  - Resist
-  - Flames
-  - Resist
-  - Magick
-  - Resist
-  - Peril
-  - Resist
-  - Poison
-  - Resist
-  - Weather
+  - Consume Alcohol
+  - Resist Disease
+  - Resist Flames
+  - Resist Magick
+  - Resist Peril
+  - Resist Poison
+  - Resist Weather

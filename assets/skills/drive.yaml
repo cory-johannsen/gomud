@@ -1,8 +1,24 @@
 name: Drive
-description: "This is a description of the skill."
+description: |
+  Drive represents the ability to control common vehicles, 
+  such as simple carts and wagons, passenger vehicles, semis 
+  and even war machines such as tanks. The Skill is also
+  used to maneuver vehicles round tight corners, race across
+  the countryside, plow through a hedge and even roll over
+  others should they stand in your way.
+  Unless you’re doing something out of the ordinary, a Test
+  is not required to Drive a vehicle. However, Drive Tests
+  are required if you want to attempt a difficult maneuver or
+  race against others. Depending on the severity and inherent
+  challenge of the maneuver, you may be required to roll
+  multiple Drive Tests to successfully evade debris or navigate
+  tight corners.
 stat: Muscle
 type: Common
 focuses:
   - Carting
   - Coaching
   - Wagoner
+  - Small Vehicle
+  - Large Vehicle
+  - War Vehicle

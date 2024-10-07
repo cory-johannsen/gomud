@@ -1,0 +1,24 @@
+name: Handle Animal
+description: |
+  The Handle Animal Skill represents the ability to subdue,
+  command and train creatures classified as Animals. Although
+  this Skill doesn’t allow those who use it to domesticate
+  animals that are not meant to be domesticated, it does allow
+  one to tame creatures. This Skill also teaches the proper way
+  to care for and groom an animal, establishing a bond of trust
+  and submission.
+  You can use this Skill to coerce or tame those creatures
+  classified as Animals. Chickens, dogs, horses, falcons, pigs
+  and other farm creatures can easily be trained to obey you.
+  However, should you wish to teach one of these animals more
+  complex tricks you must teach it over nine consecutive days.
+  If successful, you are master of the animal and it will learn
+  one simple trick. You can never impart more than a number
+  of tricks to a single animal in excess of your [FB], however.
+stat: Flair
+type: Special
+focuses:
+  - Animal Care
+  - Calm
+  - Animal Rustling
+  - Teach Trick

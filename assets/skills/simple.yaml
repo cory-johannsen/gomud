@@ -1,8 +1,0 @@
-name: Simple
-description: "This is a description of the skill."
-stat: Ranged
-type: Fighting
-focuses:
-  - Common
-  - Gunpowder
-  - Missile

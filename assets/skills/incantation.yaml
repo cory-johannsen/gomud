@@ -1,22 +1,26 @@
 name: Incantation
-description: "This is a description of the skill."
+description: |
+  Incantation is a Skill that’s used to tap into the Æthereal
+  Veil and to reach beyond the stars or peer into the Abyss
+  to command Magick. It can be used to identify strange
+  Magickal symbols, understand occult activities, participate
+  in rituals, research otherworldly creatures, interpret omens
+  and even gain understanding of superstitions made real. In
+  addition, use of Incantation is relied upon by would-be seers,
+  diviners, tarot card readers and other types of spiritualists.
+  Expressly, this Skill is used for Magickal practices.
 stat: Grit
 type: Special
 focuses:
   - Astrology
-  - Card
-  - Reading
-  - Cast
-  - Runes
+  - Card Reading
+  - Cast Runes
   - Concentration
-  - Conduct
-  - Ritual
+  - Conduct Ritual
   - Counterspell
-  - Dream
-  - Interpretation
+  - Dream Interpretation
   - Hypnotize
-  - Learn
-  - Magick
+  - Learn Magick
   - Palmistry
   - Scapulimancy
   - Scrying
