@@ -5,3 +5,25 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Shadow Broker
+skillRanks:
+  - Bargain
+  - Counterfeit
+  - Disguise
+  - Eavesdrop
+  - Education
+  - Folklore
+  - Rumor
+  - Simple Melee
+  - Stealth
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 1
+  Savvy: 1
+  Smarts: 1
+  Grit: 1
+  Flair: 2
+talents:
+  - Larceny
+  - Secret Signs
+  - Streetwise

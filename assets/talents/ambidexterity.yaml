@@ -1,0 +1,5 @@
+name: Ambidexterity
+description: |
+  You can use both hands with equal finesse.
+effects:
+  - You never suffer penalties when using tools or weapons in either hand. If you ever suffer an Injury where you cannot use your primary hand, you do not suffer penalties to use your off-hand.

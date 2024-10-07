@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Vim & Vigor
+skillRanks:
+  - Athletics
+  - Charm
+  - Coordination
+  - Folklore
+  - Gamble
+  - Guile
+  - Martial Melee
+  - Resolve
+  - Rumor
+  - Simple Melee
+bonusAdvances:
+  Fighting: 0
+  Muscle: 1
+  Speed: 2
+  Savvy: 0
+  Smarts: 1
+  Grit: 1
+  Flair: 2
+talents:
+  - Fencer's Panache
+  - Incredible Numeration
+  - Lightning Reaction

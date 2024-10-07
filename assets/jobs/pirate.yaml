@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Salty Dog
+skillRanks:
+  - Athletics
+  - Folklore
+  - Gamble
+  - Guile
+  - Martial Ranged
+  - Intimidate
+  - Pilot
+  - Resolve
+  - Simple Melee
+  - Simple Ranged
+bonusAdvances:
+  Fighting: 1
+  Muscle: 2
+  Speed: 2
+  Savvy: 0
+  Smarts: 0
+  Grit: 1
+  Flair: 1
+talents:
+  - Appalling Mien
+  - Gallows Humor
+  - Mariner

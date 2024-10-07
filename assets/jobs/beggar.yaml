@@ -1,7 +1,53 @@
 name: Beggar
 archetype: Criminal
-description: "The rich get richer and the poor get poorer in these trying times, with the Beggar evidence of just how poor you can get. Beggars are common in large cities, drifting in crowded marketplaces and digging in rubbish piles hoping for a piece of scrap. Every small town its own local tramp, or Beggar. Any number of misfortunes can drive you to the life of a Beggar: debilitating sickness, a terrible war wound or even psychological scarring. Such erstwhile unfortunates make their lives on the streets, clutching a chipped and cracked alms bowl to beg for a pfennig. Here they learn various underhanded skills and to know who will fill their bowls and who will kick them in the stomach. Few burghers and even fewer aristocrats have any sympathy for these poor wretches. Beggars remain stalwart and strangely optimistic that their lot will improve. Leaving behind the broken bowl and picking up a stolen knife to become an adventurer is a way to improve their lot; many see it as an infinitely better alternative to slogging through muddy streets and eating dead rats. Having become convinced that society doesn’t care for them, adventuring Beggars find little hope, the true nature of the universe being equally as uncaring. This has led many Beggars back where they started, sobbing in alleyways and jumping at shadows, even more scarred."
+description: |
+  The rich get richer and the poor get poorer in these trying
+  times, with the Beggar evidence of just how poor you can
+  get. Beggars are common in large cities, drifting in crowded
+  marketplaces and digging in rubbish piles hoping for a piece
+  of scrap. Every small town its own local tramp, or Beggar.
+  Any number of misfortunes can drive you to the life of a
+  Beggar: debilitating sickness, a terrible war wound or even
+  psychological scarring. Such erstwhile unfortunates make their
+  lives on the streets, clutching a chipped and cracked alms bowl
+  to beg for a pfennig. Here they learn various underhanded
+  skills and to know who will fill their bowls and who will kick
+  them in the stomach. Few burghers and even fewer aristocrats
+  have any sympathy for these poor wretches. Beggars remain
+  stalwart and strangely optimistic that their lot will improve.
+  Leaving behind the broken bowl and picking up a stolen
+  knife to become an adventurer is a way to improve their
+  lot; many see it as an infinitely better alternative to slogging
+  through muddy streets and eating dead rats. Having become
+  convinced that society doesn’t care for them, adventuring
+  Beggars find little hope, the true nature of the universe being
+  equally as uncaring. This has led many Beggars back where
+  they started, sobbing in alleyways and jumping at shadows,
+  even more scarred.
 tier: Basic
 reward_point_cost: 100
 traits:
   - Beggars Bowl
+skillRanks:
+  - Awareness
+  - Disguise
+  - Eavesdrop
+  - Folklore
+  - Guile
+  - Intimidate
+  - Rumo
+  - Simple Melee
+  - Skulduggery
+  - Stealth
+bonusAdvances:
+  Fighting: 0
+  Muscle: 1
+  Speed: 2
+  Savvy: 2
+  Smarts: 0
+  Grit: 0
+  Flair: 2
+talents:
+  - Forked Tongue
+  - Streetwise
+  - Supernatural Paranoia

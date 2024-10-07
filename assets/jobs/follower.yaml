@@ -5,3 +5,29 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Cult of Personality
+  - Dive Magick
+drawback:
+  - Cruel Tutelage
+skillRanks:
+  - Eavesdrop
+  - Education
+  - Folklore
+  - Guile
+  - Incantation
+  - Navigation
+  - Resolve
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 2
+  Smarts: 2
+  Grit: 2
+  Flair: 1
+talents:
+  - Blood Magick
+  - Forked Tongue
+  - Secret Signs

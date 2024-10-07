@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Pliers... Scalpel... Bonesaw
+skillRanks:
+  - Awareness
+  - Bargain
+  - Coordination
+  - Education
+  - Folklore
+  - HandleAnimal
+  - Heal
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 1
+  Savvy: 0
+  Smarts: 2
+  Grit: 2
+  Flair: 2
+talents:
+  - Determination
+  - Indifference
+  - Knife Work

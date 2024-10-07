@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - The Show Must Go On
+skillRanks:
+  - Athletics
+  - Charm
+  - Coordination
+  - Disguise
+  - Folklore
+  - Gamble
+  - Rumor
+  - Scrutinize
+  - Simple Ranged
+  - Tradecraft
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 2
+  Savvy: 1
+  Smarts: 1
+  Grit: 1
+  Flair: 2
+talents:
+  - Ambidexterity
+  - Doppelganger
+  - Silver Tongue

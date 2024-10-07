@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Eureka!
+skillRanks:
+  - Awareness
+  - Coordination
+  - Drive
+  - Education
+  - Folklore
+  - Scrutinize
+  - Simple Ranged
+  - Survival
+  - Tradecraft
+  - Warfare
+bonusAdvances:
+  Fighting: 0
+  Muscle: 2
+  Speed: 1
+  Savvy: 2
+  Smarts: 2
+  Grit: 1
+  Flair: 0
+talents:
+  - Incredible Numeration
+  - Mine Craft
+  - Siegecraft

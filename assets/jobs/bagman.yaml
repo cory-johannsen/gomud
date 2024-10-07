@@ -6,7 +6,25 @@ reward_point_cost: 100
 traits:
   - Pay the Piper
 skillRanks:
-  -
+  - Bargain
+  - Interrogation
+  - Intimidate
+  - Martial Melee
+  - Ride
+  - Rumor
+  - Simple Melee
+  - Simple Ranged
+  - Survival
+  - Toughness
 bonusAdvances:
+  Fighting: 3
+  Muscle: 1
+  Speed: 1
+  Savvy: 1
+  Smarts: 0
+  Grit: 1
+  Flair: 1
 talents:
-  -
+  - Impervious Mind
+  - Menacing Demeanor
+  - Meeting of the Minds

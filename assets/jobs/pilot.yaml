@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Batten Down the Hatches
+skillRanks:
+  - Athletics
+  - Bargain
+  - Coordination
+  - Folklore
+  - Gamble
+  - Navigation
+  - Pilot
+  - Resolve
+  - Rumor
+  - Simple Melee
+bonusAdvances:
+  Fighting: 0
+  Muscle: 2
+  Speed: 2
+  Savvy: 0
+  Smarts: 1
+  Grit: 1
+  Flair: 1
+talents:
+  - Azimuth
+  - Carousing
+  - Mariner

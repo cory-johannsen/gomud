@@ -5,3 +5,25 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Grease the Wheels
+skillRanks:
+  - Bargain
+  - Counterfeit
+  - Drive
+  - Folklore
+  - Gamble
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+  - Tradecraft
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 2
+  Smarts: 1
+  Grit: 2
+  Flair: 2
+talents:
+  - Forked Tongue
+  - Larceny
+  - Incredible Numeration

@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - For A Few Shillings More
+skillRanks:
+  - Awareness
+  - Bargain
+  - Martial Ranged
+  - Navigation
+  - Ride
+  - Rumor
+  - Simple Melee
+  - Simple Ranged
+  - Survival
+  - Toughness
+bonusAdvances:
+  Fighting: 2
+  Muscle: 0
+  Speed: 2
+  Savvy: 2
+  Smarts: 1
+  Grit: 0
+  Flair: 0
+talents:
+  - No Mercy
+  - Saddle-born
+  - Take 'Em Down

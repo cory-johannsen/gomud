@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - True Detective
+skillRanks:
+  - Charm
+  - Counterfeit
+  - Eavesdrop
+  - Education
+  - Folklore
+  - Interrogation
+  - Resolve
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 2
+  Smarts: 2
+  Grit: 2
+  Flair: 1
+talents:
+  - Impervious Mind
+  - Indifference
+  - Secret Signs

@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - I Sell the Dead
+skillRanks:
+  - Athletics
+  - Awareness
+  - Bargain
+  - Folklore
+  - Guile
+  - Resolve
+  - Rumor
+  - Simple Melee
+  - Skulduggery
+  - Stealth
+bonusAdvances:
+  Fighting: 0
+  Muscle: 1
+  Speed: 2
+  Savvy: 1
+  Smarts: 0
+  Grit: 1
+  Flair: 2
+talents:
+  - Gallows Humor
+  - Larceny
+  - Long-winded

@@ -1,7 +1,42 @@
 name: Roid Rager
 archetype: Aggressor
-description: The Roid Rager abandons all reason and thought, violently assaulting anything and everything in their way.
+description: |
+  The spark of life kindles the hearts of some and engulfs others.
+  The fury of a Roid Rager is not something learned, it is an
+  extension of something raging within. These warriors throw
+  themselves at their foes fearlessly – a terrible and wondrous
+  sight to behold. Theirs is an existence of sanguine intensity,
+  of fiery passion and unmitigated rage. Most Roid Ragers
+  come from the uncivilized wilds, instilled by the spirit of the
+  primal earth. Others consume red cap mushrooms to induce
+  states of bloodlust that darkens their vision and twitches
+  their muscles into life. Even when not engrossed in battle,
+  Roid Ragers are furious and imposing figures, never hesitating
+  when it comes time to unleash bloodshed.
 tier: Basic
 reward_point_cost: 100
 traits:
   - Warp Spasm
+skillRanks:
+  - Athletics
+  - Folklore
+  - Guile
+  - Intimidate
+  - Martial Melee
+  - Resolve
+  - Simple Melee
+  - Simple Ranged
+  - Toughness
+  - Warfare
+bonusAdvances:
+  Fighting: 2
+  Muscle: 2
+  Speed: 0
+  Savvy: 0
+  Smarts: 1
+  Grit: 2
+  Flair: 0
+talents:
+  - Nerves of Steel
+  - Overwhelming Force
+  - Run Amok

@@ -5,3 +5,15 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Road to Enlightenment
+skillRanks:
+  -
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 0
+  Smarts: 0
+  Grit: 0
+  Flair: 0
+talents:
+  -

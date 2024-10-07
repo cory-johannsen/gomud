@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Confidence Trick
+skillRanks:
+  - Counterfeit
+  - Disguise
+  - Eavesdrop
+  - Gamble
+  - Guile
+  - Intimidate
+  - Resolve
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 2
+  Smarts: 1
+  Grit: 2
+  Flair: 2
+talents:
+  - Doppelganger
+  - Forked Tongue
+  - Holdout

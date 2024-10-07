@@ -21,7 +21,8 @@ type LoginHandler struct {
 	conn             Connection
 }
 
-func NewLoginHandler(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, conn Connection) *LoginHandler {
+func NewLoginHandler(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
+	teams *loader.TeamLoader, conn Connection) *LoginHandler {
 	return &LoginHandler{
 		stateConstructor: stateConstructor,
 		players:          players,

@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Hedgewizardry
+skillRanks:
+  - Alchemy
+  - Bargain
+  - Folklore
+  - Handle Animal
+  - Incantation
+  - Navigation
+  - Resolve
+  - Rumor
+  - Simple Melee
+  - Survival
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 1
+  Smarts: 2
+  Grit: 2
+  Flair: 2
+talents:
+  - Azimuth
+  - Blood Magick
+  - Supernatural Paranoia

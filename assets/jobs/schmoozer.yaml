@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Fame & Fortune
+skillRanks:
+  - Charm
+  - Counterfeit
+  - Eavesdrop
+  - Folklore
+  - Gamble
+  - Guile
+  - Resolve
+  - Rumor
+  - Scrutinize
+  - Simple Ranged
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 2
+  Smarts: 2
+  Grit: 1
+  Flair: 2
+talents:
+  - Carousing
+  - Silver Tongue
+  - Worldly

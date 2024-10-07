@@ -1,10 +1,15 @@
 package main
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
+	log.SetFormatter(&log.TextFormatter{
+		FullTimestamp: false,
+		DisableColors: false,
+	})
+	log.SetReportCaller(true)
 	mud, err := InitializeEngine()
 	if err != nil {
 		panic(err)

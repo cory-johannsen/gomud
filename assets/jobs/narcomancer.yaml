@@ -5,3 +5,29 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Winds of Change
+  - Arcane Magick
+drawback:
+  - Lure of Power
+skillRanks:
+  - Alchemy
+  - Bargain
+  - Coordination
+  - Education
+  - Folklore
+  - Incantation
+  - Intimidate
+  - Resolve
+  - Rumor
+  - Simple Melee
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 1
+  Savvy: 1
+  Smarts: 2
+  Grit: 2
+  Flair: 1
+talents:
+  - Electrical Alignment
+  - Menacing Demeanor
+  - Secret Signs

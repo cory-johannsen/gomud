@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Warden of the Wild
+skillRanks:
+  - Athletics
+  - Awareness
+  - Folklore
+  - Handle Animal
+  - Navigation
+  - Ride
+  - Simple Melee
+  - Simple Ranged
+  - Stealth
+  - Survival
+bonusAdvances:
+  Fighting: 0
+  Muscle: 2
+  Speed: 2
+  Savvy: 1
+  Smarts: 1
+  Grit: 0
+  Flair: 1
+talents:
+  - Azimuth
+  - Instincts
+  - Rural Sensibility

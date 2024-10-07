@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Feast or Famine
+skillRanks:
+  - Bargain
+  - Handle Animal
+  - Heal
+  - Martial Ranged
+  - Resolve
+  - Rumor
+  - Simple Ranged
+  - Survival
+  - Toughness
+  - Tradecraft
+bonusAdvances:
+  Fighting: 0
+  Muscle: 2
+  Speed: 0
+  Savvy: 1
+  Smarts: 0
+  Grit: 2
+  Flair: 2
+talents:
+  - Carousing
+  - Sprint
+  - Strong Jaw

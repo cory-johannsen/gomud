@@ -5,3 +5,26 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Don't Kill the Messenger
+skillRanks:
+  - Bargain
+  - Eavesdrop
+  - Education
+  - Folklore
+  - Interrogation
+  - Resolve
+  - Ride
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+bonusAdvances:
+  Fighting: 2
+  Muscle: 0
+  Speed: 0
+  Savvy: 1
+  Smarts: 2
+  Grit: 2
+  Flair: 0
+talents:
+  - Long-winded
+  - Meeting Of The Minds
+  - Multilingual
