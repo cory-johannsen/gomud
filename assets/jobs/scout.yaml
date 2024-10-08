@@ -6,14 +6,25 @@ reward_point_cost: 100
 traits:
   - Situational Awareness
 skillRanks:
-  -
+  - Awareness
+  - Folklore
+  - Martial Ranged
+  - Navigation
+  - Ride
+  - Simple Melee
+  - Simple Ranged
+  - Stealth
+  - Survival
+  - Toughness
 bonusAdvances:
-  Fighting: 0
-  Muscle: 0
-  Speed: 0
-  Savvy: 0
-  Smarts: 0
+  Fighting: 1
+  Muscle: 1
+  Speed: 2
+  Savvy: 2
+  Smarts: 1
   Grit: 0
   Flair: 0
 talents:
-  -
+  - Azimuth
+  - Rural Sensibility
+  - Saddle-born

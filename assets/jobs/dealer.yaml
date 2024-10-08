@@ -1,0 +1,31 @@
+name: Dealer
+archetype: Drifter
+description: Dealers combine folk medicine, traditional healing practices, and heavy drugs to attempt to solve problems.  The outcomes aren't really all that important.
+tier: Basic
+reward_point_cost: 100
+traits:
+  - White Witchery
+drawback:
+  - Abstain From Violence
+skillRanks:
+  - Alchemy
+  - Folklore
+  - Handle Animal eal
+  - Resolve
+  - Rumor
+  - Simple Melee
+  - Survival
+  - Toughness
+  - Tradecraft
+bonusAdvances:
+  Fighting: 0
+  Muscle: 0
+  Speed: 0
+  Savvy: 1
+  Smarts: 2
+  Grit: 2
+  Flair: 2
+talents:
+  - Determination
+  - Indifference
+  - Secret Signs
