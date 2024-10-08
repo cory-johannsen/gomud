@@ -244,16 +244,31 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			props[k] = domain.Season(v.(string))
 		case domain.ConsumedAdvancesProperty:
 			consumedAdvances := make(domain.ConsumedAdvances)
-			for jobName, advances := range v.(map[string]interface{}) {
-				for statName, amount := range advances.(map[string]interface{}) {
-					if _, ok := consumedAdvances[jobName]; !ok {
-						consumedAdvances[jobName] = make([]domain.ConsumedAdvance, 0)
+			for _, advances := range v.(map[string]interface{}) {
+				for _, advance := range advances.([]interface{}) {
+					job := advance.(map[string]interface{})["Job"].(string)
+					stat := advance.(map[string]interface{})["Stat"].(string)
+					amount := advance.(map[string]interface{})["Amount"].(float64)
+					if _, ok := consumedAdvances[job]; !ok {
+						consumedAdvances[job] = make([]domain.ConsumedAdvance, 0)
 					}
-					consumedAdvances[jobName] = append(consumedAdvances[jobName], domain.ConsumedAdvance{
-						Job:    jobName,
-						Stat:   statName,
-						Amount: int(amount.(float64)),
-					})
+
+					var consumedAdvance *domain.ConsumedAdvance
+					for _, ca := range consumedAdvances[job] {
+						if ca.Stat == stat {
+							consumedAdvance = &ca
+							break
+						}
+					}
+					if consumedAdvance == nil {
+						consumedAdvances[job] = append(consumedAdvances[job], domain.ConsumedAdvance{
+							Job:    job,
+							Stat:   stat,
+							Amount: int(amount),
+						})
+					} else {
+						consumedAdvance.Amount += int(amount)
+					}
 				}
 			}
 			props[k] = consumedAdvances

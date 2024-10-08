@@ -201,7 +201,7 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Birth Season - %s\n", v.(Season))
 			continue
 		case ConsumedAdvancesProperty:
-			msg += "  Consumed Advances: \n"
+			msg += "  Bonus Advances: \n"
 			for job, advances := range v.(ConsumedAdvances) {
 				msg += fmt.Sprintf("\t%s\n", job)
 				for _, advance := range advances {
@@ -218,11 +218,20 @@ func (p *Player) String() string {
 		case DrawbackProperty:
 			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s\n\t\tdesc\n\t\teffect\n", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)
 			continue
+		case ExperienceProperty:
+			msg += fmt.Sprintf("  Experience - %d\n", v.(*BaseProperty).Val.(int))
+			continue
 		case JobProperty:
 			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier)
 			continue
 		case StatsProperty:
-			msg += fmt.Sprintf("  Stats - \n\tFighting: %d\n\tMuscle: %d\n\tSpeed: %d\n\tSavvy: %d\n\tSmarts: %d\n\tGrit: %d\n\tFlair: %d\n", v.(*Stats).Fighting, v.(*Stats).Muscle, v.(*Stats).Speed, v.(*Stats).Savvy, v.(*Stats).Smarts, v.(*Stats).Grit, v.(*Stats).Flair)
+			stats := v.(*Stats)
+			bonuses := p.StatBonuses()
+			msg += fmt.Sprintf("  Stats - \n\tFighting: %d [%d]\n\tMuscle: %d [%d]\n\tSpeed: %d [%d]\n\tSavvy: %d [%d]\n\tSmarts: %d [%d]\n\tGrit: %d [%d]\n\tFlair: %d [%d]\n",
+				stats.Fighting, bonuses.Fighting, stats.Muscle, bonuses.Muscle,
+				stats.Speed, bonuses.Speed, stats.Savvy, bonuses.Savvy,
+				stats.Smarts, bonuses.Smarts, stats.Grit, bonuses.Grit,
+				stats.Flair, bonuses.Flair)
 			continue
 		case SkillRanksProperty:
 			msg += "  Skill Ranks: \n"
@@ -357,6 +366,47 @@ func (p *Player) Stats() *Stats {
 		p.Data[StatsProperty] = &Stats{}
 	}
 	return p.Data[StatsProperty].(*Stats)
+}
+
+func bonusFromStat(stat int) int {
+	return stat / 10
+}
+
+func (p *Player) StatBonuses() *Stats {
+	stats := p.Stats()
+	bonuses := &Stats{
+		Fighting: bonusFromStat(stats.Fighting),
+		Muscle:   bonusFromStat(stats.Muscle),
+		Speed:    bonusFromStat(stats.Speed),
+		Savvy:    bonusFromStat(stats.Savvy),
+		Smarts:   bonusFromStat(stats.Smarts),
+		Grit:     bonusFromStat(stats.Grit),
+		Flair:    bonusFromStat(stats.Flair),
+	}
+	advances := p.ConsumedBonusAdvances()
+	for job, jobAdvances := range advances {
+		for _, advance := range jobAdvances {
+			switch advance.Stat {
+			case "Fighting":
+				bonuses.Fighting += advance.Amount
+			case "Muscle":
+				bonuses.Muscle += advance.Amount
+			case "Speed":
+				bonuses.Speed += advance.Amount
+			case "Savvy":
+				bonuses.Savvy += advance.Amount
+			case "Smarts":
+				bonuses.Smarts += advance.Amount
+			case "Grit":
+				bonuses.Grit += advance.Amount
+			case "Flair":
+				bonuses.Flair += advance.Amount
+			default:
+				log.Warnf("unknown stat %s for job %s", advance.Stat, job)
+			}
+		}
+	}
+	return bonuses
 }
 
 func (p *Player) Background() *Background {

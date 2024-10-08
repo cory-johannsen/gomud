@@ -71,16 +71,7 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	msg := fmt.Sprintf("creating new player %s", name)
 	_ = h.conn.Writeln(msg)
 
-	msg = fmt.Sprintf("Select Team:\n")
-	teams, err := h.teams.LoadTeams()
-	if err != nil {
-		return nil, err
-	}
-	for _, team := range teams {
-		msg += fmt.Sprintf("%s\n", team.Name)
-	}
-	_ = h.conn.Write(msg + "> ")
-	team, err := h.selectTeam(teams)
+	team, err := h.selectTeam()
 	if err != nil {
 		return nil, err
 	}
@@ -114,8 +105,8 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 			return nil, err
 		}
 
-		if player.Experience() > 100 {
-			_ = h.conn.Writeln("You have more experience to spend.  Do you wish to continue spending? (y/n): ")
+		if player.Experience() >= 100 {
+			_ = h.conn.Write("You have more experience to spend.  Do you wish to continue spending? (y/n): ")
 			choice := h.conn.Read()
 			if choice == "n" {
 				break
@@ -183,16 +174,31 @@ func (h *LoginHandler) validatePassword(name string) *domain.Player {
 	return player
 }
 
-func (h *LoginHandler) selectTeam(teams domain.Teams) (*domain.Team, error) {
+func (h *LoginHandler) selectTeam() (*domain.Team, error) {
 	var t *domain.Team
 	for {
-		team := h.conn.Read()
-		for _, tm := range teams {
-			if tm.Name == team {
-				t = tm
-				break
-			}
+		msg := fmt.Sprintf("Select Team:\n")
+		teams, err := h.teams.LoadTeams()
+		if err != nil {
+			return nil, err
 		}
+		for i, team := range teams {
+			msg += fmt.Sprintf("%d) %s\n", i, team.Name)
+		}
+		_ = h.conn.Write(msg + "> ")
+
+		team := h.conn.Read()
+
+		index, err := strconv.Atoi(team)
+		if err != nil {
+			_ = h.conn.Write("Invalid team.  Please select a valid team\n> ")
+			continue
+		}
+		if index < 0 || index >= len(teams) {
+			_ = h.conn.Write("Invalid team.  Please select a valid team\n> ")
+			continue
+		}
+		t = teams[index]
 		if t != nil {
 			break
 		}
