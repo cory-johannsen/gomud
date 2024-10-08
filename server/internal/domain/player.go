@@ -174,6 +174,9 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Age - %d\n", v.(*BaseProperty).Val.(int))
 			continue
 		case AlignmentProperty:
+			if v == nil {
+				log.Warnf("alignment property is nil")
+			}
 			msg += fmt.Sprintf("  Alignment - %s/%s\n\tOrder: %s (rank: %d)\n\tChaos: %s (rank: %d)\n\tCorruption: %d\n", v.(*Alignment).Order.Name, v.(*Alignment).Chaos.Name, v.(*Alignment).Order.Name, v.(*Alignment).Order.Rank, v.(*Alignment).Chaos.Name, v.(*Alignment).Chaos.Rank, v.(*Alignment).Corruption)
 			continue
 		case ArchetypeProperty:

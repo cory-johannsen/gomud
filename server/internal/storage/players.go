@@ -24,13 +24,16 @@ func NewPlayers(database *Database, loaders *loader.Loaders) *Players {
 }
 
 func (p *Players) CreatePlayer(ctx context.Context, name string, password string, data map[string]domain.Property) (*domain.Player, error) {
-	encoded, err := json.Marshal(propertiesToData(data))
+	specData := propertiesToData(data)
+	encoded, err := json.Marshal(specData)
 	if err != nil {
+		log.Errorf("failed to marshal player data: %s", err)
 		return nil, err
 	}
 	var id int
 	err = p.database.Conn.QueryRow(ctx, "INSERT INTO players (name, password, data) VALUES ($1, $2, $3) RETURNING id", name, password, encoded).Scan(&id)
 	if err != nil {
+		log.Errorf("failed to insert player: %s", err)
 		return nil, err
 	}
 	player := domain.NewPlayer(nil, name, password, data)
@@ -49,12 +52,13 @@ func (p *Players) FetchPlayerById(ctx context.Context, id int) (*domain.Player, 
 	var name, password, data string
 	err := p.database.Conn.QueryRow(ctx, "SELECT name, password FROM players WHERE id = $1", id).Scan(&name, &password, &data)
 	if err != nil {
+		log.Errorf("failed to fetch player: %s", err)
 		return nil, err
 	}
 	specProps := make(map[string]interface{})
 	err = json.Unmarshal([]byte(data), &specProps)
 	if err != nil {
-		log.Printf("failed to unmarshal player data: %s", err)
+		log.Errorf("failed to unmarshal player data: %s", err)
 		return nil, err
 	}
 	spec := &PlayerSpec{
@@ -77,12 +81,13 @@ func (p *Players) FetchPlayerByName(ctx context.Context, name string) (*domain.P
 	var data string
 	err := p.database.Conn.QueryRow(ctx, "SELECT id, password, data FROM players WHERE name = $1", name).Scan(&id, &password, &data)
 	if err != nil {
+		log.Errorf("failed to fetch player: %s", err)
 		return nil, err
 	}
 	specProps := make(map[string]interface{})
 	err = json.Unmarshal([]byte(data), &specProps)
 	if err != nil {
-		log.Printf("failed to unmarshal player data: %s", err)
+		log.Errorf("failed to unmarshal player data: %s", err)
 		return nil, err
 	}
 	props := p.dataToProperties(specProps)
@@ -96,6 +101,7 @@ func (p *Players) Exists(ctx context.Context, name string) (bool, error) {
 	row := p.database.Conn.QueryRow(ctx, "SELECT count(*) FROM players WHERE name = $1", name)
 	err := row.Scan(&count)
 	if err != nil {
+		log.Errorf("failed to check if player exists: %s", err)
 		return false, err
 	}
 	return count > 0, nil
@@ -130,7 +136,10 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 			data[k] = v.(*domain.Archetype).Name
 			continue
 		case domain.BackgroundProperty:
-			data[k] = domain.SpecFromBackground(v.(*domain.Background))
+			data[k] = v.(*domain.Background).Name
+			continue
+		case domain.BackgroundTraitProperty:
+			data[k] = v.(*domain.Trait).Name
 			continue
 		case domain.ConsumedAdvancesProperty:
 			data[k] = v
@@ -208,7 +217,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 			props[k] = archetype
 		case domain.BackgroundProperty:
-			background, err := p.loaders.BackgroundLoader.GetBackground(v.(map[string]interface{})["Name"].(string))
+			name := v.(string)
+			background, err := p.loaders.BackgroundLoader.GetBackground(name)
 			if err != nil {
 				log.Printf("failed to load background %s: %s", v.(string), err)
 				continue
@@ -218,6 +228,18 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				continue
 			}
 			props[k] = background
+		case domain.BackgroundTraitProperty:
+			name := v.(string)
+			trait, err := p.loaders.TraitLoader.GetTrait(name)
+			if err != nil {
+				log.Printf("failed to load trait %s: %s", v.(string), err)
+				continue
+			}
+			if trait == nil {
+				log.Printf("trait %s not found", v.(string))
+				continue
+			}
+			props[k] = trait
 		case domain.BirthSeasonProperty:
 			props[k] = domain.Season(v.(string))
 		case domain.ConsumedAdvancesProperty:
@@ -362,7 +384,8 @@ func (p *Players) StorePlayer(ctx context.Context, player *domain.Player) (*doma
 	if player.Id == nil {
 		return p.CreatePlayer(ctx, player.Name, player.Password, player.Data)
 	}
-	encoded, err := json.Marshal(SpecFromPlayer(player).Data)
+	data := SpecFromPlayer(player).Data
+	encoded, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
 	}

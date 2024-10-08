@@ -10,6 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 	"strconv"
+	"strings"
 )
 
 type LoginHandler struct {
@@ -232,7 +233,7 @@ func (h *LoginHandler) selectSkillRanks(player *domain.Player) error {
 		}
 		_ = h.conn.Write("Q) Quit purchasing Skill Ranks\n> ")
 		choice := h.conn.Read()
-		if choice == "Q" {
+		if strings.ToUpper(choice) == "Q" {
 			break
 		}
 		index, err := strconv.Atoi(choice)
@@ -326,7 +327,7 @@ func (h *LoginHandler) selectBonusAdvances(player *domain.Player) error {
 		}
 		_ = h.conn.Write("Q) Quit purchasing Advances\n> ")
 		choice := h.conn.Read()
-		if choice == "Q" {
+		if strings.ToUpper(choice) == "Q" {
 			break
 		}
 		index, err := strconv.Atoi(choice)
@@ -362,7 +363,7 @@ func (h *LoginHandler) selectTalents(player *domain.Player) error {
 		}
 		_ = h.conn.Write("Q) Quit purchasing Talents\n> ")
 		choice := h.conn.Read()
-		if choice == "Q" {
+		if strings.ToUpper(choice) == "Q" {
 			break
 		}
 		index, err := strconv.Atoi(choice)
