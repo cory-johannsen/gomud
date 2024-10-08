@@ -6,14 +6,25 @@ reward_point_cost: 100
 traits:
   - Mastermind
 skillRanks:
-  -
+  - Education
+  - Folklore
+  - Gamble
+  - Guile
+  - Intimidate
+  - Leadership
+  - Resolve
+  - Rumor
+  - Scrutinize
+  - Simple Melee
 bonusAdvances:
   Fighting: 0
-  Muscle: 0
+  Muscle: 1
   Speed: 0
-  Savvy: 0
-  Smarts: 0
-  Grit: 0
-  Flair: 0
+  Savvy: 1
+  Smarts: 2
+  Grit: 1
+  Flair: 2
 talents:
-  -
+  - Incredible Numeration
+  - Indifference
+  - Menacing Demeanor

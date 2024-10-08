@@ -6,14 +6,25 @@ reward_point_cost: 100
 traits:
   - It;s a Trap!
 skillRanks:
-  -
+  - Awareness
+  - Coordination
+  - Folklore
+  - Handle Animal
+  - Navigation
+  - Simple Ranged
+  - Skullduggery
+  - Stealth
+  - Survival
+  - Toughness
 bonusAdvances:
-  Fighting: 0
-  Muscle: 0
-  Speed: 0
-  Savvy: 0
-  Smarts: 0
+  Fighting: 1
+  Muscle: 1
+  Speed: 2
+  Savvy: 2
+  Smarts: 1
   Grit: 0
   Flair: 0
 talents:
-  -
+  - Azimuth
+  - Rural Sensibility
+  - Take 'Em Down

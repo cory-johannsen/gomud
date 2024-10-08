@@ -6,14 +6,25 @@ reward_point_cost: 100
 traits:
   - Scrivener's Speed
 skillRanks:
-  -
+  - Awareness
+  - Coordination
+  - Counterfeit
+  - Education
+  - Folklore
+  - Resolve
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+  - Tradecraft
 bonusAdvances:
   Fighting: 0
   Muscle: 0
-  Speed: 0
-  Savvy: 0
-  Smarts: 0
-  Grit: 0
+  Speed: 2
+  Savvy: 1
+  Smarts: 2
+  Grit: 2
   Flair: 0
 talents:
-  -
+  - Determination
+  - Incredible Numeration
+  - Multilingual

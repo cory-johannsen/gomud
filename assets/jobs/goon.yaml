@@ -1,30 +1,30 @@
-name: Beat Down Artist
-archetype: Aggressor
+name: Goon
+archetype: Influencer
 description: Beat Down Artists punch people in the face for a living.  It's not a hard job but not very many folks qualify.
 tier: Basic
 reward_point_cost: 100
 traits:
-  - Mortal Combat!
+  - Jack Of All Trades
 skillRanks:
-  - Athletics
-  - Coordination
+  - Bargain
+  - Counterfeit
+  - Eavesdrop
+  - Education
   - Folklore
-  - Gamble
   - Guile
-  - Intimidate
-  - Resolve
   - Rumor
-  - Simple Melee
-  - Toughness
+  - Scrutinize
+  - Simple Ranged
+  - Skullduggery
 bonusAdvances:
   Fighting: 0
-  Muscle: 2
+  Muscle: 0
   Speed: 1
-  Savvy: 0
-  Smarts: 0
-  Grit: 2
+  Savvy: 2
+  Smarts: 2
+  Grit: 0
   Flair: 2
 talents:
-  - Beatdown
-  - Clinch Fighter
-  - Ground & Pound
+  - Carousing
+  - Forked Tongue
+  - Worldly

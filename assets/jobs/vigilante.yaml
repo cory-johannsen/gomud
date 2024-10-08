@@ -5,15 +5,28 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Mortality Work
+drawbacks:
+  - Alter Ego
 skillRanks:
-  -
+  - Awareness
+  - Coordination
+  - Disguise
+  - Intimidate
+  - Martial Melee
+  - Resolve
+  - Rumor
+  - Simple Melee
+  - Simple Ranged
+  - Stealth
 bonusAdvances:
-  Fighting: 0
-  Muscle: 0
-  Speed: 0
-  Savvy: 0
+  Fighting: 2
+  Muscle: 1
+  Speed: 2
+  Savvy: 1
   Smarts: 0
-  Grit: 0
+  Grit: 1
   Flair: 0
 talents:
-  -
+  - Indifference
+  - Knifework
+  - Strangler's Union

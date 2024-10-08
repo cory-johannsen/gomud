@@ -6,14 +6,25 @@ reward_point_cost: 100
 traits:
   - Dogs of War
 skillRanks:
-  -
+  - Athletics
+  - Intimidate
+  - Leadership
+  - Martial Melee
+  - Resolve
+  - Rumor
+  - Simple Melee
+  - Simple Ranged
+  - Toughness
+  - Warfare
 bonusAdvances:
-  Fighting: 0
-  Muscle: 0
+  Fighting: 2
+  Muscle: 2
   Speed: 0
   Savvy: 0
-  Smarts: 0
-  Grit: 0
-  Flair: 0
+  Smarts: 1
+  Grit: 1
+  Flair: 1
 talents:
-  -
+  - Indifference
+  - Second Skin
+  - Tough As Nails

@@ -3,6 +3,7 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
@@ -56,6 +57,10 @@ func (l *ArchetypeLoader) LoadArchetypes() (domain.Archetypes, error) {
 			trait, err := l.traitLoader.GetTrait(traitName)
 			if err != nil {
 				return nil, err
+			}
+			if trait == nil {
+				log.Printf("trait %s not found", traitName)
+				continue
 			}
 			archetype.Traits = append(archetype.Traits, trait)
 		}

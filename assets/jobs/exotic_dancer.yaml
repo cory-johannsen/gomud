@@ -6,14 +6,24 @@ reward_point_cost: 100
 traits:
   - Alfred Pfennigworth
 skillRanks:
-  -
+  - Bargain
+  - Charm
+  - Eavesdrop
+  - Folklore
+  - Gamble
+  - Rumor
+  - Scrutinize
+  - Simple Melee
+  - Stealth
 bonusAdvances:
   Fighting: 0
   Muscle: 0
-  Speed: 0
-  Savvy: 0
-  Smarts: 0
+  Speed: 1
+  Savvy: 2
+  Smarts: 2
   Grit: 0
-  Flair: 0
+  Flair: 2
 talents:
-  -
+  - Meeting Of The Minds
+  - Multilingual
+  - Silver Tongue

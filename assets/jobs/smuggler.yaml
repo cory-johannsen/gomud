@@ -6,14 +6,25 @@ reward_point_cost: 100
 traits:
   - Hans Shot First
 skillRanks:
-  -
+  - Awareness
+  - Bargain
+  - Counterfeit
+  - Disguise
+  - Drive
+  - Pilot
+  - Rumor
+  - Simple Melee
+  - Simple Ranged
+  - Stealth
 bonusAdvances:
   Fighting: 0
   Muscle: 0
-  Speed: 0
-  Savvy: 0
-  Smarts: 0
+  Speed: 2
+  Savvy: 2
+  Smarts: 1
   Grit: 0
-  Flair: 0
+  Flair: 2
 talents:
-  -
+  - Larceny
+  - Light Sleeper
+  - Streetwise

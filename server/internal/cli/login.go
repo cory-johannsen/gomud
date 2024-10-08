@@ -93,23 +93,36 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	}
 
 	_ = h.conn.Writeln(fmt.Sprintf("Created player %s", player.String()))
+	_ = h.conn.Writeln(fmt.Sprintf("You now get to select your skills, bonuses and talents.  You have %d experience to spend, each selection cosets 100 experience.", player.Experience()))
+	for {
+		if player.Experience() < 100 {
+			break
+		}
+		err = h.selectSkillRanks(player)
+		if err != nil {
+			return nil, err
+		}
 
-	err = h.selectSkillRanks(player)
-	if err != nil {
-		return nil, err
+		err = h.selectBonusAdvances(player)
+		if err != nil {
+			return nil, err
+		}
+
+		err = h.selectTalents(player)
+		if err != nil {
+			return nil, err
+		}
+
+		if player.Experience() > 100 {
+			_ = h.conn.Writeln("You have more experience to spend.  Do you wish to continue spending? (y/n): ")
+			choice := h.conn.Read()
+			if choice == "n" {
+				break
+			}
+		}
 	}
 
-	err = h.selectBonusAdvances(player)
-	if err != nil {
-		return nil, err
-	}
-
-	err = h.selectTalents(player)
-	if err != nil {
-		return nil, err
-	}
-
-	log.Printf("Created player %s", name)
+	log.Printf("Created player %s", player.Name)
 
 	return player, nil
 }
@@ -208,8 +221,14 @@ func (h *LoginHandler) takeDrawback() bool {
 func (h *LoginHandler) selectSkillRanks(player *domain.Player) error {
 	for {
 		_ = h.conn.Write(fmt.Sprintf("You have %d experience to spend. Purchase a Skill Rank (100 exp each):\n", player.Experience()))
+		purchased := make(map[int]bool)
 		for i, skillRank := range player.Job().SkillRanks {
-			_ = h.conn.Write(fmt.Sprintf("%d) %s\n", i, skillRank.Name))
+			if !player.HasSkillRank(player.Job(), skillRank) {
+				_ = h.conn.Write(fmt.Sprintf("%d) %s\n", i, skillRank.Name))
+			} else {
+				purchased[i] = true
+				_ = h.conn.Write(fmt.Sprintf("%d) %s (purchased)\n", i, skillRank.Name))
+			}
 		}
 		_ = h.conn.Write("Q) Quit purchasing Skill Ranks\n> ")
 		choice := h.conn.Read()
@@ -223,6 +242,10 @@ func (h *LoginHandler) selectSkillRanks(player *domain.Player) error {
 		}
 		if index < 0 || index >= len(player.Job().SkillRanks) {
 			_ = h.conn.Writeln("Invalid choice")
+			continue
+		}
+		if _, found := purchased[index]; found {
+			_ = h.conn.Writeln("Skill rank already purchased")
 			continue
 		}
 		skill := player.Job().SkillRanks[index]
@@ -247,49 +270,56 @@ func (h *LoginHandler) selectBonusAdvances(player *domain.Player) error {
 		choices := make([]string, 0)
 		if bonusAdvances.Fighting > 0 {
 			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Fighting") < bonusAdvances.Fighting {
-				_ = h.conn.Write(fmt.Sprintf("%d) Fighting\n", i))
+				advancesLeft := bonusAdvances.Fighting - consumedAdvances.ConsumedAdvance(player.Job().Name, "Fighting")
+				_ = h.conn.Write(fmt.Sprintf("%d) Fighting (%d remaining)\n", i, advancesLeft))
 				i++
 				choices = append(choices, "Fighting")
 			}
 		}
 		if bonusAdvances.Muscle > 0 {
 			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Muscle") < bonusAdvances.Muscle {
-				_ = h.conn.Write(fmt.Sprintf("%d) Muscle\n", i))
+				advancesLeft := bonusAdvances.Muscle - consumedAdvances.ConsumedAdvance(player.Job().Name, "Muscle")
+				_ = h.conn.Write(fmt.Sprintf("%d) Muscle (%d remaining)\n", i, advancesLeft))
 				i++
 				choices = append(choices, "Muscle")
 			}
 		}
 		if bonusAdvances.Speed > 0 {
 			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Speed") < bonusAdvances.Speed {
-				_ = h.conn.Write(fmt.Sprintf("%d) Speed\n", i))
+				advancesLeft := bonusAdvances.Speed - consumedAdvances.ConsumedAdvance(player.Job().Name, "Speed")
+				_ = h.conn.Write(fmt.Sprintf("%d) Speed (%d remaining)\n", i, advancesLeft))
 				i++
 				choices = append(choices, "Speed")
 			}
 		}
 		if bonusAdvances.Savvy > 0 {
 			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Savvy") < bonusAdvances.Savvy {
-				_ = h.conn.Write(fmt.Sprintf("%d) Savvy\n", i))
+				advancesLeft := bonusAdvances.Savvy - consumedAdvances.ConsumedAdvance(player.Job().Name, "Savvy")
+				_ = h.conn.Write(fmt.Sprintf("%d) Savvy (%d remaining)\n", i, advancesLeft))
 				i++
 				choices = append(choices, "Savvy")
 			}
 		}
 		if bonusAdvances.Smarts > 0 {
 			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Smarts") < bonusAdvances.Smarts {
-				_ = h.conn.Write(fmt.Sprintf("%d) Smarts\n", i))
+				advancesLeft := bonusAdvances.Smarts - consumedAdvances.ConsumedAdvance(player.Job().Name, "Smarts")
+				_ = h.conn.Write(fmt.Sprintf("%d) Smarts (%d remaining)\n", i, advancesLeft))
 				i++
 				choices = append(choices, "Smarts")
 			}
 		}
 		if bonusAdvances.Grit > 0 {
 			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Grit") < bonusAdvances.Grit {
-				_ = h.conn.Write(fmt.Sprintf("%d) Grit\n", i))
+				advancesLeft := bonusAdvances.Grit - consumedAdvances.ConsumedAdvance(player.Job().Name, "Grit")
+				_ = h.conn.Write(fmt.Sprintf("%d) Grit (%d remaining)\n", i, advancesLeft))
 				i++
 				choices = append(choices, "Grit")
 			}
 		}
 		if bonusAdvances.Flair > 0 {
 			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Flair") < bonusAdvances.Flair {
-				_ = h.conn.Write(fmt.Sprintf("%d) Flair\n", i))
+				advancesLeft := bonusAdvances.Flair - consumedAdvances.ConsumedAdvance(player.Job().Name, "Flair")
+				_ = h.conn.Write(fmt.Sprintf("%d) Flair (%d remaining)\n", i, advancesLeft))
 				i++
 				choices = append(choices, "Flair")
 			}
@@ -321,8 +351,14 @@ func (h *LoginHandler) selectTalents(player *domain.Player) error {
 			break
 		}
 		_ = h.conn.Write(fmt.Sprintf("You have %d experience to spend. Purchase a Talent:\n", player.Experience()))
+		purchased := make(map[int]bool)
 		for i, talent := range player.Job().Talents {
-			_ = h.conn.Write(fmt.Sprintf("%d) %s\n", i, talent.Name))
+			if !player.HasTalent(player.Job(), talent) {
+				_ = h.conn.Write(fmt.Sprintf("%d) %s\n", i, talent.Name))
+			} else {
+				purchased[i] = true
+				_ = h.conn.Write(fmt.Sprintf("%d) %s (purchased)\n", i, talent.Name))
+			}
 		}
 		_ = h.conn.Write("Q) Quit purchasing Talents\n> ")
 		choice := h.conn.Read()
@@ -336,6 +372,10 @@ func (h *LoginHandler) selectTalents(player *domain.Player) error {
 		}
 		if index < 0 || index >= len(player.Job().Talents) {
 			_ = h.conn.Writeln("Invalid choice")
+			continue
+		}
+		if _, found := purchased[index]; found {
+			_ = h.conn.Writeln("Talent already purchased")
 			continue
 		}
 		talent := player.Job().Talents[index]

@@ -260,17 +260,39 @@ func (p *Player) Job() *Job {
 }
 
 func (p *Player) PurchaseSkillRank(job *Job, skill *Skill, exp int) {
-	skillRanks := p.Data[SkillRanksProperty].(SkillRanks)
+	skillRanks := p.SkillRanks()
 	skillRanks = append(skillRanks, &SkillRank{
 		Job:   job,
 		Skill: skill,
 	})
+	p.Data[SkillRanksProperty] = skillRanks
 	p.DeductExperience(exp)
 }
 
+func (p *Player) SkillRanks() SkillRanks {
+	if _, ok := p.Data[SkillRanksProperty]; !ok {
+		p.Data[SkillRanksProperty] = make(SkillRanks, 0)
+	}
+	return p.Data[SkillRanksProperty].(SkillRanks)
+}
+
+func (p *Player) HasSkillRank(job *Job, skil *Skill) bool {
+	skillRanks := p.SkillRanks()
+	for _, rank := range skillRanks {
+		if rank.Job == job && rank.Skill == skil {
+			return true
+		}
+	}
+	return false
+}
+
 func (p *Player) ConsumedBonusAdvances() ConsumedAdvances {
+	if _, ok := p.Data[ConsumedAdvancesProperty]; !ok {
+		p.Data[ConsumedAdvancesProperty] = make(ConsumedAdvances)
+	}
 	return p.Data[ConsumedAdvancesProperty].(ConsumedAdvances)
 }
+
 func (p *Player) ConsumeBonusAdvance(job string, stat string, exp int) {
 	consumed := p.ConsumedBonusAdvances()
 	advances, ok := consumed[job]
@@ -294,7 +316,7 @@ func (p *Player) ConsumeBonusAdvance(job string, stat string, exp int) {
 	} else {
 		advance.Amount++
 	}
-
+	consumed[job] = advances
 	p.Data[ConsumedAdvancesProperty] = consumed
 	p.DeductExperience(exp)
 }
@@ -306,18 +328,31 @@ func (p *Player) ConsumeTalent(job *Job, talent *Talent, exp int) {
 		p.Data[TalentsProperty] = talents
 	}
 	talents = append(talents, talent)
+	p.Data[TalentsProperty] = talents
 	p.DeductExperience(exp)
 }
 
-func (p *Player) SkillRanks() SkillRanks {
-	return p.Data[SkillRanksProperty].(SkillRanks)
-}
-
 func (p *Player) Talents() Talents {
+	if _, ok := p.Data[TalentsProperty]; !ok {
+		p.Data[TalentsProperty] = make(Talents, 0)
+	}
 	return p.Data[TalentsProperty].(Talents)
 }
 
+func (p *Player) HasTalent(job *Job, talent *Talent) bool {
+	talents := p.Talents()
+	for _, t := range talents {
+		if t == talent {
+			return true
+		}
+	}
+	return false
+}
+
 func (p *Player) Stats() *Stats {
+	if _, ok := p.Data[StatsProperty]; !ok {
+		p.Data[StatsProperty] = &Stats{}
+	}
 	return p.Data[StatsProperty].(*Stats)
 }
 

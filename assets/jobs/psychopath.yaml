@@ -5,15 +5,28 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - The Slayers Path
+drawbacks:
+  - Death Wish
 skillRanks:
-  -
+  - Athletics
+  - Coordination
+  - Folklore
+  - Intimidate
+  - Martial Melee
+  - Resolve
+  - Rumor
+  - Simple Melee
+  - Survival
+  - Toughness
 bonusAdvances:
-  Fighting: 0
-  Muscle: 0
+  Fighting: 2
+  Muscle: 2
   Speed: 0
-  Savvy: 0
+  Savvy: 1
   Smarts: 0
-  Grit: 0
+  Grit: 2
   Flair: 0
 talents:
-  -
+  - Ambidexterity
+  - Bad Axx!
+  - Die Hard
