@@ -1,5 +1,6 @@
 name: Doppelganger
 description: |
-  Doppelganger description
+  As an acute observer of others’ habits, you’re able to mimic their
+  mannerisms with little chance of failure.
 effects:
-  - Doppelganger Effect
+  - When masquerading as someone of a Social Class other than your own, you gain a +20 Base Chance to Disguise Tests.

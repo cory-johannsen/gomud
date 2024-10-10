@@ -1,5 +1,7 @@
 name: Cheap Shot
 description: |
-  Cheap Shot description
+  When an attacker is stupid enough to expose their groin when
+  turning away your attack, you use that opportunity to kick them
+  in the tender parts as a low blow
 effects:
-  - Cheap Shot Effect
+  - When a foe successfully Parries your Melee Attack, immediately make a bare-handed Opportunity Attack.

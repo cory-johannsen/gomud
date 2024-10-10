@@ -1,5 +1,6 @@
 name: Clinch Fighter
 description: |
-  Clinch Fighter description
+  You are a natural wrestler, using paralyzing grapples in close
+  quarters combat.
 effects:
-  - Clinch Fighter Effect
+  - You penalize your foe’s ability to Resist a Chokehold and Dirty Tricks by a -10 Base Chance to their Skill Test.  In addition, when you use a Chokehold, add an additional 1D10 to determine how much physical Peril you inflict.

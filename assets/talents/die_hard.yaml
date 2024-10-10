@@ -1,5 +1,5 @@
 name: Die Hard
 description: |
-  Die Hard description
+  Pain has come to mean little to you these days, as you heal quickly.
 effects:
-  - Die Hard Effect
+  - You reduce the time to Recuperate from your own Injuries by three days, to a minimum of one day. In addition, you never Bleed.

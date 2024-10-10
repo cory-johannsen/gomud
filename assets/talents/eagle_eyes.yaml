@@ -1,5 +1,6 @@
 name: Eagle Eyes
 description: |
-  Eagle Eyes description
+  You have exceedingly focused vision, targeting foes accurately over
+  great distances.
 effects:
-  - Eagle Eyes Effect
+  - You do not suffer additional hardship when firing ranged weapons at Medium Distance, instead treating it as Short Distance

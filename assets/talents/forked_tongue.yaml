@@ -1,5 +1,6 @@
 name: Forked Tongue
 description: |
-  Forked Tongue description
+  Lies simply spill from your lips, but others are generally none
+  the wiser.
 effects:
-  - Forked Tongue Effect
+  - When you attempt to deceive someone of a Social Class other than your own, you gain a +20 Base Chance to Guile Tests.

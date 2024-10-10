@@ -1,5 +1,6 @@
 name: Fencer’s Panache
 description: |
-  Fencer’s Panache description
+  Your intense studies of dueling have made you into an expert
+  swordsman.
 effects:
-  - Fencer’s Panache Effect
+  - When you Take Aim and then make a successful Melee Attack, you force a foe to Resist a Disarm. You must attack with weapons possessing the Fast or Finesse Quality to utilize this Talent.

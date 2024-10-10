@@ -1,5 +1,6 @@
 name: Beatdown
 description: |
-  Beatdown description
+  You are an unscrupulous cur, opting to strike joints and other vital
+  areas instead of putting up a fair fight.
 effects:
-  - Beatdown Effect
+  - When you Take Aim and then make a successful Melee Attack, you force a foe to Resist a Takedown. You must attack with Brawling or Crushing types of weapons to utilize this Talent.

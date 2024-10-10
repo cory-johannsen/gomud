@@ -1,5 +1,7 @@
 name: Blood Magick
 description: |
-  Blood Magick description
+  With great practice, you have learned to bend the powers of
+  disorder to your whim. However, every dark gift requires a
+  sacrifice in return.
 effects:
-  - Blood Magick Effect
+  - After you have made the appropriate sacrifice of an innocent creature (a beloved animal for Petty Magick, a farm animal for Lesser Magick or a living person for Greater Magick), you can cause any one foe to automatically fail to Resist one cast Magick spell within the next 24 hours. You can only make a sacrifice like this once per day and will likely suffer Corruption for such a heinous act.

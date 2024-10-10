@@ -1,5 +1,6 @@
 name: Determination
 description: |
-  Determination description
+  Your doggedness tends to slow everyone down, but your considerable
+  foresight grants you extraordinary ability.
 effects:
-  - Determination Effect
+  - When you attempt an Extended Test to take your time, you gain an additional +10 Base Chance to your Skill Test.

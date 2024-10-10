@@ -1,5 +1,6 @@
 name: Gallows Humor
 description: |
-  Gallows Humor description
+  With a morbid sense of humor, you use witticisms to counter the
+  bleak world you live in (and its grim outcomes).
 effects:
-  - Gallows Humor Effect
+  - At your option, you can substitute the Guile Skill in place of Resolve.
