@@ -1,0 +1,6 @@
+name: Gatecrasher
+description: |
+  You’ve been trained amongst the martial elite, whose tutelage
+  taught you how to break through a foe’s defenses.
+effects:
+  - When you Take Aim and then make a successful Melee Attack, add 3 Damage.

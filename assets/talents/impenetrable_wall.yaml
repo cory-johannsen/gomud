@@ -1,0 +1,6 @@
+name: Impenetrable Wall
+description: |
+  When you’re surrounded, you manage to outmaneuver foes that are
+  flanking you.
+effects:
+  - Opponents do not gain an advantage (such as additional Damage or bonuses to strike) when they flank, outnumber or surround you in combat.

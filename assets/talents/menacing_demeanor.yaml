@@ -1,5 +1,5 @@
 name: Menacing Demeanor
 description: |
-  Menacing Demeanor description
+  You are intimidating and tend to act in a prickly manner.
 effects:
-  - Menacing Demeanor Effect
+  - When you succeed at an Intimidate Test, you inflict 1D10+1 mental Peril.

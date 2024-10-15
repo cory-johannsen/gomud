@@ -1,5 +1,6 @@
 name: Spirited Charge
 description: |
-  Spirited Charge description
+  Atop a vehicle or horse, you ride like a hellion borne from the gates
+  of hell.
 effects:
-  - Spirited Charge Effect
+  - When you use the Drive or Ride Skills, add +3 to your Movement.

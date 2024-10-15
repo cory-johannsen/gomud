@@ -1,5 +1,6 @@
 name: Sprint
 description: |
-  Sprint description
+  You move at such a fast pace that others cannot get a bead on you
+  when drawing their bows or aiming their guns.
 effects:
-  - Sprint Effect
+  - When you Charge or Run, you cannot be struck by attacks made with ranged weapons until your next Turn.

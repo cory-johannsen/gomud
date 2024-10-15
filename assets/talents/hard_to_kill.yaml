@@ -1,5 +1,6 @@
 name: Hard To Kill
 description: |
-  Hard To Kill description
+  You are stubborn and tough, incapable of being put down. With
+  strength left within, you turn away blows with bitter resolve.
 effects:
-  - Hard To Kill Effect
+  - When you are Grievously Wounded, temporarily add 3 to your Damage Threshold.

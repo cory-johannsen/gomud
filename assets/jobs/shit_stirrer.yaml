@@ -6,7 +6,7 @@ reward_point_cost: 100
 traits:
   - Shaken Not Stirred
 skillRanks:
-  - Char,
+  - Charm
   - Disguise
   - Eavesdrop
   - Education

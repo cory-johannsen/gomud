@@ -1,5 +1,6 @@
 name: Holdout
 description: |
-  Holdout description
+  You find it easy to hide items you’ve palmed in places where no one
+  can find them.
 effects:
-  - Holdout Effect
+  - You always succeed at Skulduggery Tests to conceal objects no larger than a knife about your person.

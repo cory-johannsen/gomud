@@ -1,5 +1,6 @@
-name: Nerves Of Steel
+name: Nerves of Steel
 description: |
-  Nerves Of Steel description
+  Your will alone is often enough to withstand the rigors of fatigue
+  and strain.
 effects:
-  - Nerves Of Steel Effect
+  - When resting in unsafe places, your Peril Condition Track moves all steps positively to Unhindered.

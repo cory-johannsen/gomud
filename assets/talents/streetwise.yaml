@@ -1,5 +1,6 @@
 name: Streetwise
 description: |
-  Streetwise description
+  You were born in the streets, and know how to get around
+  unnoticed along the gutters and back alleys.
 effects:
-  - Streetwise Effect
+  - When you attempt to hide in urban environments, you gain a +20 Base Chance to Stealth Tests.

@@ -1,5 +1,6 @@
 name: Ground & Pound
 description: |
-  Ground & Pound description
+  Whenever a foe escapes your hold, you sucker punch them right
+  in the gut.
 effects:
-  - Ground & Pound Effect
+  - When a foe successfully Resists your Chokehold, immediately make a bare-handed Opportunity Attack.

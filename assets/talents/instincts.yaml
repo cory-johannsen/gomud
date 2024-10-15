@@ -1,5 +1,6 @@
 name: Instincts
 description: |
-  Instincts description
+  You do not need to be able to see your enemies clearly in order to
+  strike them.
 effects:
-  - Instincts Effect
+  - While in fog, mist or smoke, you ignore the normal penalties associated with impaired vision.

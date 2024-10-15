@@ -1,0 +1,6 @@
+name: Supernatural Paranoia
+description: |
+  Your encounters with the supernatural and the terrifying have
+  made you extremely paranoid.
+effects:
+  - When your Chaos Ranks are higher than your Order Ranks, add 3 to your Initiative.

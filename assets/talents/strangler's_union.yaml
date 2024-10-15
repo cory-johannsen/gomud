@@ -1,0 +1,7 @@
+name: Strangler's Union
+description: |
+  You’re a straight-up murderer,
+  dealing death silently and
+  effectively.
+effects:
+  - When you make an Attack Action with a blackjack, bullwhip or garrote, your foe cannot Dodge or Parry this attack.

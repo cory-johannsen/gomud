@@ -1,5 +1,5 @@
 name: Gangster Grip
 description: |
-  Gangster Grip description
+  “Step off, knave. If you tryin’ to plough with me, my go bang!”
 effects:
-  - Gangster Grip Effect
+  - When you make an Attack Action with a weapon possessing the Gunpowder Quality within one yard of an opponent, you inflict an additional 1D6 Fury Die to Damage.

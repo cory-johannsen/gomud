@@ -9,7 +9,7 @@ skillRanks:
   - Awareness
   - Charm
   - Disguise
-  - Eacesdrop
+  - Eavesdrop
   - Education
   - Martial Ranged
   - Ride
@@ -26,5 +26,5 @@ bonusAdvances:
   Flair: 2
 talents:
   - Saddle-born
-  - Silver-tongue
+  - Silver Tongue
   - Take 'Em Down

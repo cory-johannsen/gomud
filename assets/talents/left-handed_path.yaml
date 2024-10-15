@@ -1,5 +1,6 @@
 name: Left-handed Path
 description: |
-  Left-handed Path description
+  You possess an inexorable command over the powers of chaos and
+  disorder and are resilient to their corrupting effects.
 effects:
-  - Left-handed Path Effect
+  - When you Channel Power, if your Chaos Dice do not result in a Chaos Manifestation, you avoid gaining Corruption as a result.

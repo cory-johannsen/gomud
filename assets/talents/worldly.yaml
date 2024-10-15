@@ -1,0 +1,7 @@
+name: Worldly
+description: |
+  You are highly knowledgeable about the world around you and
+  the world at large, having either travelled or read widely. You’re
+  innately friendly and people enjoy your company.
+effects:
+  - When gossiping or spinning a tale, you gain a +20 Base Chance to Rumor Tests.

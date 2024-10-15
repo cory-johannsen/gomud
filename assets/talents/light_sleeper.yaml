@@ -1,5 +1,5 @@
 name: Light Sleeper
 description: |
-  Light Sleeper description
+  You rest with one eye open, ever-watchful for danger.
 effects:
-  - Light Sleeper Effect
+  - When you are sleeping, you cannot be Surprised or left Helpless.

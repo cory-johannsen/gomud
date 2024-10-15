@@ -1,5 +1,6 @@
 name: Knifework
 description: |
-  Knifework description
+  You are incredibly adept at using cutting weapons, striking
+  between the chinks of your enemy’s armor and twisting the blade.
 effects:
-  - Knifework Effect
+  - When you deal Damage to a foe using a melee weapon with the Fast Quality, they must Resist with a Toughness Test or begin to Bleed.

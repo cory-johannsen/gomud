@@ -5,7 +5,7 @@ tier: Basic
 reward_point_cost: 100
 traits:
   - Cult of Personality
-  - Dive Magick
+  - Divine Magick
 drawback:
   - Cruel Tutelage
 skillRanks:

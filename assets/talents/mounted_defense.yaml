@@ -1,5 +1,6 @@
 name: Mounted Defense
 description: |
-  Mounted Defense description
+  You are an expert rider, and can duck and weave with ease to
+  defend yourself while astride a mount or on a moving vehicle.
 effects:
-  - Mounted Defense Effect
+  - When fighting on horseback or atop a vehicle like a cart, coach or wagon, you can substitute your Drive or Ride Skill in place of Coordination when you Dodge or Parry. In addition, you always succeed at Skill Tests to retain control when your mount or the animal that’s pulling your vehicle suffers Damage.

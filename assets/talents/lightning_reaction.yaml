@@ -1,5 +1,6 @@
 name: Lightning Reaction
 description: |
-  Lightning Reaction description
+  You are unnaturally fast and able to assess the situation with
+  lightning reflexes.
 effects:
-  - Lightning Reaction Effect
+  - In combat, you gain 1 additional Action Point. However, it can only be used to Dodge and Parry. This Action Point refreshes at the beginning of your Turn.

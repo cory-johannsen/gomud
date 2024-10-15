@@ -1,5 +1,6 @@
 name: Housebreaker
 description: |
-  Housebreaker description
+  You’ve likely spent some time as a second story man or been paid to
+  help old mothers locked out of their own cottages.
 effects:
-  - Housebreaker Effect
+  - When trying to open locks, you gain a +20 Base Chance to Skulduggery Tests.

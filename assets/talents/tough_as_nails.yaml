@@ -1,5 +1,6 @@
 name: Tough As Nails
 description: |
-  Tough As Nails description
+  Scars ripple up and down your body, telling tale of horrendous
+  injuries you’ve suffered over the years.
 effects:
-  - Tough As Nails Effect
+  - You no longer suffer Moderate Injuries, remaining uninjured as a result.

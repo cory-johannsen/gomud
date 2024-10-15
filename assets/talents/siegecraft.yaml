@@ -1,5 +1,6 @@
 name: Siegecraft
 description: |
-  Siegecraft description
+  Siege warfare and investiture are your forte, having spent time in
+  the field perfecting the art of war.
 effects:
-  - Siegecraft Effect
+  - When you attempt to determine appropriate distances for siege engines and employ them to hit, you gain a +20 Base Chance to Warfare Tests.

@@ -1,5 +1,5 @@
 name: Saddle-born
 description: |
-  Saddle-born description
+  "Hi-yo and away!” You are an accomplished rider in the saddle.
 effects:
-  - Saddle-born Effect
+  - When fighting on horseback or atop a vehicle like a cart, coach or wagon, you gain a +10 Base Chance to strike with melee and ranged weapons.

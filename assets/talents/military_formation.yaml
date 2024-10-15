@@ -1,5 +1,6 @@
 name: Military Formation
 description: |
-  Military Formation description
+  Standing alongside your allies, you lead them towards victory as
+  you occupy the van.
 effects:
-  - Military Formation Effect
+  - When you successfully use Inspiring Words in combat, both you and the allies you inspire raise their Initiative by 3.

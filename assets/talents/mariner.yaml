@@ -1,5 +1,6 @@
 name: Mariner
 description: |
-  Mariner description
+  You ply waterways nearest the shore, along river ways and deep
+  lakes with ease.
 effects:
-  - Mariner Effect
+  - When boating in waters where the shore can be seen, you gain a +20 Base Chance to Pilot Tests.

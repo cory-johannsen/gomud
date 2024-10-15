@@ -1,5 +1,6 @@
 name: Larceny
 description: |
-  Larceny description
+  You engage in illegal activities and find a natural home in the
+  criminal underworld.
 effects:
-  - Larceny Effect
+  - When fencing black market goods or procuring illegal information, you gain a +20 Base Chance to Bargain Tests.

@@ -1,5 +1,8 @@
 name: Higher Mysteries
 description: |
-  Higher Mysteries description
+  A rare few dabble in the darkest of Magicks. In its purest of forms,
+  it is vile and destructive to others and soul-corrupting to the
+  magician that wields it. You force the dark to kneel before you, but
+  only after appropriating a suitable sacrifice.
 effects:
-  - Higher Mysteries Effect
+  - While Channeling Power, you can voluntarily remove any number of Chaos Dice. However, you suffer 3 additional Corruption for each Chaos Die you remove.

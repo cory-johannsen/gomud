@@ -1,5 +1,6 @@
 name: Run Amok
 description: |
-  Run Amok description
+  You plow through your enemies, driving the business end of your
+  weapon home with terrible accuracy.
 effects:
-  - Run Amok Effect
+  - When you Charge, you gain a +20 Base Chance to strike with a melee-based Attack Actions and Perilous Stunts.

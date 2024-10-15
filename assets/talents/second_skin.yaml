@@ -1,5 +1,6 @@
 name: Second Skin
 description: |
-  Second Skin description
+  You’ve grown accustomed to the weight of armor and move around
+  unimpeded.
 effects:
-  - Second Skin Effect
+  - You can Dodge when wearing armor with the Heavy Quality.

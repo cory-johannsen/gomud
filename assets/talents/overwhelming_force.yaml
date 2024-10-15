@@ -1,5 +1,6 @@
 name: Overwhelming Force
 description: |
-  Overwhelming Force description
+  When armed with a heavy weapon, you can deliver crushing
+  blows that splinter shields and shatter weapons.
 effects:
-  - Overwhelming Force Effect
+  - If you roll a Critical Success with a Melee Attack, you inflict the Ruined! Quality to a foe’s shield, weapon or armor (your choice). Overwhelming Force has no effect on Castle-forged trappings, and you must be armed with a two- handed melee weapon.

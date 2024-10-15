@@ -1,5 +1,5 @@
 name: Handspring
 description: |
-  Handspring description
+  You get knocked down, but you get up again.
 effects:
-  - Handspring Effect
+  - You can use the Movement Action called Get Up for 0 Action Points.

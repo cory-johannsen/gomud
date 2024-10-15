@@ -1,5 +1,5 @@
 name: Gruesome Shot
 description: |
-  Gruesome Shot description
+  In one masterful stroke, you strike your target clean and accurately.
 effects:
-  - Gruesome Shot Effect
+  - When you Take Aim and then make a successful Ranged Attack, add 3 Damage.

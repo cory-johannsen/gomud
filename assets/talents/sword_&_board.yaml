@@ -1,0 +1,5 @@
+name: Sword & Board
+description: |
+  When armed with a shield and sword, you are a whirlwind of blows.
+effects:
+  - If a foe successfully Parries your Melee Attack, immediately make an Opportunity Attack using a shield as an improvised hand weapon.

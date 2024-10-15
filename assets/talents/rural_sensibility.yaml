@@ -1,5 +1,6 @@
 name: Rural Sensibility
 description: |
-  Rural Sensibility description
+  You are country-born and know how to get around unnoticed in
+  the wilderness and countryside.
 effects:
-  - Rural Sensibility Effect
+  - When you attempt to hide in rural environments, you gain a +20 Base Chance to Stealth Tests.

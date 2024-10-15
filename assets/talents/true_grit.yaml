@@ -1,5 +1,6 @@
 name: True Grit
 description: |
-  True Grit description
+  You have an incredibly hardy physique, powering through pain
+  and suffering with resolve.
 effects:
-  - True Grit Effect
+  - You are immune to the effects of Knockout! and Stunning Blow.

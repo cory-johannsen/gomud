@@ -1,5 +1,6 @@
 name: Impervious Mind
 description: |
-  Impervious description
+  You spit in the face of fear, your mind being incredibly resilient
+  to events that lead towards stress and madness.
 effects:
-  - Impervious Effect
+  - When you suffer mental Peril, reduce your Peril Condition Track by one less step negatively.
