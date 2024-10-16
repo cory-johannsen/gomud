@@ -94,7 +94,11 @@ func (d *Dispatcher) Register(name string, handler Handler) {
 }
 
 func (d *Dispatcher) Prompt() string {
-	return "> "
+	if d.State() == nil || d.State().Player() == nil {
+		return "> "
+	}
+	player := d.State().Player()
+	return fmt.Sprintf("[%s] (%s)> ", player.Name, player.Peril().Condition.String())
 }
 
 func (d *Dispatcher) Tab(buffer string) string {
