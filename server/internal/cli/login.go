@@ -66,7 +66,8 @@ func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error
 		player = h.validatePassword(name)
 	}
 	h.state = h.stateConstructor(player)
-	return fmt.Sprintf("Welcome %s", name), nil
+	msg := fmt.Sprintf("Welcome %s!\n%s", name, Look(player))
+	return msg, nil
 }
 
 func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {

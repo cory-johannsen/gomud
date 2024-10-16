@@ -3,10 +3,20 @@ package cli
 import (
 	"context"
 	"fmt"
+	"github.com/cory-johannsen/gomud/internal/domain"
 )
 
 type LookHandler struct {
 	stateProvider StateProvider
+}
+
+func Look(player *domain.Player) string {
+	room := player.Room()
+	msg := fmt.Sprintf("You are in %s\n\t%s\n\tExits:\n", room.Name, room.Description)
+	for _, exit := range room.Exits() {
+		msg += fmt.Sprintf("\t\t%s: %s\n", exit.Direction, exit.Description)
+	}
+	return msg
 }
 
 func (h *LookHandler) Handle(ctx context.Context, args []string) (string, error) {
