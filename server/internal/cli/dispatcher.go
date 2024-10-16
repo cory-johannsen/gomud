@@ -6,6 +6,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
+	"sort"
 	"strings"
 )
 
@@ -54,6 +55,33 @@ func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, 
 		dispatcher.Register(alias.Alias, alias)
 	}
 
+	moveHandler := NewMoveHandler(dispatcher.State, players, rooms)
+	dispatcher.Register("move", moveHandler)
+	moveAliases := CreateAliases(moveHandler, "m")
+	for _, alias := range moveAliases {
+		dispatcher.Register(alias.Alias, alias)
+	}
+
+	directions := map[string][]string{
+		"North":     {"n", "N", "north"},
+		"South":     {"s", "S", "south"},
+		"East":      {"e", "E", "east"},
+		"West":      {"w", "W", "west"},
+		"Northeast": {"ne", "NE", "northeast"},
+		"Northwest": {"nw", "NW", "northwest"},
+		"Southeast": {"se", "SE", "southeast"},
+		"Southwest": {"sw", "SW", "southwest"},
+		"Up":        {"u", "U", "up"},
+		"Down":      {"d", "D", "down"},
+	}
+	for direction, aliases := range directions {
+		handler := NewDirectionalMoveHandler(dispatcher.State, players, rooms, direction)
+		dispatcher.Register(direction, handler)
+		handlerAliases := CreateAliases(handler, aliases...)
+		for _, alias := range handlerAliases {
+			dispatcher.Register(alias.Alias, alias)
+		}
+	}
 	return dispatcher
 }
 
@@ -83,6 +111,7 @@ func (d *Dispatcher) Eval(buffer string) string {
 				for k := range d.handlers {
 					commands = append(commands, k)
 				}
+				sort.Strings(commands)
 				return "available commands: " + strings.Join(commands, ", ")
 			}
 			cmd = fields[1]
