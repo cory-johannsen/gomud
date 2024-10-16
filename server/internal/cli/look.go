@@ -16,16 +16,17 @@ func Look(player *domain.Player) string {
 	for _, exit := range room.Exits() {
 		msg += fmt.Sprintf("\t\t%s: %s\n", exit.Direction, exit.Description)
 	}
+	for _, other := range room.Players {
+		if other == player {
+			continue
+		}
+		msg += fmt.Sprintf("%s the %s is here\n", other.Name, other.Job().Name)
+	}
 	return msg
 }
 
 func (h *LookHandler) Handle(ctx context.Context, args []string) (string, error) {
-	player := h.stateProvider().Player()
-	room := player.Room()
-	msg := fmt.Sprintf("You are in %s\n\t%s\n\tExits:\n", room.Name, room.Description)
-	for _, exit := range room.Exits() {
-		msg += fmt.Sprintf("\t\t%s: %s\n", exit.Direction, exit.Description)
-	}
+	msg := Look(h.stateProvider().Player())
 	return msg, nil
 }
 

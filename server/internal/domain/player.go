@@ -113,6 +113,8 @@ type Player struct {
 	Password string
 }
 
+type Players map[int]*Player
+
 func NewPlayer(id *int, name string, password string, data map[string]Property) *Player {
 	p := &Player{
 		Character: Character{

@@ -3,6 +3,8 @@ package cli
 import (
 	"context"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/storage"
+	log "github.com/sirupsen/logrus"
 )
 
 type State interface {
@@ -57,9 +59,18 @@ const WelcomeMessage = "\n<-- 🔫 Gunchete 🔪 -->\n\nWelcome to Gunchete!  Ty
 const QuitMessage = "peace out"
 
 type QuitHandler struct {
+	stateProvider StateProvider
+	players       *storage.Players
 }
 
 func (h *QuitHandler) Handle(ctx context.Context, args []string) (string, error) {
+	player := h.stateProvider().Player()
+	room := player.Room()
+	room.RemovePlayer(player)
+	_, err := h.players.StorePlayer(ctx, player)
+	if err != nil {
+		log.Printf("error storing player: %s", err)
+	}
 	return QuitMessage, nil
 }
 
@@ -68,5 +79,5 @@ func (h *QuitHandler) Help([]string) string {
 }
 
 func (h *QuitHandler) State() State {
-	return nil
+	return h.stateProvider()
 }

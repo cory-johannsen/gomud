@@ -40,6 +40,8 @@ func (m *MoveHandler) Handle(ctx context.Context, args []string) (string, error)
 		log.Printf("error storing player: %s", err)
 		return "", err
 	}
+	room.RemovePlayer(player)
+	destination.AddPlayer(player)
 	return Look(player), nil
 }
 

@@ -1,6 +1,9 @@
 package domain
 
-import "fmt"
+import (
+	"fmt"
+	log "github.com/sirupsen/logrus"
+)
 
 type ExitSpec struct {
 	Direction   string
@@ -28,6 +31,7 @@ type Room struct {
 	ID          int64
 	Name        string
 	Description string
+	Players     Players
 	exitSpecs   map[string]ExitSpec
 	exits       Exits
 	resolver    RoomResolver
@@ -52,6 +56,7 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver) *Room {
 		ID:          spec.ID,
 		Name:        spec.Name,
 		Description: spec.Description,
+		Players:     make(Players),
 		exitSpecs:   spec.Exits,
 		exits:       make(Exits),
 		resolver:    resolver,
@@ -72,4 +77,22 @@ func (r *Room) Exits() Exits {
 		}
 	}
 	return r.exits
+}
+
+func (r *Room) AddPlayer(player *Player) {
+	if player.Id == nil {
+		log.Printf("player %s has no id", player.Name)
+		return
+	}
+	id := *player.Id
+	r.Players[id] = player
+}
+
+func (r *Room) RemovePlayer(player *Player) {
+	if player.Id == nil {
+		log.Printf("player %s has no id", player.Name)
+		return
+	}
+	id := *player.Id
+	delete(r.Players, id)
 }

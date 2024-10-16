@@ -6,7 +6,6 @@ import (
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
-	"sort"
 	"strings"
 )
 
@@ -27,14 +26,19 @@ func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, 
 		handlers: make(map[string]Handler),
 		ctx:      context.Background(),
 	}
-	quit := &QuitHandler{}
-	quitAliases := CreateAliases(dispatcher.handlers["quit"], "exit", "q")
+	quit := &QuitHandler{
+		stateProvider: dispatcher.State,
+		players:       players,
+	}
+	quitAliases := CreateAliases(quit, "exit", "q")
 	dispatcher.Register("quit", quit)
 	for _, alias := range quitAliases {
 		dispatcher.Register(alias.Alias, alias)
 	}
 
-	helpAliases := CreateAliases(dispatcher.handlers["help"], "?", "h")
+	helpHandler := &HelpHandler{stateProvider: dispatcher.State, dispatcher: dispatcher}
+	dispatcher.Register("help", helpHandler)
+	helpAliases := CreateAliases(helpHandler, "?", "h")
 	for _, alias := range helpAliases {
 		dispatcher.Register(alias.Alias, alias)
 	}
@@ -104,23 +108,6 @@ func (d *Dispatcher) Eval(buffer string) string {
 		return ""
 	} else {
 		cmd := fields[0]
-
-		if cmd == "help" {
-			if len(fields) == 1 {
-				commands := make([]string, 0)
-				for k := range d.handlers {
-					commands = append(commands, k)
-				}
-				sort.Strings(commands)
-				return "available commands: " + strings.Join(commands, ", ")
-			}
-			cmd = fields[1]
-			handler, ok := d.handlers[cmd]
-			if !ok {
-				return fmt.Sprintf("unrecognized command \"%s\"", cmd)
-			}
-			return handler.Help(fields[2:])
-		}
 
 		handler, ok := d.handlers[cmd]
 		if !ok {
