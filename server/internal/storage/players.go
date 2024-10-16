@@ -92,6 +92,8 @@ func (p *Players) FetchPlayerByName(ctx context.Context, name string) (*domain.P
 	}
 	props := p.dataToProperties(specProps)
 	player := domain.NewPlayer(&id, name, password, props)
+	// Peril threshold is calculated from Grit Bonus
+	player.Peril().Threshold = player.StatBonuses().Grit + 3
 	p.players[name] = player
 	return player, nil
 }
@@ -302,6 +304,14 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				continue
 			}
 			props[k] = job
+		case domain.PerilProperty:
+			peril := v.(map[string]interface{})
+			threshold := peril["Threshold"].(float64)
+			perilCondition := peril["Condition"].(float64)
+			props[k] = &domain.Peril{
+				Threshold: int(threshold),
+				Condition: domain.PerilCondition(perilCondition),
+			}
 		case domain.RoomProperty:
 			room := p.loaders.RoomLoader.GetRoom(v.(string))
 			props[k] = room

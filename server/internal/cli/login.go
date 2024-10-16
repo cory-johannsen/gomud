@@ -123,6 +123,11 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	player.SetRoom(room)
 	room.AddPlayer(player)
 
+	player.SetPeril(&domain.Peril{
+		Threshold: player.StatBonuses().Grit + 3,
+		Condition: domain.PerilConditionUnhindered,
+	})
+
 	log.Printf("Created player %s", player.Name)
 
 	return player, nil

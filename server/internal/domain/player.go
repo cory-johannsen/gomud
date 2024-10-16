@@ -26,6 +26,7 @@ const (
 	DrawbackProperty           = "drawback"
 	ExperienceProperty         = "experience"
 	JobProperty                = "job"
+	PerilProperty              = "peril"
 	RoomProperty               = "room"
 	TeamProperty               = "team"
 	TattooProperty             = "tattoo"
@@ -107,6 +108,50 @@ func (s SkillRanks) Value() interface{} {
 
 var _ Property = &SkillRanks{}
 
+type PerilCondition int
+
+const (
+	PerilConditionUnhindered PerilCondition = iota
+	PerilConditionImperiled
+	PerilConditionIgnore1SkillRank
+	PerilConditionIgnore2SkillRanks
+	PerilConditionIgnore3SkillRanks
+	PerilConditionIncapacitated
+)
+
+func (p PerilCondition) String() string {
+	switch p {
+	case PerilConditionUnhindered:
+		return "Unhindered"
+	case PerilConditionImperiled:
+		return "Imperiled"
+	case PerilConditionIgnore1SkillRank:
+		return "Ignore 1 Skill Rank"
+	case PerilConditionIgnore2SkillRanks:
+		return "Ignore 2 Skill Ranks"
+	case PerilConditionIgnore3SkillRanks:
+		return "Ignore 3 Skill Ranks"
+	case PerilConditionIncapacitated:
+		return "INCAPACITATED!"
+	}
+	return "undefined"
+}
+
+type Peril struct {
+	Threshold int
+	Condition PerilCondition
+}
+
+func (p Peril) Value() interface{} {
+	return p
+}
+
+func (p Peril) String() string {
+	return fmt.Sprintf("Peril Threshold: %d\nPeril Condition: %s", p.Threshold, p.Condition.String())
+}
+
+var _ Property = &Peril{}
+
 type Player struct {
 	Character
 	Id       *int
@@ -165,7 +210,8 @@ func (p *Player) String() string {
 		SkillRanksProperty,
 		TalentsProperty,
 		BackgroundTraitProperty,
-		TeamProperty}
+		TeamProperty,
+		PerilProperty}
 	for _, k := range properties {
 		v, ok := p.Data[k]
 		if !ok {
@@ -227,6 +273,8 @@ func (p *Player) String() string {
 		case JobProperty:
 			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier)
 			continue
+		case PerilProperty:
+			msg += fmt.Sprintf("  Peril - \n\tThreshold: %d\n\tCondition: %s", v.(*Peril).Threshold, v.(*Peril).Condition.String())
 		case StatsProperty:
 			stats := v.(*Stats)
 			bonuses := p.StatBonuses()
@@ -426,4 +474,12 @@ func (p *Player) Room() *Room {
 
 func (p *Player) SetRoom(r *Room) {
 	p.Data[RoomProperty] = r
+}
+
+func (p *Player) Peril() *Peril {
+	return p.Data[PerilProperty].(*Peril)
+}
+
+func (p *Player) SetPeril(peril *Peril) {
+	p.Data[PerilProperty] = peril
 }
