@@ -20,7 +20,25 @@ func Look(player *domain.Player) string {
 		if other == player {
 			continue
 		}
-		msg += fmt.Sprintf("%s the %s is here\n", other.Name, other.Job().Name)
+		perilCondition := other.Peril().Condition
+		var perilDescription string
+		switch perilCondition {
+		default:
+			fallthrough
+		case domain.PerilConditionUnhindered:
+			perilDescription = "cool as a cucumber."
+		case domain.PerilConditionImperiled:
+			perilDescription = "kinda concerned."
+		case domain.PerilConditionIgnore1SkillRank:
+			perilDescription = "pretty freaked out."
+		case domain.PerilConditionIgnore2SkillRanks:
+			perilDescription = "super freaked out."
+		case domain.PerilConditionIgnore3SkillRanks:
+			perilDescription = "out of their damn mind!"
+		case domain.PerilConditionIncapacitated:
+			perilDescription = "totally incapacitated!"
+		}
+		msg += fmt.Sprintf("%s the %s is here.  They look %s\n", other.Name, other.Job().Name, perilDescription)
 	}
 	return msg
 }
