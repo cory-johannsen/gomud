@@ -70,8 +70,8 @@ type Client struct {
 	Dispatcher *cli.Dispatcher
 }
 
-func NewClient(players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, conn net.Conn) *Client {
-	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, NewClientConnection(conn))
+func NewClient(players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, rooms *loader.RoomLoader, conn net.Conn) *Client {
+	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, rooms, NewClientConnection(conn))
 	return &Client{
 		Connection: conn,
 		Dispatcher: dispatcher,
@@ -149,7 +149,7 @@ func (s *Server) Start() {
 		if err != nil {
 			panic(err)
 		}
-		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, c)
+		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, c)
 		go client.Connect()
 	}
 }

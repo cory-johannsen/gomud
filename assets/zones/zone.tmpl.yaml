@@ -1,0 +1,11 @@
+name: {{ .name }}
+description: |
+  {{ .description }}
+rooms:
+  {% range .rooms %}
+  - {{ . }}
+  {% end %}
+areas:
+  {% range .areas %}
+  - {{ . }}
+  {% end %}

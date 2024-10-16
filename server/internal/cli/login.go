@@ -19,16 +19,18 @@ type LoginHandler struct {
 	players          *storage.Players
 	generator        *generator.PlayerGenerator
 	teams            *loader.TeamLoader
+	rooms            *loader.RoomLoader
 	conn             Connection
 }
 
 func NewLoginHandler(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, conn Connection) *LoginHandler {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn Connection) *LoginHandler {
 	return &LoginHandler{
 		stateConstructor: stateConstructor,
 		players:          players,
 		generator:        generator,
 		teams:            teams,
+		rooms:            rooms,
 		conn:             conn,
 	}
 }
@@ -113,6 +115,8 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 			}
 		}
 	}
+
+	player.SetRoom(h.rooms.GetRoom("Wayne Dawg's Trailer"))
 
 	log.Printf("Created player %s", player.Name)
 

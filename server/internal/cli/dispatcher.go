@@ -21,7 +21,7 @@ func (d *Dispatcher) State() State {
 	return d.state
 }
 
-func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, conn Connection) *Dispatcher {
+func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, rooms *loader.RoomLoader, conn Connection) *Dispatcher {
 	dispatcher := &Dispatcher{
 		handlers: make(map[string]Handler),
 		ctx:      context.Background(),
@@ -38,14 +38,22 @@ func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, 
 		dispatcher.Register(alias.Alias, alias)
 	}
 
-	dispatcher.Register("login", NewLoginHandler(stateConstructor, players, generator, teams, conn))
-	
+	dispatcher.Register("login", NewLoginHandler(stateConstructor, players, generator, teams, rooms, conn))
+
 	characterHandler := CharacterHandler{stateProvider: dispatcher.State}
 	dispatcher.Register("character", &characterHandler)
 	characterAliases := CreateAliases(&characterHandler, "c", "char", "me", "self")
 	for _, alias := range characterAliases {
 		dispatcher.Register(alias.Alias, alias)
 	}
+
+	lookHandler := NewLookHandler(dispatcher.State)
+	dispatcher.Register("look", lookHandler)
+	lookAliases := CreateAliases(lookHandler, "l")
+	for _, alias := range lookAliases {
+		dispatcher.Register(alias.Alias, alias)
+	}
+
 	return dispatcher
 }
 

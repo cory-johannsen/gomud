@@ -1,0 +1,10 @@
+name: Wayne Dawg's Trailer Kitchen
+description: |
+  Wayne Dawg's trailer kitchen is a small, cramped space. The walls are lined
+  with trash and the floor is littered with empty beer cans and cigarette butts.
+  The sink is piled high with dirty dishes and the stove is covered in grease.
+exits:
+  West:
+    name: Living room
+    description: A disgusting living room
+    target: Wayne Dawg's Trailer

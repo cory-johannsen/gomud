@@ -26,6 +26,7 @@ const (
 	DrawbackProperty           = "drawback"
 	ExperienceProperty         = "experience"
 	JobProperty                = "job"
+	RoomProperty               = "room"
 	TeamProperty               = "team"
 	TattooProperty             = "tattoo"
 	SkillRanksProperty         = "skillRanks"
@@ -415,4 +416,12 @@ func (p *Player) Background() *Background {
 
 func (p *Player) BackgroundTrait() *Trait {
 	return p.Data[BackgroundTraitProperty].(*Trait)
+}
+
+func (p *Player) Room() *Room {
+	return p.Data[RoomProperty].(*Room)
+}
+
+func (p *Player) SetRoom(r *Room) {
+	p.Data[RoomProperty] = r
 }

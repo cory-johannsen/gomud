@@ -1,0 +1,11 @@
+name: {{ .name }}
+description: |
+  {{ .description }}
+exits:
+  {% range .exits %}
+  - {{ .direction }}:
+    name: {{ .name }}
+    description: |
+      {{ .description }}
+    target: {{ .target }}
+  {% end %}

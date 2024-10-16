@@ -150,6 +150,8 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 		case domain.JobProperty:
 			data[k] = v.(*domain.Job).Name
 			continue
+		case domain.RoomProperty:
+			data[k] = v.(*domain.Room).Name
 		case domain.SkillRanksProperty:
 			skillRanks := make(map[string][]string)
 			for _, skill := range v.(domain.SkillRanks) {
@@ -300,6 +302,9 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				continue
 			}
 			props[k] = job
+		case domain.RoomProperty:
+			room := p.loaders.RoomLoader.GetRoom(v.(string))
+			props[k] = room
 		case domain.SkillRanksProperty:
 			skillRanks := make(domain.SkillRanks, 0)
 			for jobName, skills := range v.(map[string]interface{}) {
