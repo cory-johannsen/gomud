@@ -1,6 +1,8 @@
 module github.com/cory-johannsen/gomud
 
-go 1.22.4
+go 1.23
+
+toolchain go1.23.2
 
 require (
 	github.com/caarlos0/env/v6 v6.10.1
@@ -22,6 +24,7 @@ require (
 	github.com/jackc/pgtype v1.14.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/stanipetrosyan/go-eventbus v0.8.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/crypto v0.27.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect

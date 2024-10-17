@@ -12,6 +12,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
+	"github.com/stanipetrosyan/go-eventbus"
 )
 
 // Injectors from wire.go:
@@ -34,12 +35,14 @@ func InitializeEngine() (*engine.Engine, error) {
 	skillLoader := loader.NewSkillLoader(configConfig)
 	talentLoader := loader.NewTalentLoader(configConfig)
 	jobLoader := loader.NewJobLoader(configConfig, archetypeLoader, skillLoader, talentLoader, traitLoader)
-	roomLoader := loader.NewRoomLoader(configConfig)
+	eventBus := goeventbus.NewEventBus()
+	roomLoader := loader.NewRoomLoader(configConfig, eventBus)
 	teamLoader := loader.NewTeamLoader(configConfig)
 	loaders := loader.NewLoaders(appearanceLoader, alignmentLoader, archetypeLoader, backgroundLoader, injuryLoader, jobLoader, roomLoader, skillLoader, talentLoader, traitLoader, teamLoader)
 	players := storage.NewPlayers(database, loaders)
 	playerGenerator := generator.NewPlayerGenerator(loaders)
-	server := engine.NewServer(configConfig, database, players, loaders, playerGenerator)
-	engineEngine := engine.NewEngine(configConfig, server)
+	clock := engine.NewClock(eventBus, configConfig)
+	server := engine.NewServer(configConfig, database, players, loaders, playerGenerator, eventBus, clock)
+	engineEngine := engine.NewEngine(configConfig, server, eventBus)
 	return engineEngine, nil
 }

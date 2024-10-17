@@ -3,6 +3,7 @@ package domain
 import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
+	goeventbus "github.com/stanipetrosyan/go-eventbus"
 )
 
 type ExitSpec struct {
@@ -35,6 +36,7 @@ type Room struct {
 	exitSpecs   map[string]ExitSpec
 	exits       Exits
 	resolver    RoomResolver
+	eventBus    goeventbus.EventBus
 }
 
 func (r *Room) Value() interface{} {
@@ -51,7 +53,13 @@ type RoomResolver func(name string) *Room
 
 type Rooms map[string]*Room
 
-func NewRoom(spec *RoomSpec, resolver RoomResolver) *Room {
+func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus goeventbus.EventBus) *Room {
+	eventBus.Channel(spec.Name).Subscriber().Listen(func(ctx goeventbus.Context) {
+		msg := ctx.Result()
+		log.Printf("room %s received message: %v", spec.Name, msg)
+
+	})
+
 	return &Room{
 		ID:          spec.ID,
 		Name:        spec.Name,
@@ -60,6 +68,7 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver) *Room {
 		exitSpecs:   spec.Exits,
 		exits:       make(Exits),
 		resolver:    resolver,
+		eventBus:    eventBus,
 	}
 }
 

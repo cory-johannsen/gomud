@@ -10,6 +10,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
+	goeventbus "github.com/stanipetrosyan/go-eventbus"
 	"net"
 	"strings"
 )
@@ -67,11 +68,13 @@ func (c *ClientConnection) Writeln(data string) int {
 
 type Client struct {
 	Connection net.Conn
+	EventBus   goeventbus.EventBus
 	Dispatcher *cli.Dispatcher
 }
 
-func NewClient(players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, rooms *loader.RoomLoader, conn net.Conn) *Client {
-	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, rooms, NewClientConnection(conn))
+func NewClient(players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, rooms *loader.RoomLoader,
+	conn net.Conn, eventBus goeventbus.EventBus) *Client {
+	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, rooms, NewClientConnection(conn), eventBus)
 	return &Client{
 		Connection: conn,
 		Dispatcher: dispatcher,
@@ -124,16 +127,20 @@ type Server struct {
 	loaders         *loader.Loaders
 	playerGenerator *generator.PlayerGenerator
 	dispatcher      *cli.Dispatcher
+	eventBus        goeventbus.EventBus
+	clock           *Clock
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, loaders *loader.Loaders,
-	playerGenerator *generator.PlayerGenerator) *Server {
+	playerGenerator *generator.PlayerGenerator, eventBus goeventbus.EventBus, clock *Clock) *Server {
 	return &Server{
 		port:            config.Port,
 		db:              db,
 		players:         players,
 		loaders:         loaders,
 		playerGenerator: playerGenerator,
+		eventBus:        eventBus,
+		clock:           clock,
 	}
 }
 
@@ -144,24 +151,28 @@ func (s *Server) Start() {
 	}
 	defer l.Close()
 
+	s.clock.Start()
+
 	for {
 		c, err := l.Accept()
 		if err != nil {
 			panic(err)
 		}
-		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, c)
+		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, c, s.eventBus)
 		go client.Connect()
 	}
 }
 
 type Engine struct {
-	Config *config.Config
-	Server *Server
+	Config   *config.Config
+	Server   *Server
+	EventBus goeventbus.EventBus
 }
 
-func NewEngine(config *config.Config, server *Server) *Engine {
+func NewEngine(config *config.Config, server *Server, eventBus goeventbus.EventBus) *Engine {
 	return &Engine{
-		Config: config,
-		Server: server,
+		Config:   config,
+		Server:   server,
+		EventBus: eventBus,
 	}
 }

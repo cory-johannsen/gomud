@@ -4,20 +4,23 @@ import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
 	log "github.com/sirupsen/logrus"
+	goeventbus "github.com/stanipetrosyan/go-eventbus"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
 )
 
 type RoomLoader struct {
-	config *config.Config
-	rooms  map[string]*domain.Room
+	config   *config.Config
+	eventBus goeventbus.EventBus
+	rooms    map[string]*domain.Room
 }
 
-func NewRoomLoader(cfg *config.Config) *RoomLoader {
+func NewRoomLoader(cfg *config.Config, eventBus goeventbus.EventBus) *RoomLoader {
 	return &RoomLoader{
-		config: cfg,
-		rooms:  make(map[string]*domain.Room),
+		config:   cfg,
+		eventBus: eventBus,
+		rooms:    make(map[string]*domain.Room),
 	}
 }
 
@@ -50,7 +53,7 @@ func (l *RoomLoader) LoadRooms() (map[string]*domain.Room, error) {
 			log.Printf("error unmarshalling file %s: %s", item.Name(), err)
 			continue
 		}
-		room := domain.NewRoom(spec, l.GetRoom)
+		room := domain.NewRoom(spec, l.GetRoom, l.eventBus)
 		l.rooms[room.Name] = room
 	}
 	return l.rooms, nil

@@ -16,6 +16,7 @@ type Config struct {
 	DatabasePassword       string `env:"DATABASE_PASSWORD" envDefault:"postgres"`
 	DatabaseMigrationsPath string `env:"DATABASE_MIGRATIONS_PATH" envDefault:"migrations"`
 	AssetPath              string `env:"ASSET_PATH" envDefault:"../assets"`
+	TickDurationMillis     int    `env:"TICK_DURATION_MILLIS" envDefault:"1000"`
 }
 
 func NewConfigFromEnv() (*Config, error) {
