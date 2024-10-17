@@ -16,6 +16,7 @@ func Look(player *domain.Player) string {
 	for _, exit := range room.Exits() {
 		msg += fmt.Sprintf("\t\t%s: %s\n", exit.Direction, exit.Description)
 	}
+	msg += "\n"
 	for _, other := range room.Players {
 		if other == player {
 			continue
@@ -34,9 +35,9 @@ func Look(player *domain.Player) string {
 		case domain.PerilConditionIgnore2SkillRanks:
 			perilDescription = "super freaked out."
 		case domain.PerilConditionIgnore3SkillRanks:
-			perilDescription = "out of their damn mind!"
+			perilDescription = "freaked out of their damn mind!"
 		case domain.PerilConditionIncapacitated:
-			perilDescription = "totally incapacitated!"
+			perilDescription = "totally incapacitated by all this shit!"
 		}
 		msg += fmt.Sprintf("%s the %s is here.  They look %s\n", other.Name, other.Job().Name, perilDescription)
 	}

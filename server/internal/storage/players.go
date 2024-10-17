@@ -133,25 +133,20 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 		switch k {
 		case domain.AlignmentProperty:
 			data[k] = domain.SpecFromAlignment(v.(*domain.Alignment))
-			continue
 		case domain.ArchetypeProperty:
 			data[k] = v.(*domain.Archetype).Name
-			continue
 		case domain.BackgroundProperty:
 			data[k] = v.(*domain.Background).Name
-			continue
 		case domain.BackgroundTraitProperty:
 			data[k] = v.(*domain.Trait).Name
-			continue
+		case domain.ConditionProperty:
+			data[k] = v.(domain.Condition)
 		case domain.ConsumedAdvancesProperty:
 			data[k] = v
-			continue
 		case domain.DrawbackProperty:
 			data[k] = v.(*domain.Drawback).Name
-			continue
 		case domain.JobProperty:
 			data[k] = v.(*domain.Job).Name
-			continue
 		case domain.RoomProperty:
 			data[k] = v.(*domain.Room).Name
 		case domain.SkillRanksProperty:
@@ -164,17 +159,14 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 				skillRanks[jobName] = append(skillRanks[jobName], skill.Skill.Name)
 			}
 			data[k] = skillRanks
-			continue
 		case domain.TeamProperty:
 			data[k] = domain.SpecFromTeam(v.(*domain.Team))
-			continue
 		case domain.TalentsProperty:
 			talents := make([]string, 0)
 			for _, talent := range v.(domain.Talents) {
 				talents = append(talents, talent.Name)
 			}
 			data[k] = talents
-			continue
 		case domain.TattooProperty:
 			fallthrough
 		case domain.DistinguishingMarkProperty:
@@ -246,6 +238,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			props[k] = trait
 		case domain.BirthSeasonProperty:
 			props[k] = domain.Season(v.(string))
+		case domain.ConditionProperty:
+			props[k] = domain.Condition(v.(string))
 		case domain.ConsumedAdvancesProperty:
 			consumedAdvances := make(domain.ConsumedAdvances)
 			for _, advances := range v.(map[string]interface{}) {
@@ -254,18 +248,18 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 					stat := advance.(map[string]interface{})["Stat"].(string)
 					amount := advance.(map[string]interface{})["Amount"].(float64)
 					if _, ok := consumedAdvances[job]; !ok {
-						consumedAdvances[job] = make([]domain.ConsumedAdvance, 0)
+						consumedAdvances[job] = make([]*domain.ConsumedAdvance, 0)
 					}
 
 					var consumedAdvance *domain.ConsumedAdvance
 					for _, ca := range consumedAdvances[job] {
 						if ca.Stat == stat {
-							consumedAdvance = &ca
+							consumedAdvance = ca
 							break
 						}
 					}
 					if consumedAdvance == nil {
-						consumedAdvances[job] = append(consumedAdvances[job], domain.ConsumedAdvance{
+						consumedAdvances[job] = append(consumedAdvances[job], &domain.ConsumedAdvance{
 							Job:    job,
 							Stat:   stat,
 							Amount: int(amount),
@@ -293,6 +287,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				continue
 			}
 			props[k] = drawback
+		case domain.ExperienceProperty:
+			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
 		case domain.JobProperty:
 			job, err := p.loaders.JobLoader.GetJob(v.(string))
 			if err != nil {

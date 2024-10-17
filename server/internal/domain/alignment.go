@@ -33,11 +33,39 @@ type Alignment struct {
 	Corruption int
 }
 
-func (a Alignment) Value() interface{} {
+func (a *Alignment) AddOrderRank(rank int) {
+	a.Order.Rank += rank
+}
+
+func (a *Alignment) ResetOrderRank() {
+	a.Order.Rank = 0
+}
+
+func (a *Alignment) AddChaosRank(rank int) {
+	a.Chaos.Rank += rank
+}
+
+func (a *Alignment) ResetChaosRank() {
+	a.Chaos.Rank = 0
+}
+
+func (a *Alignment) AddCorruption(corruption int) {
+	a.Corruption += corruption
+	if a.Corruption >= 10 {
+		a.Chaos.Rank++
+		a.Corruption = 0
+	}
+}
+
+func (a *Alignment) ResetCorruption() {
+	a.Corruption = 0
+}
+
+func (a *Alignment) Value() interface{} {
 	return a
 }
 
-func (a Alignment) String() string {
+func (a *Alignment) String() string {
 	return fmt.Sprintf("%s - %s", a.Order.Name, a.Chaos.Name)
 }
 

@@ -93,5 +93,7 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 
 	player.Data[domain.ExperienceProperty] = &domain.BaseProperty{Val: 900}
 
+	player.Data[domain.InjuriesProperty] = make(domain.Injuries, 0)
+
 	return player, nil
 }

@@ -98,7 +98,7 @@ func (d *Dispatcher) Prompt() string {
 		return "> "
 	}
 	player := d.State().Player()
-	return fmt.Sprintf("[%s] (%s)> ", player.Name, player.Peril().Condition.String())
+	return fmt.Sprintf("%s [%s, %s]> ", player.Name, player.Condition(), player.Peril().Condition.String())
 }
 
 func (d *Dispatcher) Tab(buffer string) string {
