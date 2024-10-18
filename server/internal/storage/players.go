@@ -5,25 +5,29 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	log "github.com/sirupsen/logrus"
+	goeventbus "github.com/stanipetrosyan/go-eventbus"
 )
 
 type Players struct {
 	database *Database
 	loaders  *loader.Loaders
 	players  map[string]*domain.Player
+	eventBus goeventbus.EventBus
 }
 
-func NewPlayers(database *Database, loaders *loader.Loaders) *Players {
+func NewPlayers(database *Database, loaders *loader.Loaders, eventBus goeventbus.EventBus) *Players {
 	return &Players{
 		database: database,
 		players:  make(map[string]*domain.Player),
 		loaders:  loaders,
+		eventBus: eventBus,
 	}
 }
 
-func (p *Players) CreatePlayer(ctx context.Context, name string, password string, data map[string]domain.Property) (*domain.Player, error) {
+func (p *Players) CreatePlayer(ctx context.Context, name string, password string, data map[string]domain.Property, conn io.Connection) (*domain.Player, error) {
 	specData := propertiesToData(data)
 	encoded, err := json.Marshal(specData)
 	if err != nil {
@@ -36,14 +40,14 @@ func (p *Players) CreatePlayer(ctx context.Context, name string, password string
 		log.Errorf("failed to insert player: %s", err)
 		return nil, err
 	}
-	player := domain.NewPlayer(nil, name, password, data)
+	player := domain.NewPlayer(nil, name, password, data, p.eventBus, conn)
 	player.Id = &id
 	player.Data = data
 	p.players[name] = player
 	return player, nil
 }
 
-func (p *Players) FetchPlayerById(ctx context.Context, id int) (*domain.Player, error) {
+func (p *Players) FetchPlayerById(ctx context.Context, id int, conn io.Connection) (*domain.Player, error) {
 	for _, player := range p.players {
 		if player.Id != nil && *player.Id == id {
 			return player, nil
@@ -67,12 +71,12 @@ func (p *Players) FetchPlayerById(ctx context.Context, id int) (*domain.Player, 
 		Password: password,
 		Data:     specProps,
 	}
-	player := p.PlayerFromSpec(spec)
+	player := p.PlayerFromSpec(spec, conn)
 
 	return player, nil
 }
 
-func (p *Players) FetchPlayerByName(ctx context.Context, name string) (*domain.Player, error) {
+func (p *Players) FetchPlayerByName(ctx context.Context, name string, conn io.Connection) (*domain.Player, error) {
 	if player, ok := p.players[name]; ok {
 		return player, nil
 	}
@@ -91,7 +95,7 @@ func (p *Players) FetchPlayerByName(ctx context.Context, name string) (*domain.P
 		return nil, err
 	}
 	props := p.dataToProperties(specProps)
-	player := domain.NewPlayer(&id, name, password, props)
+	player := domain.NewPlayer(&id, name, password, props, p.eventBus, conn)
 	// Peril threshold is calculated from Grit Bonus
 	player.Peril().Threshold = player.StatBonuses().Grit + 3
 	p.players[name] = player
@@ -401,14 +405,14 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 	return props
 }
 
-func (p *Players) PlayerFromSpec(spec *PlayerSpec) *domain.Player {
+func (p *Players) PlayerFromSpec(spec *PlayerSpec, conn io.Connection) *domain.Player {
 	data := p.dataToProperties(spec.Data)
-	return domain.NewPlayer(spec.Id, spec.Name, spec.Password, data)
+	return domain.NewPlayer(spec.Id, spec.Name, spec.Password, data, p.eventBus, conn)
 }
 
-func (p *Players) StorePlayer(ctx context.Context, player *domain.Player) (*domain.Player, error) {
+func (p *Players) StorePlayer(ctx context.Context, player *domain.Player, conn io.Connection) (*domain.Player, error) {
 	if player.Id == nil {
-		return p.CreatePlayer(ctx, player.Name, player.Password, player.Data)
+		return p.CreatePlayer(ctx, player.Name, player.Password, player.Data, conn)
 	}
 	data := SpecFromPlayer(player).Data
 	encoded, err := json.Marshal(data)

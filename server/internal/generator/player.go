@@ -2,24 +2,28 @@ package generator
 
 import (
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	log "github.com/sirupsen/logrus"
+	goeventbus "github.com/stanipetrosyan/go-eventbus"
 	"math/rand"
 )
 
 type PlayerGenerator struct {
-	loaders *loader.Loaders
+	loaders  *loader.Loaders
+	eventBus goeventbus.EventBus
 }
 
-func NewPlayerGenerator(loaders *loader.Loaders) *PlayerGenerator {
+func NewPlayerGenerator(loaders *loader.Loaders, eventBus goeventbus.EventBus) *PlayerGenerator {
 	return &PlayerGenerator{
-		loaders: loaders,
+		loaders:  loaders,
+		eventBus: eventBus,
 	}
 }
 
-func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, takeDrawback bool) (*domain.Player, error) {
+func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, takeDrawback bool, conn io.Connection) (*domain.Player, error) {
 	log.Printf("generating player %s", name)
-	player := domain.NewPlayer(nil, name, pw, nil)
+	player := domain.NewPlayer(nil, name, pw, nil, g.eventBus, conn)
 	player.Data[domain.TeamProperty] = team
 	player.Data[domain.StatsProperty] = domain.NewStats()
 	// generate background

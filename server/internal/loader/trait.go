@@ -3,7 +3,6 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
-	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
@@ -34,10 +33,10 @@ func (l *TraitLoader) LoadTraits() (domain.Traits, error) {
 			continue
 		}
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
-			log.Printf("skipping template file %s", item.Name())
+			//log.Printf("skipping template file %s", item.Name())
 			continue
 		}
-		log.Printf("loading trait %s", item.Name())
+		//log.Printf("loading trait %s", item.Name())
 		spec := &domain.TraitSpec{}
 		data, err := os.ReadFile(l.config.AssetPath + "/traits/" + item.Name())
 		if err != nil {
@@ -54,7 +53,7 @@ func (l *TraitLoader) LoadTraits() (domain.Traits, error) {
 		}
 		for _, effectName := range spec.Effects {
 			// TODO resolve the effects
-			log.Printf("loading trait %s effect %s", spec.Name, effectName)
+			//log.Printf("loading trait %s effect %s", spec.Name, effectName)
 			effect := domain.Effect{
 				Name: effectName,
 			}

@@ -3,7 +3,6 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
-	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
@@ -38,7 +37,7 @@ func (l *SkillLoader) LoadSkills() (domain.Skills, error) {
 			strings.HasSuffix(item.Name(), ".sh") {
 			continue
 		}
-		log.Printf("loading skill %s", item.Name())
+		//log.Printf("loading skill %s", item.Name())
 		skill := &domain.Skill{}
 		data, err := os.ReadFile(l.config.AssetPath + "/skills/" + item.Name())
 		if err != nil {

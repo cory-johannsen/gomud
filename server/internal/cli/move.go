@@ -35,7 +35,7 @@ func (m *MoveHandler) Handle(ctx context.Context, args []string) (string, error)
 	}
 	destination := exit.Target
 	player.SetRoom(destination)
-	_, err := m.players.StorePlayer(ctx, player)
+	_, err := m.players.StorePlayer(ctx, player, player.Connection)
 	if err != nil {
 		log.Printf("error storing player: %s", err)
 		return "", err

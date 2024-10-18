@@ -32,35 +32,12 @@ func (l *InjuryLoader) LoadInjuries() (map[domain.Severity]domain.Injuries, erro
 	}
 	for _, item := range items {
 		if item.IsDir() {
-			continue
+			injuries, err := l.loadInjuries(item.Name())
+			if err != nil {
+				return nil, err
+			}
+			l.injuries[domain.Severity(strings.ToUpper(item.Name()))] = injuries
 		}
-		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
-			log.Printf("skipping template file %s", item.Name())
-			continue
-		}
-		log.Printf("loading injury %s", item.Name())
-		spec := &domain.InjurySpec{}
-		data, err := os.ReadFile(l.config.AssetPath + "/injuries/" + item.Name())
-		if err != nil {
-			log.Errorf("error reading file %s: %v", item.Name(), err)
-			continue
-		}
-		err = yaml.Unmarshal(data, spec)
-		if err != nil {
-			log.Errorf("error unmarshalling file %s: %v", item.Name(), err)
-			continue
-		}
-		injury := domain.Injury{
-			Name:     spec.Name,
-			Severity: domain.Severity(spec.Severity),
-			Effect: domain.Effect{
-				Name: spec.Effect,
-			},
-		}
-		if _, ok := l.injuries[injury.Severity]; !ok {
-			l.injuries[injury.Severity] = make(domain.Injuries, 0)
-		}
-		l.injuries[injury.Severity] = append(l.injuries[injury.Severity], &injury)
 	}
 	return l.injuries, nil
 }
@@ -95,4 +72,43 @@ func (l *InjuryLoader) Random(severity domain.Severity) (*domain.Injury, error) 
 	}
 	injuries := l.injuries[severity]
 	return injuries[rand.Intn(len(injuries))], nil
+}
+
+func (l *InjuryLoader) loadInjuries(path string) (domain.Injuries, error) {
+	itemPath := l.config.AssetPath + "/injuries/" + path
+	items, err := os.ReadDir(itemPath)
+	if err != nil {
+		return nil, err
+	}
+	injuries := make(domain.Injuries, 0)
+	for _, item := range items {
+		if item.IsDir() {
+			continue
+		}
+		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
+			log.Printf("skipping template file %s", item.Name())
+			continue
+		}
+		//log.Printf("loading injury %s", item.Name())
+		spec := &domain.InjurySpec{}
+		data, err := os.ReadFile(itemPath + "/" + item.Name())
+		if err != nil {
+			log.Errorf("error reading file %s: %v", item.Name(), err)
+			continue
+		}
+		err = yaml.Unmarshal(data, spec)
+		if err != nil {
+			log.Errorf("error unmarshalling file %s: %v", item.Name(), err)
+			continue
+		}
+		injury := domain.Injury{
+			Name:     spec.Name,
+			Severity: domain.Severity(spec.Severity),
+			Effect: domain.Effect{
+				Name: spec.Effect,
+			},
+		}
+		injuries = append(injuries, &injury)
+	}
+	return injuries, nil
 }

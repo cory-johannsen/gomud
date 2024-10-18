@@ -3,7 +3,6 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
-	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
@@ -34,7 +33,6 @@ func (l *TeamLoader) LoadTeams() (domain.Teams, error) {
 			continue
 		}
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
-			log.Printf("skipping template file %s", item.Name())
 			continue
 		}
 		team := &domain.Team{}

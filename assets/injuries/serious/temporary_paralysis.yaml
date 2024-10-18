@@ -1,0 +1,4 @@
+name: Temporary Paralysis
+severity: Serious
+effects:
+  - You are knocked Prone. Until fully Recuperated, you cannot move as you're paralyzed.

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/generator"
+	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
@@ -26,7 +27,7 @@ func (d *Dispatcher) State() State {
 }
 
 func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn Connection, eventBus goeventbus.EventBus) *Dispatcher {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection, eventBus goeventbus.EventBus) *Dispatcher {
 	dispatcher := &Dispatcher{
 		handlers: make(map[string]Handler),
 		ctx:      context.Background(),

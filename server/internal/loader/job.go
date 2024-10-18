@@ -45,7 +45,7 @@ func (l *JobLoader) LoadJobs() (domain.Jobs, error) {
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
 			continue
 		}
-		log.Printf("loading job %s", item.Name())
+		//log.Printf("loading job %s", item.Name())
 		spec := &domain.JobSpec{}
 		data, err := os.ReadFile(l.config.AssetPath + "/jobs/" + item.Name())
 		if err != nil {

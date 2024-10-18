@@ -3,7 +3,6 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
-	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
@@ -36,7 +35,7 @@ func (l *TalentLoader) LoadTalents() (domain.Talents, error) {
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
 			continue
 		}
-		log.Printf("loading talent %s", item.Name())
+		//log.Printf("loading talent %s", item.Name())
 		talent := &domain.Talent{}
 		data, err := os.ReadFile(l.config.AssetPath + "/talents/" + item.Name())
 		if err != nil {

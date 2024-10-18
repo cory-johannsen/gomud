@@ -28,7 +28,7 @@ func (l *BackgroundLoader) LoadBackgrounds() (domain.Backgrounds, error) {
 	if len(l.backgrounds) > 0 {
 		return l.backgrounds, nil
 	}
-	log.Printf("loading backgrounds from %s", l.config.AssetPath+"/backgrounds")
+	//log.Printf("loading backgrounds from %s", l.config.AssetPath+"/backgrounds")
 	items, err := os.ReadDir(l.config.AssetPath + "/backgrounds")
 	if err != nil {
 		return nil, err
@@ -38,10 +38,10 @@ func (l *BackgroundLoader) LoadBackgrounds() (domain.Backgrounds, error) {
 			continue
 		}
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
-			log.Printf("skipping template file %s", item.Name())
+			//log.Printf("skipping template file %s", item.Name())
 			continue
 		}
-		log.Printf("loading background %s", item.Name())
+		//log.Printf("loading background %s", item.Name())
 		spec := &domain.BackgroundSpec{}
 		data, err := os.ReadFile(l.config.AssetPath + "/backgrounds/" + item.Name())
 		if err != nil {
@@ -55,7 +55,7 @@ func (l *BackgroundLoader) LoadBackgrounds() (domain.Backgrounds, error) {
 		// iterates the trait names and resolve the traits
 		traits := make(domain.Traits, 0)
 		for _, traitName := range spec.Traits {
-			log.Printf("loading trait %s", traitName)
+			//log.Printf("loading trait %s", traitName)
 			trait, err := l.traitLoader.GetTrait(traitName)
 			if err != nil {
 				return nil, err

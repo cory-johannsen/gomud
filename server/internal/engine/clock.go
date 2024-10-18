@@ -25,15 +25,18 @@ func NewClock(eventBus goeventbus.EventBus, config *config.Config) *Clock {
 func (c *Clock) Start() {
 	ticker := time.NewTicker(time.Duration(c.config.TickDurationMillis) * time.Millisecond)
 	defer ticker.Stop()
-	for {
-		select {
-		case <-c.done:
-			return
-		case t := <-ticker.C:
-			message := goeventbus.CreateMessage().SetBody(t)
-			c.eventBus.Channel(c.channel).Publisher().Publish(message)
+	channel := c.eventBus.Channel(c.channel)
+	go func() {
+		for {
+			select {
+			case <-c.done:
+				return
+			case t := <-ticker.C:
+				message := goeventbus.CreateMessage().SetBody(t)
+				channel.Publisher().Publish(message)
+			}
 		}
-	}
+	}()
 }
 
 func (c *Clock) Stop() {

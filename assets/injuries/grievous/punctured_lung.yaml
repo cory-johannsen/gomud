@@ -1,0 +1,4 @@
+name: Punctured Lung
+severity: Grievous
+effects:
+  - Until fully Recuperated, you remain unconscious. You must undergo a successful surgery or suffer the consequences. Once a Punctured Lung has undergone a failed surgery, you permanently gain the Weak Lungs Drawback. If you already have this Drawback, you permanently lose 9% Willpower.

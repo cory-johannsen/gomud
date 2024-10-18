@@ -28,7 +28,7 @@ func (l *RoomLoader) LoadRooms() (map[string]*domain.Room, error) {
 	if len(l.rooms) > 0 {
 		return l.rooms, nil
 	}
-	log.Printf("loading rooms from %s", l.config.AssetPath+"/rooms")
+	//log.Printf("loading rooms from %s", l.config.AssetPath+"/rooms")
 	items, err := os.ReadDir(l.config.AssetPath + "/rooms")
 	if err != nil {
 		return nil, err
@@ -38,10 +38,10 @@ func (l *RoomLoader) LoadRooms() (map[string]*domain.Room, error) {
 			continue
 		}
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
-			log.Printf("skipping template file %s", item.Name())
+			//log.Printf("skipping template file %s", item.Name())
 			continue
 		}
-		log.Printf("loading room %s", item.Name())
+		//log.Printf("loading room %s", item.Name())
 		spec := &domain.RoomSpec{}
 		data, err := os.ReadFile(l.config.AssetPath + "/rooms/" + item.Name())
 		if err != nil {

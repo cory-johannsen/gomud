@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/generator"
+	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
@@ -20,11 +21,11 @@ type LoginHandler struct {
 	generator        *generator.PlayerGenerator
 	teams            *loader.TeamLoader
 	rooms            *loader.RoomLoader
-	conn             Connection
+	conn             io.Connection
 }
 
 func NewLoginHandler(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn Connection) *LoginHandler {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection) *LoginHandler {
 	return &LoginHandler{
 		stateConstructor: stateConstructor,
 		players:          players,
@@ -57,7 +58,7 @@ func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error
 			return "failed to create player", err
 		}
 		log.Printf("Storing player %s", name)
-		player, err = h.players.StorePlayer(ctx, player)
+		player, err = h.players.StorePlayer(ctx, player, h.conn)
 		if err != nil {
 			return "failed to store player", err
 		}
@@ -84,7 +85,7 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 
 	takeDrawback := h.takeDrawback()
 
-	player, err := h.generator.Generate(name, pw, team, takeDrawback)
+	player, err := h.generator.Generate(name, pw, team, takeDrawback, h.conn)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +168,7 @@ func (h *LoginHandler) enterPassword() (string, error) {
 
 func (h *LoginHandler) validatePassword(name string) *domain.Player {
 	retries := 3
-	player, err := h.players.FetchPlayerByName(context.Background(), name)
+	player, err := h.players.FetchPlayerByName(context.Background(), name, h.conn)
 	if err != nil {
 		_ = h.conn.Writeln(err.Error())
 		return nil

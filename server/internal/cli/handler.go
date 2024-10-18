@@ -14,12 +14,6 @@ type State interface {
 
 type StateConstructor func(player *domain.Player) State
 
-type Connection interface {
-	Read() string
-	Write(string) int
-	Writeln(string) int
-}
-
 type Handler interface {
 	Handle(ctx context.Context, args []string) (string, error)
 	Help(args []string) string
@@ -67,7 +61,7 @@ func (h *QuitHandler) Handle(ctx context.Context, args []string) (string, error)
 	player := h.stateProvider().Player()
 	room := player.Room()
 	room.RemovePlayer(player)
-	_, err := h.players.StorePlayer(ctx, player)
+	_, err := h.players.StorePlayer(ctx, player, player.Connection)
 	if err != nil {
 		log.Printf("error storing player: %s", err)
 	}
