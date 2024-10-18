@@ -3,14 +3,12 @@ package cli
 import (
 	"context"
 	"fmt"
+	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
-	log "github.com/sirupsen/logrus"
-	goeventbus "github.com/stanipetrosyan/go-eventbus"
 	"strings"
-	"time"
 )
 
 type StateProvider func() State
@@ -19,7 +17,7 @@ type Dispatcher struct {
 	handlers map[string]Handler
 	ctx      context.Context
 	state    State
-	eventBus goeventbus.EventBus
+	eventBus eventbus.Bus
 }
 
 func (d *Dispatcher) State() State {
@@ -27,7 +25,7 @@ func (d *Dispatcher) State() State {
 }
 
 func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection, eventBus goeventbus.EventBus) *Dispatcher {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection, eventBus eventbus.Bus) *Dispatcher {
 	dispatcher := &Dispatcher{
 		handlers: make(map[string]Handler),
 		ctx:      context.Background(),
@@ -93,13 +91,6 @@ func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, 
 			dispatcher.Register(alias.Alias, alias)
 		}
 	}
-
-	eventBus.Channel("tick").Subscriber().Listen(func(ctx goeventbus.Context) {
-		msg := ctx.Result()
-		t := msg.Data.(time.Time)
-		log.Debugf("tick %v", t)
-	})
-
 	return dispatcher
 }
 

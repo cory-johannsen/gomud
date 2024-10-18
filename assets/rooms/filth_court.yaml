@@ -11,8 +11,8 @@ exits:
     name: The Rusty Oasis
     description: The Rusty Oasis
     target: The Rusty Oasis
-  East:
-    direction: East
+  North:
+    direction: North
     name: Roach Haven
     description: Roach Haven
     target: Roach Haven

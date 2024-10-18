@@ -4,13 +4,13 @@
 package main
 
 import (
+	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/engine"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	"github.com/google/wire"
-	goeventbus "github.com/stanipetrosyan/go-eventbus"
 )
 
 func InitializeEngine() (*engine.Engine, error) {
@@ -19,6 +19,6 @@ func InitializeEngine() (*engine.Engine, error) {
 		loader.NewInjuryLoader, loader.NewJobLoader, loader.NewRoomLoader, loader.NewSkillLoader, loader.NewTalentLoader,
 		loader.NewTeamLoader, loader.NewTraitLoader, loader.NewLoaders,
 		generator.NewPlayerGenerator,
-		goeventbus.NewEventBus, engine.NewClock, engine.NewServer, engine.NewEngine)
+		eventbus.New, engine.NewClock, engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil
 }

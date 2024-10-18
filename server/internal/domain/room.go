@@ -2,8 +2,8 @@ package domain
 
 import (
 	"fmt"
+	eventbus "github.com/asaskevich/EventBus"
 	log "github.com/sirupsen/logrus"
-	goeventbus "github.com/stanipetrosyan/go-eventbus"
 )
 
 const (
@@ -41,8 +41,7 @@ type Room struct {
 	exitSpecs   map[string]ExitSpec
 	exits       Exits
 	resolver    RoomResolver
-	eventBus    goeventbus.EventBus
-	channel     goeventbus.Channel
+	eventBus    eventbus.Bus
 }
 
 func (r *Room) Value() interface{} {
@@ -59,12 +58,9 @@ type RoomResolver func(name string) *Room
 
 type Rooms map[string]*Room
 
-func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus goeventbus.EventBus) *Room {
-	channel := eventBus.Channel(spec.Name)
-	channel.Subscriber().Listen(func(ctx goeventbus.Context) {
-		msg := ctx.Result()
-		log.Printf("room %s received message: %v", spec.Name, msg)
-
+func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room {
+	eventBus.Subscribe("", func(player *Player, action string) {
+		log.Printf("room %s received action %s from player %s", spec.Name, action, player.Name)
 	})
 
 	return &Room{
@@ -76,7 +72,6 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus goeventbus.EventBus
 		exits:       make(Exits),
 		resolver:    resolver,
 		eventBus:    eventBus,
-		channel:     channel,
 	}
 }
 
@@ -119,14 +114,5 @@ func (r *Room) RemovePlayer(player *Player) {
 }
 
 func (r *Room) broadcast(player *Player, action string) {
-	msg := goeventbus.CreateMessage()
-	options := goeventbus.NewMessageOptions()
-	headers := goeventbus.NewHeaders().
-		Add("room", r.Name).
-		Add("player", player.Name).
-		Add("action", action)
-	msg.Data = player
-	msg.MessageOptions = options
-	options.SetHeaders(headers)
-	r.channel.Publisher().Publish(msg)
+	r.eventBus.Publish(r.Name, player, action)
 }

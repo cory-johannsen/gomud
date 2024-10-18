@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/io"
 	log "github.com/sirupsen/logrus"
-	goeventbus "github.com/stanipetrosyan/go-eventbus"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -209,13 +208,12 @@ type Player struct {
 	Character
 	Id         *int
 	Password   string
-	EventBus   goeventbus.EventBus
 	Connection io.Connection
 }
 
 type Players map[int]*Player
 
-func NewPlayer(id *int, name string, password string, data map[string]Property, bus goeventbus.EventBus, conn io.Connection) *Player {
+func NewPlayer(id *int, name string, password string, data map[string]Property, conn io.Connection) *Player {
 	p := &Player{
 		Character: Character{
 			Name: name,
@@ -223,7 +221,6 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 		},
 		Id:         id,
 		Password:   password,
-		EventBus:   bus,
 		Connection: conn,
 	}
 	if p.Data == nil {
@@ -533,21 +530,6 @@ func (p *Player) Room() *Room {
 func (p *Player) SetRoom(r *Room) {
 	p.Data[RoomProperty] = r
 
-	p.EventBus.Channel(r.Name).Subscriber().Listen(func(ctx goeventbus.Context) {
-		msg := ctx.Result()
-		headers := msg.MessageOptions.Headers()
-		room := headers.Header("room")
-		if room != r.Name {
-			return
-		}
-		action := headers.Header("action")
-		switch action {
-		case "enter":
-			log.Printf("player %s entered %s", p.Name, room)
-		case "exit":
-			log.Printf("player %s exited %s", p.Name, room)
-		}
-	})
 }
 
 func (p *Player) Peril() *Peril {
