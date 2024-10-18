@@ -1,12 +1,8 @@
 name: Wayne Dawg's Trailer
-description: |
-  Wayne Dawg's trailer is a small, cramped space. The walls are lined with
-  empty beer cans and the floor is littered with cigarette butts. The air is
-  thick with the smell of stale beer and cigarettes. A small, ratty couch sits
-  in the corner, facing a small, old TV. A small table sits in the center of the
-  room, covered in empty beer bottles and ashtrays.
+description: Wayne Dawg, a grizzled old tweaker, lives in this trailer. It’s covered in rust and oil stains, with a makeshift lab attached to the side. Wayne Dawg is the lowliest of low. A downright dirty dog if there ever was one. This is his trailer, and he’s not one to share.
 exits:
   East:
-    name: Kitchen
-    description: A disgusting kitchen
-    target: Wayne Dawg's Trailer Kitchen
+    direction: East
+    name: Filth Courtyard
+    description: Filth Courtyard
+    target: Filth Courtyard

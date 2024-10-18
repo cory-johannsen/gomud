@@ -1,0 +1,10 @@
+name: Filth Court
+description: Filth Court is the heart of Rustbucket Ridge, a grimy, circular cul-de-sac where the trailers huddle close like survivors of a forgotten war. The cracked pavement is littered with broken glass, rusted scraps,and pools of stagnant water. A flickering streetlight struggles to pierce the gloom, casting long,eerie shadows over the beat-up trailers. The air is thick with the stench of spilled oil and burning garbage. Filth Court is a place where people keep their heads down, mind their business, and survive by any means necessary. It’s a dead-end in every sense of the word.
+rooms:
+  -  Filth Courtyard 
+  -  Wayne's Trailer 
+  -  The Rusty Oasis 
+  -  Roach Haven 
+  -  Junker's Dream 
+  -  The Green Hell 
+  -  The Bottle Shack

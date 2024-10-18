@@ -37,8 +37,7 @@ func (l *RoomLoader) LoadRooms() (map[string]*domain.Room, error) {
 		if item.IsDir() {
 			continue
 		}
-		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
-			//log.Printf("skipping template file %s", item.Name())
+		if strings.HasSuffix(item.Name(), "tmpl.yaml") || strings.HasSuffix(item.Name(), "txt") {
 			continue
 		}
 		//log.Printf("loading room %s", item.Name())

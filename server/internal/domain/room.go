@@ -12,10 +12,10 @@ const (
 )
 
 type ExitSpec struct {
-	Direction   string
-	Name        string
-	Description string
-	Target      string
+	Direction   string `yaml:"direction"`
+	Name        string `yaml:"name"`
+	Description string `yaml:"description"`
+	Target      string `yaml:"target"`
 }
 
 type Exit struct {
@@ -27,10 +27,10 @@ type Exit struct {
 type Exits map[string]*Exit
 
 type RoomSpec struct {
-	ID          int64
-	Name        string
-	Description string
-	Exits       map[string]ExitSpec
+	ID          int64               `yaml:"id"`
+	Name        string              `yaml:"name"`
+	Description string              `yaml:"description"`
+	Exits       map[string]ExitSpec `yaml:"exits"`
 }
 
 type Room struct {

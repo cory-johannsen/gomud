@@ -1,0 +1,8 @@
+name: Scrapheap Circle
+description: A grimy court where the trailers are surrounded by piles of rusted metal and broken-down vehicles. Residents here make a living scavenging and repurposing scrap, and the constant clanging of metal can be heard at all hours. The whole area feels like a junkyard, with paths winding through stacks of discarded machinery and parts.
+rooms:
+  -  The Heap 
+  -  The Tinker's Den 
+  -  Scrapshack 23 
+  -  Wrecker's Rest -Salvage Hut 
+  -  A

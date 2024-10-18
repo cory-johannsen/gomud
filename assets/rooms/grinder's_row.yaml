@@ -1,0 +1,23 @@
+name: Grinder's Row
+description: The street is lined with battered trailers, makeshift shops, and the occasional wandering figure, all set against a backdrop of decay. It’s the spine of the trailer park, where the toughest residents live, and the harsh realities of the world are on full display.
+exits:
+  South:
+    direction: South
+    name: Filth Courtyard
+    description: Filth Courtyard
+    target: Filth Courtyard
+  North:
+    direction: North
+    name: Rotgut Alley
+    description: Rotgut Alley
+    target: Rotgut Alley
+  East:
+    direction: East
+    name: Scrapheap Circle
+    description: Scrapheap Circle
+    target: Scrapheap Circle
+  West:
+    direction: West
+    name: Shiv Way
+    description: Shiv Way
+    target: Shiv Way
