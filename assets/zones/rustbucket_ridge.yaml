@@ -20,15 +20,41 @@ description: |
   life that the world left behind.
 rooms:
   - Grinder's Row
+  - Grinder's Row
   - Filth Courtyard
   - Wayne Dawg's Trailer
-  - Wayne Dawg's Trailer Kitchen
   - The Rusty Oasis
   - Roach Haven
   - Last Stand Lodge
   - Junker's Dream
   - The Green Hell
+  - Rotgut Alley
   - The Bottle Shack
+  - The Heap
+  - The Tinker's Den
+  - Scrapshack 23
+  - Wrecker's Rest
+  - Salvage Hut
+  - The Still
+  - Rotgut Shack
+  - The Barrel House
+  - Snakepit
+  - The Keg Hole
+  - The Graveyard
+  - The Mausoleum
+  - Ghost’s Rest
+  - The Forgotten Trailer
+  - Bonepicker's Roost
+  - Ashen Hollow
+  - Smoker's Den
+  - The Furnace
+  - Scorchside Camp
+  - The Ember's Edge
+  - Blade House
+  - The Cutthroat
+  - Blood Camp
+  - The Slasher's Den
+  - The Razor Nest
 areas:
   - Filth Court
   - Cinder Pit

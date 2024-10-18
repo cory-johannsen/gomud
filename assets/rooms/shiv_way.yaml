@@ -1,0 +1,28 @@
+name: Shiv Way
+description: The most dangerous court in Rustbucket Ridge, known for its gang activity and frequent brawls. The trailers are heavily fortified, with makeshift barricades and barbed wire. The residents here are tough, quick to violence, and often involved in the criminal underworld. This is not a place to wander into lightly, as it lives up to its name—people here are always armed and ready for a fight.
+exits:
+  North:
+    direction: North
+    name: Blade House
+    description: Blade House
+    target: Blade House
+  Northeast:
+    direction: Northeast
+    name: The Cutthroat
+    description: The Cutthroat
+    target: The Cutthroat
+  East:
+    direction: East
+    name: Blood Camp
+    description: Blood Camp
+    target: Blood Camp
+  Southeast:
+    direction: Southeast
+    name: The Slasher's Den
+    description: The Slasher's Den
+    target: The Slasher's Den
+  West:
+    direction: West
+    name: Grinder's Row
+    description: Grinder's Row
+    target: Grinder's Row

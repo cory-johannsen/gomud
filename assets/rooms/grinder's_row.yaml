@@ -3,9 +3,19 @@ description: The street is lined with battered trailers, makeshift shops, and th
 exits:
   South:
     direction: South
-    name: Filth Courtyard
-    description: Filth Courtyard
-    target: Filth Courtyard
+    name: Filth Court
+    description: Filth Court
+    target: Filth Court
+  Southwest:
+    direction: Southwest
+    name: Boneyard Bend
+    description: Boneyard Bend
+    target: Boneyard Bend
+  Southeast:
+    direction: Southeast
+    name: Cinder Pit
+    description: Cinder Pit
+    target: Cinder Pit
   North:
     direction: North
     name: Rotgut Alley

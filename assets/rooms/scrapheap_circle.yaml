@@ -1,0 +1,33 @@
+name: Scrapheap Circle
+description: A grimy court where the trailers are surrounded by piles of rusted metal and broken-down vehicles. Residents here make a living scavenging and repurposing scrap, and the constant clanging of metal can be heard at all hours. The whole area feels like a junkyard, with paths winding through stacks of discarded machinery and parts.
+exits:
+  North:
+    direction: North
+    name: Filth Court
+    description: Filth Court
+    target: Filth Court
+  Northeast:
+    direction: Northeast
+    name: The Heap
+    description: The Heap
+    target: The Heap
+  East:
+    direction: East
+    name: The Tinker's Den
+    description: The Tinker's Den
+    target: The Tinker's Den
+  Southeast:
+    direction: Southeast
+    name: Scrapshack 23
+    description: Scrapshack 23
+    target: Scrapshack 23
+  South:
+    direction: South
+    name: Wrecker's Rest
+    description: Wrecker's Rest
+    target: Wrecker's Rest
+  Southwest:
+    direction: Southwest
+    name: Salvage Hut
+    description: Salvage Hut
+    target: Salvage Hut

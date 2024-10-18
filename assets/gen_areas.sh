@@ -28,11 +28,6 @@ for area in $areas; do
       description=$(echo "${parts[1]}" | awk '{$1=$1; print}')
       rooms=("${parts[@]:2}")
       echo "creating $name"
-      echo "    description: $description"
-      echo "    rooms:"
-      for room in "${rooms[@]}"; do
-        echo "        - $room"
-      done
       create_area "$name" "$description" "${rooms[@]}"
     done < "$area"
 done

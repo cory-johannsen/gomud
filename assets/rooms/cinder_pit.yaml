@@ -1,0 +1,33 @@
+name: Cinder Pit
+description: This court earned its name from the constant bonfires and smoky haze that fills the air. The trailers are in rough shape, surrounded by piles of burning trash and smoldering embers. It’s a place where people go to get rid of things—whether it's garbage, evidence, or unwanted memories. The smoke gives it an ominous, choking atmosphere.
+exits:
+  North:
+    direction: North
+    name: Ashen Hollow
+    description: Ashen Hollow
+    target: Ashen Hollow
+  Northeast:
+    direction: Northeast
+    name: Smoker's Den
+    description: Smoker's Den
+    target: Smoker's Den
+  East:
+    direction: East
+    name: The Furnace
+    description: The Furnace
+    target: The Furnace
+  Southeast:
+    direction: Southeast
+    name: Scorchside Camp
+    description: Scorchside Camp
+    target: Scorchside Camp
+  Northwest:
+    direction: Northwest
+    name: Grinder's Way
+    description: Grinder's Way
+    target: Grinder's Way
+  Southwest:
+    direction: Southwest
+    name: The Ember's Edge
+    description: The Ember's Edge
+    target: The Ember's Edge

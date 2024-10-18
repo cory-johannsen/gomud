@@ -3,6 +3,6 @@ description: Wayne Dawg, a grizzled old tweaker, lives in this trailer. It’s c
 exits:
   East:
     direction: East
-    name: Filth Courtyard
-    description: Filth Courtyard
-    target: Filth Courtyard
+    name: Filth Court
+    description: Filth Court
+    target: Filth Court
