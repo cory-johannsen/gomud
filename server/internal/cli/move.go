@@ -29,7 +29,8 @@ func (m *MoveHandler) Handle(ctx context.Context, args []string) (string, error)
 	player := m.stateProvider().Player()
 	room := player.Room()
 	direction := args[0]
-	exit, ok := room.Exits()[direction]
+	exits := room.Exits()
+	exit, ok := exits[direction]
 	if !ok {
 		return "no exit in that direction", nil
 	}

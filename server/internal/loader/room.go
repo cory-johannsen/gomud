@@ -41,15 +41,16 @@ func (l *RoomLoader) LoadRooms() (map[string]*domain.Room, error) {
 			continue
 		}
 		//log.Printf("loading room %s", item.Name())
+		name := item.Name()
 		spec := &domain.RoomSpec{}
-		data, err := os.ReadFile(l.config.AssetPath + "/rooms/" + item.Name())
+		data, err := os.ReadFile(l.config.AssetPath + "/rooms/" + name)
 		if err != nil {
-			log.Printf("error reading file %s: %s", item.Name(), err)
+			log.Printf("error reading file %s: %s", name, err)
 			continue
 		}
 		err = yaml.Unmarshal(data, spec)
 		if err != nil {
-			log.Printf("error unmarshalling file %s: %s", item.Name(), err)
+			log.Printf("error unmarshalling file %s: %s", name, err)
 			continue
 		}
 		room := domain.NewRoom(spec, l.GetRoom, l.eventBus)

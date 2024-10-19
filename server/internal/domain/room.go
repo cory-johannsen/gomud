@@ -59,9 +59,13 @@ type RoomResolver func(name string) *Room
 type Rooms map[string]*Room
 
 func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room {
-	eventBus.Subscribe("", func(player *Player, action string) {
+	err := eventBus.Subscribe(spec.Name, func(player *Player, action string) {
 		log.Printf("room %s received action %s from player %s", spec.Name, action, player.Name)
 	})
+	if err != nil {
+		log.Printf("error subscribing to event bus: %s", err)
+		panic(err)
+	}
 
 	return &Room{
 		ID:          spec.ID,
