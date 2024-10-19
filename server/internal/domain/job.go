@@ -58,5 +58,3 @@ func (j *Job) String() string {
 }
 
 type Jobs []*Job
-
-var _ Property = &Job{}

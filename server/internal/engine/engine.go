@@ -112,7 +112,7 @@ func (c *Client) Connect() {
 			log.Println(err)
 			return
 		}
-		if strings.TrimSuffix(result, "\n") == cli.QuitMessage {
+		if strings.HasPrefix(result, cli.QuitMessage) {
 			break
 		}
 		prompt = fmt.Sprintf("\n%s", c.Dispatcher.Prompt())

@@ -209,6 +209,7 @@ type Player struct {
 	Id         *int
 	Password   string
 	Connection io.Connection
+	LoggedIn   bool
 }
 
 type Players map[int]*Player
@@ -222,6 +223,7 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 		Id:         id,
 		Password:   password,
 		Connection: conn,
+		LoggedIn:   false,
 	}
 	if p.Data == nil {
 		p.Data = make(map[string]Property)
@@ -532,25 +534,14 @@ func (p *Player) SetRoom(r *Room) {
 	if r == currentRoom {
 		return
 	}
-	if currentRoom != nil {
-		err := p.Connection.EventBus().Unsubscribe(currentRoom.Name, p.RoomHandler)
-		if err != nil {
-			log.Printf("error unsubscribing from room %s: %s", currentRoom.Name, err)
-		}
-	}
 	p.Data[RoomProperty] = r
-	err := p.Connection.EventBus().Subscribe(r.Name, p.RoomHandler)
-	if err != nil {
-		log.Printf("error subscribing to room %s: %s", r.Name, err)
-		return
-	}
 }
 
 func (p *Player) RoomHandler(player *Player, action string) {
 	if player == p {
 		return
 	}
-	p.Connection.Writeln(fmt.Sprintf("%s %ss the room", player.Name, action))
+	p.Connection.Writeln(fmt.Sprintf("\n%s the %s %ss the room", player.Name, player.Job().Name, action))
 }
 
 func (p *Player) Peril() *Peril {

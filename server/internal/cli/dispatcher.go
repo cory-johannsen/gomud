@@ -31,10 +31,7 @@ func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, 
 		ctx:      context.Background(),
 		eventBus: eventBus,
 	}
-	quit := &QuitHandler{
-		stateProvider: dispatcher.State,
-		players:       players,
-	}
+	quit := NewLogoutHandler(dispatcher.State, players)
 	quitAliases := CreateAliases(quit, "exit", "q")
 	dispatcher.Register("quit", quit)
 	for _, alias := range quitAliases {
@@ -99,7 +96,7 @@ func (d *Dispatcher) Register(name string, handler Handler) {
 }
 
 func (d *Dispatcher) Prompt() string {
-	if d.State() == nil || d.State().Player() == nil {
+	if d.State() == nil || d.State().Player() == nil || !d.State().Player().LoggedIn {
 		return "> "
 	}
 	player := d.State().Player()

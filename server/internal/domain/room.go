@@ -43,17 +43,6 @@ type Room struct {
 	resolver    RoomResolver
 	eventBus    eventbus.Bus
 }
-
-func (r *Room) Value() interface{} {
-	return r
-}
-
-func (r *Room) String() string {
-	return fmt.Sprintf("%s: %s", r.Name, r.Description)
-}
-
-var _ Property = &Room{}
-
 type RoomResolver func(name string) *Room
 
 type Rooms map[string]*Room
@@ -79,6 +68,14 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room
 	}
 }
 
+func (r *Room) Value() interface{} {
+	return r
+}
+
+func (r *Room) String() string {
+	return fmt.Sprintf("%s: %s", r.Name, r.Description)
+}
+
 func (r *Room) Exits() Exits {
 	if len(r.exits) > 0 {
 		return r.exits
@@ -102,7 +99,10 @@ func (r *Room) AddPlayer(player *Player) {
 	}
 	id := *player.Id
 	r.Players[id] = player
-
+	err := r.eventBus.Subscribe(r.Name, player.RoomHandler)
+	if err != nil {
+		log.Errorf("error subscribing player %s to room %s: %s", player.Name, r.Name, err)
+	}
 	r.broadcast(player, RoomEventEnter)
 }
 
@@ -113,6 +113,10 @@ func (r *Room) RemovePlayer(player *Player) {
 	}
 	id := *player.Id
 	delete(r.Players, id)
+	err := r.eventBus.Unsubscribe(r.Name, player.RoomHandler)
+	if err != nil {
+		log.Errorf("error unsubscribing player %s from room %s: %s", player.Name, r.Name, err)
+	}
 
 	r.broadcast(player, RoomEventExit)
 }
