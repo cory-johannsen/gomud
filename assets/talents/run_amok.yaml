@@ -4,3 +4,4 @@ description: |
   weapon home with terrible accuracy.
 effects:
   - When you Charge, you gain a +20 Base Chance to strike with a melee-based Attack Actions and Perilous Stunts.
+goType: RunAmok

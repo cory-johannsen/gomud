@@ -36,7 +36,7 @@
   effect: "Whenever you fail to Resist Stress, Fear or Terror, you temporarily reduce your Initiative and Movement by -3 (to a minimum of 1). This lasts until you get a good night's rest."
 - name: "Melancholic Temperament"
   description: "ou are prone to fits of fatigue, and oftentimes suffer from phantom pains in your muscles. In fact, it’s hard to rouse you from war-weariness without using twice the normal medication required to lift your spirits."
-  effect: "Whenever you use Smelling Salts, you must use two instead of one. Using an additional dose of Smelling Salts in this instance has no negative effects."
+  effect: "Whenever you use Smelling Salts, you must use two instead of one. Using an additional dose of Smelling Salts in this instance has no negative effect."
 - name: "Ne’er Do Well"
   description: "You are feckless, irresponsible and prone to idleness. It doesn’t mean that you are completely useless, however, you are unreliable when the chips are down."
   effect: "You cannot Assist others’ Skill Tests."

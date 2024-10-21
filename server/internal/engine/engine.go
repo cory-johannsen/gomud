@@ -28,7 +28,7 @@ func (s *State) Property(key string) domain.Property {
 	return s.vars[key]
 }
 
-func NewState(player *domain.Player) cli.State {
+func NewState(player *domain.Player) domain.State {
 	return &State{
 		player: player,
 		vars:   make(map[string]domain.Property),

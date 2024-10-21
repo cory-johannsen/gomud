@@ -2,3 +2,4 @@ name: Blood & Sand
 description: The roar of the crowd inspires the Pit Fighter to greatness. Let the lavish spectacle of the sport begin and rally the people to your favor!
 effects:
   - Whenever you spend a Fortune Point, you move one step up the Damage & Peril Condition Tracks positively.
+goType: BloodSand

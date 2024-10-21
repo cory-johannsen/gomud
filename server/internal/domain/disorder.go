@@ -5,7 +5,7 @@ import "fmt"
 type DisorderSpec struct {
 	Name        string   `yaml:"name"`
 	Description string   `yaml:"description"`
-	Effects     []string `yaml:"effects"`
+	Effects     []string `yaml:"effect"`
 }
 
 type Disorder struct {

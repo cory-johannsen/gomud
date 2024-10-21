@@ -11,14 +11,16 @@ import (
 )
 
 type InjuryLoader struct {
-	config   *config.Config
-	injuries map[domain.Severity]domain.Injuries
+	config       *config.Config
+	injuries     map[domain.Severity]domain.Injuries
+	effectLoader *EffectLoader
 }
 
-func NewInjuryLoader(cfg *config.Config) *InjuryLoader {
+func NewInjuryLoader(cfg *config.Config, effectLoader *EffectLoader) *InjuryLoader {
 	return &InjuryLoader{
-		config:   cfg,
-		injuries: make(map[domain.Severity]domain.Injuries),
+		config:       cfg,
+		injuries:     make(map[domain.Severity]domain.Injuries),
+		effectLoader: effectLoader,
 	}
 }
 
@@ -101,12 +103,14 @@ func (l *InjuryLoader) loadInjuries(path string) (domain.Injuries, error) {
 			log.Errorf("error unmarshalling file %s: %v", item.Name(), err)
 			continue
 		}
+		effect, err := l.effectLoader.GetEffect(spec.Effect)
+		if err != nil {
+			log.Errorf("error loading injury %s effect %s: %s", spec.Name, spec.Effect, err)
+		}
 		injury := domain.Injury{
 			Name:     spec.Name,
 			Severity: domain.Severity(spec.Severity),
-			Effect: domain.Effect{
-				Name: spec.Effect,
-			},
+			Effect:   effect,
 		}
 		injuries = append(injuries, &injury)
 	}

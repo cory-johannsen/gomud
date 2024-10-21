@@ -2,3 +2,4 @@ name: It's a Trap!
 description: With an eye for the minutest of details, traps cannot confound you.
 effects:
   - You automatically spot hidden traps without having to make a Skill Test. Furthermore, you may flip the results to succeed at Skill Tests to create and disarm traps.
+goType: ItsaTrap

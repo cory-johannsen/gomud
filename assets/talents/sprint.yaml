@@ -4,3 +4,4 @@ description: |
   when drawing their bows or aiming their guns.
 effects:
   - When you Charge or Run, you cannot be struck by attacks made with ranged weapons until your next Turn.
+goType: Sprint

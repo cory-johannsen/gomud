@@ -2,3 +2,4 @@ name: Divine Magick
 description: You are a proxy to a distant god, calling for divine intervention with the utterance of sacred prayers.
 effects:
   - You are solely a practitioner of Divine Magick. As a consequence, you may never adopt a Profession which has Arcane Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells when you enter this Profession. If you gained Divine Magick from a previous Profession, you learn an additional Generalist Magick spell instead.
+goType: DivineMagick

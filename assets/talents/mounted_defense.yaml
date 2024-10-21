@@ -4,3 +4,4 @@ description: |
   defend yourself while astride a mount or on a moving vehicle.
 effects:
   - When fighting on horseback or atop a vehicle like a cart, coach or wagon, you can substitute your Drive or Ride Skill in place of Coordination when you Dodge or Parry. In addition, you always succeed at Skill Tests to retain control when your mount or the animal that’s pulling your vehicle suffers Damage.
+goType: MountedDefense

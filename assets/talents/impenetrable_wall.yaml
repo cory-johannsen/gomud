@@ -4,3 +4,4 @@ description: |
   flanking you.
 effects:
   - Opponents do not gain an advantage (such as additional Damage or bonuses to strike) when they flank, outnumber or surround you in combat.
+goType: ImpenetrableWall

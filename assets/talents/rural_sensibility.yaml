@@ -4,3 +4,4 @@ description: |
   the wilderness and countryside.
 effects:
   - When you attempt to hide in rural environments, you gain a +20 Base Chance to Stealth Tests.
+goType: RuralSensibility

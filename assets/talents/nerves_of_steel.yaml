@@ -4,3 +4,4 @@ description: |
   and strain.
 effects:
   - When resting in unsafe places, your Peril Condition Track moves all steps positively to Unhindered.
+goType: NervesofSteel

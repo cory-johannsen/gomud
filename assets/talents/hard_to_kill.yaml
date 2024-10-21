@@ -4,3 +4,4 @@ description: |
   strength left within, you turn away blows with bitter resolve.
 effects:
   - When you are Grievously Wounded, temporarily add 3 to your Damage Threshold.
+goType: HardToKill

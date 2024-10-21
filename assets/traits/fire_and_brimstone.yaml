@@ -2,3 +2,4 @@ name: Fire and Brimstone
 description: A Preacher’s sermons are filled with impassioned words, evoking vivid images of sinners in anguish and torment.
 effects:
   - You may flip the results to succeed at Leadership Tests. When you succeed, it is always considered a Critical Success. Furthermore, you always influence a number of people with the Leadership Skill equal to three times your [FB] – this includes use of Inspiring Words during combat. You also understand how to use the Ritual of Blessed Sacrament.
+goType: FireandBrimstone

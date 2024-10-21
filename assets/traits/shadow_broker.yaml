@@ -2,3 +2,4 @@ name: Shadow Broker
 description: Legal informants and other underworld associates share random information with you freely for the benefits they may yield at a later time. Assembling these dissonant parts, your mind can weave them together to provide significant leverage when the time is right.
 effects:
   - At any time, you may spend 1 Fortune Point to gain a critical piece of information from underworld contacts, rumormongers or other sources.
+goType: ShadowBroker

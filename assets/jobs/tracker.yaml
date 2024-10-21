@@ -4,7 +4,7 @@ description: Trackers are skilled at finding, following, and trapping their targ
 tier: Basic
 reward_point_cost: 100
 traits:
-  - It;s a Trap!
+  - It's a Trap!
 skillRanks:
   - Awareness
   - Coordination

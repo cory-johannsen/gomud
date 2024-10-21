@@ -2,3 +2,4 @@ name: Dogs of War
 description: Every scar a Sellsword bears has a story behind it. Every disfigurement speaks to their history of violence. But war... war never changes. And every mercenary must debase themselves for survival, doling out barbarity with reckless abandon.
 effects:
   - You never suffer Serious Injuries.
+goType: DogsofWar

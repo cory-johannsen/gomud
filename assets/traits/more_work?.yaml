@@ -2,3 +2,4 @@ name: More Work?
 description: The long, arduous days a Peasant faces never seem to end. Rustic in your ways, you’re well-acquainted with the hardships of labor and have developed a specific tolerance towards backbreaking drudgery. And when you rest, you sleep soundly and always awaken refreshed.
 effects:
   - Adjust your Peril Threshold by +3. In addition, you always recover your Peril Condition Track to Unhindered after resting.
+goType: MoreWork

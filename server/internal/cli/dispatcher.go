@@ -12,6 +12,13 @@ import (
 	"strings"
 )
 
+type Dispatcher struct {
+	handlers map[string]Handler
+	ctx      context.Context
+	state    domain.State
+	eventBus eventbus.Bus
+}
+
 func (d *Dispatcher) State() domain.State {
 	return d.state
 }
@@ -27,13 +34,6 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 	quitAliases := CreateAliases(quit, "exit", "q")
 	dispatcher.Register("quit", quit)
 	for _, alias := range quitAliases {
-		dispatcher.Register(alias.Alias, alias)
-	}
-
-	helpHandler := &HelpHandler{stateProvider: dispatcher.State, dispatcher: dispatcher}
-	dispatcher.Register("help", helpHandler)
-	helpAliases := CreateAliases(helpHandler, "?", "h")
-	for _, alias := range helpAliases {
 		dispatcher.Register(alias.Alias, alias)
 	}
 
@@ -80,6 +80,14 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 			dispatcher.Register(alias.Alias, alias)
 		}
 	}
+
+	helpHandler := &HelpHandler{stateProvider: dispatcher.State, handlers: dispatcher.handlers}
+	dispatcher.Register("help", helpHandler)
+	helpAliases := CreateAliases(helpHandler, "?", "h")
+	for _, alias := range helpAliases {
+		dispatcher.Register(alias.Alias, alias)
+	}
+
 	return dispatcher
 }
 

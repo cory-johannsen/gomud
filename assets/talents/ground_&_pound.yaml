@@ -4,3 +4,4 @@ description: |
   in the gut.
 effects:
   - When a foe successfully Resists your Chokehold, immediately make a bare-handed Opportunity Attack.
+goType: GroundPound

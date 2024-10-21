@@ -4,3 +4,4 @@ description: |
   begs for it or otherwise.
 effects:
   - When you Injure a foe with a melee weapon, you inflict two Injuries instead of one.
+goType: NoMercy

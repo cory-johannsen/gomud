@@ -5,3 +5,4 @@ description: |
   Æthereal energies to the betterment of your Magicks.
 effects:
   - Foes who are made subject to your Magicks must spend one additional Action Point to properly Counterspell. In addition, you penalize your foe’s ability to Resist your Magicks by a -10 Base Chance.
+goType: BattleMagick

@@ -2,3 +2,4 @@ name: Four-in-Hand
 description: Coachmen establish a trusted bond with animals and beasts, pressing them onwards when the time is needed. For all they know, you may very well have been a champion cart racer in the past, exhibiting tight skills when in the driver’s seat.
 effects:
   - You may flip the results to succeed at Drive Tests. When you succeed, it is always considered a Critical Success. In addition, when using the Movement subtype of Drive, you do not have to add the additional 1 AP cost.
+goType: FourinHand

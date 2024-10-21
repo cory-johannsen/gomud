@@ -5,3 +5,4 @@ description: |
   in the tender parts as a low blow
 effects:
   - When a foe successfully Parries your Melee Attack, immediately make a bare-handed Opportunity Attack.
+goType: CheapShot

@@ -4,3 +4,4 @@ description: |
   help old mothers locked out of their own cottages.
 effects:
   - When trying to open locks, you gain a +20 Base Chance to Skulduggery Tests.
+goType: Housebreaker

@@ -4,3 +4,4 @@ description: |
   areas instead of putting up a fair fight.
 effects:
   - When you Take Aim and then make a successful Melee Attack, you force a foe to Resist a Takedown. You must attack with Brawling or Crushing types of weapons to utilize this Talent.
+goType: Beatdown

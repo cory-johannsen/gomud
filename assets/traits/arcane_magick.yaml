@@ -4,3 +4,4 @@ description: |
   formula, you can harness Magick with but an utterance of a few words.
 effects:
   - You are solely a practitioner of Arcane Magick. As a consequence, you may never adopt a Profession which has Divine Magick as a Special Trait. In addition, you immediately learn three Generalist Magick spells when you enter this Profession. If you gained Arcane Magick from a previous Profession, you learn an additional Generalist Magick spell instead.
+goType: ArcaneMagick

@@ -4,3 +4,4 @@ description: |
   lightning reflexes.
 effects:
   - In combat, you gain 1 additional Action Point. However, it can only be used to Dodge and Parry. This Action Point refreshes at the beginning of your Turn.
+goType: LightningReaction

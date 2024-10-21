@@ -10,20 +10,20 @@ import (
 
 type HelpHandler struct {
 	stateProvider domain.StateProvider
-	dispatcher    *Dispatcher
+	handlers      map[string]Handler
 }
 
 func (h *HelpHandler) Handle(ctx context.Context, args []string) (string, error) {
 	if len(args) == 0 {
 		commands := make([]string, 0)
-		for k := range h.dispatcher.handlers {
+		for k := range h.handlers {
 			commands = append(commands, k)
 		}
 		sort.Strings(commands)
 		return "available commands: " + strings.Join(commands, ", "), nil
 	}
 	cmd := args[0]
-	handler, ok := h.dispatcher.handlers[cmd]
+	handler, ok := h.handlers[cmd]
 	if !ok {
 		return fmt.Sprintf("unrecognized command \"%s\"", cmd), nil
 	}

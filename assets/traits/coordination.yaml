@@ -2,3 +2,4 @@ name: Coordination
 description: 
 effects:
   - 
+goType: Coordination

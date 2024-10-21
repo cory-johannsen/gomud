@@ -8,7 +8,8 @@ import (
 type TraitSpec struct {
 	Name        string   `yaml:"name"`
 	Description string   `yaml:"description"`
-	Effects     []string `yaml:"effects"`
+	Effects     []string `yaml:"effect"`
+	GoType      string   `yaml:"goType"`
 }
 
 type Trait struct {

@@ -4,3 +4,4 @@ description: |
   with great might and speed.
 effects:
   - When you wield a shield, the melee weapon you wield in your primary hand gains the Powerful Quality.
+goType: ShieldSlam

@@ -3,4 +3,5 @@ description: |
   You’ve grown accustomed to the battlefield and the smell of rotting
   corpses doesn’t bother you.
 effects:
-  - When viewing blood-soaked and visceral scenes of death, you always succeed at Resolve Tests to withstand their potential psychological effects (such as with Stress, Fear and Terror) and don’t suffer Corruption due to such scenes.
+  - When viewing blood-soaked and visceral scenes of death, you always succeed at Resolve Tests to withstand their potential psychological effect (such as with Stress, Fear and Terror) and don’t suffer Corruption due to such scenes.
+goType: Indifference

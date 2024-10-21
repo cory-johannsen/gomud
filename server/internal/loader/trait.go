@@ -3,20 +3,23 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
 )
 
 type TraitLoader struct {
-	config *config.Config
-	traits domain.Traits
+	config       *config.Config
+	traits       domain.Traits
+	effectLoader *EffectLoader
 }
 
-func NewTraitLoader(cfg *config.Config) *TraitLoader {
+func NewTraitLoader(cfg *config.Config, effectLoader *EffectLoader) *TraitLoader {
 	return &TraitLoader{
-		config: cfg,
-		traits: make(domain.Traits, 0),
+		config:       cfg,
+		traits:       make(domain.Traits, 0),
+		effectLoader: effectLoader,
 	}
 }
 
@@ -51,14 +54,12 @@ func (l *TraitLoader) LoadTraits() (domain.Traits, error) {
 			Description: spec.Description,
 			Effects:     make(domain.Effects, 0),
 		}
-		for _, effectName := range spec.Effects {
-			// TODO resolve the effects
-			//log.Printf("loading trait %s effect %s", spec.Name, effectName)
-			effect := domain.Effect{
-				Name: effectName,
-			}
-			trait.Effects = append(trait.Effects, &effect)
+		effect, err := l.effectLoader.GetEffect(spec.Name)
+		if err != nil {
+			log.Errorf("error loading effect for %s: %s", spec.Name, err)
+			continue
 		}
+		trait.Effects = append(trait.Effects, effect)
 		l.traits = append(l.traits, &trait)
 	}
 	return l.traits, nil

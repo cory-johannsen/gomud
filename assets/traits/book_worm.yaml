@@ -2,3 +2,4 @@ name: Book Worm
 description: The Antiquarian has spent many years in the dark, cold recesses of libraries reading histories and treatises of far-flung lands and their inhabitants. Although your skin may be pale as parchment from all those years spent scouring bookshelves, your mental acuity is virtually unparalleled.
 effects:
   - Multiply your [IB] by three to determine how many Focuses you may possess.
+goType: BookWorm

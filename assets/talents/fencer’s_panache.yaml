@@ -4,3 +4,4 @@ description: |
   swordsman.
 effects:
   - When you Take Aim and then make a successful Melee Attack, you force a foe to Resist a Disarm. You must attack with weapons possessing the Fast or Finesse Quality to utilize this Talent.
+goType: FencersPanache

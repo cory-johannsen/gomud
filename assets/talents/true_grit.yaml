@@ -3,4 +3,5 @@ description: |
   You have an incredibly hardy physique, powering through pain
   and suffering with resolve.
 effects:
-  - You are immune to the effects of Knockout! and Stunning Blow.
+  - You are immune to the effect of Knockout! and Stunning Blow.
+goType: TrueGrit

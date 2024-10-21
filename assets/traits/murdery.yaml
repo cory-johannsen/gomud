@@ -2,3 +2,4 @@ name: "Murdery"
 description: "You prefer to solve problems by killing them."
 effects:
   - "When performing an act of Killing to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure."
+goType: Murdery

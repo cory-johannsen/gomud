@@ -6,7 +6,7 @@ import (
 )
 
 type CharacterHandler struct {
-	stateProvider StateProvider
+	stateProvider domain.StateProvider
 }
 
 func (c *CharacterHandler) Handle(ctx context.Context, args []string) (string, error) {

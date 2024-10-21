@@ -4,3 +4,4 @@ description: |
   and fear in those who encounter you.
 effects:
   - When you succeed at an Intimidate Test against one foe, they cannot attack you until they succeed at a Resolve Test. However, if you or your allies harm them in any way, they immediately shake off this effect.
+goType: AppallingMien

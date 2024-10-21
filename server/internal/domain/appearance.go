@@ -110,7 +110,7 @@ func (t Tattoos) Random(locations TattooLocations) Tattoo {
 		return Tattoo{}
 	}
 	tat := t[rand.Intn(len(t))]
-	
+
 	return Tattoo{
 		Description: tat.Description,
 		Location:    locations[rand.Intn(len(locations))],
@@ -118,10 +118,17 @@ func (t Tattoos) Random(locations TattooLocations) Tattoo {
 	}
 }
 
-type Drawback struct {
+type DrawbackSpec struct {
 	Name        string
 	Description string
 	Effect      string
+}
+type DrawbackSpecs []*DrawbackSpec
+
+type Drawback struct {
+	Name        string
+	Description string
+	Effect      Effect
 }
 type Drawbacks []*Drawback
 

@@ -3,6 +3,7 @@ package loader
 import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
 )
@@ -13,11 +14,13 @@ type AppearanceLoader struct {
 	tats         domain.SeasonalTattoos
 	drawbacks    domain.Drawbacks
 	marks        domain.DistinguishingMarks
+	effectLoader *EffectLoader
 }
 
-func NewAppearanceLoader(cfg *config.Config) *AppearanceLoader {
+func NewAppearanceLoader(cfg *config.Config, effectLoader *EffectLoader) *AppearanceLoader {
 	return &AppearanceLoader{
-		config: cfg,
+		config:       cfg,
+		effectLoader: effectLoader,
 	}
 }
 
@@ -68,15 +71,31 @@ func (l *AppearanceLoader) LoadDrawbacks() (domain.Drawbacks, error) {
 	if l.drawbacks != nil {
 		return l.drawbacks, nil
 	}
-	drawbacks := make(domain.Drawbacks, 0)
+	specs := make(domain.DrawbackSpecs, 0)
 	data, err := os.ReadFile(l.config.AssetPath + "/appearance/drawbacks.yaml")
 	if err != nil {
 		return nil, err
 	}
-	err = yaml.Unmarshal(data, &drawbacks)
+	err = yaml.Unmarshal(data, &specs)
 	if err != nil {
 		return nil, err
 	}
+
+	drawbacks := make(domain.Drawbacks, 0)
+	for _, d := range specs {
+		effect, err := l.effectLoader.GetEffect(d.Name)
+		if err != nil {
+			log.Errorf("error loading effect %s: %v", d.Name, err)
+			continue
+		}
+		drawback := &domain.Drawback{
+			Name:        d.Name,
+			Description: d.Description,
+			Effect:      effect,
+		}
+		drawbacks = append(drawbacks, drawback)
+	}
+
 	l.drawbacks = drawbacks
 	return drawbacks, nil
 }

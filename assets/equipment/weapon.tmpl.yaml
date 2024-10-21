@@ -13,6 +13,6 @@ weapon:
     - {{ . }}
   {{- end }}
   effects:
-  {{- range .effects }}
+  {{- range .effect }}
     - {{ . }}
   {{- end }}

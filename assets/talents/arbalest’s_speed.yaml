@@ -4,3 +4,4 @@ description: |
   another arrow or reload another stone to strike your enemy again.
 effects:
   - When you begin to Load a ranged weapon, make a successful Coordination Test to Load it without spending Action Points. If you fail, you must spend the requisite number of Action Points to finish Loading.
+goType: ArbalestsSpeed

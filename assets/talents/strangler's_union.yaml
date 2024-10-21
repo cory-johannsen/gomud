@@ -5,3 +5,4 @@ description: |
   effectively.
 effects:
   - When you make an Attack Action with a blackjack, bullwhip or garrote, your foe cannot Dodge or Parry this attack.
+goType: StranglersUnion

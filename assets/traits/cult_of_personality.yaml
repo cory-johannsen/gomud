@@ -2,3 +2,4 @@ name: Cult of Personality
 description: The Cultist can harness the ever-changing Ætheric Winds as the wellspring of their Magick. They exhibit mastery over the smallest of spells, but ignorance towards others beyond their understanding.
 effects:
   - When casting Generalist Magick – at your option – you may automatically succeed at the Incantation Test, but move one step down the Peril Condition Track negatively. You also understand how to use the Ritual of Blessed Sacrament.
+goType: CultofPersonality

@@ -2,3 +2,4 @@ name: Alfred Pfennigworth
 description: Valets embody impeccable grace and confidence, attending to their duties with professional charm while galvanizing the presence of those whom they serve. Their presence mollifies reputation, lends credit to business dealings and ensures seamless social maneuvering.
 effects:
   - When you Assist others with Skill Tests, they gain two Assist Dice instead, choosing the better of the two to use. In addition, when you Assist them, they may ignore any Critical Failures they roll, treating them as regular failures instead.
+goType: AlfredPfennigworth

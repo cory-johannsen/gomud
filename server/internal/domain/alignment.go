@@ -8,14 +8,14 @@ import (
 type Order struct {
 	Name        string   `yaml:"name"`
 	Description string   `yaml:"description"`
-	Effects     []string `yaml:"effects"`
+	Effects     []string `yaml:"effect"`
 	Rank        int
 }
 
 type Chaos struct {
 	Name        string   `yaml:"name"`
 	Description string   `yaml:"description"`
-	Effect      []string `yaml:"effects"`
+	Effect      []string `yaml:"effect"`
 	Rank        int
 }
 

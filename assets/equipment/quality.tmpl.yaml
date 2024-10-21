@@ -9,6 +9,6 @@ targets:
   - {{ . }}
   {{ end }}
 effects:
-  {{ range .effects }}
+  {{ range .effect }}
   - {{ . }}
   {{ end }}

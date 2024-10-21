@@ -2,3 +2,4 @@ name: Turn the Other Cheek
 description: So as long as an Believer makes no attempt to harm another, they are above reproach. But those who walk in blood-stained clothes with a sword at their waist may send the wrong message, allowing others to ignore the Adherent’s pacifist ways.
 effects:
   - You can read, write and speak the language of any creature that is classified as a Humanoid (including player Ancestries). In addition, whenever you suffer Corruption, decrease the number you gain by 1 (to a minimum of one). This means that if you suffer 3 Corruption, you gain 2 instead.
+goType: TurntheOtherCheek

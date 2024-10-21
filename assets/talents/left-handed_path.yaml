@@ -4,3 +4,4 @@ description: |
   disorder and are resilient to their corrupting effects.
 effects:
   - When you Channel Power, if your Chaos Dice do not result in a Chaos Manifestation, you avoid gaining Corruption as a result.
+goType: LefthandedPath

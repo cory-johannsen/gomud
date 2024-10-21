@@ -4,3 +4,4 @@ description: |
   you occupy the van.
 effects:
   - When you successfully use Inspiring Words in combat, both you and the allies you inspire raise their Initiative by 3.
+goType: MilitaryFormation

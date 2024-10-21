@@ -3,3 +3,4 @@ description: |
   You never get lost under a starry sky.
 effects:
   - When you can see the stars, you gain a +20 Base Chance to Navigation Tests. In addition, you always know true north above ground, even during inclement weather.
+goType: Azimuth

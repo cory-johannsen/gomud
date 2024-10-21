@@ -16,7 +16,7 @@ import (
 
 type LoginHandler struct {
 	state            domain.State
-	stateConstructor StateConstructor
+	stateConstructor domain.StateConstructor
 	players          *storage.Players
 	generator        *generator.PlayerGenerator
 	teams            *loader.TeamLoader
@@ -24,7 +24,7 @@ type LoginHandler struct {
 	conn             io.Connection
 }
 
-func NewLoginHandler(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
+func NewLoginHandler(stateConstructor domain.StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
 	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection) *LoginHandler {
 	return &LoginHandler{
 		stateConstructor: stateConstructor,
@@ -91,7 +91,7 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	}
 
 	_ = h.conn.Writeln(fmt.Sprintf("Created player %s", player.String()))
-	_ = h.conn.Writeln(fmt.Sprintf("You now get to select your skills, bonuses and talents.  You have %d experience to spend, each selection cosets 100 experience.", player.Experience()))
+	_ = h.conn.Writeln(fmt.Sprintf("You now get to select your skills, bonuses and talents.  You have %d experience to spend, each selection costs 100 experience.", player.Experience()))
 	for {
 		if player.Experience() < 100 {
 			break

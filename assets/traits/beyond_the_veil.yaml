@@ -2,3 +2,4 @@ name: Beyond the Veil
 description: "This is a description of the trait."
 effects:
   - Effect1
+goType: BeyondtheVeil

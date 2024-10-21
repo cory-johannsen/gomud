@@ -293,7 +293,7 @@ func (p *Player) String() string {
 			for _, trait := range v.(*Archetype).Traits {
 				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n\t\tEffects:\n", trait.Name, trait.Description)
 				for _, effect := range trait.Effects {
-					msg += fmt.Sprintf("\t\t\t%s\n\t\t\t%s\n", effect.Name, effect.Description)
+					msg += fmt.Sprintf("\t\t\t%s\n\t\t\t%s\n", effect.Name(), effect.Description())
 				}
 			}
 		case BackgroundProperty:
@@ -301,7 +301,7 @@ func (p *Player) String() string {
 		case BackgroundTraitProperty:
 			msg += fmt.Sprintf("  Background Trait - \n\t%s\n\t%s\n", v.(*Trait).Name, v.(*Trait).Description)
 			for _, effect := range v.(*Trait).Effects {
-				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n", effect.Name, effect.Description)
+				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n", effect.Name(), effect.Description())
 			}
 		case BirthSeasonProperty:
 			msg += fmt.Sprintf("  Birth Season - %s\n", v.(Season))
@@ -326,7 +326,7 @@ func (p *Player) String() string {
 				msg += fmt.Sprintf("\t%s\n", mark)
 			}
 		case DrawbackProperty:
-			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s\n\t\tdesc\n\t\teffect\n", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect)
+			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect.Description())
 		case ExperienceProperty:
 			msg += fmt.Sprintf("  Experience - %d\n", v.(*BaseProperty).Val.(int))
 		case FatePointsProperty:
@@ -351,14 +351,14 @@ func (p *Player) String() string {
 		case SkillRanksProperty:
 			msg += "  Skill Ranks: \n"
 			for _, rank := range v.(SkillRanks) {
-				msg += fmt.Sprintf("\t%s (from %s)\n\t%s\n", rank.Skill.Name, rank.Job.Name, rank.Skill.Description)
+				msg += fmt.Sprintf("\t%s (from %s)\n", rank.Skill.Name, rank.Job.Name)
 			}
 		case TattooProperty:
 			msg += fmt.Sprintf("  Tattoo - \n\t\"%s\" on your %s\n", v.(*Tattoo).Description, v.(*Tattoo).Location)
 		case TalentsProperty:
 			msg += "  Talents: \n"
 			for _, talent := range v.(Talents) {
-				msg += fmt.Sprintf("\t%s\n\t%s\n\t%s\n", talent.Name, talent.Description, talent.Effect.Name)
+				msg += fmt.Sprintf("\t%s\n\t\t%s\n\t\t%s\n", talent.Name, talent.Description, talent.Effect.Description())
 			}
 		case TeamProperty:
 			msg += fmt.Sprintf("  Team - %s\n", v.(*Team).Name)
@@ -526,7 +526,11 @@ func (p *Player) BackgroundTrait() *Trait {
 }
 
 func (p *Player) Room() *Room {
-	return p.Data[RoomProperty].(*Room)
+	r := p.Data[RoomProperty]
+	if r == nil {
+		return nil
+	}
+	return r.(*Room)
 }
 
 func (p *Player) SetRoom(r *Room) {

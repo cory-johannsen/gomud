@@ -2,3 +2,4 @@ name: Nimble Fingers
 description: A Burglar’s hands are precious tools and most spend years honing their innate dexterity.
 effects:
   - You drastically reduce the time required to use Skulduggery Tests, taking no more than a minute for complex actions (examples include picking locks, pilfering goods, etc.). In addition, you may flip the results to succeed at Skill Tests to steal.
+goType: NimbleFingers

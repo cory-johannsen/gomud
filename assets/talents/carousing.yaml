@@ -4,3 +4,4 @@ description: |
   finding yourself drinking everyone else underneath the table.
 effects:
   - When you are Intoxicated, will you be a friendly drunk or a mean drunk? When you’re a friendly drunk, gain  a +10 Base Chance to Charm Tests while Intoxicated. When  you’re a mean drunk, gain a +10 Base Chance to Intimidate  Tests while Intoxicated. You can make this choice every time you become Intoxicated.
+goType: Carousing

@@ -2,3 +2,4 @@ name: Hue & Cry
 description: A Watchman relies on preternatural instincts to sniff out danger. They are quick to rally in the face of lawlessness, vigilant and alert.
 effects:
   - When combat begins, roll 2D10, instead of 1D10, to determine your place in the Initiative Order.
+goType: HueCry

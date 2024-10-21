@@ -1,4 +1,5 @@
 name: Fame & Fortune
 description: Even when the chips are down, a Fop always seems to come out on top. Unlike others, they make their own luck.
 effects:
-  - When making any Skill Test, you never suffer the ill-effects of Critical Failures, instead treating it as a failed Skill Test.
+  - When making any Skill Test, you never suffer the ill-effect of Critical Failures, instead treating it as a failed Skill Test.
+goType: FameFortune

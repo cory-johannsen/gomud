@@ -3,3 +3,4 @@ description: |
   In one masterful stroke, you strike your target clean and accurately.
 effects:
   - When you Take Aim and then make a successful Ranged Attack, add 3 Damage.
+goType: GruesomeShot
