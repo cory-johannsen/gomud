@@ -7,6 +7,7 @@ type Loaders struct {
 	BackgroundLoader *BackgroundLoader
 	EffectLoader     *EffectLoader
 	InjuryLoader     *InjuryLoader
+	InventoryLoader  *InventoryLoader
 	JobLoader        *JobLoader
 	RoomLoader       *RoomLoader
 	SkillLoader      *SkillLoader
@@ -16,7 +17,7 @@ type Loaders struct {
 }
 
 func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLoader, archetypeLoader *ArchetypeLoader,
-	backgroundLoader *BackgroundLoader, effectLoader *EffectLoader, injuryLoader *InjuryLoader, jobLoader *JobLoader, roomLoader *RoomLoader, skillLoader *SkillLoader, talentLoader *TalentLoader,
+	backgroundLoader *BackgroundLoader, effectLoader *EffectLoader, injuryLoader *InjuryLoader, inventoryLoader *InventoryLoader, jobLoader *JobLoader, roomLoader *RoomLoader, skillLoader *SkillLoader, talentLoader *TalentLoader,
 	traitLoader *TraitLoader, teamLoader *TeamLoader) *Loaders {
 	return &Loaders{
 		AppearanceLoader: appearanceLoader,
@@ -25,6 +26,7 @@ func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLo
 		BackgroundLoader: backgroundLoader,
 		EffectLoader:     effectLoader,
 		InjuryLoader:     injuryLoader,
+		InventoryLoader:  inventoryLoader,
 		JobLoader:        jobLoader,
 		RoomLoader:       roomLoader,
 		SkillLoader:      skillLoader,

@@ -120,6 +120,8 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 		}
 	}
 
+	player.Data[domain.InventoryProperty] = domain.NewInventory()
+
 	room := h.rooms.GetRoom("Wayne Dawg's Trailer")
 	player.SetRoom(room)
 	room.AddPlayer(player)

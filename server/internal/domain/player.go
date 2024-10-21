@@ -28,8 +28,10 @@ const (
 	DistinguishingMarkProperty = "distinguishingMark"
 	DrawbackProperty           = "drawback"
 	ExperienceProperty         = "experience"
+	EquipmentProperty          = "equipment"
 	FatePointsProperty         = "fatePoints"
 	InjuriesProperty           = "injuries"
+	InventoryProperty          = "inventory"
 	JobProperty                = "job"
 	PerilProperty              = "peril"
 	ReputationPointsProperty   = "reputationPoints"
@@ -228,6 +230,9 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 	if p.Data == nil {
 		p.Data = make(map[string]Property)
 	}
+	if _, ok := p.Data[InventoryProperty]; !ok {
+		p.Data[InventoryProperty] = NewInventory()
+	}
 	return p
 }
 
@@ -273,6 +278,7 @@ func (p *Player) String() string {
 		DisordersProperty,
 		PerilProperty,
 		InjuriesProperty,
+		InventoryProperty,
 	}
 	for _, k := range properties {
 		v, ok := p.Data[k]
@@ -329,6 +335,26 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect.Description())
 		case ExperienceProperty:
 			msg += fmt.Sprintf("  Experience - %d\n", v.(*BaseProperty).Val.(int))
+		case InventoryProperty:
+			inventory := v.(*Inventory)
+			msg += fmt.Sprintf("  Inventory - \n\tMain Hand: ")
+			if inventory.MainHand() == nil {
+				msg += "empty"
+			} else {
+				msg += inventory.MainHand().Name()
+			}
+			msg += fmt.Sprintf("\n\tOff Hand: ")
+			if inventory.OffHand() == nil {
+				msg += "empty"
+			} else {
+				msg += inventory.OffHand().Name()
+			}
+			msg += fmt.Sprintf("\n\tArmor: ")
+			if inventory.Armor() == nil {
+				msg += "empty"
+			} else {
+				msg += inventory.Armor().Name()
+			}
 		case FatePointsProperty:
 			msg += fmt.Sprintf("  Fate Points - %d\n", v.(*BaseProperty).Val.(int))
 		case InjuriesProperty:
@@ -339,7 +365,7 @@ func (p *Player) String() string {
 		case JobProperty:
 			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier)
 		case PerilProperty:
-			msg += fmt.Sprintf("  Peril - \n\tThreshold: %d\n\tCondition: %s", v.(*Peril).Threshold, v.(*Peril).Condition.String())
+			msg += fmt.Sprintf("  Peril - \n\tThreshold: %d\n\tCondition: %s\n", v.(*Peril).Threshold, v.(*Peril).Condition.String())
 		case StatsProperty:
 			stats := v.(*Stats)
 			bonuses := p.StatBonuses()
@@ -623,4 +649,8 @@ func (p *Player) Injuries() Injuries {
 		p.Data[InjuriesProperty] = make(Injuries, 0)
 	}
 	return p.Data[InjuriesProperty].(Injuries)
+}
+
+func (p *Player) Inventory() *Inventory {
+	return p.Data[InventoryProperty].(*Inventory)
 }

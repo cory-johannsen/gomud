@@ -146,6 +146,8 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 			data[k] = v
 		case domain.DrawbackProperty:
 			data[k] = v.(*domain.Drawback).Name
+		case domain.InventoryProperty:
+			data[k] = domain.SpecFromInventory(v.(*domain.Inventory))
 		case domain.JobProperty:
 			data[k] = v.(*domain.Job).Name
 		case domain.RoomProperty:
@@ -290,6 +292,42 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			props[k] = drawback
 		case domain.ExperienceProperty:
 			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
+		case domain.InventoryProperty:
+			m := v.(map[string]interface{})
+			pack := make([]int, 0)
+			var mainHand = 0
+			var offHand = 0
+			var armor = 0
+			if _, ok := m["MainHand"]; ok {
+				mainHand = int(m["MainHand"].(float64))
+			}
+			if _, ok := m["OffHand"]; ok {
+				offHand = int(m["OffHand"].(float64))
+			}
+			if _, ok := m["Armor"]; ok {
+				armor = int(m["Armor"].(float64))
+			}
+			if _, ok := m["Pack"]; ok {
+				ids := m["Pack"].([]float64)
+				for _, id := range ids {
+					pack = append(pack, int(id))
+				}
+			}
+			spec := &domain.InventorySpec{
+				MainHand: mainHand,
+				OffHand:  offHand,
+				Armor:    armor,
+				Pack:     pack,
+			}
+			inventory, err := p.loaders.InventoryLoader.InventoryFromSpec(spec)
+			if err != nil {
+				log.Printf("failed to load inventory: %s", err)
+				continue
+			}
+			if inventory == nil {
+				inventory = domain.NewInventory()
+			}
+			props[k] = inventory
 		case domain.JobProperty:
 			job, err := p.loaders.JobLoader.GetJob(v.(string))
 			if err != nil {
