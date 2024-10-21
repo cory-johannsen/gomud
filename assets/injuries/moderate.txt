@@ -1,4 +1,4 @@
-Fortune’s Mercy! | Ignore Injury, keep your Fate Point and continue fighting onwards!
+Fortune’s Mercy! (Moderate) | Ignore Injury, keep your Fate Point and continue fighting onwards!
 Black Eye | Until fully Recuperated, you must flip the results to fail Skill Tests which rely on vision.
 Bruised Ribs | Until fully Recuperated, reduce your Encumbrance Limit by 3.
 Dislocated Shoulder | Until fully Recuperated, you start your Turn with 1 less AP.
@@ -9,4 +9,4 @@ Rattled Brain | Until fully Recuperated, reduce your Initiative by 3.
 Sprained Wrist | Until fully Recuperated, you cannot hold anything in your primary hand, and must rely on your off-hand.
 Strained Groin | Until fully Recuperated, you cannot use any Movement Actions besides Take Cover or Walk in combat.
 Twisted Ankle | Until fully Recuperated, reduce your Movement by 3.
-Misfortune! | Roll on the Serious Injury table instead!
+Misfortune! (Moderate)  | Roll on the Serious Injury table instead!

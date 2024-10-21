@@ -103,7 +103,7 @@ func (l *InjuryLoader) loadInjuries(path string) (domain.Injuries, error) {
 			log.Errorf("error unmarshalling file %s: %v", item.Name(), err)
 			continue
 		}
-		effect, err := l.effectLoader.GetEffect(spec.Effect)
+		effect, err := l.effectLoader.GetEffect(spec.Name)
 		if err != nil {
 			log.Errorf("error loading injury %s effect %s: %s", spec.Name, spec.Effect, err)
 		}

@@ -1,7 +1,7 @@
 package effect
 
 import (
-	"github.com/cory-johannsen/gomud/internal/domain"
+  "github.com/cory-johannsen/gomud/internal/domain"
   log "github.com/sirupsen/logrus"
 )
 

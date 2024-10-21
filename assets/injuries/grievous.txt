@@ -1,4 +1,4 @@
-Fortune’s Mercy! | Ignore Injury, keep your Fate Point and continue fighting onwards!
+Fortune’s Mercy! (Grievous) | Ignore Injury, keep your Fate Point and continue fighting onwards!
 Butchered Leg | Until fully Recuperated, you cannot move as you’re in pain. You must undergo a successful surgery or suffer the consequences. Once a Butchered Leg has undergone a failed surgery, you gain the Veteran’s Leg Drawback. If you already have this Drawback, you permanently lose 9% Agility.
 Cerebral Contusion | Until fully Recuperated, you remain unconscious. You must undergo a successful surgery or suffer the consequences. Once a Cerebral Contusion has undergone a failed surgery, you gain the Dunderhead Drawback. If you already have this Drawback, you permanently lose 9% Intelligence.
 Detached Ear | Until fully Recuperated, you cannot hear as you’re in pain. You must undergo a successful surgery or suffer the consequences. Once a Detached Ear has undergone a failed surgery, you suffer the Crop Ear Drawback. If you already have this Drawback, you permanently lose 9% Perception.

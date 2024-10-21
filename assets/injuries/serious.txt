@@ -1,4 +1,4 @@
-Fortune’s Mercy! | Ignore Injury, keep your Fate Point and continue fighting onwards!
+Fortune’s Mercy! (Serious) | Ignore Injury, keep your Fate Point and continue fighting onwards!
 Broken Rib | Your armor gains the Ruined! Quality. Until fully Recuperated, you cannot add Skill Ranks to Combat, Brawn or Agility-based Skills.
 Busted Kneecap | Until fully Recuperated, any time you fail a Skill Test that relies on Brawn or Agility, you suffer 2D10+2 physical Peril.
 Fractured Larynx | Until fully Recuperated, you must succeed at a Scrutinize Test to speak.
@@ -9,4 +9,4 @@ Skull Fracture Until | fully Recuperated, you must flip the results to fail all 
 Stress Fracture Until | fully Recuperated, you cannot Counterspell, Dodge or Parry.
 Temporary Paralysis | You are knocked Prone. Until fully Recuperated, you cannot move as you're paralyzed.
 Torn Shoulder | Whatever you are holding in your primary hand gains the Ruined! Quality. Until fully Recuperated, you start your Turn with 2 less AP.
-Misfortune! | Roll on the Grievous Injury table instead!
+Misfortune! (Serious) | Roll on the Grievous Injury table instead!
