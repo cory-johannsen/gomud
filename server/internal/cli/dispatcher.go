@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
+	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
@@ -11,20 +12,11 @@ import (
 	"strings"
 )
 
-type StateProvider func() State
-
-type Dispatcher struct {
-	handlers map[string]Handler
-	ctx      context.Context
-	state    State
-	eventBus eventbus.Bus
-}
-
-func (d *Dispatcher) State() State {
+func (d *Dispatcher) State() domain.State {
 	return d.state
 }
 
-func NewDispatcher(stateConstructor StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
+func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
 	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection, eventBus eventbus.Bus) *Dispatcher {
 	dispatcher := &Dispatcher{
 		handlers: make(map[string]Handler),

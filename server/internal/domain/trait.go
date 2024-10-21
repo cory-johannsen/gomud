@@ -5,15 +5,6 @@ import (
 	"math/rand"
 )
 
-type Applier func() interface{}
-
-type Effect struct {
-	Name        string
-	Description string
-	Applier     Applier
-}
-type Effects []*Effect
-
 type TraitSpec struct {
 	Name        string   `yaml:"name"`
 	Description string   `yaml:"description"`

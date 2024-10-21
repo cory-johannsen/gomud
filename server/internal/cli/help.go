@@ -3,12 +3,13 @@ package cli
 import (
 	"context"
 	"fmt"
+	"github.com/cory-johannsen/gomud/internal/domain"
 	"sort"
 	"strings"
 )
 
 type HelpHandler struct {
-	stateProvider StateProvider
+	stateProvider domain.StateProvider
 	dispatcher    *Dispatcher
 }
 
@@ -33,7 +34,7 @@ func (h *HelpHandler) Help(args []string) string {
 	return "help [command]"
 }
 
-func (h *HelpHandler) State() State {
+func (h *HelpHandler) State() domain.State {
 	return h.stateProvider()
 }
 

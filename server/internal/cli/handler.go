@@ -5,17 +5,10 @@ import (
 	"github.com/cory-johannsen/gomud/internal/domain"
 )
 
-type State interface {
-	Player() *domain.Player
-	Property(string) domain.Property
-}
-
-type StateConstructor func(player *domain.Player) State
-
 type Handler interface {
 	Handle(ctx context.Context, args []string) (string, error)
 	Help(args []string) string
-	State() State
+	State() domain.State
 }
 
 type Alias struct {
@@ -31,7 +24,7 @@ func (a *Alias) Help(args []string) string {
 	return a.Handler.Help(args)
 }
 
-func (a *Alias) State() State {
+func (a *Alias) State() domain.State {
 	return a.Handler.State()
 }
 

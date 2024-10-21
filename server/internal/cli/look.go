@@ -7,7 +7,7 @@ import (
 )
 
 type LookHandler struct {
-	stateProvider StateProvider
+	stateProvider domain.StateProvider
 }
 
 func Look(player *domain.Player) string {
@@ -53,11 +53,11 @@ func (h *LookHandler) Help(args []string) string {
 	return "look around"
 }
 
-func (h *LookHandler) State() State {
+func (h *LookHandler) State() domain.State {
 	return h.stateProvider()
 }
 
-func NewLookHandler(stateProvider StateProvider) *LookHandler {
+func NewLookHandler(stateProvider domain.StateProvider) *LookHandler {
 	return &LookHandler{stateProvider: stateProvider}
 }
 

@@ -3,18 +3,19 @@ package cli
 import (
 	"context"
 	"fmt"
+	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
 
 type MoveHandler struct {
-	stateProvider StateProvider
+	stateProvider domain.StateProvider
 	players       *storage.Players
 	rooms         *loader.RoomLoader
 }
 
-func NewMoveHandler(stateProvider StateProvider, players *storage.Players, rooms *loader.RoomLoader) *MoveHandler {
+func NewMoveHandler(stateProvider domain.StateProvider, players *storage.Players, rooms *loader.RoomLoader) *MoveHandler {
 	return &MoveHandler{
 		stateProvider: stateProvider,
 		players:       players,
@@ -61,7 +62,7 @@ type DirectionalMoveHandler struct {
 	Direction string
 }
 
-func NewDirectionalMoveHandler(stateProvider StateProvider, players *storage.Players, rooms *loader.RoomLoader, direction string) *DirectionalMoveHandler {
+func NewDirectionalMoveHandler(stateProvider domain.StateProvider, players *storage.Players, rooms *loader.RoomLoader, direction string) *DirectionalMoveHandler {
 	return &DirectionalMoveHandler{
 		MoveHandler: MoveHandler{
 			stateProvider: stateProvider,

@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
@@ -9,7 +10,7 @@ import (
 const QuitMessage = "peace out"
 
 type LogoutHandler struct {
-	stateProvider StateProvider
+	stateProvider domain.StateProvider
 	players       *storage.Players
 }
 
@@ -33,11 +34,11 @@ func (l *LogoutHandler) Help(args []string) string {
 	return "abandon your dawgs to the streets"
 }
 
-func (l *LogoutHandler) State() State {
+func (l *LogoutHandler) State() domain.State {
 	return l.stateProvider()
 }
 
-func NewLogoutHandler(stateProvider StateProvider, players *storage.Players) *LogoutHandler {
+func NewLogoutHandler(stateProvider domain.StateProvider, players *storage.Players) *LogoutHandler {
 	return &LogoutHandler{
 		stateProvider: stateProvider,
 		players:       players,

@@ -15,7 +15,7 @@ import (
 )
 
 type LoginHandler struct {
-	state            State
+	state            domain.State
 	stateConstructor StateConstructor
 	players          *storage.Players
 	generator        *generator.PlayerGenerator
@@ -410,7 +410,7 @@ func (h *LoginHandler) Help(args []string) string {
 	return "login to the system.  Usage: login <username>"
 }
 
-func (h *LoginHandler) State() State {
+func (h *LoginHandler) State() domain.State {
 	return h.state
 }
 

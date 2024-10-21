@@ -1,0 +1,17 @@
+package effects
+
+import (
+	"github.com/cory-johannsen/gomud/internal/domain"
+  log "github.com/sirupsen/logrus"
+)
+
+type Slamdance struct {
+  Name string
+  Description string
+}
+
+func (e *Slamdance) Apply(state domain.State) domain.State {
+  // - Effect1
+  log.Println("applying Slamdance")
+  return state
+}
