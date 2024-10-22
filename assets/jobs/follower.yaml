@@ -20,11 +20,11 @@ skillRanks:
   - Scrutinize
   - Simple Melee
 bonusAdvances:
-  Fighting: 0
+  Brutality: 0
   Muscle: 0
-  Speed: 0
+  Quickness: 0
   Savvy: 2
-  Smarts: 2
+  Reasoning: 2
   Grit: 2
   Flair: 1
 talents:

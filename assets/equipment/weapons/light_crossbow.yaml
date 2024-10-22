@@ -5,7 +5,7 @@ weapon:
   name: Light crossbow
   description: These are lighter versions of the arbalest, their strings hand-drawn by a crank. They’re typically used as weaponry for peasant militias, or as playthings for lordly children too nearsighted or clumsy to draw a bowstring.
   handling: Two-handed
-  distance: 6+[PB] meters
+  distance: 6+[SB] meters
   skill: Simple Ranged
   target: Single Target
   encumbrance: 3

@@ -8,7 +8,7 @@ description: |
   ranged combat, it also allows you to maintain the quality of
   Martial Ranged weapons and perform general maintenance
   to keep them in usable condition
-stat: Fighting
+stat: Brutality
 type: Special
 focuses:
   - Gunpowder

@@ -16,11 +16,11 @@ skillRanks:
   - Tradecraft
   - Warfare
 bonusAdvances:
-  Fighting: 1
+  Brutality: 1
   Muscle: 1
-  Speed: 2
+  Quickness: 2
   Savvy: 1
-  Smarts: 1
+  Reasoning: 1
   Grit: 1
   Flair: 0
 talents:

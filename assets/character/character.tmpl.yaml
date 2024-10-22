@@ -1,6 +1,6 @@
 name: {{ .name }}
 statistics:
-  - fighting:
+  - brutality:
     value: { .combat.value }}
     modifiers:
       {{- range .combat.modifiers }}
@@ -12,10 +12,10 @@ statistics:
       {{- range .muscle.modifiers }}
       - {{ . }}
       {{- end }}
-  - speed:
-    value: { .speed.value }}
+  - quickness:
+    value: { .quickness.value }}
     modifiers:
-      {{- range .speed.modifiers }}
+      {{- range .quickness.modifiers }}
       - {{ . }}
       {{- end }}
   - savvy:
@@ -24,10 +24,10 @@ statistics:
       {{- range .savvy.modifiers }}
       - {{ . }}
       {{- end }}
-  - smarts:
-    value: { .smarts.value }}
+  - reasoning:
+    value: { .reasoning.value }}
     modifiers:
-      {{- range .smarts.modifiers }}
+      {{- range .reasoning.modifiers }}
       - {{ . }}
       {{- end }}
   - grit:

@@ -5,7 +5,7 @@ weapon:
   name: Composite bow
   description: Used in militias for its great range, they’re entirely worthless in any close encounter… which is why archers always carry a backup knife.
   handling: Two-handed
-  distance: 12+[PB] meters
+  distance: 12+[SB] meters
   skill: Martial Ranged
   target: Single Target
   encumbrance: 3

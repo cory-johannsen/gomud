@@ -388,10 +388,10 @@ func (p *Player) String() string {
 		case StatsProperty:
 			stats := v.(*Stats)
 			bonuses := p.StatBonuses()
-			msg += fmt.Sprintf("  Stats - \n\tFighting: %d [%d]\n\tMuscle: %d [%d]\n\tSpeed: %d [%d]\n\tSavvy: %d [%d]\n\tSmarts: %d [%d]\n\tGrit: %d [%d]\n\tFlair: %d [%d]\n",
-				stats.Fighting, bonuses.Fighting, stats.Muscle, bonuses.Muscle,
-				stats.Speed, bonuses.Speed, stats.Savvy, bonuses.Savvy,
-				stats.Smarts, bonuses.Smarts, stats.Grit, bonuses.Grit,
+			msg += fmt.Sprintf("  Stats - \n\tBrutality: %d [%d]\n\tMuscle: %d [%d]\n\tQuickness: %d [%d]\n\tSavvy: %d [%d]\n\tReasoning: %d [%d]\n\tGrit: %d [%d]\n\tFlair: %d [%d]\n",
+				stats.Brutality, bonuses.Brutality, stats.Muscle, bonuses.Muscle,
+				stats.Quickness, bonuses.Quickness, stats.Savvy, bonuses.Savvy,
+				stats.Reasoning, bonuses.Reasoning, stats.Grit, bonuses.Grit,
 				stats.Flair, bonuses.Flair)
 		case SkillRanksProperty:
 			msg += "  Skill Ranks: \n"
@@ -536,28 +536,28 @@ func bonusFromStat(stat int) int {
 func (p *Player) StatBonuses() *Stats {
 	stats := p.Stats()
 	bonuses := &Stats{
-		Fighting: bonusFromStat(stats.Fighting),
-		Muscle:   bonusFromStat(stats.Muscle),
-		Speed:    bonusFromStat(stats.Speed),
-		Savvy:    bonusFromStat(stats.Savvy),
-		Smarts:   bonusFromStat(stats.Smarts),
-		Grit:     bonusFromStat(stats.Grit),
-		Flair:    bonusFromStat(stats.Flair),
+		Brutality: bonusFromStat(stats.Brutality),
+		Muscle:    bonusFromStat(stats.Muscle),
+		Quickness: bonusFromStat(stats.Quickness),
+		Savvy:     bonusFromStat(stats.Savvy),
+		Reasoning: bonusFromStat(stats.Reasoning),
+		Grit:      bonusFromStat(stats.Grit),
+		Flair:     bonusFromStat(stats.Flair),
 	}
 	advances := p.ConsumedBonusAdvances()
 	for job, jobAdvances := range advances {
 		for _, advance := range jobAdvances {
 			switch advance.Stat {
-			case "Fighting":
-				bonuses.Fighting += advance.Amount
+			case "Brutality":
+				bonuses.Brutality += advance.Amount
 			case "Muscle":
 				bonuses.Muscle += advance.Amount
-			case "Speed":
-				bonuses.Speed += advance.Amount
+			case "Quickness":
+				bonuses.Quickness += advance.Amount
 			case "Savvy":
 				bonuses.Savvy += advance.Amount
-			case "Smarts":
-				bonuses.Smarts += advance.Amount
+			case "Reasoning":
+				bonuses.Reasoning += advance.Amount
 			case "Grit":
 				bonuses.Grit += advance.Amount
 			case "Flair":

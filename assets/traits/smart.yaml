@@ -1,5 +1,5 @@
 name: "Smart"
 description: "You think your way through problems."
 effects:
-  - "When using Smarts to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure."
+  - "When using Reasoning to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure."
 goType: Smart

@@ -5,7 +5,7 @@ weapon:
   name: Janky 38
   description: Although considered to be the king of all pistols, they are inaccurate and make an incredibly intimidating explosive sound when fired. Given the amount of gunpowder stuffed into the three barrels, it is no wonder that they’re notorious for exploding in the wielder’s hand.
   handling: One-handed
-  distance: 3+[PB] meters
+  distance: 3+[SB] meters
   skill: Martial Ranged
   target: Single Target
   encumbrance: 2

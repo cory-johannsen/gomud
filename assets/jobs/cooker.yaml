@@ -17,9 +17,9 @@ skillRanks:
   - Survival
   - Tradecraft
 bonusAdvances:
-  Speed: 1
+  Quickness: 1
   Flair: 1
-  Smarts: 2
+  Reasoning: 2
   Savvy: 2
   Grit: 1
 talents:

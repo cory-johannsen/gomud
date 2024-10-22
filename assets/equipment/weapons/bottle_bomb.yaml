@@ -5,7 +5,7 @@ weapon:
   name: Bottle bomb
   description: Generally sparked by a demagogue’s fiery rhetoric, this rudimentary incendiary sets its enemies aflame upon contact.
   handling: One-handed
-  distance: 1+[PB] meters
+  distance: 1+[SB] meters
   skill: Simple Ranged
   target: Single Target
   encumbrance: 1

@@ -6,7 +6,7 @@ description: |
   in hand-to-hand combat, it also allows you to maintain
   the quality of Martial Melee weapons and perform general
   maintenance to keep them in usable condition
-stat: Fighting
+stat: Brutality
 type: Special
 focuses:
   - Bladed

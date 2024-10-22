@@ -482,21 +482,21 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 			props[k] = upbringing
 		case domain.StatsProperty:
-			fighting := int(v.(map[string]interface{})["fighting"].(float64))
+			brutality := int(v.(map[string]interface{})["brutality"].(float64))
 			muscle := int(v.(map[string]interface{})["muscle"].(float64))
-			speed := int(v.(map[string]interface{})["speed"].(float64))
+			quickness := int(v.(map[string]interface{})["quickness"].(float64))
 			savvy := int(v.(map[string]interface{})["savvy"].(float64))
-			smarts := int(v.(map[string]interface{})["smarts"].(float64))
+			reasoning := int(v.(map[string]interface{})["reasoning"].(float64))
 			grit := int(v.(map[string]interface{})["grit"].(float64))
 			flair := int(v.(map[string]interface{})["flair"].(float64))
 			stats := &domain.Stats{
-				Fighting: fighting,
-				Muscle:   muscle,
-				Speed:    speed,
-				Savvy:    savvy,
-				Smarts:   smarts,
-				Grit:     grit,
-				Flair:    flair,
+				Brutality: brutality,
+				Muscle:    muscle,
+				Quickness: quickness,
+				Savvy:     savvy,
+				Reasoning: reasoning,
+				Grit:      grit,
+				Flair:     flair,
 			}
 			props[k] = stats
 		default:

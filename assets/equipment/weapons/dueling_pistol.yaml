@@ -5,7 +5,7 @@ weapon:
   name: Dueling pistol
   description: Ostentatious and unusually decorated, these flintlock pistols are deadly quick. A true ‘gentleman’s’ weapon, if there ever was one to be named.
   handling: One-handed
-  distance: 3+[PB] meters
+  distance: 3+[SB] meters
   skill: Martial Ranged
   target: Single Target
   encumbrance: 2

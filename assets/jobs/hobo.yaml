@@ -17,11 +17,11 @@ skillRanks:
   - Stealth
   - Survival
 bonusAdvances:
-  Fighting: 0
+  Brutality: 0
   Muscle: 0
-  Speed: 2
+  Quickness: 2
   Savvy: 2
-  Smarts: 1
+  Reasoning: 1
   Grit: 0
   Flair: 2
 talents:

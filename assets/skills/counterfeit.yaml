@@ -22,7 +22,7 @@ description: |
   attempt to resell forged objects or pass them off as official or
   original, you may be required to employ use of Guile to spin
   a tale or give credence to the legitimacy of the Counterfeit.
-stat: Smarts
+stat: Reasoning
 type: Special
 focuses:
   - Clip

@@ -16,7 +16,7 @@ description: |
   is to wait until dark or walk amongst the crowds during the
   day, hiding in plain sight. Whenever you make a Stealth Test,
   it is always treated as a Secret Test
-stat: Speed
+stat: Quickness
 type: Common
 focuses:
   - Ambush

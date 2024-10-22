@@ -17,11 +17,11 @@ skillRanks:
   - Toughness
   - Warfare
 bonusAdvances:
-  Fighting: 2
+  Brutality: 2
   Muscle: 1
-  Speed: 1
+  Quickness: 1
   Savvy: 0
-  Smarts: 1
+  Reasoning: 1
   Grit: 1
   Flair: 1
 talents:

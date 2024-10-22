@@ -22,7 +22,7 @@ description: |
   it. You may also know what grows in the area, which parts are
   possibly dangerous and what the expected weather conditions
   will be.
-stat: Smarts
+stat: Reasoning
 type: Common
 focuses:
   - Creature Lore

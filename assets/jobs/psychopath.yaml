@@ -19,11 +19,11 @@ skillRanks:
   - Survival
   - Toughness
 bonusAdvances:
-  Fighting: 2
+  Brutality: 2
   Muscle: 2
-  Speed: 0
+  Quickness: 0
   Savvy: 1
-  Smarts: 0
+  Reasoning: 0
   Grit: 2
   Flair: 0
 talents:

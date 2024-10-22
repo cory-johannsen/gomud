@@ -1,35 +1,35 @@
-Alchemy Smarts Special Gunpowder, Medicine, Poison, Wytchstone
+Alchemy Reasoning Special Gunpowder, Medicine, Poison, Wytchstone
 Athletics Muscle Common Climb, Lift, Row, Swim, Wrestle
 Awareness Savvy Common Count, Discern Details
 Bargain Flair Common Bribery, Courtly Intrigue, Diplomacy, Evaluate, Haggle Charm Flair Common Acting, Begging, Comedy, Mime, Mimic, Play Music, Seduce, Sing, Storytelling, Write Poetry
-Coordination Speed Common Acrobatics, Balance, Contortion, Dance, Dodge Attack, Juggle
-Counterfeit Smarts Special Clip Coins, Embezzle, Forgery
+Coordination Quickness Common Acrobatics, Balance, Contortion, Dance, Dodge Attack, Juggle
+Counterfeit Reasoning Special Clip Coins, Embezzle, Forgery
 Disguise Flair Special Act, Assume Identity, Hide Social Class
 Drive Muscle Common Carting, Coaching, Wagoner
 Eavesdrop Savvy Common Lip Reading, Listen In, Sign Language, Ventriloquism
-Education Smarts Special Astronomy, Cartography, Geography, Heraldry, History, Law, Politics, Science, Theology
-Folklore Smarts Common Creature Lore, Foreign Lore, Local Lore
-Gamble Smarts Common Ball Games, Cards, Chess, Cockfighting, Dice
+Education Reasoning Special Astronomy, Cartography, Geography, Heraldry, History, Law, Politics, Science, Theology
+Folklore Reasoning Common Creature Lore, Foreign Lore, Local Lore
+Gamble Reasoning Common Ball Games, Cards, Chess, Cockfighting, Dice
 Guile Flair Common Appear Innocent, Blather, Con Games, Deception, Innuendo, Thieves' Cant
 Handle Animal Flair Special Animal Care, Calm Animal, Rustling, Teach Trick
-Heal Smarts Special Bind Wounds, Bloodletting, Kiss of Life, Perform Psychosurgery, Perform Surgery, Prepare Bandages, Treat Disease, Treat Injury
+Heal Reasoning Special Bind Wounds, Bloodletting, Kiss of Life, Perform Psychosurgery, Perform Surgery, Prepare Bandages, Treat Disease, Treat Injury
 Incantation Grit Special Astrology, Card Reading, Cast Runes, Concentration, Conduct Ritual, Counterspell, Dream Interpretation, Hypnotize, Learn Magick, Palmistry, Scapulimancy, Scrying
 Interrogation Grit Special Mental Torture, Physical Torture
 Intimidate Muscle Common Physical Presence, Threaten
 Leadership Flair Special Incite Rebellion, Military Command, Spiritual Leadership, Stewardship
-Martial Melee Fighting Special Bladed, Crushing, Parry Attack
-Martial Ranged Fighting Special Gunpowder, Missile
-Navigation Smarts Special Guide, Orientation, Overland Travel
-Pilot Speed Special Boating, Ocean Lore, River Lore, Sailing
+Martial Melee  Brutality Special Bladed, Crushing, Parry Attack
+Martial Ranged  Brutality Special Gunpowder, Missile
+Navigation Reasoning Special Guide, Orientation, Overland Travel
+Pilot Quickness Special Boating, Ocean Lore, River Lore, Sailing
 Resolve Grit Common Resist Fear, Resist Magick, Resist Stress, Resist Terror
-Ride Speed Special Ride Animal, Ride Beast, Trick Riding
+Ride Quickness Special Ride Animal, Ride Beast, Trick Riding
 Rumor Flair Common Etiquette, Gossip, Linguistics, Public Speaking, Secret Language
 Scrutinize Savvy Common Cryptography, Detect Lics, Memory, Sense Social Class
-Simple Melee Fighting Common Bladed, Brawling, Crushing, Parry Attack
-Simple Ranged Fighting Common Gunpowder, Missile
-Skulduggery Speed Special Disable Trap, Lock Picking, Palm Object, Pick Pocket, Set Trap, Window Fishing
-Stealth Speed Common Ambush, Hide, Scout, Shadowing, Silent Movement
+Simple Melee  Brutality Common Bladed, Brawling, Crushing, Parry Attack
+Simple Ranged  Brutality Common Gunpowder, Missile
+Skulduggery Quickness Special Disable Trap, Lock Picking, Palm Object, Pick Pocket, Set Trap, Window Fishing
+Stealth Quickness Common Ambush, Hide, Scout, Shadowing, Silent Movement
 Survival Savvy Common Build Shelter, Find Water, Forage, Game Hunting, Plant Lore, Survivalist, Tracking
 Toughness Muscle Common Consume Alcohol, Resist Disease, Resist Flames, Resist Magick, Resist Peril, Resist Poison, Resist Weather
 Tradecraft Grit Special Artistry, Brewing, Carpentry, Engineering, Fine Smithery, Gastronomy, Gunsmithing, Metallurgy, Runesmith, Shipwright, Smithing, Stoneworking, Tailoring, Tanning, Weaponsmithing
-Warfare Smarts Special Fortifications, Military Tactics, War Machines
+Warfare Reasoning Special Fortifications, Military Tactics, War Machines

@@ -17,11 +17,11 @@ skillRanks:
   - Rumor
   - Simple Melee
 bonusAdvances:
-  Fighting: 0
+  Brutality: 0
   Muscle: 2
-  Speed: 2
+  Quickness: 2
   Savvy: 0
-  Smarts: 1
+  Reasoning: 1
   Grit: 1
   Flair: 1
 talents:

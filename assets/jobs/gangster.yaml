@@ -17,11 +17,11 @@ skillRanks:
   - Simple Melee
   - Simple Ranged
 bonusAdvances:
-  Fighting: 2
+  Brutality: 2
   Muscle: 0
-  Speed: 0
+  Quickness: 0
   Savvy: 2
-  Smarts: 0
+  Reasoning: 0
   Grit: 2
   Flair: 1
 talents:

@@ -20,7 +20,7 @@ description: |
   are not accustomed to the battlefield and will often spook or
   attempt to bolt away when faced with the scent of blood or
   the clang of steel against steel.
-stat: Speed
+stat: Quickness
 type: Special
 focuses:
   - Ride Animal

@@ -1,15 +1,15 @@
 name: Midwest
 description: "You were born in the hot and muggy South."
 modifiers:
-  - fighting:
+  - brutality:
       bonus: 1
   - muscle:
       bonus: 2
-  - speed:
+  - quickness:
       bonus: -2
   - savvy:
       bonus: -1
-  - smarts:
+  - reasoning:
       bonus: 0
   - grit:
       bonus: 0

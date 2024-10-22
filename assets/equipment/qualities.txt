@@ -4,13 +4,13 @@ Defensive: Shields and weapons of this Quality add a +10 Base Chance to Parry.
 Entangling: Immediately after striking a foe, weapons of this Quality force a foe to Resist either a Chokehold or Takedown – you choose which. Additionally, whenever a foe is threatened with a Chokehold or Takedown with this weapon, they must flip the results to fail when Resisting its effects.
 Fast: Whenever a foe is struck by weapons of this Quality, they suffer a -10 Base Chance to Dodge or Parry.
 Fiery: After a foe is struck with a weapon of this Quality, both the foe and one other combatant who is Engaged with them must succeed at a Coordination Test or be set On Fire (see Chapter 9: Hazards & Healing).
-Finesse: Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [CB].
+Finesse: Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [BB].
 Gunpowder: Weapons of this Quality can be loaded and fired while standing in an Engagement. Furthermore, these weapons cannot be Dodged or Parried. Finally, your Fury Dice explode on a face '1' or '6' when dealing Damage.
 Immolate: After a foe is struck with a weapon of this Quality, they must succeed at a Coordination Test or be set On Fire. The weapon is immediately extinguished after a successful attack, until relit.
 Ineffective: Weapons of this Quality cannot deal Damage or inflict Injuries.
 Light: Whenever weapons or shields of this Quality are held in your off-hand when attacking with a melee weapon in your primary hand, add +1 to Total Damage.
 Powerful: Immediately after striking an Engaged foe, weapons of this Quality force a foe to Resist with Toughness or be shoved out of the Engagement.
-Pummeling: Weapons of this Quality always refer to [BB] whenever inflicting Damage, instead of [CB]. Pummeling weapons can only inflict Moderate Injuries, never Serious or Grievous Injuries. Finally, Pummeling weapons cannot be used to cause Bleeding.
+Pummeling: Weapons of this Quality always refer to [MB] whenever inflicting Damage, instead of [BB]. Pummeling weapons can only inflict Moderate Injuries, never Serious or Grievous Injuries. Finally, Pummeling weapons cannot be used to cause Bleeding.
 Punishing: Immediately after striking a foe, weapons of this Quality may add a 1D6 Fury Die to Total Damage in exchange for spending 1 additional Action Point on this Turn. You’ll learn more about Action Points and Fury Dice in Chapter 8: Combat.
 Reach: Weapons of this Quality may strike a foe you’re Engaged with or standing one yard away from outside of an Engagement. Additionally, foes who are armed with a Reach weapon can make an Opportunity Attack whenever someone Charges or Runs toward them.
 Reload: The weapon can be reloaded after it is empty.

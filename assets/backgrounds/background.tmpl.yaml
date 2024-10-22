@@ -1,16 +1,16 @@
 name: {{ .name}}
 description: "{{ .description }}"
 modifiers:
-  - fighting:
-      bonus: {{ .modifiers.fighting }}
+  - brutality:
+      bonus: {{ .modifiers.brutality }}
   - muscle:
       bonus: {{ .modifiers.muscle }}
-  - speed:
-      bonus: {{ .modifiers.speed }}
+  - quickness:
+      bonus: {{ .modifiers.quickness }}
   - savvy:
       bonus: {{ .modifiers.savvy }}
-  - smarts:
-      bonus: {{ .modifiers.smarts }}
+  - reasoning:
+      bonus: {{ .modifiers.reasoning }}
   - grit:
       bonus: {{ .modifiers.grit }}
   - flair:

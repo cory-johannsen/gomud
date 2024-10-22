@@ -19,11 +19,11 @@ skillRanks:
   - Simple Ranged
   - Stealth
 bonusAdvances:
-  Fighting: 2
+  Brutality: 2
   Muscle: 1
-  Speed: 2
+  Quickness: 2
   Savvy: 1
-  Smarts: 0
+  Reasoning: 0
   Grit: 1
   Flair: 0
 talents:

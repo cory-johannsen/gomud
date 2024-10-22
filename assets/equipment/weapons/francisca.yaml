@@ -5,7 +5,7 @@ weapon:
   name: Francisca
   description: A balanced throwing axe, it’s good for splitting pumpkins or noggins at range. Strangely, both make similar sounds when struck.
   handling: One-handed
-  distance: 1+[PB] meters
+  distance: 1+[SB] meters
   skill: Simple Ranged
   target: Single Target
   encumbrance: 1

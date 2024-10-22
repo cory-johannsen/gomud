@@ -1,15 +1,15 @@
 name: Midwest
 description: "You were born in the mediocre Midwest."
 modifiers:
-  - fighting:
+  - brutality:
       bonus: 1
   - muscle:
       bonus: 0
-  - speed:
+  - quickness:
       bonus: -1
   - savvy:
       bonus: 1
-  - smarts:
+  - reasoning:
       bonus: 1
   - grit:
       bonus: -1

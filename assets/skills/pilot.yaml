@@ -9,7 +9,7 @@ description: |
   patching holes, attending to torn sails and a host of other
   repairs minor and major that are needed to keep a vessel
   ship-shape and in top working order.
-stat: Speed
+stat: Quickness
 type: Special
 focuses:
   - Boating

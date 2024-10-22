@@ -9,6 +9,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
+	"github.com/fatih/color"
 	"strings"
 )
 
@@ -100,7 +101,9 @@ func (d *Dispatcher) Prompt() string {
 		return "> "
 	}
 	player := d.State().Player()
-	return fmt.Sprintf("%s [%s, %s]> ", player.Name, player.Condition(), player.Peril().Condition.String())
+	cyan := color.New(color.FgCyan).SprintFunc()
+	green := color.New(color.FgGreen).SprintFunc()
+	return fmt.Sprintf("%s [%s, %s]> ", cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()))
 }
 
 func (d *Dispatcher) Tab(buffer string) string {

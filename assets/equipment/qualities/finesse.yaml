@@ -2,6 +2,6 @@ name: Finesse
 conditions:
   - Equipped
 effects:
-  - Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [CB].
+  - Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [BB].
 targets:
   - single

@@ -5,7 +5,7 @@ weapon:
   name: Musket
   description: Incredibly expensive, this percussion cgun is intimidating enough that it doesn’t really matter whether you load it or not. Deadly accuracy and reliability make them the best of class among gunpowder weapons.
   handling: Two-handed
-  distance: 9+[PB] meters
+  distance: 9+[SB] meters
   skill: Martial Ranged
   target: Single Target
   encumbrance: 3

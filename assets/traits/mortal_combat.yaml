@@ -1,5 +1,5 @@
 name: Mortal Combat!
 description: Pugilists rarely know one end of a sword from the other, but they can rely on their fists and feet to get the job done. Brutal palm strikes, ferocious kicks to the groin and bone-shattering headbutts make up their fighting style.
 effects:
-  - You ignore the Pummeling and Weak Qualities when fighting with Brawling type of weapons. In addition, you may refer to [BB] or [CB] when inflicting Damage with this type of weapon, whichever is more favorable.
+  - You ignore the Pummeling and Weak Qualities when fighting with Brawling type of weapons. In addition, you may refer to [MB] or [BB] when inflicting Damage with this type of weapon, whichever is more favorable.
 goType: MortalCombat

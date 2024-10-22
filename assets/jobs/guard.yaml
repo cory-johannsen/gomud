@@ -17,11 +17,11 @@ skillRanks:
   - Simple Ranged
   - Toughness
 bonusAdvances:
-  Fighting: 0
+  Brutality: 0
   Muscle: 2
-  Speed: 0
+  Quickness: 0
   Savvy: 1
-  Smarts: 1
+  Reasoning: 1
   Grit: 2
   Flair: 1
 talents:

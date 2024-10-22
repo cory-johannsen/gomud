@@ -80,15 +80,15 @@ func (l *JobLoader) LoadJobs() (domain.Jobs, error) {
 		bonusAdvances := domain.BonusAdvances{}
 		for stat, count := range spec.BonusAdvances {
 			switch stat {
-			case "Fighting":
+			case "Brutality":
 				bonusAdvances.Fighting = count
 			case "Muscle":
 				bonusAdvances.Muscle = count
-			case "Speed":
+			case "Quickness":
 				bonusAdvances.Speed = count
 			case "Savvy":
 				bonusAdvances.Savvy = count
-			case "Smarts":
+			case "Reasoning":
 				bonusAdvances.Smarts = count
 			case "Grit":
 				bonusAdvances.Grit = count

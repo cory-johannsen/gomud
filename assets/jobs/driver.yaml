@@ -17,11 +17,11 @@ skillRanks:
   - Simple Ranged
   - Survival
 bonusAdvances:
-  Fighting: 1
+  Brutality: 1
   Muscle: 2
-  Speed: 1
+  Quickness: 1
   Savvy: 2
-  Smarts: 0
+  Reasoning: 0
   Grit: 0
   Flair: 1
 talents:

@@ -16,11 +16,11 @@ skillRanks:
   - Simple Melee
   - Tradecraft
 bonusAdvances:
-  Fighting: 0
+  Brutality: 0
   Muscle: 0
-  Speed: 0
+  Quickness: 0
   Savvy: 2
-  Smarts: 1
+  Reasoning: 1
   Grit: 2
   Flair: 2
 talents:

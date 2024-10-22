@@ -9,7 +9,7 @@ description: |
   be crafted using this Skill. An alchemist’s laboratory tends to
   be a strange amalgam of scientific notes, erudite symbols of
   Magick, smells and boiling baubles
-stat: Smarts
+stat: Reasoning
 type: Special
 focuses:
   - Gunpowder

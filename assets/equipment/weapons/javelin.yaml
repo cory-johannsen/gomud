@@ -5,7 +5,7 @@ weapon:
   name: Javelin
   description: Used both in sport and murder, these short spears are carried by the half dozen. The range it can be thrown is a point of pride on both fields.
   handling: One-handed
-  distance: 3+[PB] meters
+  distance: 3+[SB] meters
   skill: Simple Ranged
   target: Single Target
   encumbrance: 1

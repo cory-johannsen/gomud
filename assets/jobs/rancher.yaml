@@ -17,7 +17,7 @@ skillRanks:
   - Simple Melee
   - Survival
 bonusAdvances:
-  Speed: 1
+  Quickness: 1
   Muscle: 2
   Flair: 2
   Savvy: 1

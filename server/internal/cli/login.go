@@ -297,11 +297,11 @@ func (h *LoginHandler) selectBonusAdvances(player *domain.Player) error {
 		i := 0
 		choices := make([]string, 0)
 		if bonusAdvances.Fighting > 0 {
-			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Fighting") < bonusAdvances.Fighting {
-				advancesLeft := bonusAdvances.Fighting - consumedAdvances.ConsumedAdvance(player.Job().Name, "Fighting")
-				_ = h.conn.Write(fmt.Sprintf("%d) Fighting (%d remaining)\n", i, advancesLeft))
+			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Brutality") < bonusAdvances.Fighting {
+				advancesLeft := bonusAdvances.Fighting - consumedAdvances.ConsumedAdvance(player.Job().Name, "Brutality")
+				_ = h.conn.Write(fmt.Sprintf("%d) Brutality (%d remaining)\n", i, advancesLeft))
 				i++
-				choices = append(choices, "Fighting")
+				choices = append(choices, "Brutality")
 			}
 		}
 		if bonusAdvances.Muscle > 0 {
@@ -313,11 +313,11 @@ func (h *LoginHandler) selectBonusAdvances(player *domain.Player) error {
 			}
 		}
 		if bonusAdvances.Speed > 0 {
-			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Speed") < bonusAdvances.Speed {
-				advancesLeft := bonusAdvances.Speed - consumedAdvances.ConsumedAdvance(player.Job().Name, "Speed")
-				_ = h.conn.Write(fmt.Sprintf("%d) Speed (%d remaining)\n", i, advancesLeft))
+			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Quickness") < bonusAdvances.Speed {
+				advancesLeft := bonusAdvances.Speed - consumedAdvances.ConsumedAdvance(player.Job().Name, "Quickness")
+				_ = h.conn.Write(fmt.Sprintf("%d) Quickness (%d remaining)\n", i, advancesLeft))
 				i++
-				choices = append(choices, "Speed")
+				choices = append(choices, "Quickness")
 			}
 		}
 		if bonusAdvances.Savvy > 0 {
@@ -329,11 +329,11 @@ func (h *LoginHandler) selectBonusAdvances(player *domain.Player) error {
 			}
 		}
 		if bonusAdvances.Smarts > 0 {
-			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Smarts") < bonusAdvances.Smarts {
-				advancesLeft := bonusAdvances.Smarts - consumedAdvances.ConsumedAdvance(player.Job().Name, "Smarts")
-				_ = h.conn.Write(fmt.Sprintf("%d) Smarts (%d remaining)\n", i, advancesLeft))
+			if consumedAdvances.ConsumedAdvance(player.Job().Name, "Reasoning") < bonusAdvances.Smarts {
+				advancesLeft := bonusAdvances.Smarts - consumedAdvances.ConsumedAdvance(player.Job().Name, "Reasoning")
+				_ = h.conn.Write(fmt.Sprintf("%d) Reasoning (%d remaining)\n", i, advancesLeft))
 				i++
-				choices = append(choices, "Smarts")
+				choices = append(choices, "Reasoning")
 			}
 		}
 		if bonusAdvances.Grit > 0 {

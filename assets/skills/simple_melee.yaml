@@ -9,7 +9,7 @@ description: |
   by being members of a militia. It also allows you to maintain
   the quality of Simple Melee weapons and perform general
   maintenance to keep them in usable condition.
-stat: Fighting
+stat: Brutality
 type: Common
 focuses:
   - Bladed
