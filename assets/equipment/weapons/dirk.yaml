@@ -1,0 +1,18 @@
+weapon:
+  category: Melee
+  level: Simple
+  type: Bladed
+  name: Dirk
+  description: Slender and sharp, this is used to either cut your meat or your enemy.
+  handling: One-handed
+  distance: Engaged
+  skill: Simple Melee
+  target: Single Target
+  encumbrance: 1
+  cost: 100
+  load: 0
+  qualities:
+    - Fast
+    - Finesse
+    - Light
+    - Weak

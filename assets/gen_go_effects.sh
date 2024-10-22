@@ -132,6 +132,14 @@ for i in $(seq 0 $(($drawbackCount - 1))); do
   varNames+=("$varName")
 done
 
+echo "generating item quality effects"
+qualities=$(ls -l equipment/qualities/*.yaml | awk '{print $9}')
+for quality in $qualities; do
+  process "$quality"
+done
+
+# complete the wireset
+
 echo ")" >> "../server/internal/domain/effect/wireset.go"
 
 cat <<EOL >> "../server/internal/domain/effect/effect.go"

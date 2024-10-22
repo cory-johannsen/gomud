@@ -1,0 +1,7 @@
+name: Throwing
+conditions:
+  - Equipped
+effects:
+  - Weapons of this Quality do not have a Medium or Long Distance increment for ranged weapons.
+targets:
+  - single

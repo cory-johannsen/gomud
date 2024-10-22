@@ -1,0 +1,7 @@
+name: Fiery
+conditions:
+  - Equipped
+effects:
+  - After a foe is struck with a weapon of this Quality, both the foe and one other combatant who is Engaged with them must succeed at a Coordination Test or be set On Fire (see Chapter 9
+targets:
+  - single

@@ -1,0 +1,7 @@
+name: Repeating
+conditions:
+  - Equipped
+effects:
+  - Ranged weapons of this Quality can be fired multiple times without having to spend Action Points to load. See Ammunition.
+targets:
+  - single

@@ -17,9 +17,7 @@ import (
 func InitializeEngine() (*engine.Engine, error) {
 	wire.Build(config.NewConfigFromEnv, storage.NewDatabase, storage.NewPlayers,
 		effect.EffectsSet, effect.NewEffects,
-		loader.NewAppearanceLoader, loader.NewAlignmentLoader, loader.NewArchetypeLoader, loader.NewBackgroundLoader,
-		loader.NewEffectLoader, loader.NewInjuryLoader, loader.NewInventoryLoader, loader.NewJobLoader, loader.NewRoomLoader, loader.NewSkillLoader,
-		loader.NewTalentLoader, loader.NewTeamLoader, loader.NewTraitLoader, loader.NewLoaders,
+		loader.LoaderSet, loader.NewLoaders,
 		generator.NewPlayerGenerator,
 		eventbus.New, engine.NewClock, engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil

@@ -1,0 +1,7 @@
+name: Finesse
+conditions:
+  - Equipped
+effects:
+  - Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [CB].
+targets:
+  - single

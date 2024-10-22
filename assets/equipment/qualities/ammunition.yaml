@@ -1,8 +1,7 @@
 name: Ammunition
-description: The weapon requires ammunition.
 conditions:
-  - "Attack"
-targets:
-  - "Self"
+  - Equipped
 effects:
-  - "6 rounds"
+  - Weapons of this Quality require ammunition to be used. The weapon will have an amount it holds before it must be reloaded. See Repeating.
+targets:
+  - single

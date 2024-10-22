@@ -1,0 +1,15 @@
+weapon:
+  category: Melee
+  level: Simple
+  type: Varies
+  name: Improvised Hand Weapon
+  description: These are weapons that shouldn’t really be weapons. It could be an ale stein, a stool, pots and pans, a fire poker, a salted leg of pork; the list goes on. They are generally useful in bar scuffles and emergencies, laughable otherwise.
+  handling: One-handed
+  distance: Engaged
+  skill: Simple Melee
+  target: Single Target
+  encumbrance: 1
+  cost: Varies
+  load: 0
+  qualities:
+    - Pummeling

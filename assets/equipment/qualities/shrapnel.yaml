@@ -1,0 +1,7 @@
+name: Shrapnel
+conditions:
+  - Equipped
+effects:
+  - Whenever a weapon with this Quality is fired, it affects multiple targets in a Cone Template.
+targets:
+  - single

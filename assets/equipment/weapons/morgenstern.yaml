@@ -1,0 +1,17 @@
+weapon:
+  category: Melee
+  level: Martial
+  type: Crushing
+  name: Morgenstern
+  description: This is a round-headed club, dotted with small barbs and tipped with a stout iron spike. Viscera has a tendency to stick to its barbs in a most gruesome fashion. Morgenstern are never topped with rattling chains affixed to iron spheres; those are weapons of pure fantasy or historic ignorance.
+  handling: One or two-handed
+  distance: Engaged
+  skill: Martial Melee
+  target: Single Target
+  encumbrance: 2
+  cost: 100
+  load: 0
+  qualities:
+    - Adaptable
+    - Powerful
+    - Vicious

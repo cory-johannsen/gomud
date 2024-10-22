@@ -1,0 +1,17 @@
+weapon:
+  category: Ranged
+  level: Simple
+  type: Missile
+  name: Improvised Throwing Weapon
+  description: Bottles of beer, a brass pitcher, a sizable rock, a lead plate or even a pair of boots are all serviceable enough to be flung. Mostly, they serve as a minor annoyance.
+  handling: One-handed
+  distance: 1+[PB] meters
+  skill: Simple Ranged
+  target: Single Target
+  encumbrance: 1
+  cost: 0
+  load: 1
+  qualities:
+    - Pummeling
+    - Slow
+    - Throwing

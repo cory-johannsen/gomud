@@ -1,0 +1,16 @@
+weapon:
+  category: Melee
+  level: Simple
+  type: Bladed
+  name: Shiv
+  description: A sliver of metal or broken piece of glass wrapped in leather, it has made the difference between life or death for both the imprisoned and the desperate.
+  handling: One-handed
+  distance: Engaged
+  skill: Simple Melee
+  target: Single Target
+  encumbrance: 1
+  cost: 40
+  load: 0
+  qualities:
+    - Fast
+    - Weak

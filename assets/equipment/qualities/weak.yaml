@@ -1,0 +1,7 @@
+name: Weak
+conditions:
+  - Equipped
+effects:
+  - Weapons of this Quality can only inflict Moderate or Serious Injuries, never Grievous Injuries.
+targets:
+  - single

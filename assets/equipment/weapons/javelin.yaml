@@ -1,0 +1,16 @@
+weapon:
+  category: Ranged
+  level: Simple
+  type: Missile
+  name: Javelin
+  description: Used both in sport and murder, these short spears are carried by the half dozen. The range it can be thrown is a point of pride on both fields.
+  handling: One-handed
+  distance: 3+[PB] meters
+  skill: Simple Ranged
+  target: Single Target
+  encumbrance: 1
+  cost: 120
+  load: 1
+  qualities:
+    - Throwing
+    - Weak

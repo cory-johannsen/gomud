@@ -1,0 +1,16 @@
+weapon:
+  category: Melee
+  level: Simple
+  type: Brawling
+  name: Blackjack
+  description: This is nothing more than a glorified leather sack full of lead shot, or alternatively an officer’s club. Generally, it’s guaranteed to knock the sense into or out of anyone it is used against.
+  handling: One-handed
+  distance: Engaged
+  skill: Simple Melee
+  target: Single Target
+  encumbrance: 1
+  cost: 20
+  load: 0
+  qualities:
+    - Powerful
+    - Pummeling

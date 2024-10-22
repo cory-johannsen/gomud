@@ -1,0 +1,16 @@
+weapon:
+  category: Melee
+  level: Martial
+  type: Crushing
+  name: War Hammer
+  description: The trademark weapon of your favorite Uncle Siggy. Big, laborious, terrifying; much like its wielders. This hammer was crafted for war, not driving nails.
+  handling: Two-handed
+  distance: Engaged
+  skill: Martial Melee
+  target: Single Target
+  encumbrance: 3
+  cost: 100
+  load: 0
+  qualities:
+    - Powerful
+    - Slow

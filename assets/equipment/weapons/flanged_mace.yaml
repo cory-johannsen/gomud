@@ -1,0 +1,15 @@
+weapon:
+  category: Melee
+  level: Martial
+  type: Crushing
+  name: Flanged Mace
+  description: A metal version of the cudgel, it comes in a myriad of designs. Used by priests because they are ‘gentler’ than a blade, though many caved-in skulls rebuke this fact.
+  handling: One-handed
+  distance: Engaged
+  skill: Martial Melee
+  target: Single Target
+  encumbrance: 1
+  cost: 100
+  load: 0
+  qualities:
+    - Powerful

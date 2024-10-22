@@ -1,0 +1,7 @@
+name: Adaptable
+conditions:
+  - Equipped
+effects:
+  - Whenever weapons of this Quality are held in two hands instead of one for Attack Actions, add +1 to Damage.
+targets:
+  - single

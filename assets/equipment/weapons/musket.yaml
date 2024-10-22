@@ -1,0 +1,15 @@
+weapon:
+  category: Ranged
+  level: Martial
+  type: Gunpowder
+  name: Musket
+  description: Incredibly expensive, this percussion cgun is intimidating enough that it doesn’t really matter whether you load it or not. Deadly accuracy and reliability make them the best of class among gunpowder weapons.
+  handling: Two-handed
+  distance: 9+[PB] meters
+  skill: Martial Ranged
+  target: Single Target
+  encumbrance: 3
+  cost: 67gc
+  load: 4
+  qualities:
+    - Gunpowder

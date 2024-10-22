@@ -28,12 +28,12 @@ const (
 	DistinguishingMarkProperty = "distinguishingMark"
 	DrawbackProperty           = "drawback"
 	ExperienceProperty         = "experience"
-	EquipmentProperty          = "equipment"
 	FatePointsProperty         = "fatePoints"
 	InjuriesProperty           = "injuries"
 	InventoryProperty          = "inventory"
 	JobProperty                = "job"
 	PerilProperty              = "peril"
+	PoornessProperty           = "poorness"
 	ReputationPointsProperty   = "reputationPoints"
 	RoomProperty               = "room"
 	TeamProperty               = "team"
@@ -41,6 +41,7 @@ const (
 	SkillRanksProperty         = "skillRanks"
 	StatsProperty              = "stats"
 	TalentsProperty            = "talents"
+	UpbringingProperty         = "upbringing"
 )
 
 type BaseProperty struct {
@@ -268,6 +269,7 @@ func (p *Player) String() string {
 		DistinguishingMarkProperty,
 		TattooProperty,
 		DrawbackProperty,
+		UpbringingProperty,
 		ArchetypeProperty,
 		JobProperty,
 		SkillRanksProperty,
@@ -315,6 +317,9 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Condition - %s\n", v.(Condition))
 		case ConsumedAdvancesProperty:
 			msg += "  Bonus Advances: \n"
+			if len(v.(ConsumedAdvances)) == 0 {
+				msg += "\tNone\n"
+			}
 			for job, advances := range v.(ConsumedAdvances) {
 				msg += fmt.Sprintf("\t%s\n", job)
 				for _, advance := range advances {
@@ -323,16 +328,22 @@ func (p *Player) String() string {
 			}
 		case DisordersProperty:
 			msg += "  Disorders: \n"
+			if len(v.(Disorders)) == 0 {
+				msg += "\tNone\n"
+			}
 			for _, disorder := range v.(Disorders) {
 				msg += fmt.Sprintf("\t%s\n\t%s\n", disorder.Name, disorder.Description)
 			}
 		case DistinguishingMarkProperty:
 			msg += "  Distinguishing Marks: \n"
+			if len(v.(DistinguishingMarks)) == 0 {
+				msg += "\tNone\n"
+			}
 			for _, mark := range v.(DistinguishingMarks) {
 				msg += fmt.Sprintf("\t%s\n", mark)
 			}
 		case DrawbackProperty:
-			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect.Description())
+			msg += fmt.Sprintf("  Drawback - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s\n", v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect.Description())
 		case ExperienceProperty:
 			msg += fmt.Sprintf("  Experience - %d\n", v.(*BaseProperty).Val.(int))
 		case InventoryProperty:
@@ -359,6 +370,9 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Fate Points - %d\n", v.(*BaseProperty).Val.(int))
 		case InjuriesProperty:
 			msg += "  Injuries: \n"
+			if len(v.(Injuries)) == 0 {
+				msg += "\tNone\n"
+			}
 			for _, injury := range v.(Injuries) {
 				msg += fmt.Sprintf("\t%s\n", injury)
 			}
@@ -366,6 +380,8 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Job - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n", v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier)
 		case PerilProperty:
 			msg += fmt.Sprintf("  Peril - \n\tThreshold: %d\n\tCondition: %s\n", v.(*Peril).Threshold, v.(*Peril).Condition.String())
+		case PoornessProperty:
+			msg += fmt.Sprintf("  Poorness - %s\n", v.(Poorness))
 		case StatsProperty:
 			stats := v.(*Stats)
 			bonuses := p.StatBonuses()
@@ -376,6 +392,9 @@ func (p *Player) String() string {
 				stats.Flair, bonuses.Flair)
 		case SkillRanksProperty:
 			msg += "  Skill Ranks: \n"
+			if len(v.(SkillRanks)) == 0 {
+				msg += "\tNone\n"
+			}
 			for _, rank := range v.(SkillRanks) {
 				msg += fmt.Sprintf("\t%s (from %s)\n", rank.Skill.Name, rank.Job.Name)
 			}
@@ -383,11 +402,16 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Tattoo - \n\t\"%s\" on your %s\n", v.(*Tattoo).Description, v.(*Tattoo).Location)
 		case TalentsProperty:
 			msg += "  Talents: \n"
+			if len(v.(Talents)) == 0 {
+				msg += "\tNone\n"
+			}
 			for _, talent := range v.(Talents) {
 				msg += fmt.Sprintf("\t%s\n\t\t%s\n\t\t%s\n", talent.Name, talent.Description, talent.Effect.Description())
 			}
 		case TeamProperty:
 			msg += fmt.Sprintf("  Team - %s\n", v.(*Team).Name)
+		case UpbringingProperty:
+			msg += fmt.Sprintf("  Upbringing - \n\t%s\n\tPrimary Stat: %s\n", v.(*Upbringing).Name, v.(*Upbringing).Stat)
 		default:
 			msg += fmt.Sprintf("  %s: %s\n", k, v)
 		}

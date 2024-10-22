@@ -1,0 +1,16 @@
+weapon:
+  category: Ranged
+  level: Simple
+  type: Missile
+  name: Hunting bow
+  description: Lightweight and easy to wield, these bows are favored by forest stalkers. They have a strong pull, but not strong enough to split an arrow in twain.
+  handling: Two-handed
+  distance: 9+[PB] meters
+  skill: Simple Ranged
+  target: Single Target
+  encumbrance: 3
+  cost: 1920
+  load: 1
+  qualities:
+    - Finesse
+    - Weak

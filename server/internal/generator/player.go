@@ -60,6 +60,7 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 	tat := tats[season].Random(tatLocations)
 	player.Data[domain.TattooProperty] = &tat
 
+	reputationPoints := 1
 	if takeDrawback {
 		drawbacks, err := g.loaders.AppearanceLoader.LoadDrawbacks()
 		if err != nil {
@@ -67,6 +68,7 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 			return nil, err
 		}
 		player.Data[domain.DrawbackProperty] = drawbacks.Random()
+		reputationPoints++
 	}
 
 	archetypes, err := g.loaders.ArchetypeLoader.LoadArchetypes()
@@ -95,6 +97,16 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 	player.Data[domain.ExperienceProperty] = &domain.BaseProperty{Val: 900}
 
 	player.Data[domain.InjuriesProperty] = make(domain.Injuries, 0)
+
+	player.Data[domain.UpbringingProperty] = g.loaders.UpbringingLoader.Random()
+
+	player.Data[domain.PoornessProperty] = domain.RandomPoorness()
+
+	player.Data[domain.FatePointsProperty] = &domain.BaseProperty{Val: reputationPoints}
+
+	player.Data[domain.ReputationPointsProperty] = &domain.BaseProperty{Val: 0}
+
+	player.Data[domain.DisordersProperty] = make(domain.Disorders, 0)
 
 	return player, nil
 }

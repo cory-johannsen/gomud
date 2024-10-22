@@ -1,0 +1,16 @@
+weapon:
+  category: Melee
+  level: Martial
+  type: Bladed
+  name: Pike
+  description: A very long, hard stick – making it the weapon of choice for any imperial army which fields great phalanxes of pike men. Its conical iron spearhead is purposefully reinforced with ‘cheeks’ along the flange of the shaft. Folk oftentimes say ‘the bigger the pike, the smaller the you-know-what’.
+  handling: Two-handed
+  distance: Engaged or 1 meter
+  skill: Martial Melee
+  target: Single Target
+  encumbrance: 3
+  cost: 20
+  load: 0
+  qualities:
+    - Finesse
+    - Reach

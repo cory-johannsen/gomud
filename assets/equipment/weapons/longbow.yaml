@@ -1,0 +1,15 @@
+weapon:
+  category: Ranged
+  level: Martial
+  type: Missile
+  name: Longbow
+  description: Used by scouts and raiders, these great bows as tall as a man are the cause of many a death at archers’ hands. The mere length of the arrows they fire is enough to put a well-hung Ogre to shame.
+  handling: Two-handed
+  distance: 12+[PB] meters
+  skill: Martial Ranged
+  target: Single Target
+  encumbrance: 3
+  cost: 24000
+  load: 1
+  qualities:
+    - Finesse

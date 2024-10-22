@@ -1,0 +1,18 @@
+weapon:
+  category: Ranged
+  level: Simple
+  type: Gunpowder
+  name: Blunderbus
+  description: This wheellock hand cannon is stuffed with blackpowder, boot nails and pebbles – for when you absolutely, positively, have to kill everyone in the room?Accept no substitute.
+  handling: Two-handed
+  distance: 3+[PB] meters
+  skill: Simple Ranged
+  target: Single Target
+  encumbrance: 3
+  cost: 6240
+  load: 4
+  qualities:
+    - Gunpowder
+    - Shrapnel
+    - Volatile
+    - Weak

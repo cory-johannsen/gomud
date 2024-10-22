@@ -1,8 +1,7 @@
 name: Defensive
-description: Increased chance to Parry
 conditions:
-  - "Parry"
-targets:
-  - "Self"
+  - Equipped
 effects:
-  - "+10 to Parry"
+  - Shields and weapons of this Quality add a +10 Base Chance to Parry.
+targets:
+  - single

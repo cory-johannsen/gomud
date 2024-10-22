@@ -151,60 +151,7 @@ func NewServer(config *config.Config, db *storage.Database, players *storage.Pla
 }
 
 func (s *Server) Start() {
-	log.Println("Pre-loading assets")
-	_, err := s.loaders.AlignmentLoader.LoadAlignments()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.AppearanceLoader.LoadTattooLocations()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.AppearanceLoader.LoadTattoos()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.AppearanceLoader.LoadDistinguishingMarks()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.AppearanceLoader.LoadDrawbacks()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.ArchetypeLoader.LoadArchetypes()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.BackgroundLoader.LoadBackgrounds()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.InjuryLoader.LoadInjuries()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.SkillLoader.LoadSkills()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.TalentLoader.LoadTalents()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.TraitLoader.LoadTraits()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.JobLoader.LoadJobs()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.TeamLoader.LoadTeams()
-	if err != nil {
-		panic(err)
-	}
-	_, err = s.loaders.RoomLoader.LoadRooms()
+	err := s.loaders.Preload()
 	if err != nil {
 		panic(err)
 	}

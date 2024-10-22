@@ -27,7 +27,7 @@ type Exit struct {
 type Exits map[string]*Exit
 
 type RoomSpec struct {
-	ID          int64               `yaml:"id"`
+	ID          int64               `yaml:"ItemId"`
 	Name        string              `yaml:"name"`
 	Description string              `yaml:"description"`
 	Exits       map[string]ExitSpec `yaml:"exits"`
@@ -94,7 +94,7 @@ func (r *Room) Exits() Exits {
 
 func (r *Room) AddPlayer(player *Player) {
 	if player.Id == nil {
-		log.Printf("player %s has no id", player.Name)
+		log.Printf("player %s has no ItemId", player.Name)
 		return
 	}
 	id := *player.Id
@@ -108,7 +108,7 @@ func (r *Room) AddPlayer(player *Player) {
 
 func (r *Room) RemovePlayer(player *Player) {
 	if player.Id == nil {
-		log.Printf("player %s has no id", player.Name)
+		log.Printf("player %s has no ItemId", player.Name)
 		return
 	}
 	id := *player.Id

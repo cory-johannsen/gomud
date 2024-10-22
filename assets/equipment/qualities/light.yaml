@@ -1,0 +1,7 @@
+name: Light
+conditions:
+  - Equipped
+effects:
+  - Whenever weapons or shields of this Quality are held in your off-hand when attacking with a melee weapon in your primary hand, add +1 to Total Damage.
+targets:
+  - single

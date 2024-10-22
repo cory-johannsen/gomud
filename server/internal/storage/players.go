@@ -150,6 +150,8 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 			data[k] = domain.SpecFromInventory(v.(*domain.Inventory))
 		case domain.JobProperty:
 			data[k] = v.(*domain.Job).Name
+		case domain.PoornessProperty:
+			data[k] = v.(domain.Poorness)
 		case domain.RoomProperty:
 			data[k] = v.(*domain.Room).Name
 		case domain.SkillRanksProperty:
@@ -170,6 +172,8 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 				talents = append(talents, talent.Name)
 			}
 			data[k] = talents
+		case domain.UpbringingProperty:
+			data[k] = v.(*domain.Upbringing).Name
 		case domain.TattooProperty:
 			fallthrough
 		case domain.DistinguishingMarkProperty:
@@ -292,6 +296,21 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			props[k] = drawback
 		case domain.ExperienceProperty:
 			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
+		case domain.InjuriesProperty:
+			injuries := make(domain.Injuries, 0)
+			for _, name := range v.([]interface{}) {
+				injury, err := p.loaders.InjuryLoader.GetInjury(name.(string))
+				if err != nil {
+					log.Printf("failed to load injury %s: %s", name, err)
+					continue
+				}
+				if injury == nil {
+					log.Printf("injury %s not found", name)
+					continue
+				}
+				injuries = append(injuries, injury)
+			}
+			props[k] = injuries
 		case domain.InventoryProperty:
 			m := v.(map[string]interface{})
 			pack := make([]int, 0)
@@ -308,9 +327,9 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				armor = int(m["Armor"].(float64))
 			}
 			if _, ok := m["Pack"]; ok {
-				ids := m["Pack"].([]float64)
+				ids := m["Pack"].([]interface{})
 				for _, id := range ids {
-					pack = append(pack, int(id))
+					pack = append(pack, int(id.(float64)))
 				}
 			}
 			spec := &domain.InventorySpec{
@@ -347,6 +366,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				Threshold: int(threshold),
 				Condition: domain.PerilCondition(perilCondition),
 			}
+		case domain.PoornessProperty:
+			props[k] = domain.Poorness(v.(string))
 		case domain.RoomProperty:
 			room := p.loaders.RoomLoader.GetRoom(v.(string))
 			props[k] = room
@@ -415,6 +436,17 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				talents = append(talents, talent)
 			}
 			props[k] = talents
+		case domain.UpbringingProperty:
+			upbringing, err := p.loaders.UpbringingLoader.GetUpbringing(v.(string))
+			if err != nil {
+				log.Printf("failed to load upbringing %s: %s", v.(string), err)
+				continue
+			}
+			if upbringing == nil {
+				log.Printf("upbringing %s not found", v.(string))
+				continue
+			}
+			props[k] = upbringing
 		case domain.StatsProperty:
 			fighting := int(v.(map[string]interface{})["fighting"].(float64))
 			muscle := int(v.(map[string]interface{})["muscle"].(float64))

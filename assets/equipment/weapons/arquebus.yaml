@@ -1,0 +1,16 @@
+weapon:
+  category: Ranged
+  level: Martial
+  type: Gunpowder
+  name: Arquebus
+  description: This long-range matchlock gun is the predecessor to the far-superior musket. Arquebuses are notoriously unreliable and useless when its raining, as the fuse is invariably snuffed out.
+  handling: Two-handed
+  distance: 6+[PB] meters
+  skill: Martial Ranged
+  target: Single Target
+  encumbrance: 3
+  cost: 26400
+  load: 4
+  qualities:
+    - Gunpowder
+    - Volatile

@@ -1,0 +1,17 @@
+weapon:
+  category: 
+  level: 
+  type: Crushing
+  name: Cudgel
+  description: Basically a large shillelagh, and that’s roughly it. Found in abundance in any old growth forest or detritus pile on a farm, the good ones are bigger and studded at the end.
+  handling: One-handed
+  distance: Engaged
+  skill: 
+  target: Single Target
+  encumbrance: 100
+  cost: Simple Melee
+  load: 0
+  qualities:
+    - Light
+    - Powerful
+    - Weak

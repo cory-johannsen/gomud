@@ -1,0 +1,15 @@
+weapon:
+  category: Melee
+  level: Martial
+  type: Bladed
+  name: Sabre
+  description: Arm of choice for both cavalry and to give airs that you know what you’re doing. Many Veterans hang their sabre in honor of the blood and sanity they shed for whatever nameless count marched them off to war.
+  handling: One-handed
+  distance: Engaged
+  skill: Martial Melee
+  target: Single Target
+  encumbrance: 1
+  cost: 120
+  load: 0
+  qualities:
+    - Defensive

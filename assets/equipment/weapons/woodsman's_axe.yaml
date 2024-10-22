@@ -1,0 +1,17 @@
+weapon:
+  category: Melee
+  level: Simple
+  type: Bladed
+  name: Woodsman's Axe
+  description: Perfect for felling trees, splitting logs and dismembering raiders, the axe is the perfunctory tool of foresters. Sometimes, they are edged with silver in case of attack by the supernatural.
+  handling: One or two-handed
+  distance: Engaged
+  skill: Simple Melee
+  target: Single Target
+  encumbrance: 2
+  cost: 80
+  load: 0
+  qualities:
+    - Adaptable
+    - Slow
+    - Weak

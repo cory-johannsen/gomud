@@ -1,0 +1,17 @@
+weapon:
+  category: Melee
+  level: Simple
+  type: Bladed
+  name: Rapier
+  description: Not to be confused with the fanciful court sword, this is the standard weapon of civilians. It’s a deadly tool in the proper hands, but little more than an unwieldy sharp crowbar for the inept.
+  handling: One-handed
+  distance: Engaged
+  skill: Simple Melee
+  target: Single Target
+  encumbrance: 1
+  cost: 2400
+  load: 0
+  qualities:
+    - Fast
+    - Finesse
+    - Weak

@@ -1,0 +1,38 @@
+package effect
+
+import (
+  "github.com/cory-johannsen/gomud/internal/domain"
+  log "github.com/sirupsen/logrus"
+)
+
+type Finesse struct {
+  name string
+  description string
+}
+
+func NewFinesse() *Finesse {
+  return &Finesse{
+    name: "Finesse",
+    description: "Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [CB].",
+  }
+}
+
+func (e *Finesse) Name() string {
+  return e.name
+}
+
+func (e *Finesse) Description() string {
+  return e.description
+}
+
+func (e *Finesse) Applier() domain.Applier {
+  return e.Apply
+}
+
+func (e *Finesse) Apply(state domain.State) domain.State {
+  // - Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [CB].
+  log.Println("applying Finesse")
+  return state
+}
+
+var _ domain.Effect = &Finesse{}

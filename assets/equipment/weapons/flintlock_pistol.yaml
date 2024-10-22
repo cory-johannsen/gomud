@@ -1,0 +1,16 @@
+weapon:
+  category: Ranged
+  level: Martial
+  type: Gunpowder
+  name: Flintlock pistol
+  description: Much like the arquebus, these pistols are inefficient when firing in bad weather. However, it is the mainstay weapon of choice for highwaymen and soldiers of fortune.
+  handling: One-handed
+  distance: 3+[PB] meters
+  skill: Martial Ranged
+  target: Single Target
+  encumbrance: 2
+  cost: 9600
+  load: 3
+  qualities:
+    - Gunpowder
+    - Volatile

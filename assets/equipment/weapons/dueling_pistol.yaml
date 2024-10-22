@@ -1,0 +1,15 @@
+weapon:
+  category: Ranged
+  level: Martial
+  type: Gunpowder
+  name: Dueling pistol
+  description: Ostentatious and unusually decorated, these flintlock pistols are deadly quick. A true ‘gentleman’s’ weapon, if there ever was one to be named.
+  handling: One-handed
+  distance: 3+[PB] meters
+  skill: Martial Ranged
+  target: Single Target
+  encumbrance: 2
+  cost: 24000
+  load: 3
+  qualities:
+    - Gunpowder

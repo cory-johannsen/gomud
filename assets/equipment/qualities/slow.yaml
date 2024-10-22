@@ -1,0 +1,7 @@
+name: Slow
+conditions:
+  - Equipped
+effects:
+  - Whenever a foe is struck by weapons of this Quality, they gain a +10 Base Chance to Dodge or Parry its Damage.
+targets:
+  - single

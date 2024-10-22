@@ -1,0 +1,16 @@
+weapon:
+  category: Melee
+  level: Simple
+  type: Bladed
+  name: Maul
+  description: Both a carpenter’s and a mason’s tool, it’s one-part axe and one-part hammer. Verily, an easy choice for rioting peasants or an adventurer who is short on money but efficient with scavenged farming tools.
+  handling: Two-handed
+  distance: Engaged
+  skill: Simple Melee
+  target: Single Target
+  encumbrance: 3
+  cost: 80
+  load: 0
+  qualities:
+    - Slow
+    - Weak

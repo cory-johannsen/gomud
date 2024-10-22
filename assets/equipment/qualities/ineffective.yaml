@@ -1,0 +1,7 @@
+name: Ineffective
+conditions:
+  - Equipped
+effects:
+  - Weapons of this Quality cannot deal Damage or inflict Injuries.
+targets:
+  - single

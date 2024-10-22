@@ -1,18 +1,17 @@
 weapon:
-  category: "Ranged"
-  level: "Simple"
-  type: "Piercing"
-  name: "Janky .38"
-  description: "A janky old .38 revolver.  It's seen better days, but it still works."
-  handling: "One-Handed"
-  distance: "3 + [PB] Meters"
-  skill: "Martial Ranged"
-  target: "Single Target"
+  category: Ranged
+  level: Martial
+  type: Gunpowder
+  name: Janky 38
+  description: Although considered to be the king of all pistols, they are inaccurate and make an incredibly intimidating explosive sound when fired. Given the amount of gunpowder stuffed into the three barrels, it is no wonder that they’re notorious for exploding in the wielder’s hand.
+  handling: One-handed
+  distance: 3+[PB] meters
+  skill: Martial Ranged
+  target: Single Target
+  encumbrance: 2
+  cost: 83gc
+  load: 4
   qualities:
-    - "Volatile"
-    - "Fast"
-    - "Ammunition"
-    - "Reload"
-  effects:
-    - "-10 to Attack"
-    - "+10 to Margin of Success"
+    - Gunpowder
+    - Repeating
+    - Volatile

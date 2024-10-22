@@ -1,0 +1,15 @@
+weapon:
+  category: 
+  level: 20
+  type: Powerful, Reach, Vicious
+  name: Military Lance
+  description: Wrought of wood and metal, this spear is commonly used to tilt at windmills or at other knights. It can only be used one-handed
+  handling: 0
+  distance: One or two-handed
+  skill: 20
+  target: Single Target
+  encumbrance: Bladed
+  cost: 3
+  load: while in the saddle.
+  qualities:
+    - Engaged or 1 meter

@@ -1,0 +1,7 @@
+name: Immolate
+conditions:
+  - Equipped
+effects:
+  - After a foe is struck with a weapon of this Quality, they must succeed at a Coordination Test or be set On Fire. The weapon is immediately extinguished after a successful attack, until relit.
+targets:
+  - single
