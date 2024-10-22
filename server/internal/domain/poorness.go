@@ -2,6 +2,9 @@ package domain
 
 import "math/rand"
 
+const CIGS_PER_PACK = 20
+const PACKS_PER_CASE = 24
+
 type Poorness string
 
 func (p Poorness) Value() interface{} {
@@ -31,6 +34,22 @@ func (p Poorness) Rank() int {
 
 func (p Poorness) PoorerThan(other Poorness) bool {
 	return p.Rank() < other.Rank()
+}
+
+func (p Poorness) StartingCash() int {
+	switch p {
+	case PoornessDestitute:
+		return ThreeD10() + 3
+	case PoornessPoor:
+		return (TwoD10() + 2) * CIGS_PER_PACK
+	case PoornessMiddleClass:
+		return (D10() + 1) * CIGS_PER_PACK * PACKS_PER_CASE
+	case PoornessWealthy:
+		return (TwoD10() + 2) * CIGS_PER_PACK * PACKS_PER_CASE
+	case PoornessRich:
+		return (ThreeD10() + 3) * CIGS_PER_PACK * PACKS_PER_CASE
+	}
+	return 0
 }
 
 var RankedPoorness = []Poorness{

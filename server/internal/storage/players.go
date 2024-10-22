@@ -146,6 +146,12 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 			data[k] = v
 		case domain.DrawbackProperty:
 			data[k] = v.(*domain.Drawback).Name
+		case domain.DisordersProperty:
+			disorders := make([]string, 0)
+			for _, disorder := range v.(domain.Disorders) {
+				disorders = append(disorders, disorder.Name)
+			}
+			data[k] = disorders
 		case domain.InventoryProperty:
 			data[k] = domain.SpecFromInventory(v.(*domain.Inventory))
 		case domain.JobProperty:
@@ -174,6 +180,10 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 			data[k] = talents
 		case domain.UpbringingProperty:
 			data[k] = v.(*domain.Upbringing).Name
+		case domain.ReputationPointsProperty:
+			fallthrough
+		case domain.FatePointsProperty:
+			fallthrough
 		case domain.TattooProperty:
 			fallthrough
 		case domain.DistinguishingMarkProperty:
@@ -277,6 +287,21 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				}
 			}
 			props[k] = consumedAdvances
+		case domain.DisordersProperty:
+			disorders := make(domain.Disorders, 0)
+			for _, name := range v.([]interface{}) {
+				disorder, err := p.loaders.DisorderLoader.GetDisorder(name.(string))
+				if err != nil {
+					log.Printf("failed to load disorder %s: %s", name, err)
+					continue
+				}
+				if disorder == nil {
+					log.Printf("disorder %s not found", name)
+					continue
+				}
+				disorders = append(disorders, disorder)
+			}
+			props[k] = disorders
 		case domain.DistinguishingMarkProperty:
 			marks := make(domain.DistinguishingMarks, 0)
 			for _, mark := range v.([]interface{}) {
@@ -295,6 +320,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 			props[k] = drawback
 		case domain.ExperienceProperty:
+			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
+		case domain.FatePointsProperty:
 			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
 		case domain.InjuriesProperty:
 			injuries := make(domain.Injuries, 0)
@@ -317,6 +344,7 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			var mainHand = 0
 			var offHand = 0
 			var armor = 0
+			var cash = 0
 			if _, ok := m["MainHand"]; ok {
 				mainHand = int(m["MainHand"].(float64))
 			}
@@ -332,11 +360,15 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 					pack = append(pack, int(id.(float64)))
 				}
 			}
+			if _, ok := m["Cash"]; ok {
+				cash = int(m["Cash"].(float64))
+			}
 			spec := &domain.InventorySpec{
 				MainHand: mainHand,
 				OffHand:  offHand,
 				Armor:    armor,
 				Pack:     pack,
+				Cash:     cash,
 			}
 			inventory, err := p.loaders.InventoryLoader.InventoryFromSpec(spec)
 			if err != nil {
@@ -368,6 +400,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 			}
 		case domain.PoornessProperty:
 			props[k] = domain.Poorness(v.(string))
+		case domain.ReputationPointsProperty:
+			props[k] = &domain.BaseProperty{Val: int(v.(float64))}
 		case domain.RoomProperty:
 			room := p.loaders.RoomLoader.GetRoom(v.(string))
 			props[k] = room

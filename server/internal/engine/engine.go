@@ -50,7 +50,7 @@ func NewClientConnection(conn net.Conn, bus eventbus.Bus) *ClientConnection {
 func (c *ClientConnection) Read() string {
 	netData, err := bufio.NewReader(c.Connection).ReadString('\n')
 	if err != nil {
-		log.Println(err)
+		log.Debug(err)
 		return ""
 	}
 	return strings.TrimSuffix(netData, "\r\n")
@@ -59,7 +59,7 @@ func (c *ClientConnection) Read() string {
 func (c *ClientConnection) Write(data string) int {
 	written, err := c.Connection.Write([]byte(data))
 	if err != nil {
-		log.Println(err)
+		log.Debug(err)
 	}
 	return written
 }
@@ -79,8 +79,8 @@ type Client struct {
 }
 
 func NewClient(players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, rooms *loader.RoomLoader,
-	conn net.Conn, eventBus eventbus.Bus) *Client {
-	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, rooms, NewClientConnection(conn, eventBus), eventBus)
+	skills *loader.SkillLoader, conn net.Conn, eventBus eventbus.Bus) *Client {
+	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, rooms, skills, NewClientConnection(conn, eventBus), eventBus)
 	return &Client{
 		Connection: conn,
 		Dispatcher: dispatcher,
@@ -110,7 +110,7 @@ func (c *Client) Connect() {
 		_, err = c.Connection.Write([]byte(result))
 		if err != nil {
 			log.Println(err)
-			return
+			break
 		}
 		if strings.HasPrefix(result, cli.QuitMessage) {
 			break
@@ -119,7 +119,7 @@ func (c *Client) Connect() {
 		_, err = c.Connection.Write([]byte(prompt))
 		if err != nil {
 			log.Println(err)
-			return
+			break
 		}
 	}
 	log.Printf("Client %s disconnected\n", c.Connection.RemoteAddr().String())
@@ -171,7 +171,7 @@ func (s *Server) Start() {
 		if err != nil {
 			panic(err)
 		}
-		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, c, s.eventBus)
+		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, s.loaders.SkillLoader, c, s.eventBus)
 		go client.Connect()
 	}
 }

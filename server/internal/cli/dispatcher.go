@@ -24,7 +24,7 @@ func (d *Dispatcher) State() domain.State {
 }
 
 func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection, eventBus eventbus.Bus) *Dispatcher {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, skills *loader.SkillLoader, conn io.Connection, eventBus eventbus.Bus) *Dispatcher {
 	dispatcher := &Dispatcher{
 		handlers: make(map[string]Handler),
 		ctx:      context.Background(),
@@ -37,7 +37,7 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 		dispatcher.Register(alias.Alias, alias)
 	}
 
-	dispatcher.Register("login", NewLoginHandler(stateConstructor, players, generator, teams, rooms, conn))
+	dispatcher.Register("login", NewLoginHandler(stateConstructor, players, generator, teams, rooms, skills, conn))
 
 	characterHandler := CharacterHandler{stateProvider: dispatcher.State}
 	dispatcher.Register("character", &characterHandler)

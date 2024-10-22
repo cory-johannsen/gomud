@@ -100,7 +100,13 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 
 	player.Data[domain.UpbringingProperty] = g.loaders.UpbringingLoader.Random()
 
-	player.Data[domain.PoornessProperty] = domain.RandomPoorness()
+	poorness := domain.RandomPoorness()
+	player.Data[domain.PoornessProperty] = poorness
+
+	inventory := domain.NewInventory()
+	cash := poorness.StartingCash()
+	inventory.AddCash(cash)
+	player.Data[domain.InventoryProperty] = inventory
 
 	player.Data[domain.FatePointsProperty] = &domain.BaseProperty{Val: reputationPoints}
 

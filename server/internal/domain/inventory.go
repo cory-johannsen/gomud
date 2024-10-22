@@ -36,6 +36,7 @@ type Inventory struct {
 	offHand  *Weapon
 	armor    *Armor
 	pack     *Pack
+	cash     int
 }
 
 func (i *Inventory) MainHand() *Weapon {
@@ -52,6 +53,20 @@ func (i *Inventory) Armor() *Armor {
 
 func (i *Inventory) Pack() *Pack {
 	return i.pack
+}
+
+func (i *Inventory) Cash() int {
+	return i.cash
+}
+func (i *Inventory) AddCash(amount int) {
+	i.cash += amount
+}
+func (i *Inventory) RemoveCash(amount int) error {
+	if i.cash < amount {
+		return errors.New("not enough cash")
+	}
+	i.cash -= amount
+	return nil
 }
 
 func (i *Inventory) EquipMainHand(weapon *Weapon) error {
@@ -148,6 +163,7 @@ type InventorySpec struct {
 	OffHand  int   `yaml:"off_hand"`
 	Armor    int   `yaml:"armor"`
 	Pack     []int `yaml:"pack"`
+	Cash     int   `yaml:"cash"`
 }
 
 func SpecFromInventory(inventory *Inventory) *InventorySpec {
@@ -172,6 +188,7 @@ func SpecFromInventory(inventory *Inventory) *InventorySpec {
 		OffHand:  offHand,
 		Armor:    armor,
 		Pack:     pack,
+		Cash:     inventory.cash,
 	}
 }
 

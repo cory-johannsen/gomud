@@ -79,5 +79,6 @@ func (l *InventoryLoader) InventoryFromSpec(spec *domain.InventorySpec) (*domain
 			return nil, err
 		}
 	}
+	inventory.AddCash(spec.Cash)
 	return inventory, nil
 }

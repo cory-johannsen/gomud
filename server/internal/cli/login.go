@@ -21,11 +21,12 @@ type LoginHandler struct {
 	generator        *generator.PlayerGenerator
 	teams            *loader.TeamLoader
 	rooms            *loader.RoomLoader
+	skills           *loader.SkillLoader
 	conn             io.Connection
 }
 
 func NewLoginHandler(stateConstructor domain.StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, rooms *loader.RoomLoader, conn io.Connection) *LoginHandler {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, skills *loader.SkillLoader, conn io.Connection) *LoginHandler {
 	return &LoginHandler{
 		stateConstructor: stateConstructor,
 		players:          players,
@@ -33,6 +34,7 @@ func NewLoginHandler(stateConstructor domain.StateConstructor, players *storage.
 		teams:            teams,
 		rooms:            rooms,
 		conn:             conn,
+		skills:           skills,
 	}
 }
 
@@ -119,8 +121,6 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 			}
 		}
 	}
-
-	player.Data[domain.InventoryProperty] = domain.NewInventory()
 
 	room := h.rooms.GetRoom("Wayne Dawg's Trailer")
 	player.SetRoom(room)
@@ -244,7 +244,7 @@ func (h *LoginHandler) takeDrawback() bool {
 
 func (h *LoginHandler) selectSkillRanks(player *domain.Player) error {
 	for {
-		_ = h.conn.Write(fmt.Sprintf("You have %d experience to spend. Purchase a Skill Rank (100 exp each):\n", player.Experience()))
+		_ = h.conn.Write(fmt.Sprintf("You have %d experience to spend. Purchase a Skill Rank (100 exp each, primary stat skills are 50):\n", player.Experience()))
 		purchased := make(map[int]bool)
 		for i, skillRank := range player.Job().SkillRanks {
 			if !player.HasSkillRank(player.Job(), skillRank) {
@@ -273,7 +273,11 @@ func (h *LoginHandler) selectSkillRanks(player *domain.Player) error {
 			continue
 		}
 		skill := player.Job().SkillRanks[index]
-		player.PurchaseSkillRank(player.Job(), skill, 100)
+		cost := 100
+		if player.PrimaryStat() == skill.Stat {
+			cost = 50
+		}
+		player.PurchaseSkillRank(player.Job(), skill, cost)
 		if player.Experience() < 100 {
 			break
 		}

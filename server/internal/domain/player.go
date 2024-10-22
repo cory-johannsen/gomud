@@ -366,6 +366,7 @@ func (p *Player) String() string {
 			} else {
 				msg += inventory.Armor().Name()
 			}
+			msg += fmt.Sprintf("\n\tCash: %d\n", inventory.Cash())
 		case FatePointsProperty:
 			msg += fmt.Sprintf("  Fate Points - %d\n", v.(*BaseProperty).Val.(int))
 		case InjuriesProperty:
@@ -382,6 +383,8 @@ func (p *Player) String() string {
 			msg += fmt.Sprintf("  Peril - \n\tThreshold: %d\n\tCondition: %s\n", v.(*Peril).Threshold, v.(*Peril).Condition.String())
 		case PoornessProperty:
 			msg += fmt.Sprintf("  Poorness - %s\n", v.(Poorness))
+		case ReputationPointsProperty:
+			msg += fmt.Sprintf("  Reputation Points - %d\n", v.(*BaseProperty).Val.(int))
 		case StatsProperty:
 			stats := v.(*Stats)
 			bonuses := p.StatBonuses()
@@ -677,4 +680,24 @@ func (p *Player) Injuries() Injuries {
 
 func (p *Player) Inventory() *Inventory {
 	return p.Data[InventoryProperty].(*Inventory)
+}
+
+func (p *Player) Poorness() Poorness {
+	return p.Data[PoornessProperty].(Poorness)
+}
+
+func (p *Player) Upbringing() *Upbringing {
+	return p.Data[UpbringingProperty].(*Upbringing)
+}
+
+func (p *Player) Drawback() *Drawback {
+	return p.Data[DrawbackProperty].(*Drawback)
+}
+
+func (p *Player) DistinguishingMark() DistinguishingMark {
+	return p.Data[DistinguishingMarkProperty].(DistinguishingMark)
+}
+
+func (p *Player) PrimaryStat() string {
+	return p.Upbringing().Stat
 }
