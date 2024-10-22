@@ -2,7 +2,9 @@ package cli
 
 import (
 	"context"
+	"fmt"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/fatih/color"
 )
 
 type Handler interface {
@@ -40,4 +42,10 @@ func CreateAliases(handler Handler, aliases ...string) Aliases {
 
 var _ Handler = &Alias{}
 
-const WelcomeMessage = "\n<-- 🔫 Gunchete 🔪 -->\n\nWelcome to Gunchete!  Type 'help' for a list of commands.\n"
+const WelcomeMessage = "Welcome to Gunchete!  Type 'help' for a list of commands."
+
+func Welcome() string {
+	red := color.New(color.FgRed).SprintFunc()
+	orange := color.New(color.FgHiRed).Add(color.FgHiYellow).Add(color.Underline).SprintFunc()
+	return fmt.Sprintf("\n%s 🔫 %s 🔪 %s\n\n%s\n", red("<--"), orange("Gunchete"), red("-->"), WelcomeMessage)
+}

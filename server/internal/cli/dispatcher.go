@@ -97,13 +97,13 @@ func (d *Dispatcher) Register(name string, handler Handler) {
 }
 
 func (d *Dispatcher) Prompt() string {
+	cyan := color.New(color.FgCyan).SprintFunc()
 	if d.State() == nil || d.State().Player() == nil || !d.State().Player().LoggedIn {
-		return "> "
+		return fmt.Sprintf("%s ", cyan(">"))
 	}
 	player := d.State().Player()
-	cyan := color.New(color.FgCyan).SprintFunc()
 	green := color.New(color.FgGreen).SprintFunc()
-	return fmt.Sprintf("%s [%s, %s]> ", cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()))
+	return fmt.Sprintf("%s [%s, %s]%s ", cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()), cyan(">"))
 }
 
 func (d *Dispatcher) Tab(buffer string) string {

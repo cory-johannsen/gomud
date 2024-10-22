@@ -90,7 +90,7 @@ func NewClient(players *storage.Players, generator *generator.PlayerGenerator, t
 func (c *Client) Connect() {
 	log.Printf("Serving client %s\n", c.Connection.RemoteAddr().String())
 	prompt := fmt.Sprintf("\n%s", c.Dispatcher.Prompt())
-	_, err := c.Connection.Write([]byte(cli.WelcomeMessage))
+	_, err := c.Connection.Write([]byte(cli.Welcome()))
 	if err != nil {
 		panic(err)
 	}
