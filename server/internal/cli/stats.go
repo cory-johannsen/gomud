@@ -9,6 +9,12 @@ type StatsHandler struct {
 	stateProvider domain.StateProvider
 }
 
+func NewStatsHandler(stateProvider domain.StateProvider) *StatsHandler {
+	return &StatsHandler{
+		stateProvider: stateProvider,
+	}
+}
+
 func (s *StatsHandler) Help(args []string) string {
 	return "display your stats"
 }

@@ -82,8 +82,11 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 		}
 	}
 
-	statsHandler := &StatsHandler{stateProvider: dispatcher.State}
+	statsHandler := NewStatsHandler(dispatcher.State)
 	dispatcher.Register("stats", statsHandler)
+
+	skillsHandler := NewSkillsHandler(dispatcher.State, skills)
+	dispatcher.Register("skills", skillsHandler)
 
 	helpHandler := &HelpHandler{stateProvider: dispatcher.State, handlers: dispatcher.handlers}
 	dispatcher.Register("help", helpHandler)

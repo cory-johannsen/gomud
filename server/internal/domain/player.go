@@ -307,7 +307,7 @@ func (p *Player) String() string {
 			for _, trait := range v.(*Archetype).Traits {
 				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n\t\tEffects:\n", trait.Name, trait.Description)
 				for _, effect := range trait.Effects {
-					msg += fmt.Sprintf("\t\t\t%s\n\t\t\t%s\n", effect.Name(), effect.Description())
+					msg += fmt.Sprintf("\t\t\t%s\n", effect.Description())
 				}
 			}
 		case BackgroundProperty:
@@ -704,4 +704,45 @@ func (p *Player) DistinguishingMark() DistinguishingMark {
 
 func (p *Player) PrimaryStat() string {
 	return p.Upbringing().Stat
+}
+
+func (p *Player) Skills(allSkills Skills) RankedSkills {
+	byStat := make(map[string]RankedSkills)
+	stats := p.Stats()
+	for _, skill := range allSkills {
+		if _, ok := byStat[skill.Stat]; !ok {
+			byStat[skill.Stat] = make(RankedSkills, 0)
+		}
+		statValue := stats.StatValue(skill.Stat)
+		byStat[skill.Stat] = append(byStat[skill.Stat], &RankedSkill{
+			Skill:             skill,
+			Rank:              0,
+			SuccessPercentage: statValue,
+		})
+	}
+	for _, skillRank := range p.SkillRanks() {
+		rankedSkills, ok := byStat[skillRank.Skill.Stat]
+		if !ok {
+			log.Printf("skill %s not found in stats", skillRank.Skill.Name)
+			continue
+		}
+		var skill *RankedSkill
+		for _, s := range rankedSkills {
+			if s.Skill == skillRank.Skill {
+				skill = s
+				break
+			}
+		}
+		if skill == nil {
+			log.Printf("skill %s not found in stats", skillRank.Skill.Name)
+			continue
+		}
+		skill.Rank++
+		skill.SuccessPercentage += 10
+	}
+	rankedSkills := make(RankedSkills, 0)
+	for _, skills := range byStat {
+		rankedSkills = append(rankedSkills, skills...)
+	}
+	return rankedSkills
 }
