@@ -1,5 +1,5 @@
 name: Jack Of All Trades
-description: "This is a description of the trait."
+description: This is a description of the trait.
 effects:
   - Effect1
 goType: JackOfAllTrades

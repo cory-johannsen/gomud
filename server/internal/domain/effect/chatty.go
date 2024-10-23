@@ -13,7 +13,7 @@ type Chatty struct {
 func NewChatty() *Chatty {
   return &Chatty{
     name: "Chatty",
-    description: "'When using Flair to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.'",
+    description: "When using Flair to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Chatty) Applier() domain.Applier {
 }
 
 func (e *Chatty) Apply(state domain.State) domain.State {
-  // - 'When using Flair to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.'
+  // - When using Flair to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.
   log.Println("applying Chatty")
   return state
 }

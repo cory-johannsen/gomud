@@ -1,5 +1,5 @@
-name: "Chatty"
-description: "You prefer to talk your way out of problems."
+name: Chatty
+description: You prefer to talk your way out of problems.
 effects:
-  - "When using Flair to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure."
+  - When using Flair to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.
 goType: Chatty

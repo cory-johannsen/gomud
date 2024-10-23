@@ -99,7 +99,7 @@ func StatsString(stats *Stats, bonuses *Stats, advances ConsumedAdvances) string
 
 	cyan := color.New(color.FgCyan).SprintFunc()
 
-	return fmt.Sprintf("%s - \n\tBrutality: %s\tBB[%s]\n\tMuscle:    %s\tMB[%s]\n\tQuickness: %s\tQB[%s]\n\tSavvy:     %s\tSB[%s]\n\tReasoning: %s\tRB[%s]\n\tGrit:      %s\tGB[%s]\n\tFlair:     %s\tRB[%s]\n",
+	return fmt.Sprintf("%s\n\tBrutality: %s\tBB[%s]\n\tMuscle:    %s\tMB[%s]\n\tQuickness: %s\tQB[%s]\n\tSavvy:     %s\tSB[%s]\n\tReasoning: %s\tRB[%s]\n\tGrit:      %s\tGB[%s]\n\tFlair:     %s\tRB[%s]\n",
 		cyan("Stats"),
 		cyan(stats.Brutality), bb,
 		cyan(stats.Muscle), bm,

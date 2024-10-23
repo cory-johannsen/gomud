@@ -13,7 +13,7 @@ type Smart struct {
 func NewSmart() *Smart {
   return &Smart{
     name: "Smart",
-    description: "'When using Reasoning to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.'",
+    description: "When using Reasoning to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Smart) Applier() domain.Applier {
 }
 
 func (e *Smart) Apply(state domain.State) domain.State {
-  // - 'When using Reasoning to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.'
+  // - When using Reasoning to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.
   log.Println("applying Smart")
   return state
 }

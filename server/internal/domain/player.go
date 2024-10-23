@@ -7,6 +7,7 @@ import (
 	"github.com/fatih/color"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
+	"strings"
 )
 
 type Property interface {
@@ -258,6 +259,8 @@ func (p *Player) String() string {
 	cyan := color.New(color.FgCyan).SprintFunc()
 	magenta := color.New(color.FgMagenta).SprintFunc()
 	yellow := color.New(color.FgYellow).SprintFunc()
+	green := color.New(color.FgGreen).SprintFunc()
+	red := color.New(color.FgRed).SprintFunc()
 	msg := fmt.Sprintf("%s: %s\n", cyan("Name"), p.Name)
 	// Enforce the ordering of the character properties
 	properties := []string{
@@ -270,6 +273,7 @@ func (p *Player) String() string {
 		BirthSeasonProperty,
 		AgeProperty,
 		BackgroundProperty,
+		PoornessProperty,
 		DistinguishingMarkProperty,
 		TattooProperty,
 		DrawbackProperty,
@@ -294,48 +298,71 @@ func (p *Player) String() string {
 		}
 		switch k {
 		case AgeProperty:
-			msg += fmt.Sprintf("  %s - %d\n", cyan("Age"), v.(*BaseProperty).Val.(int))
+			msg += fmt.Sprintf("  %s: %d\n", cyan("Age"), v.(*BaseProperty).Val.(int))
 		case AlignmentProperty:
 			if v == nil {
 				log.Warnf("alignment property is nil")
 			}
-			msg += fmt.Sprintf("  %s - %s/%s\n\tOrder: %s (rank: %d)\n\tChaos: %s (rank: %d)\n\tCorruption: %d\n",
+			corruption := cyan(v.(*Alignment).Corruption)
+			if v.(*Alignment).Corruption > 4 {
+				if v.(*Alignment).Corruption > 7 {
+					corruption = red(v.(*Alignment).Corruption)
+				} else {
+					corruption = yellow(v.(*Alignment).Corruption)
+				}
+			}
+			orderRank := cyan(v.(*Alignment).Order.Rank)
+			if v.(*Alignment).Order.Rank > 0 {
+				orderRank = green(v.(*Alignment).Order.Rank)
+			}
+			chaosRank := cyan(v.(*Alignment).Chaos.Rank)
+			if v.(*Alignment).Chaos.Rank > 0 {
+				if v.(*Alignment).Chaos.Rank > 4 {
+					if v.(*Alignment).Chaos.Rank > 7 {
+						chaosRank = red(v.(*Alignment).Chaos.Rank)
+					} else {
+						chaosRank = yellow(v.(*Alignment).Chaos.Rank)
+					}
+				}
+				chaosRank = green(v.(*Alignment).Chaos.Rank)
+			}
+			msg += fmt.Sprintf("  %s: %s/%s\n\tOrder: %s (rank: %s)\n\tChaos: %s (rank: %s)\n\tCorruption: %s\n",
 				cyan("Alignment"), v.(*Alignment).Order.Name, v.(*Alignment).Chaos.Name,
-				v.(*Alignment).Order.Name, v.(*Alignment).Order.Rank,
-				v.(*Alignment).Chaos.Name, v.(*Alignment).Chaos.Rank,
-				v.(*Alignment).Corruption)
+				v.(*Alignment).Order.Name, orderRank,
+				v.(*Alignment).Chaos.Name, chaosRank,
+				corruption)
 		case ArchetypeProperty:
-			msg += fmt.Sprintf("  %s - %s\n", cyan("Archetype"), v.(*Archetype).Name)
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Archetype"), v.(*Archetype).Name)
 			for _, trait := range v.(*Archetype).Traits {
-				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n\t\tEffects:\n", trait.Name, trait.Description)
+				msg += fmt.Sprintf("\t%s\n\t  %s\n", magenta(trait.Name), trait.Description)
 				for _, effect := range trait.Effects {
-					msg += fmt.Sprintf("\t\t\t%s\n", effect.Description())
+					msg += fmt.Sprintf("\t  %s\n", yellow(effect.Description()))
 				}
 			}
 		case BackgroundProperty:
-			msg += fmt.Sprintf("  %s - \n\t%s\n\t%s\n", cyan("Background"), v.(*Background).Name, v.(*Background).Description)
+			msg += fmt.Sprintf("  %s\n\t%s\n\t%s\n", cyan("Background"), v.(*Background).Name, v.(*Background).Description)
 		case BackgroundTraitProperty:
-			msg += fmt.Sprintf("  %s - \n\t%s\n\t%s\n", cyan("Background Trait"), v.(*Trait).Name, v.(*Trait).Description)
+			msg += fmt.Sprintf("  %s\n\t%s\n\t%s\n", cyan("Background Trait"), v.(*Trait).Name, v.(*Trait).Description)
 			for _, effect := range v.(*Trait).Effects {
 				msg += fmt.Sprintf("\t\t%s\n", yellow(effect.Description()))
 			}
 		case BirthSeasonProperty:
-			msg += fmt.Sprintf("  %s - %s\n", cyan("Birth Season"), v.(Season))
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Birth Season"), v.(Season))
 		case ConditionProperty:
-			msg += fmt.Sprintf("  %s - %s\n", cyan("Condition"), v.(Condition))
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Condition"), v.(Condition))
 		case ConsumedAdvancesProperty:
-			msg += fmt.Sprintf("  %s: \n", cyan("Bonus Advances"))
+			msg += fmt.Sprintf("  %s\n", cyan("Bonus Advances"))
 			if len(v.(ConsumedAdvances)) == 0 {
 				msg += "\tNone\n"
 			}
 			for job, advances := range v.(ConsumedAdvances) {
 				msg += fmt.Sprintf("\t%s\n", job)
 				for _, advance := range advances {
-					msg += fmt.Sprintf("\t\t%s: %d\n", advance.Stat, advance.Amount)
+					msg += fmt.Sprintf("\t\t%s: %s\n", advance.Stat, green(advance.Amount))
 				}
 			}
 		case DisordersProperty:
-			msg += fmt.Sprintf("  %s: \n", cyan("Disorders"))
+			msg += fmt.Sprintf("  %s\n", cyan("Disorders"))
 			if len(v.(Disorders)) == 0 {
 				msg += "\tNone\n"
 			}
@@ -343,7 +370,7 @@ func (p *Player) String() string {
 				msg += fmt.Sprintf("\t%s\n\t%s\n", disorder.Name, disorder.Description)
 			}
 		case DistinguishingMarkProperty:
-			msg += fmt.Sprintf("  %s: \n", cyan("Distinguishing Marks"))
+			msg += fmt.Sprintf("  %s\n", cyan("Distinguishing Marks"))
 			if len(v.(DistinguishingMarks)) == 0 {
 				msg += "\tNone\n"
 			}
@@ -351,12 +378,16 @@ func (p *Player) String() string {
 				msg += fmt.Sprintf("\t%s\n", mark)
 			}
 		case DrawbackProperty:
-			msg += fmt.Sprintf("  %s - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s\n", cyan("Drawback"), magenta(v.(*Drawback).Name), v.(*Drawback).Description, yellow(v.(*Drawback).Effect.Description()))
+			msg += fmt.Sprintf("  %s\n\t%s\n\t  %s\n\t  %s\n", cyan("Drawback"), magenta(v.(*Drawback).Name), v.(*Drawback).Description, yellow(v.(*Drawback).Effect.Description()))
 		case ExperienceProperty:
-			msg += fmt.Sprintf("  %s - %d\n", cyan("Experience"), v.(*BaseProperty).Val.(int))
+			val := cyan(v.(*BaseProperty).Val.(int))
+			if v.(*BaseProperty).Val.(int) > 0 {
+				val = green(v.(*BaseProperty).Val.(int))
+			}
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Experience"), val)
 		case InventoryProperty:
 			inventory := v.(*Inventory)
-			msg += fmt.Sprintf("  %s - \n\tMain Hand: ", cyan("Inventory"))
+			msg += fmt.Sprintf("  %s\n\tMain Hand: ", cyan("Inventory"))
 			if inventory.MainHand() == nil {
 				msg += "empty"
 			} else {
@@ -376,9 +407,13 @@ func (p *Player) String() string {
 			}
 			msg += fmt.Sprintf("\n\tCash: %d\n", inventory.Cash())
 		case FatePointsProperty:
-			msg += fmt.Sprintf("  %s - %d\n", cyan("Fate Points"), v.(*BaseProperty).Val.(int))
+			val := cyan(v.(*BaseProperty).Val.(int))
+			if v.(*BaseProperty).Val.(int) > 0 {
+				val = green(v.(*BaseProperty).Val.(int))
+			}
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Fate Points"), val)
 		case InjuriesProperty:
-			msg += fmt.Sprintf("  %s: \n", cyan("Injuries"))
+			msg += fmt.Sprintf("  %s\n", cyan("Injuries"))
 			if len(v.(Injuries)) == 0 {
 				msg += "\tNone\n"
 			}
@@ -386,14 +421,18 @@ func (p *Player) String() string {
 				msg += fmt.Sprintf("\t%s\n", injury)
 			}
 		case JobProperty:
-			msg += fmt.Sprintf("  %s - \n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n",
+			msg += fmt.Sprintf("  %s\n\t%s\n\tDescription: %s\n\tArchetype: %s\n\tTier: %s\n",
 				cyan("Job"), v.(*Job).Name, v.(*Job).Description, v.(*Job).Archetype.Name, v.(*Job).Tier)
 		case PerilProperty:
-			msg += fmt.Sprintf("  %s - \n\tThreshold: %d\n\tCondition: %s\n", cyan("Peril"), v.(*Peril).Threshold, v.(*Peril).Condition.String())
+			msg += fmt.Sprintf("  %s\n\tThreshold: %d\n\tCondition: %s\n", cyan("Peril"), v.(*Peril).Threshold, v.(*Peril).Condition.String())
 		case PoornessProperty:
-			msg += fmt.Sprintf("  %s - %s\n", cyan("Poorness"), v.(Poorness))
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Poorness"), v.(Poorness))
 		case ReputationPointsProperty:
-			msg += fmt.Sprintf("  %s - %d\n", cyan("Reputation Points"), v.(*BaseProperty).Val.(int))
+			val := cyan(v.(*BaseProperty).Val.(int))
+			if v.(*BaseProperty).Val.(int) > 0 {
+				val = green(v.(*BaseProperty).Val.(int))
+			}
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Reputation Points"), val)
 		case StatsProperty:
 			stats := v.(*Stats)
 			bonuses := p.StatBonuses()
@@ -408,19 +447,20 @@ func (p *Player) String() string {
 				msg += fmt.Sprintf("\t%s (from %s)\n", rank.Skill.Name, rank.Job.Name)
 			}
 		case TattooProperty:
-			msg += fmt.Sprintf("  %s - \n\t\"%s\" on your %s\n", cyan("Tattoo"), v.(*Tattoo).Description, v.(*Tattoo).Location)
+			msg += fmt.Sprintf("  %s\n\t\"%s\" on your %s\n", cyan("Tattoo"), v.(*Tattoo).Description, v.(*Tattoo).Location)
 		case TalentsProperty:
 			msg += fmt.Sprintf("  %s: \n", cyan("Talents"))
 			if len(v.(Talents)) == 0 {
 				msg += "\tNone\n"
 			}
 			for _, talent := range v.(Talents) {
-				msg += fmt.Sprintf("\t%s\n\t\t%s\n\t\t%s\n", magenta(talent.Name), talent.Description, yellow(talent.Effect.Description()))
+				desc := strings.ReplaceAll(talent.Description, "\n", " ")
+				msg += fmt.Sprintf("\t%s\n\t  %s\n\t  %s\n\n", magenta(talent.Name), desc, yellow(talent.Effect.Description()))
 			}
 		case TeamProperty:
-			msg += fmt.Sprintf("  %s - %s\n", cyan("Team"), v.(*Team).Name)
+			msg += fmt.Sprintf("  %s: %s\n", cyan("Team"), v.(*Team).Name)
 		case UpbringingProperty:
-			msg += fmt.Sprintf("  %s - \n\t%s\n\tPrimary Stat: %s\n", cyan("Upbringing"), v.(*Upbringing).Name, v.(*Upbringing).Stat)
+			msg += fmt.Sprintf("  %s\n\t%s\n\tPrimary Stat: %s\n", cyan("Upbringing"), v.(*Upbringing).Name, v.(*Upbringing).Stat)
 		default:
 			msg += fmt.Sprintf("  %s: %s\n", k, v)
 		}

@@ -13,7 +13,7 @@ type Recidivist struct {
 func NewRecidivist() *Recidivist {
   return &Recidivist{
     name: "Recidivist",
-    description: "'When performing an Illegal Act to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.'",
+    description: "When performing an Illegal Act to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Recidivist) Applier() domain.Applier {
 }
 
 func (e *Recidivist) Apply(state domain.State) domain.State {
-  // - 'When performing an Illegal Act to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.'
+  // - When performing an Illegal Act to solve a problem, flip the roll to Success.  Otherwise flip the roll to Failure.
   log.Println("applying Recidivist")
   return state
 }
