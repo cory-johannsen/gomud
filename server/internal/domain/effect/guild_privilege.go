@@ -13,7 +13,7 @@ type GuildPrivilege struct {
 func NewGuildPrivilege() *GuildPrivilege {
   return &GuildPrivilege{
     name: "Guild Privilege",
-    description: "Whenever you purchase a Focus in the Tradecraft Skill, you instead gain three Focuses. This means you may exceed the normal limits for Focuses set by your [IB], but for Tradecraft only.",
+    description: "Whenever you purchase a Focus in the Tradecraft Skill, you instead gain three Focuses. This means you may exceed the normal limits for Focuses set by your [RB], but for Tradecraft only.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *GuildPrivilege) Applier() domain.Applier {
 }
 
 func (e *GuildPrivilege) Apply(state domain.State) domain.State {
-  // - Whenever you purchase a Focus in the Tradecraft Skill, you instead gain three Focuses. This means you may exceed the normal limits for Focuses set by your [IB], but for Tradecraft only.
+  // - Whenever you purchase a Focus in the Tradecraft Skill, you instead gain three Focuses. This means you may exceed the normal limits for Focuses set by your [RB], but for Tradecraft only.
   log.Println("applying Guild Privilege")
   return state
 }

@@ -13,7 +13,7 @@ type ArtfulDodger struct {
 func NewArtfulDodger() *ArtfulDodger {
   return &ArtfulDodger{
     name: "Artful Dodger",
-    description: "You automatically gain every Focus in the Stealth Skill when you enter this Job. This means you may exceed the normal limits for Focuses set by your [IB], but for Stealth only.",
+    description: "You automatically gain every Focus in the Stealth Skill when you enter this Job. This means you may exceed the normal limits for Focuses set by your [RB], but for Stealth only.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *ArtfulDodger) Applier() domain.Applier {
 }
 
 func (e *ArtfulDodger) Apply(state domain.State) domain.State {
-  // - You automatically gain every Focus in the Stealth Skill when you enter this Job. This means you may exceed the normal limits for Focuses set by your [IB], but for Stealth only.
+  // - You automatically gain every Focus in the Stealth Skill when you enter this Job. This means you may exceed the normal limits for Focuses set by your [RB], but for Stealth only.
   log.Println("applying Artful Dodger")
   return state
 }

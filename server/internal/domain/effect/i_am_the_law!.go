@@ -13,7 +13,7 @@ type IAmTheLaw struct {
 func NewIAmTheLaw() *IAmTheLaw {
   return &IAmTheLaw{
     name: "I Am The Law!",
-    description: "You may flip the results to succeed at Intimidate Tests. When you succeed, it is always considered a Critical Success. Furthermore, you always influence a number of people with the Intimidate Skill equal to three times your [BB] – this includes use of Litany of Hatred during combat.",
+    description: "You may flip the results to succeed at Intimidate Tests. When you succeed, it is always considered a Critical Success. Furthermore, you always influence a number of people with the Intimidate Skill equal to three times your [MB] – this includes use of Litany of Hatred during combat.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *IAmTheLaw) Applier() domain.Applier {
 }
 
 func (e *IAmTheLaw) Apply(state domain.State) domain.State {
-  // - You may flip the results to succeed at Intimidate Tests. When you succeed, it is always considered a Critical Success. Furthermore, you always influence a number of people with the Intimidate Skill equal to three times your [BB] – this includes use of Litany of Hatred during combat.
+  // - You may flip the results to succeed at Intimidate Tests. When you succeed, it is always considered a Critical Success. Furthermore, you always influence a number of people with the Intimidate Skill equal to three times your [MB] – this includes use of Litany of Hatred during combat.
   log.Println("applying I Am The Law!")
   return state
 }

@@ -2,6 +2,17 @@ package domain
 
 import (
 	"fmt"
+	"github.com/fatih/color"
+)
+
+const (
+	Brutality = "Brutality"
+	Muscle    = "Muscle"
+	Quickness = "Quickness"
+	Savvy     = "Savvy"
+	Reasoning = "Reasoning"
+	Grit      = "Grit"
+	Flair     = "Flair"
 )
 
 type Stats struct {
@@ -24,19 +35,19 @@ func (s *Stats) String() string {
 
 func (s *Stats) StatValue(name string) int {
 	switch name {
-	case "Brutality":
+	case Brutality:
 		return s.Brutality
-	case "Muscle":
+	case Muscle:
 		return s.Muscle
-	case "Quickness":
+	case Quickness:
 		return s.Quickness
-	case "Savvy":
+	case Savvy:
 		return s.Savvy
-	case "Reasoning":
+	case Reasoning:
 		return s.Reasoning
-	case "Grit":
+	case Grit:
 		return s.Grit
-	case "Flair":
+	case Flair:
 		return s.Flair
 	}
 	return -1
@@ -59,4 +70,42 @@ func NewStats() *Stats {
 		Grit:      ThreeD10() + 25,
 		Flair:     ThreeD10() + 25,
 	}
+}
+
+func statBonusAsString(bonuses *Stats, advances ConsumedAdvances, stat string) string {
+	bonus := bonuses.StatValue(stat)
+	advance := 0
+	for _, jobAdvances := range advances {
+		for _, a := range jobAdvances {
+			if a.Stat == stat {
+				advance += a.Amount
+			}
+		}
+	}
+	if advance > 0 {
+		return color.New(color.FgGreen).Sprintf("%d", bonus+advance)
+	}
+	return color.New(color.FgCyan).Sprintf("%d", bonus+advance)
+}
+
+func StatsString(stats *Stats, bonuses *Stats, advances ConsumedAdvances) string {
+	bb := statBonusAsString(bonuses, advances, Brutality)
+	bm := statBonusAsString(bonuses, advances, Muscle)
+	bq := statBonusAsString(bonuses, advances, Quickness)
+	bs := statBonusAsString(bonuses, advances, Savvy)
+	br := statBonusAsString(bonuses, advances, Reasoning)
+	bg := statBonusAsString(bonuses, advances, Grit)
+	bf := statBonusAsString(bonuses, advances, Flair)
+
+	cyan := color.New(color.FgCyan).SprintFunc()
+
+	return fmt.Sprintf("%s - \n\tBrutality: %s\tBB[%s]\n\tMuscle:    %s\tMB[%s]\n\tQuickness: %s\tQB[%s]\n\tSavvy:     %s\tSB[%s]\n\tReasoning: %s\tRB[%s]\n\tGrit:      %s\tGB[%s]\n\tFlair:     %s\tRB[%s]\n",
+		cyan("Stats"),
+		cyan(stats.Brutality), bb,
+		cyan(stats.Muscle), bm,
+		cyan(stats.Quickness), bq,
+		cyan(stats.Savvy), bs,
+		cyan(stats.Reasoning), br,
+		cyan(stats.Grit), bg,
+		cyan(stats.Flair), bf)
 }

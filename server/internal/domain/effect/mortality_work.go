@@ -13,7 +13,7 @@ type MortalityWork struct {
 func NewMortalityWork() *MortalityWork {
   return &MortalityWork{
     name: "Mortality Work",
-    description: "When you inflict an Injury with a weapon, your foe also suffers 2D10+your [WB] mental Peril.",
+    description: "When you inflict an Injury with a weapon, your foe also suffers 2D10+your [GB] mental Peril.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *MortalityWork) Applier() domain.Applier {
 }
 
 func (e *MortalityWork) Apply(state domain.State) domain.State {
-  // - When you inflict an Injury with a weapon, your foe also suffers 2D10+your [WB] mental Peril.
+  // - When you inflict an Injury with a weapon, your foe also suffers 2D10+your [GB] mental Peril.
   log.Println("applying Mortality Work")
   return state
 }

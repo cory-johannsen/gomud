@@ -13,7 +13,7 @@ type Finesse struct {
 func NewFinesse() *Finesse {
   return &Finesse{
     name: "Finesse",
-    description: "Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [CB].",
+    description: "Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [BB].",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Finesse) Applier() domain.Applier {
 }
 
 func (e *Finesse) Apply(state domain.State) domain.State {
-  // - Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [CB].
+  // - Weapons of this Quality always reference [AB] whenever dealing Damage, instead of [BB].
   log.Println("applying Finesse")
   return state
 }

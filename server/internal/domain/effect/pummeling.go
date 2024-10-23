@@ -13,7 +13,7 @@ type Pummeling struct {
 func NewPummeling() *Pummeling {
   return &Pummeling{
     name: "Pummeling",
-    description: "Weapons of this Quality always refer to [BB] whenever inflicting Damage, instead of [CB]. Pummeling weapons can only inflict Moderate Injuries, never Serious or Grievous Injuries. Finally, Pummeling weapons cannot be used to cause Bleeding.",
+    description: "Weapons of this Quality always refer to [MB] whenever inflicting Damage, instead of [BB]. Pummeling weapons can only inflict Moderate Injuries, never Serious or Grievous Injuries. Finally, Pummeling weapons cannot be used to cause Bleeding.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Pummeling) Applier() domain.Applier {
 }
 
 func (e *Pummeling) Apply(state domain.State) domain.State {
-  // - Weapons of this Quality always refer to [BB] whenever inflicting Damage, instead of [CB]. Pummeling weapons can only inflict Moderate Injuries, never Serious or Grievous Injuries. Finally, Pummeling weapons cannot be used to cause Bleeding.
+  // - Weapons of this Quality always refer to [MB] whenever inflicting Damage, instead of [BB]. Pummeling weapons can only inflict Moderate Injuries, never Serious or Grievous Injuries. Finally, Pummeling weapons cannot be used to cause Bleeding.
   log.Println("applying Pummeling")
   return state
 }

@@ -82,6 +82,9 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 		}
 	}
 
+	statsHandler := &StatsHandler{stateProvider: dispatcher.State}
+	dispatcher.Register("stats", statsHandler)
+
 	helpHandler := &HelpHandler{stateProvider: dispatcher.State, handlers: dispatcher.handlers}
 	dispatcher.Register("help", helpHandler)
 	helpAliases := CreateAliases(helpHandler, "?", "h")

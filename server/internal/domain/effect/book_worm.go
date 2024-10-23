@@ -13,7 +13,7 @@ type BookWorm struct {
 func NewBookWorm() *BookWorm {
   return &BookWorm{
     name: "Book Worm",
-    description: "Multiply your [IB] by three to determine how many Focuses you may possess.",
+    description: "Multiply your [RB] by three to determine how many Focuses you may possess.",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *BookWorm) Applier() domain.Applier {
 }
 
 func (e *BookWorm) Apply(state domain.State) domain.State {
-  // - Multiply your [IB] by three to determine how many Focuses you may possess.
+  // - Multiply your [RB] by three to determine how many Focuses you may possess.
   log.Println("applying Book Worm")
   return state
 }
