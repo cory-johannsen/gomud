@@ -1,5 +1,4 @@
 name: Meditative Healing
-description: "This is a description of the trait."
+description: Gifted with the kindred’s ability to live between the weave of the world, you have learned how to harness an inner power to mend your own wounds.
 effects:
-  - Effect1
-goType: MeditativeHealing
+  - Whenever you awaken from a good night’s sleep, you move one step up the Damage Condition Track positively. This means that if you were Grievously Wounded, you are now Seriously Wounded instead. Note that this does not ‘cure’ Injuries.,

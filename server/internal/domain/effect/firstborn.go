@@ -13,7 +13,7 @@ type Firstborn struct {
 func NewFirstborn() *Firstborn {
   return &Firstborn{
     name: "Firstborn",
-    description: "Effect1",
+    description: "Whenever learning new Magicks, you always succeed at your Incantation Test. Additionally, you never have to sacrifice Reward Points to finalize the process,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Firstborn) Applier() domain.Applier {
 }
 
 func (e *Firstborn) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever learning new Magicks, you always succeed at your Incantation Test. Additionally, you never have to sacrifice Reward Points to finalize the process,
   log.Println("applying Firstborn")
   return state
 }

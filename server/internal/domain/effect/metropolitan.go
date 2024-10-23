@@ -13,7 +13,7 @@ type Metropolitan struct {
 func NewMetropolitan() *Metropolitan {
   return &Metropolitan{
     name: "Metropolitan",
-    description: "Effect1",
+    description: "All trappings you craft (with exception to armor, shields and weapons) are always best-in-class, raising its resale value three times the listed price,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Metropolitan) Applier() domain.Applier {
 }
 
 func (e *Metropolitan) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - All trappings you craft (with exception to armor, shields and weapons) are always best-in-class, raising its resale value three times the listed price,
   log.Println("applying Metropolitan")
   return state
 }

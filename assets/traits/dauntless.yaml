@@ -1,5 +1,4 @@
 name: Dauntless
-description: "This is a description of the trait."
+description: Your sheer force of will helps them withstand many challenges. Rarely do they cross the threshold to fear and darkness, as their stalwart nature shields them from the horrors that surround them.
 effects:
-  - Effect1
-goType: Dauntless
+  - You are immune to the effects of the Intimidate Skill and cannot be Stunned or Knocked Out!,

@@ -13,7 +13,7 @@ type MightyThews struct {
 func NewMightyThews() *MightyThews {
   return &MightyThews{
     name: "Mighty Thews",
-    description: "Effect1",
+    description: "You are able to wield any two-handed melee weapon with one hand. This also means you may freely take advantage of the Adaptable Quality for weapons using one hand. Whenever you gain the benefits of the Adaptable Quality, you may add +2 to Total Damage, instead of the normal +1.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *MightyThews) Applier() domain.Applier {
 }
 
 func (e *MightyThews) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You are able to wield any two-handed melee weapon with one hand. This also means you may freely take advantage of the Adaptable Quality for weapons using one hand. Whenever you gain the benefits of the Adaptable Quality, you may add +2 to Total Damage, instead of the normal +1.,
   log.Println("applying Mighty Thews")
   return state
 }

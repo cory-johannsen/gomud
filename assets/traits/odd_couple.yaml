@@ -1,5 +1,4 @@
 name: Odd Couple
-description: "This is a description of the trait."
+description: Not many trust you, but they have found an unlikely ally in you. Perhaps it is their mutual love of food and alcohol, or even commiseration about being underdogs.
 effects:
-  - Effect1
-goType: OddCouple
+  - When fighting alongside Halfling allies, you gain a +10 Base Chance to strike with Attack Actions and Perilous Stunts.,

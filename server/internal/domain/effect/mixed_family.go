@@ -13,7 +13,7 @@ type MixedFamily struct {
 func NewMixedFamily() *MixedFamily {
   return &MixedFamily{
     name: "Mixed Family",
-    description: "Effect1",
+    description: "You gain a Trait from that Background as well.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *MixedFamily) Applier() domain.Applier {
 }
 
 func (e *MixedFamily) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You gain a Trait from that Background as well.,
   log.Println("applying Mixed Family")
   return state
 }

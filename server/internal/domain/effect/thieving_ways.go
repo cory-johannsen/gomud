@@ -13,7 +13,7 @@ type ThievingWays struct {
 func NewThievingWays() *ThievingWays {
   return &ThievingWays{
     name: "Thieving Ways",
-    description: "Effect1",
+    description: "Foes must flip their results to fail all Attack Actions or Perilous Stunts made with ranged weapons against you. However, you cannot wield two-handed weapons, carry a shield and must reduce your Movement by 3. Finally, you will reference “1 to 10” on the Height table and will have a Frail build on the Build table.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *ThievingWays) Applier() domain.Applier {
 }
 
 func (e *ThievingWays) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Foes must flip their results to fail all Attack Actions or Perilous Stunts made with ranged weapons against you. However, you cannot wield two-handed weapons, carry a shield and must reduce your Movement by 3. Finally, you will reference “1 to 10” on the Height table and will have a Frail build on the Build table.,
   log.Println("applying Thieving Ways")
   return state
 }

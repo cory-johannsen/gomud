@@ -13,7 +13,7 @@ type EsotericMemory struct {
 func NewEsotericMemory() *EsotericMemory {
   return &EsotericMemory{
     name: "Esoteric Memory",
-    description: "Effect1",
+    description: "When attempting to recall a particular detail or remember a fact, you always succeed at Scrutinize Tests.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *EsotericMemory) Applier() domain.Applier {
 }
 
 func (e *EsotericMemory) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - When attempting to recall a particular detail or remember a fact, you always succeed at Scrutinize Tests.,
   log.Println("applying Esoteric Memory")
   return state
 }

@@ -13,7 +13,7 @@ type Gutplate struct {
 func NewGutplate() *Gutplate {
   return &Gutplate{
     name: "Gut-plate",
-    description: "Effect1",
+    description: "Whenever unarmored, add +2 to your Damage Threshold as if you were wearing a suit of leather armor. You also gain the benefits of the Natural Quality in these cases.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Gutplate) Applier() domain.Applier {
 }
 
 func (e *Gutplate) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever unarmored, add +2 to your Damage Threshold as if you were wearing a suit of leather armor. You also gain the benefits of the Natural Quality in these cases.,
   log.Println("applying Gut-plate")
   return state
 }

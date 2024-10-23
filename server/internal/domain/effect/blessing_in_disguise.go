@@ -13,7 +13,7 @@ type BlessinginDisguise struct {
 func NewBlessinginDisguise() *BlessinginDisguise {
   return &BlessinginDisguise{
     name: "Blessing in Disguise",
-    description: "Effect1",
+    description: "Whenever the time calls for you to suffer a debilitating Injury or face death, you may alternatively gain 1 permanent Chaos Rank (instead of spending a Fate Point) to ignore it entirely.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *BlessinginDisguise) Applier() domain.Applier {
 }
 
 func (e *BlessinginDisguise) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever the time calls for you to suffer a debilitating Injury or face death, you may alternatively gain 1 permanent Chaos Rank (instead of spending a Fate Point) to ignore it entirely.,
   log.Println("applying Blessing in Disguise")
   return state
 }

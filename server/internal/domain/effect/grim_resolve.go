@@ -13,7 +13,7 @@ type GrimResolve struct {
 func NewGrimResolve() *GrimResolve {
   return &GrimResolve{
     name: "Grim Resolve",
-    description: "Effect1",
+    description: "Immediately after you suffer Damage from a melee or ranged weapon, spend a Fortune Point to ignore it entirely, therefore negating both Damage and any Injuries you may have suffered. You may even use this after failing to Dodge or Parry.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *GrimResolve) Applier() domain.Applier {
 }
 
 func (e *GrimResolve) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Immediately after you suffer Damage from a melee or ranged weapon, spend a Fortune Point to ignore it entirely, therefore negating both Damage and any Injuries you may have suffered. You may even use this after failing to Dodge or Parry.,
   log.Println("applying Grim Resolve")
   return state
 }

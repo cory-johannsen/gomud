@@ -13,7 +13,7 @@ type Goldbergian struct {
 func NewGoldbergian() *Goldbergian {
   return &Goldbergian{
     name: "Goldbergian",
-    description: "Effect1",
+    description: "Any Skill Rank you gain in Alchemy, Counterfeit, Skulduggery and Tradecraft modifies your Base Chance by +15, instead of +10.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Goldbergian) Applier() domain.Applier {
 }
 
 func (e *Goldbergian) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Any Skill Rank you gain in Alchemy, Counterfeit, Skulduggery and Tradecraft modifies your Base Chance by +15, instead of +10.,
   log.Println("applying Goldbergian")
   return state
 }

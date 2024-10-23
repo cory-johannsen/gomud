@@ -13,7 +13,7 @@ type ThickLining struct {
 func NewThickLining() *ThickLining {
   return &ThickLining{
     name: "Thick Lining",
-    description: "Effect1",
+    description: "You are immune to Poisons of all types.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *ThickLining) Applier() domain.Applier {
 }
 
 func (e *ThickLining) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You are immune to Poisons of all types.,
   log.Println("applying Thick Lining")
   return state
 }

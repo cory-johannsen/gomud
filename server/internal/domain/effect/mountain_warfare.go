@@ -13,7 +13,7 @@ type MountainWarfare struct {
 func NewMountainWarfare() *MountainWarfare {
   return &MountainWarfare{
     name: "Mountain Warfare",
-    description: "Effect1",
+    description: "When wielding any two-handed melee weapon using both hands, any attempt to Parry automatically succeeds (providing you have the Action Points to spend).,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *MountainWarfare) Applier() domain.Applier {
 }
 
 func (e *MountainWarfare) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - When wielding any two-handed melee weapon using both hands, any attempt to Parry automatically succeeds (providing you have the Action Points to spend).,
   log.Println("applying Mountain Warfare")
   return state
 }

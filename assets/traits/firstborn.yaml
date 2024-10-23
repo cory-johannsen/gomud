@@ -1,5 +1,4 @@
 name: Firstborn
-description: "This is a description of the trait."
+description: You people came to this world first, the favored children of nameless gods. This age-long lineage has made your people distant and fickle, but it has also given them insight beyond the Ætheric Veil and nature of the world around them.
 effects:
-  - Effect1
-goType: Firstborn
+  - Whenever learning new Magicks, you always succeed at your Incantation Test. Additionally, you never have to sacrifice Reward Points to finalize the process,

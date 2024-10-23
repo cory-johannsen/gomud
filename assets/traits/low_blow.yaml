@@ -1,5 +1,4 @@
 name: Low Blow
-description: "This is a description of the trait."
+description: When cornered, you will resort to nasty tricks to fell a foe. Menfolk are known to gasp in horror whenever they bear witness to this heinous (and deliberately) painful tactic.
 effects:
-  - Effect1
-goType: LowBlow
+  - Whenever you make a successful Melee Attack, you force a foe to Resist a Stunning Blow. You must be Engaged with a foe in order to use a Low Blow.,

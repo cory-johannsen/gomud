@@ -13,7 +13,7 @@ type CatlikeReflexes struct {
 func NewCatlikeReflexes() *CatlikeReflexes {
   return &CatlikeReflexes{
     name: "Cat-like Reflexes",
-    description: "Effect1",
+    description: "Whenever you fall, you may spend one Fortune Point to avoid Damage. In this case, you land on your feet, apparently unharmed.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *CatlikeReflexes) Applier() domain.Applier {
 }
 
 func (e *CatlikeReflexes) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you fall, you may spend one Fortune Point to avoid Damage. In this case, you land on your feet, apparently unharmed.,
   log.Println("applying Cat-like Reflexes")
   return state
 }

@@ -13,7 +13,7 @@ type StentorianVoice struct {
 func NewStentorianVoice() *StentorianVoice {
   return &StentorianVoice{
     name: "Stentorian Voice",
-    description: "Effect1",
+    description: "Whenever you use Fellowship-based Skills, refer to either your Brawn or Fellowship Primary Attribute (whichever is highest).,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *StentorianVoice) Applier() domain.Applier {
 }
 
 func (e *StentorianVoice) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you use Fellowship-based Skills, refer to either your Brawn or Fellowship Primary Attribute (whichever is highest).,
   log.Println("applying Stentorian Voice")
   return state
 }

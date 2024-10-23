@@ -13,7 +13,7 @@ type Slamdance struct {
 func NewSlamdance() *Slamdance {
   return &Slamdance{
     name: "Slamdance",
-    description: "Effect1",
+    description: "Whenever you make a successful Stunning Blow, you force a foe to Resist a Takedown as well. You must attack with weapons possessing the Pummeling or Weak Quality to utilize this Talent.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Slamdance) Applier() domain.Applier {
 }
 
 func (e *Slamdance) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you make a successful Stunning Blow, you force a foe to Resist a Takedown as well. You must attack with weapons possessing the Pummeling or Weak Quality to utilize this Talent.,
   log.Println("applying Slamdance")
   return state
 }

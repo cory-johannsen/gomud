@@ -1,5 +1,4 @@
 name: Warrior's Tattoo
-description: "This is a description of the trait."
+description: Intricate knots of indigo ink are painted or tattooed upon the bodies of warriors amongst your people, symbols of their might and prowess. But these same symbols make it incredibly difficult to get a job in a respectable winesink, as everyone knows the tattooed cannot be trusted with the cash till.
 effects:
-  - Effect1
-goType: WarriorsTattoo
+  - Add the Punishing Quality to any Martial Melee or Martial Ranged weapon you wield, and +1 to Total Damage with these same weapons.,

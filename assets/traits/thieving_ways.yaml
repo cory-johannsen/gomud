@@ -1,5 +1,4 @@
 name: Thieving Ways
-description: "This is a description of the trait."
+description: You are a hair shorter than their kin. You find it easy to hide in gardens, particularly because they have a propensity to wear red caps and fake white beards!
 effects:
-  - Effect1
-goType: ThievingWays
+  - Foes must flip their results to fail all Attack Actions or Perilous Stunts made with ranged weapons against you. However, you cannot wield two-handed weapons, carry a shield and must reduce your Movement by 3. Finally, you will reference “1 to 10” on the Height table and will have a Frail build on the Build table.,

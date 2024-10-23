@@ -1,5 +1,4 @@
 name: Cavesight
-description: "This is a description of the trait."
+description: Using a combination of sounds and acoustic wayfinding, you can see in complete darkness as if it were perfectly illuminated.
 effects:
-  - Effect1
-goType: Cavesight
+  - You can see completely in the dark below ground as if it were daylight, providing you are able to hear.,

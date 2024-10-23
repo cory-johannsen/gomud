@@ -1,5 +1,4 @@
 name: Beyond the Veil
-description: "This is a description of the trait."
+description: You share a significant link with powers beyond mortal kith and kin and can manipulate them to their will. But, they have slowly fallen prey to the mind-bending warp and weft of the world beyond.
 effects:
-  - Effect1
-goType: BeyondtheVeil
+  - Whenever you fail or Critically Fail an Incantation Test, spend one Fortune Point to turn it into a Critical Success.,

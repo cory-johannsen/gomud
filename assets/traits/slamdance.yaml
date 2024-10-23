@@ -1,5 +1,4 @@
 name: Slamdance
-description: "This is a description of the trait."
+description: By bringing a powerful, hammy fist downwards to crush a foe, they also let fly their flintstone-like feet. This generally puts their enemies right where they want them - on the ground, ready for skewering.
 effects:
-  - Effect1
-goType: Slamdance
+  - Whenever you make a successful Stunning Blow, you force a foe to Resist a Takedown as well. You must attack with weapons possessing the Pummeling or Weak Quality to utilize this Talent.,

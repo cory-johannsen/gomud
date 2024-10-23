@@ -13,7 +13,7 @@ type Underfoot struct {
 func NewUnderfoot() *Underfoot {
   return &Underfoot{
     name: "Underfoot",
-    description: "Effect1",
+    description: "Add +3 to your Initiative.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Underfoot) Applier() domain.Applier {
 }
 
 func (e *Underfoot) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Add +3 to your Initiative.,
   log.Println("applying Underfoot")
   return state
 }

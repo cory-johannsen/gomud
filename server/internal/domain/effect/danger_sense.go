@@ -13,7 +13,7 @@ type DangerSense struct {
 func NewDangerSense() *DangerSense {
   return &DangerSense{
     name: "Danger Sense",
-    description: "Effect1",
+    description: "Whenever you are Surprised, spend one Fortune Point to avoid it and take your Turn as normal.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *DangerSense) Applier() domain.Applier {
 }
 
 func (e *DangerSense) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you are Surprised, spend one Fortune Point to avoid it and take your Turn as normal.,
   log.Println("applying Danger Sense")
   return state
 }

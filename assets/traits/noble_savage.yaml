@@ -1,5 +1,4 @@
 name: Noble Savage
-description: "This is a description of the trait."
+description: Whether through purposeful training or accident, you have developed a natural resistance to the elements.
 effects:
-  - Effect1
-goType: NobleSavage
+  - You never suffer physical Peril as a result of failed Toughness Tests,

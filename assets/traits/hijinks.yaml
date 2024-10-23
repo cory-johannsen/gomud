@@ -1,5 +1,4 @@
 name: Hijinks
-description: "This is a description of the trait."
+description: Sly in your ways, you use their vexing mannerisms and general under-footedness to confound the tall folk. These pranks are meant to annoy, as you love to make others an ass to their japes.
 effects:
-  - Effect1
-goType: Hijinks
+  - Whenever you suffer Damage from a melee weapon, spend a Fortune Point to ignore it entirely.,

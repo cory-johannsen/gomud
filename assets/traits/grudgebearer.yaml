@@ -1,5 +1,4 @@
 name: Grudgebearer
-description: "This is a description of the trait."
+description: You harbor ancestral hatred, bringing violence upon hated enemies. Perceived grievances – both real and imagined – and general bigotry fuel this rage.
 effects:
-  - Effect1
-goType: Grudgebearer
+  - Whenever you use Fury Dice to determine weapon Damage, they explode on face ‘5-6’.,

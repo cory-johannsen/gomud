@@ -13,7 +13,7 @@ type MeditativeHealing struct {
 func NewMeditativeHealing() *MeditativeHealing {
   return &MeditativeHealing{
     name: "Meditative Healing",
-    description: "Effect1",
+    description: "Whenever you awaken from a good night’s sleep, you move one step up the Damage Condition Track positively. This means that if you were Grievously Wounded, you are now Seriously Wounded instead. Note that this does not ‘cure’ Injuries.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *MeditativeHealing) Applier() domain.Applier {
 }
 
 func (e *MeditativeHealing) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you awaken from a good night’s sleep, you move one step up the Damage Condition Track positively. This means that if you were Grievously Wounded, you are now Seriously Wounded instead. Note that this does not ‘cure’ Injuries.,
   log.Println("applying Meditative Healing")
   return state
 }

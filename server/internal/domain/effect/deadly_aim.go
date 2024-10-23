@@ -13,7 +13,7 @@ type DeadlyAim struct {
 func NewDeadlyAim() *DeadlyAim {
   return &DeadlyAim{
     name: "Deadly Aim",
-    description: "Effect1",
+    description: "Whenever you make an Attack Action or Perilous Stunt using a ranged weapon, foes must flip the results to fail to Dodge, Parry or Resist it.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *DeadlyAim) Applier() domain.Applier {
 }
 
 func (e *DeadlyAim) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you make an Attack Action or Perilous Stunt using a ranged weapon, foes must flip the results to fail to Dodge, Parry or Resist it.,
   log.Println("applying Deadly Aim")
   return state
 }

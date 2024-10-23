@@ -13,7 +13,7 @@ type Memento struct {
 func NewMemento() *Memento {
   return &Memento{
     name: "Memento",
-    description: "Effect1",
+    description: "When carrying your memento, your Disorder’s effects may be temporarily ignored for 24 hours by spending a Fortune Point,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Memento) Applier() domain.Applier {
 }
 
 func (e *Memento) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - When carrying your memento, your Disorder’s effects may be temporarily ignored for 24 hours by spending a Fortune Point,
   log.Println("applying Memento")
   return state
 }

@@ -1,0 +1,4 @@
+name: Fleet-Footed
+description: In tense situations, you hop madly like a rabbit, being remarkably fast on your feet. This is particularly fortunate when they need to tuck and roll when attacked, but does absolutely no good when you needs to hike from one end of the shire to the mouth of a far-flung volcano.
+effects:
+  - Whenever you Charge or Run, add +6 yards to Movement.,

@@ -1,5 +1,4 @@
 name: Fettered Chaos
-description: "This is a description of the trait."
+description: Your Background is incredibly resilient despite its less than imposing physique. They illustrate an inexorable spiritual resistance towards the lure of Corruption and madness.
 effects:
-  - Effect1
-goType: FetteredChaos
+  - Whenever you suffer Corruption, decrease the number you gain by three (to a minimum of one). This means that if you suffer 6 Corruption, you gain 3 instead.,

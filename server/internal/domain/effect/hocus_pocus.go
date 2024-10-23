@@ -13,7 +13,7 @@ type HocusPocus struct {
 func NewHocusPocus() *HocusPocus {
   return &HocusPocus{
     name: "Hocus Pocus",
-    description: "Effect1",
+    description: "Whenever a foe fails to Resist your Magicks, they Critically Fail instead.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *HocusPocus) Applier() domain.Applier {
 }
 
 func (e *HocusPocus) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever a foe fails to Resist your Magicks, they Critically Fail instead.,
   log.Println("applying Hocus Pocus")
   return state
 }

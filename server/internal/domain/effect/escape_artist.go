@@ -13,7 +13,7 @@ type EscapeArtist struct {
 func NewEscapeArtist() *EscapeArtist {
   return &EscapeArtist{
     name: "Escape Artist",
-    description: "Effect1",
+    description: "You can never be caught in a Chokehold and may flip the results to succeed at Coordination Tests to slip through bonds and other situations which may detain you from moving.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *EscapeArtist) Applier() domain.Applier {
 }
 
 func (e *EscapeArtist) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You can never be caught in a Chokehold and may flip the results to succeed at Coordination Tests to slip through bonds and other situations which may detain you from moving.,
   log.Println("applying Escape Artist")
   return state
 }

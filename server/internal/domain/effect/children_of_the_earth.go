@@ -13,7 +13,7 @@ type ChildrenoftheEarth struct {
 func NewChildrenoftheEarth() *ChildrenoftheEarth {
   return &ChildrenoftheEarth{
     name: "Children of the Earth",
-    description: "Effect1",
+    description: "You can never be forced off your feet or knocked Prone onto the ground by the elements, your enemies or even Magick. Finally, you will have a Corpulent build on the Build table.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *ChildrenoftheEarth) Applier() domain.Applier {
 }
 
 func (e *ChildrenoftheEarth) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You can never be forced off your feet or knocked Prone onto the ground by the elements, your enemies or even Magick. Finally, you will have a Corpulent build on the Build table.,
   log.Println("applying Children of the Earth")
   return state
 }

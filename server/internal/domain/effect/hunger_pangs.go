@@ -13,7 +13,7 @@ type HungerPangs struct {
 func NewHungerPangs() *HungerPangs {
   return &HungerPangs{
     name: "Hunger Pangs",
-    description: "Effect1",
+    description: "Whenever you successfully Resist the effects of Stress, Fear, Terror or other effects that force you to make a Resolve Test, you immediately gain the benefits of one dose of mandrake root. If this is a Critical Success, you gain the benefits of three doses instead. When under Hunger Pang’s effects, you do not suffer the drawbacks normally associated with taking mandrake root.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *HungerPangs) Applier() domain.Applier {
 }
 
 func (e *HungerPangs) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you successfully Resist the effects of Stress, Fear, Terror or other effects that force you to make a Resolve Test, you immediately gain the benefits of one dose of mandrake root. If this is a Critical Success, you gain the benefits of three doses instead. When under Hunger Pang’s effects, you do not suffer the drawbacks normally associated with taking mandrake root.,
   log.Println("applying Hunger Pangs")
   return state
 }

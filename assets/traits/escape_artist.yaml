@@ -1,5 +1,4 @@
 name: Escape Artist
-description: "This is a description of the trait."
+description: You are wheedling and conniving. They cannot easily be caught or detained by the law.
 effects:
-  - Effect1
-goType: EscapeArtist
+  - You can never be caught in a Chokehold and may flip the results to succeed at Coordination Tests to slip through bonds and other situations which may detain you from moving.,

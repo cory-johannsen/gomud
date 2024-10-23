@@ -1,5 +1,4 @@
 name: Frightening Bellow
-description: "This is a description of the trait."
+description: You lungs are nearly as powerful as your stomach. This gives you amazing vocal capabilities, letting them rip out massive and terrifying roars as intimidation.
 effects:
-  - Effect1
-goType: FrighteningBellow
+  - Whenever you succeed at an Intimidate Test, the foes you intimidated also suffer from Stress. If it is a Critical Success, they suffer from Fear instead.,

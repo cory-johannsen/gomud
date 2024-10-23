@@ -13,7 +13,7 @@ type StrengthoftheMountain struct {
 func NewStrengthoftheMountain() *StrengthoftheMountain {
   return &StrengthoftheMountain{
     name: "Strength of the Mountain",
-    description: "Effect1",
+    description: "Any Skill Rank you acquire that relies on the Brawn Primary Attribute modifies your Base Chance by +15, instead of +10.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *StrengthoftheMountain) Applier() domain.Applier {
 }
 
 func (e *StrengthoftheMountain) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Any Skill Rank you acquire that relies on the Brawn Primary Attribute modifies your Base Chance by +15, instead of +10.,
   log.Println("applying Strength of the Mountain")
   return state
 }

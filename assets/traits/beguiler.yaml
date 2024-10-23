@@ -1,5 +1,4 @@
 name: Beguiler
-description: "This is a description of the trait."
+description: Your lies are hard to tell from truth, and you can use this to your advantage. With a string of insults and chiding, you infuriate and distract your opponent.
 effects:
-  - Effect1
-goType: Beguiler
+  - Reference either your [FB] or [BB] for the purposes of determining Damage Threshold. Additionally, you may substitute Guile in place of any Combat-based Skill when Parrying attacks.,

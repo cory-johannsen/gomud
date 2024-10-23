@@ -13,7 +13,7 @@ type PhysicalProwess struct {
 func NewPhysicalProwess() *PhysicalProwess {
   return &PhysicalProwess{
     name: "Physical Prowess",
-    description: "Effect1",
+    description: "Reference either your [MB] or [QB] when determining Movement. Additionally, you may substitute Athletics in place of Coordination when Dodging ranged weapons. Finally, you will have a Husky build on the Build table.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *PhysicalProwess) Applier() domain.Applier {
 }
 
 func (e *PhysicalProwess) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Reference either your [MB] or [QB] when determining Movement. Additionally, you may substitute Athletics in place of Coordination when Dodging ranged weapons. Finally, you will have a Husky build on the Build table.,
   log.Println("applying Physical Prowess")
   return state
 }

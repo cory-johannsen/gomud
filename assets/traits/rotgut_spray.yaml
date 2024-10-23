@@ -1,5 +1,4 @@
 name: Rotgut Spray
-description: "This is a description of the trait."
+description: You have a natural predilection towards drink. Due to their almost furnace-like guts, they can ignite any alcohol they ingest to shoot it back out as a gout of flame.
 effects:
-  - Effect1
-goType: RotgutSpray
+  - After consuming an entire bottle of rotgut, you can belch it up as flaming breath. Treat this breath as a bottle bomb. However, you must immediately make a Toughness Test or become Intoxicated.,

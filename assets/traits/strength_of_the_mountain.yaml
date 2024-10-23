@@ -1,5 +1,4 @@
 name: Strength of the Mountain
-description: "This is a description of the trait."
+description: You can perform incredible feats of stamina. They claim that even the smallest runt of their clans can haul a hogshead of mead without breaking a sweat.
 effects:
-  - Effect1
-goType: StrengthoftheMountain
+  - Any Skill Rank you acquire that relies on the Brawn Primary Attribute modifies your Base Chance by +15, instead of +10.,

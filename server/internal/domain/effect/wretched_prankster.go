@@ -13,7 +13,7 @@ type WretchedPrankster struct {
 func NewWretchedPrankster() *WretchedPrankster {
   return &WretchedPrankster{
     name: "Wretched Prankster",
-    description: "Effect1",
+    description: "At your discretion, you may use your Guile Skill to both Dodge and Parry.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *WretchedPrankster) Applier() domain.Applier {
 }
 
 func (e *WretchedPrankster) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - At your discretion, you may use your Guile Skill to both Dodge and Parry.,
   log.Println("applying Wretched Prankster")
   return state
 }

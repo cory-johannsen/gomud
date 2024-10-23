@@ -1,5 +1,4 @@
 name: Memento
-description: "This is a description of the trait."
+description: As a child you were given a precious keepsake to cherish. Typically, this is a bauble, cameo, necklace or ring – something you can hold close to their hearts. This memento brings comfort and solace in the face of danger. However, other pickpockets from your Background may covet this treasure for themselves.
 effects:
-  - Effect1
-goType: Memento
+  - When carrying your memento, your Disorder’s effects may be temporarily ignored for 24 hours by spending a Fortune Point,

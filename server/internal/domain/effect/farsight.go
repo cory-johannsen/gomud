@@ -13,7 +13,7 @@ type Farsight struct {
 func NewFarsight() *Farsight {
   return &Farsight{
     name: "Farsight",
-    description: "Effect1",
+    description: "When attempting to discern minute details with your vision, you always succeed at Awareness Tests.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Farsight) Applier() domain.Applier {
 }
 
 func (e *Farsight) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - When attempting to discern minute details with your vision, you always succeed at Awareness Tests.,
   log.Println("applying Farsight")
   return state
 }

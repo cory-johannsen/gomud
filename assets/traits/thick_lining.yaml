@@ -1,5 +1,4 @@
 name: Thick Lining
-description: "This is a description of the trait."
+description: Those whose job it is to slaughter often expose themselves to the deadly natural poisons of tainted meats. Their constant work with natural poisons have made them immune to them, and some even prefer the tangy taste.
 effects:
-  - Effect1
-goType: ThickLining
+  - You are immune to Poisons of all types.,

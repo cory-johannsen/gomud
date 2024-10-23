@@ -13,7 +13,7 @@ type DenizenofStone struct {
 func NewDenizenofStone() *DenizenofStone {
   return &DenizenofStone{
     name: "Denizen of Stone",
-    description: "Effect1",
+    description: "You are never left Helpless for any reason.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *DenizenofStone) Applier() domain.Applier {
 }
 
 func (e *DenizenofStone) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You are never left Helpless for any reason.,
   log.Println("applying Denizen of Stone")
   return state
 }

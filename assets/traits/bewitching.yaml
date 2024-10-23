@@ -1,5 +1,4 @@
 name: Bewitching
-description: "This is a description of the trait."
+description: You are striking to behold and others have a difficult time concentrating on anything else but their beauty. But beneath this veneer lies an insidious and alien power to bend people to their whim.
 effects:
-  - Effect1
-goType: Bewitching
+  - Whenever you cast Magick to control minds or use the Charm Skill on others, foes must flip their results to fail to Resist its effects. However, this only works if your foe can both see and hear you.,

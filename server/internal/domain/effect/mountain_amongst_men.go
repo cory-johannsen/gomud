@@ -13,7 +13,7 @@ type MountainAmongstMen struct {
 func NewMountainAmongstMen() *MountainAmongstMen {
   return &MountainAmongstMen{
     name: "Mountain Amongst Men",
-    description: "Effect1",
+    description: "You are able to wield any two-handed melee weapon with one hand. This also means you may freely take advantage of the Adaptable Quality for weapons using only one hand. Finally, you will reference “91 to 100” on the Height table and will have a Husky build on the Build table.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *MountainAmongstMen) Applier() domain.Applier {
 }
 
 func (e *MountainAmongstMen) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You are able to wield any two-handed melee weapon with one hand. This also means you may freely take advantage of the Adaptable Quality for weapons using only one hand. Finally, you will reference “91 to 100” on the Height table and will have a Husky build on the Build table.,
   log.Println("applying Mountain Amongst Men")
   return state
 }

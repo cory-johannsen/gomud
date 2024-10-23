@@ -13,7 +13,7 @@ type RotgutSpray struct {
 func NewRotgutSpray() *RotgutSpray {
   return &RotgutSpray{
     name: "Rotgut Spray",
-    description: "Effect1",
+    description: "After consuming an entire bottle of rotgut, you can belch it up as flaming breath. Treat this breath as a bottle bomb. However, you must immediately make a Toughness Test or become Intoxicated.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *RotgutSpray) Applier() domain.Applier {
 }
 
 func (e *RotgutSpray) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - After consuming an entire bottle of rotgut, you can belch it up as flaming breath. Treat this breath as a bottle bomb. However, you must immediately make a Toughness Test or become Intoxicated.,
   log.Println("applying Rotgut Spray")
   return state
 }

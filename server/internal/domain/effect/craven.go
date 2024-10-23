@@ -13,7 +13,7 @@ type Craven struct {
 func NewCraven() *Craven {
   return &Craven{
     name: "Craven",
-    description: "Effect1",
+    description: "You may flip the results to succeed at Combat-based Skill Tests to Parry attacks made with melee weapons.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Craven) Applier() domain.Applier {
 }
 
 func (e *Craven) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You may flip the results to succeed at Combat-based Skill Tests to Parry attacks made with melee weapons.,
   log.Println("applying Craven")
   return state
 }

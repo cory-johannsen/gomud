@@ -1,5 +1,4 @@
 name: Natural Selection
-description: "This is a description of the trait."
+description: Favored above all others, you are the living instruments of the gods. A thankless few are granted an inkling of their might. To those born beneath the right stars, a great blessing is bestowed.
 effects:
-  - Effect1
-goType: NaturalSelection
+  - You may permanently change any one Primary Attribute to a 55%.,

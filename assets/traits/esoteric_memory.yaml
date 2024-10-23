@@ -1,5 +1,4 @@
 name: Esoteric Memory
-description: "This is a description of the trait."
+description: You have a preternatural ability for remembering details and subconsciously committing things to memory. They may even develop odd rituals to help jog their memories.
 effects:
-  - Effect1
-goType: EsotericMemory
+  - When attempting to recall a particular detail or remember a fact, you always succeed at Scrutinize Tests.,

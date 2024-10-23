@@ -1,5 +1,4 @@
 name: Tunnel Vision
-description: "This is a description of the trait."
+description: Like your Mountain-born cousins, you have especially-attuned senses below the earth. Using a preternatural sense of touch, they can ‘feel’ their way around the underworld.
 effects:
-  - Effect1
-goType: TunnelVision
+  - You can see completely in the dark below ground as if it were daylight, providing you are able to use your hands freely.,

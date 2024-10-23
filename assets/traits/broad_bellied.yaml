@@ -1,5 +1,4 @@
 name: Broad Bellied
-description: "This is a description of the trait."
+description: Your staggering girth has gifted you with the ability to haul anything without breaking a sweat.
 effects:
-  - Effect1
-goType: BroadBellied
+  - You entirely ignore the effects of Overage, unless the value is in excess of two times your Initiative or Movement.,

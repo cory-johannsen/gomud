@@ -13,7 +13,7 @@ type Fieldwarden struct {
 func NewFieldwarden() *Fieldwarden {
   return &Fieldwarden{
     name: "Fieldwarden",
-    description: "Effect1",
+    description: "Ignore the Weak Quality of all ranged weapons you wield.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Fieldwarden) Applier() domain.Applier {
 }
 
 func (e *Fieldwarden) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Ignore the Weak Quality of all ranged weapons you wield.,
   log.Println("applying Fieldwarden")
   return state
 }

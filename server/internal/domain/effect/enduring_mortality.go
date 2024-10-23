@@ -13,7 +13,7 @@ type EnduringMortality struct {
 func NewEnduringMortality() *EnduringMortality {
   return &EnduringMortality{
     name: "Enduring Mortality",
-    description: "Effect1",
+    description: "You never suffer the debilitating effects of any Disease, aging or sickness – even by the hand of Magick.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *EnduringMortality) Applier() domain.Applier {
 }
 
 func (e *EnduringMortality) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You never suffer the debilitating effects of any Disease, aging or sickness – even by the hand of Magick.,
   log.Println("applying Enduring Mortality")
   return state
 }

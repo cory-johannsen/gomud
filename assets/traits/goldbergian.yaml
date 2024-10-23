@@ -1,5 +1,4 @@
 name: Goldbergian
-description: "This is a description of the trait."
+description: From devising mouse trap-styled children’s games to the chain-reactive devices that oscillate endlessly in your workshop, you have created a number of deliberately over-engineered machines in your time. You apply this same creative genius towards many of the professional arts, albeit at the cost of being seen as a madman.
 effects:
-  - Effect1
-goType: Goldbergian
+  - Any Skill Rank you gain in Alchemy, Counterfeit, Skulduggery and Tradecraft modifies your Base Chance by +15, instead of +10.,

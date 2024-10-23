@@ -1,5 +1,4 @@
 name: Mighty Thews
-description: "This is a description of the trait."
+description: You are all massive, but many possess tiny hands. However, a rarer breed has hands in proportion to the rest of their body. These mighty specimens can easily handle turning the spit over a fire on their own.
 effects:
-  - Effect1
-goType: MightyThews
+  - You are able to wield any two-handed melee weapon with one hand. This also means you may freely take advantage of the Adaptable Quality for weapons using one hand. Whenever you gain the benefits of the Adaptable Quality, you may add +2 to Total Damage, instead of the normal +1.,

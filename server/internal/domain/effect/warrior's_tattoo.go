@@ -13,7 +13,7 @@ type WarriorsTattoo struct {
 func NewWarriorsTattoo() *WarriorsTattoo {
   return &WarriorsTattoo{
     name: "Warrior's Tattoo",
-    description: "Effect1",
+    description: "Add the Punishing Quality to any Martial Melee or Martial Ranged weapon you wield, and +1 to Total Damage with these same weapons.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *WarriorsTattoo) Applier() domain.Applier {
 }
 
 func (e *WarriorsTattoo) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Add the Punishing Quality to any Martial Melee or Martial Ranged weapon you wield, and +1 to Total Damage with these same weapons.,
   log.Println("applying Warrior's Tattoo")
   return state
 }

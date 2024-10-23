@@ -1,5 +1,4 @@
 name: Nature's Own
-description: "This is a description of the trait."
+description: Your people lived amongst the forest, beneath the jungle canopy, atop the highest mountain and even below the earth. With burrs, leaves, mud and the like clinging to their clothing, they emerge unwashed from the wilderness, acknowledging little reason to clean themselves up for civilized company.
 effects:
-  - Effect1
-goType: NaturesOwn
+  - You leave no trace of your passing in rural areas or above ground, unless discovered by Magick or a Critically Succeeded Awareness Test.,

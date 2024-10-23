@@ -13,7 +13,7 @@ type LowBlow struct {
 func NewLowBlow() *LowBlow {
   return &LowBlow{
     name: "Low Blow",
-    description: "Effect1",
+    description: "Whenever you make a successful Melee Attack, you force a foe to Resist a Stunning Blow. You must be Engaged with a foe in order to use a Low Blow.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *LowBlow) Applier() domain.Applier {
 }
 
 func (e *LowBlow) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you make a successful Melee Attack, you force a foe to Resist a Stunning Blow. You must be Engaged with a foe in order to use a Low Blow.,
   log.Println("applying Low Blow")
   return state
 }

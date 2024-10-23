@@ -13,7 +13,7 @@ type ConsumeAlcohol struct {
 func NewConsumeAlcohol() *ConsumeAlcohol {
   return &ConsumeAlcohol{
     name: "Consume Alcohol",
-    description: "Effect1",
+    description: "While Intoxicated, you never suffer from the negative effects associated with this condition.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *ConsumeAlcohol) Applier() domain.Applier {
 }
 
 func (e *ConsumeAlcohol) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - While Intoxicated, you never suffer from the negative effects associated with this condition.,
   log.Println("applying Consume Alcohol")
   return state
 }

@@ -13,7 +13,7 @@ type ManifestDestiny struct {
 func NewManifestDestiny() *ManifestDestiny {
   return &ManifestDestiny{
     name: "Manifest Destiny",
-    description: "Effect1",
+    description: "When using a Skill you do not possess Skill Ranks in, add a +5 Base Chance.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *ManifestDestiny) Applier() domain.Applier {
 }
 
 func (e *ManifestDestiny) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - When using a Skill you do not possess Skill Ranks in, add a +5 Base Chance.,
   log.Println("applying Manifest Destiny")
   return state
 }

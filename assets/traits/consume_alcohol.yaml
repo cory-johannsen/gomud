@@ -1,5 +1,4 @@
 name: Consume Alcohol
-description: "This is a description of the trait."
+description: You possess an unusually high resistance to the poisonous effects of alcohol and tobacco. But the stink of these vices cling to their clothes and breath, marking them less desired among the well-landed.
 effects:
-  - Effect1
-goType: ConsumeAlcohol
+  - While Intoxicated, you never suffer from the negative effects associated with this condition.,

@@ -13,7 +13,7 @@ type Ironclad struct {
 func NewIronclad() *Ironclad {
   return &Ironclad{
     name: "Ironclad",
-    description: "Effect1",
+    description: "When wearing a suit of armor, ignore its Encumbrance Value.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Ironclad) Applier() domain.Applier {
 }
 
 func (e *Ironclad) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - When wearing a suit of armor, ignore its Encumbrance Value.,
   log.Println("applying Ironclad")
   return state
 }

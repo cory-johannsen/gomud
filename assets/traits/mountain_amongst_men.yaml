@@ -1,5 +1,4 @@
 name: Mountain Amongst Men
-description: "This is a description of the trait."
+description: You are incredibly tall, towering over their own kind. Being a hulking brute may have negative social consequences, as they are oftentimes perceived as being clumsy, dunderheaded or somewhat terrifying. Are these assertions correct? You decide.
 effects:
-  - Effect1
-goType: MountainAmongstMen
+  - You are able to wield any two-handed melee weapon with one hand. This also means you may freely take advantage of the Adaptable Quality for weapons using only one hand. Finally, you will reference “91 to 100” on the Height table and will have a Husky build on the Build table.,

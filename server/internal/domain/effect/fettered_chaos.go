@@ -13,7 +13,7 @@ type FetteredChaos struct {
 func NewFetteredChaos() *FetteredChaos {
   return &FetteredChaos{
     name: "Fettered Chaos",
-    description: "Effect1",
+    description: "Whenever you suffer Corruption, decrease the number you gain by three (to a minimum of one). This means that if you suffer 6 Corruption, you gain 3 instead.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *FetteredChaos) Applier() domain.Applier {
 }
 
 func (e *FetteredChaos) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you suffer Corruption, decrease the number you gain by three (to a minimum of one). This means that if you suffer 6 Corruption, you gain 3 instead.,
   log.Println("applying Fettered Chaos")
   return state
 }

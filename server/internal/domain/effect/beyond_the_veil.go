@@ -13,7 +13,7 @@ type BeyondtheVeil struct {
 func NewBeyondtheVeil() *BeyondtheVeil {
   return &BeyondtheVeil{
     name: "Beyond the Veil",
-    description: "Effect1",
+    description: "Whenever you fail or Critically Fail an Incantation Test, spend one Fortune Point to turn it into a Critical Success.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *BeyondtheVeil) Applier() domain.Applier {
 }
 
 func (e *BeyondtheVeil) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you fail or Critically Fail an Incantation Test, spend one Fortune Point to turn it into a Critical Success.,
   log.Println("applying Beyond the Veil")
   return state
 }

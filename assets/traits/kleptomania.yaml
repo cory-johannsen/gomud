@@ -1,5 +1,4 @@
 name: Kleptomania
-description: "This is a description of the trait."
+description: You are gifted with the ability to use illusion and sleight of hand tricks to make things disappear. Their hands may wander off on their own to nick things, only to realize later they find something stuffed in their pocket that wasn’t there before!
 effects:
-  - Effect1
-goType: Kleptomania
+  - Whenever you are in a pinch and need one object that could realistically fit into your pocket, spend one Fortune Point to automatically find it within. For instance, you could use this to produce a single silver shilling (ss) from your pockets, but not several silver shillings (ss) without spending an equal number of Fortune Points.,

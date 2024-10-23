@@ -1,5 +1,4 @@
 name: Underfoot
-description: "This is a description of the trait."
+description: Living below the world in a burrow has made Gnome backs crooked. Because of this, they hobble around like old men, not necessarily dawdling, but quickly scurrying about, beneath the line of sight for most folk.
 effects:
-  - Effect1
-goType: Underfoot
+  - Add +3 to your Initiative.,

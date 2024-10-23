@@ -1,5 +1,4 @@
 name: Dungeons Deep
-description: "This is a description of the trait."
+description: You are not a prodigious person. In fact, finding a living, breathing Gnome below ground is rare indeed. They pass soundlessly throughout the caverns below the earth, roaming the ‘under dark’ in solitude. Besides, who would go looking after this much-maligned race of people in the first place?
 effects:
-  - Effect1
-goType: DungeonsDeep
+  - You leave no trace of your passing in underground areas or caves whatsoever, unless discovered by Magick or at a Critically Successful Awareness Test.,

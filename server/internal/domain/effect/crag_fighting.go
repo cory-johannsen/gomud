@@ -13,7 +13,7 @@ type CragFighting struct {
 func NewCragFighting() *CragFighting {
   return &CragFighting{
     name: "Crag Fighting",
-    description: "Effect1",
+    description: "You may Maneuver after any Melee Attack for 0 Action Points.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *CragFighting) Applier() domain.Applier {
 }
 
 func (e *CragFighting) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You may Maneuver after any Melee Attack for 0 Action Points.,
   log.Println("applying Crag Fighting")
   return state
 }

@@ -1,5 +1,4 @@
 name: Manifest Destiny
-description: "This is a description of the trait."
+description: You are a quick study and carry with them a wealth of experiences. Unlike other Backgrounds, their people are extremely adaptable and can use a number of techniques with a minimal level of understanding.
 effects:
-  - Effect1
-goType: ManifestDestiny
+  - When using a Skill you do not possess Skill Ranks in, add a +5 Base Chance.,

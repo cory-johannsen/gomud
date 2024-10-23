@@ -13,7 +13,7 @@ type Dauntless struct {
 func NewDauntless() *Dauntless {
   return &Dauntless{
     name: "Dauntless",
-    description: "Effect1",
+    description: "You are immune to the effects of the Intimidate Skill and cannot be Stunned or Knocked Out!,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Dauntless) Applier() domain.Applier {
 }
 
 func (e *Dauntless) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You are immune to the effects of the Intimidate Skill and cannot be Stunned or Knocked Out!,
   log.Println("applying Dauntless")
   return state
 }

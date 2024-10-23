@@ -13,7 +13,7 @@ type Grudgebearer struct {
 func NewGrudgebearer() *Grudgebearer {
   return &Grudgebearer{
     name: "Grudgebearer",
-    description: "Effect1",
+    description: "Whenever you use Fury Dice to determine weapon Damage, they explode on face ‘5-6’.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Grudgebearer) Applier() domain.Applier {
 }
 
 func (e *Grudgebearer) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you use Fury Dice to determine weapon Damage, they explode on face ‘5-6’.,
   log.Println("applying Grudgebearer")
   return state
 }

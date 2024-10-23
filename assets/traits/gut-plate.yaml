@@ -1,5 +1,4 @@
 name: Gut-plate
-description: "This is a description of the trait."
+description: Your great belly is covered in an outer carapace of bones and muscles. Unfortunately, it makes for an easy target. Fortunately, it protects you from most blows.
 effects:
-  - Effect1
-goType: Gutplate
+  - Whenever unarmored, add +2 to your Damage Threshold as if you were wearing a suit of leather armor. You also gain the benefits of the Natural Quality in these cases.,

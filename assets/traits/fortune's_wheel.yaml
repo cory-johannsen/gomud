@@ -1,5 +1,4 @@
 name: Fortune's Wheel
-description: "This is a description of the trait."
+description: You are favored by Lady Luck. In a sense, they are her emissaries in an unkind and capricious world, either victims of its accidents or beneficiaries of its boons.
 effects:
-  - Effect1
-goType: FortunesWheel
+  - Anytime you generate a Critical Failure after rolling D100, automatically add one Fortune Point into the Fortune Pool.,

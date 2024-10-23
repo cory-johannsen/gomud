@@ -1,5 +1,4 @@
 name: Cruisin' for a Bruisin'
-description: "This is a description of the trait."
+description: You have reaped the full benefits of their omnivorous diets from birth – mother’s milk, raw meat, dirt, Elven trinkets, swamp gas, human livers and tears – and are infused with great size and physical potency.
 effects:
-  - Effect1
-goType: CruisinforaBruisin
+  - You may reference either [BB] or [BB] with any melee weapons you wield, including those which possess the Throwing Quality.,

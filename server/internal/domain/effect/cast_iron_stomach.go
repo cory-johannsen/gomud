@@ -13,7 +13,7 @@ type CastIronStomach struct {
 func NewCastIronStomach() *CastIronStomach {
   return &CastIronStomach{
     name: "Cast Iron Stomach",
-    description: "Effect1",
+    description: "You can gain sustenance from eating literally anything, including inanimate objects. This protects you from starvation entirely,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *CastIronStomach) Applier() domain.Applier {
 }
 
 func (e *CastIronStomach) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You can gain sustenance from eating literally anything, including inanimate objects. This protects you from starvation entirely,
   log.Println("applying Cast Iron Stomach")
   return state
 }

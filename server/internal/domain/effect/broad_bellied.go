@@ -13,7 +13,7 @@ type BroadBellied struct {
 func NewBroadBellied() *BroadBellied {
   return &BroadBellied{
     name: "Broad Bellied",
-    description: "Effect1",
+    description: "You entirely ignore the effects of Overage, unless the value is in excess of two times your Initiative or Movement.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *BroadBellied) Applier() domain.Applier {
 }
 
 func (e *BroadBellied) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You entirely ignore the effects of Overage, unless the value is in excess of two times your Initiative or Movement.,
   log.Println("applying Broad Bellied")
   return state
 }

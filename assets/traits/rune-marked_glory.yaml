@@ -1,5 +1,4 @@
 name: Rune-Marked Glory
-description: "This is a description of the trait."
+description: You mark keepsakes, armor and weapons with chalk and ink, telling of an ancient, forgotten glory that came before them. Some tattoo themselves from head to toe in these arcane symbols of might. Yet, these runes speak to an eldritch power, girding their body and mind against the effects of sorcery.
 effects:
-  - Effect1
-goType: RuneMarkedGlory
+  - Whenever you suffer Damage or Peril from Magick, spend a Fortune Point to ignore it entirely. Note that this does not alleviate any additional effects the Magick spell may also cause.,

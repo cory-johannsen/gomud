@@ -13,7 +13,7 @@ type NobleSavage struct {
 func NewNobleSavage() *NobleSavage {
   return &NobleSavage{
     name: "Noble Savage",
-    description: "Effect1",
+    description: "You never suffer physical Peril as a result of failed Toughness Tests,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *NobleSavage) Applier() domain.Applier {
 }
 
 func (e *NobleSavage) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You never suffer physical Peril as a result of failed Toughness Tests,
   log.Println("applying Noble Savage")
   return state
 }

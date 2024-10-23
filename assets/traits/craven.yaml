@@ -1,5 +1,4 @@
 name: Craven
-description: "This is a description of the trait."
+description: You are almost laughably faint-hearted, ready to bolt at a moment’s notice. Cowardice has its place, particularly when you wish to keep their hide intact.
 effects:
-  - Effect1
-goType: Craven
+  - You may flip the results to succeed at Combat-based Skill Tests to Parry attacks made with melee weapons.,

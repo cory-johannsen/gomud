@@ -1,5 +1,4 @@
 name: Ironclad
-description: "This is a description of the trait."
+description: You have an incredibly stalwart physique, sleeping and eating daily in their armor.
 effects:
-  - Effect1
-goType: Ironclad
+  - When wearing a suit of armor, ignore its Encumbrance Value.,

@@ -13,7 +13,7 @@ type NaturalSelection struct {
 func NewNaturalSelection() *NaturalSelection {
   return &NaturalSelection{
     name: "Natural Selection",
-    description: "Effect1",
+    description: "You may permanently change any one Primary Attribute to a 55%.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *NaturalSelection) Applier() domain.Applier {
 }
 
 func (e *NaturalSelection) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You may permanently change any one Primary Attribute to a 55%.,
   log.Println("applying Natural Selection")
   return state
 }

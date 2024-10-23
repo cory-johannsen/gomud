@@ -1,5 +1,4 @@
 name: Wretched Prankster
-description: "This is a description of the trait."
+description: Poking fun at their personal flaws and faults in their armor, you annoy your foes to the point of weakness.
 effects:
-  - Effect1
-goType: WretchedPrankster
+  - At your discretion, you may use your Guile Skill to both Dodge and Parry.,

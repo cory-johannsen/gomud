@@ -1,5 +1,4 @@
 name: Stentorian Voice
-description: "This is a description of the trait."
+description: You have a loud and booming voice, and when they speak, others listen. They break out in song often, recounting tales of vendettas, unending turmoil and unresolved grievances towards other Backgrounds. It can become incredibly annoying to their non- Dwarven comrades, as they must put up with their inability to hold a tune.
 effects:
-  - Effect1
-goType: StentorianVoice
+  - Whenever you use Fellowship-based Skills, refer to either your Brawn or Fellowship Primary Attribute (whichever is highest).,

@@ -1,5 +1,4 @@
 name: Seventh Sense
-description: "This is a description of the trait."
+description: You possess an unusual mutation, allowing them to visualize scents in the air. They can envision odors in the air as if they were comprised of blurry, colored light. As a result, they may be prone to allergies as the seasons change or sensitive to changes in light.
 effects:
-  - Effect1
-goType: SeventhSense
+  - Using your sense of smell to track others, you always succeed at Survival Tests.,

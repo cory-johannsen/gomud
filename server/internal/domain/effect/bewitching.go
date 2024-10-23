@@ -13,7 +13,7 @@ type Bewitching struct {
 func NewBewitching() *Bewitching {
   return &Bewitching{
     name: "Bewitching",
-    description: "Effect1",
+    description: "Whenever you cast Magick to control minds or use the Charm Skill on others, foes must flip their results to fail to Resist its effects. However, this only works if your foe can both see and hear you.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Bewitching) Applier() domain.Applier {
 }
 
 func (e *Bewitching) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you cast Magick to control minds or use the Charm Skill on others, foes must flip their results to fail to Resist its effects. However, this only works if your foe can both see and hear you.,
   log.Println("applying Bewitching")
   return state
 }

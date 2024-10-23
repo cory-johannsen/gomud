@@ -13,7 +13,7 @@ type SeventhSense struct {
 func NewSeventhSense() *SeventhSense {
   return &SeventhSense{
     name: "Seventh Sense",
-    description: "Effect1",
+    description: "Using your sense of smell to track others, you always succeed at Survival Tests.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *SeventhSense) Applier() domain.Applier {
 }
 
 func (e *SeventhSense) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Using your sense of smell to track others, you always succeed at Survival Tests.,
   log.Println("applying Seventh Sense")
   return state
 }

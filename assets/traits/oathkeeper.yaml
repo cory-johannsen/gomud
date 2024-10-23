@@ -1,5 +1,4 @@
 name: Oathkeeper
-description: "This is a description of the trait."
+description: Renowned as master builders, jealously guard the secrets of their work, passing these ancient rituals to their children. But as your fingers are the size of blood sausages and calloused, you find it difficult to work with things smaller than their hands.
 effects:
-  - Effect1
-goType: Oathkeeper
+  - All armor, shields and weapons you forge with the Tradecraft Skill automatically gains the Castle-forged Quality.,

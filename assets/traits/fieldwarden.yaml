@@ -1,5 +1,4 @@
 name: Fieldwarden
-description: "This is a description of the trait."
+description: You are taught at a young age to wield an array of weapons to defend themselves and their homeland.
 effects:
-  - Effect1
-goType: Fieldwarden
+  - Ignore the Weak Quality of all ranged weapons you wield.,

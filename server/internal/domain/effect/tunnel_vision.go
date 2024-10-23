@@ -13,7 +13,7 @@ type TunnelVision struct {
 func NewTunnelVision() *TunnelVision {
   return &TunnelVision{
     name: "Tunnel Vision",
-    description: "Effect1",
+    description: "You can see completely in the dark below ground as if it were daylight, providing you are able to use your hands freely.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *TunnelVision) Applier() domain.Applier {
 }
 
 func (e *TunnelVision) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You can see completely in the dark below ground as if it were daylight, providing you are able to use your hands freely.,
   log.Println("applying Tunnel Vision")
   return state
 }

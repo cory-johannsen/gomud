@@ -13,7 +13,7 @@ type DungeonsDeep struct {
 func NewDungeonsDeep() *DungeonsDeep {
   return &DungeonsDeep{
     name: "Dungeons Deep",
-    description: "Effect1",
+    description: "You leave no trace of your passing in underground areas or caves whatsoever, unless discovered by Magick or at a Critically Successful Awareness Test.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *DungeonsDeep) Applier() domain.Applier {
 }
 
 func (e *DungeonsDeep) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You leave no trace of your passing in underground areas or caves whatsoever, unless discovered by Magick or at a Critically Successful Awareness Test.,
   log.Println("applying Dungeons Deep")
   return state
 }

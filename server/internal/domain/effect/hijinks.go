@@ -13,7 +13,7 @@ type Hijinks struct {
 func NewHijinks() *Hijinks {
   return &Hijinks{
     name: "Hijinks",
-    description: "Effect1",
+    description: "Whenever you suffer Damage from a melee weapon, spend a Fortune Point to ignore it entirely.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Hijinks) Applier() domain.Applier {
 }
 
 func (e *Hijinks) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you suffer Damage from a melee weapon, spend a Fortune Point to ignore it entirely.,
   log.Println("applying Hijinks")
   return state
 }

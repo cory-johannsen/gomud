@@ -13,7 +13,7 @@ type Cavesight struct {
 func NewCavesight() *Cavesight {
   return &Cavesight{
     name: "Cavesight",
-    description: "Effect1",
+    description: "You can see completely in the dark below ground as if it were daylight, providing you are able to hear.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Cavesight) Applier() domain.Applier {
 }
 
 func (e *Cavesight) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You can see completely in the dark below ground as if it were daylight, providing you are able to hear.,
   log.Println("applying Cavesight")
   return state
 }

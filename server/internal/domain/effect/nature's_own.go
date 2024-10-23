@@ -13,7 +13,7 @@ type NaturesOwn struct {
 func NewNaturesOwn() *NaturesOwn {
   return &NaturesOwn{
     name: "Nature's Own",
-    description: "Effect1",
+    description: "You leave no trace of your passing in rural areas or above ground, unless discovered by Magick or a Critically Succeeded Awareness Test.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *NaturesOwn) Applier() domain.Applier {
 }
 
 func (e *NaturesOwn) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You leave no trace of your passing in rural areas or above ground, unless discovered by Magick or a Critically Succeeded Awareness Test.,
   log.Println("applying Nature's Own")
   return state
 }

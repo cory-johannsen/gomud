@@ -1,5 +1,4 @@
 name: Children of the Earth
-description: "This is a description of the trait."
+description: You have an almost magnetic pull toward the earth. This, combined with a lower center of gravity, makes you nigh impossible to topple.
 effects:
-  - Effect1
-goType: ChildrenoftheEarth
+  - You can never be forced off your feet or knocked Prone onto the ground by the elements, your enemies or even Magick. Finally, you will have a Corpulent build on the Build table.,

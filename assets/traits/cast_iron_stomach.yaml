@@ -1,5 +1,4 @@
 name: Cast Iron Stomach
-description: "This is a description of the trait."
+description: The most important part of your biology is your gut. Your heavily muscled bellies contain most of their vital organs. Their stomachs are also monstrously powerful and able to digest nearly anything, a natural mutation resulting from generations of extreme gluttony.
 effects:
-  - Effect1
-goType: CastIronStomach
+  - You can gain sustenance from eating literally anything, including inanimate objects. This protects you from starvation entirely,

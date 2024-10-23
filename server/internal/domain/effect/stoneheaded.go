@@ -13,7 +13,7 @@ type Stoneheaded struct {
 func NewStoneheaded() *Stoneheaded {
   return &Stoneheaded{
     name: "Stoneheaded",
-    description: "Effect1",
+    description: "You are immune to Magick which may control your mind and see through illusions without fail.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Stoneheaded) Applier() domain.Applier {
 }
 
 func (e *Stoneheaded) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You are immune to Magick which may control your mind and see through illusions without fail.,
   log.Println("applying Stoneheaded")
   return state
 }

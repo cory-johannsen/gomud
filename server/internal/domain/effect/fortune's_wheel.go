@@ -13,7 +13,7 @@ type FortunesWheel struct {
 func NewFortunesWheel() *FortunesWheel {
   return &FortunesWheel{
     name: "Fortune's Wheel",
-    description: "Effect1",
+    description: "Anytime you generate a Critical Failure after rolling D100, automatically add one Fortune Point into the Fortune Pool.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *FortunesWheel) Applier() domain.Applier {
 }
 
 func (e *FortunesWheel) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Anytime you generate a Critical Failure after rolling D100, automatically add one Fortune Point into the Fortune Pool.,
   log.Println("applying Fortune's Wheel")
   return state
 }

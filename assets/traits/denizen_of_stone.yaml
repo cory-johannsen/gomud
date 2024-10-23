@@ -1,5 +1,4 @@
 name: Denizen of Stone
-description: "This is a description of the trait."
+description: Whenever you go to sleep, it is whispered that they turn to stone. While this seems like a wild tale, there seems to be some truth to it. Their skin oft turns a shade of grey as they rest as if all the blood had been drained from their veins!
 effects:
-  - Effect1
-goType: DenizenofStone
+  - You are never left Helpless for any reason.,

@@ -1,5 +1,4 @@
 name: Mixed Family
-description: "This is a description of the trait."
+description: Your lineage contains folks from another Background other than your own.
 effects:
-  - Effect1
-goType: MixedFamily
+  - You gain a Trait from that Background as well.,

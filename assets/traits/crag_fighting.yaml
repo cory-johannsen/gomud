@@ -1,5 +1,4 @@
 name: Crag Fighting
-description: "This is a description of the trait."
+description: Living amongst the hills and mountains, you have adopted a particular edge in combat. Using subterfuge and guile, you cleverly outpace foes using guerilla strike tactics.
 effects:
-  - Effect1
-goType: CragFighting
+  - You may Maneuver after any Melee Attack for 0 Action Points.,

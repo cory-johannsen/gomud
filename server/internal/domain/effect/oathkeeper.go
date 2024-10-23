@@ -13,7 +13,7 @@ type Oathkeeper struct {
 func NewOathkeeper() *Oathkeeper {
   return &Oathkeeper{
     name: "Oathkeeper",
-    description: "Effect1",
+    description: "All armor, shields and weapons you forge with the Tradecraft Skill automatically gains the Castle-forged Quality.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Oathkeeper) Applier() domain.Applier {
 }
 
 func (e *Oathkeeper) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - All armor, shields and weapons you forge with the Tradecraft Skill automatically gains the Castle-forged Quality.,
   log.Println("applying Oathkeeper")
   return state
 }

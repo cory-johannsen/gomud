@@ -1,5 +1,4 @@
 name: Nighteyes
-description: "This is a description of the trait."
+description: You are not able to see completely in the dark, but can see clearly in the dim light of stars. It’s evident that to others when in these conditions, as your eyes tend to flash with their own light like an animal’s. It is enough to drive dim-witted peasants to demand that “the demon be hung by their neck until the lights go out”.
 effects:
-  - Effect1
-goType: Nighteyes
+  - You can see completely in the dark above ground as if it were full daylight, provided there is starlight or moonlight in the sky.,

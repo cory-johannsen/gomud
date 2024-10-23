@@ -1,5 +1,4 @@
 name: Enduring Mortality
-description: "This is a description of the trait."
+description: Although not immortal, you some still hold that flicker of divinity within their blood, passed down from your ancestry. Your features may change over these long decades. Even horrid scars seem to accentuate your youthful and vigorous features.
 effects:
-  - Effect1
-goType: EnduringMortality
+  - You never suffer the debilitating effects of any Disease, aging or sickness – even by the hand of Magick.,

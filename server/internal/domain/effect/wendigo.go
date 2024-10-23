@@ -13,7 +13,7 @@ type Wendigo struct {
 func NewWendigo() *Wendigo {
   return &Wendigo{
     name: "Wendigo",
-    description: "Effect1",
+    description: "You are immune from the effects of Frostbite, and automatically succeed at Toughness Tests to withstand cold weather.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Wendigo) Applier() domain.Applier {
 }
 
 func (e *Wendigo) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You are immune from the effects of Frostbite, and automatically succeed at Toughness Tests to withstand cold weather.,
   log.Println("applying Wendigo")
   return state
 }

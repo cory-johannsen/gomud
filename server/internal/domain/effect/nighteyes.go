@@ -13,7 +13,7 @@ type Nighteyes struct {
 func NewNighteyes() *Nighteyes {
   return &Nighteyes{
     name: "Nighteyes",
-    description: "Effect1",
+    description: "You can see completely in the dark above ground as if it were full daylight, provided there is starlight or moonlight in the sky.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Nighteyes) Applier() domain.Applier {
 }
 
 func (e *Nighteyes) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You can see completely in the dark above ground as if it were full daylight, provided there is starlight or moonlight in the sky.,
   log.Println("applying Nighteyes")
   return state
 }

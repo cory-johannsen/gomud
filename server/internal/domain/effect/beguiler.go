@@ -13,7 +13,7 @@ type Beguiler struct {
 func NewBeguiler() *Beguiler {
   return &Beguiler{
     name: "Beguiler",
-    description: "Effect1",
+    description: "Reference either your [FB] or [BB] for the purposes of determining Damage Threshold. Additionally, you may substitute Guile in place of any Combat-based Skill when Parrying attacks.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *Beguiler) Applier() domain.Applier {
 }
 
 func (e *Beguiler) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Reference either your [FB] or [BB] for the purposes of determining Damage Threshold. Additionally, you may substitute Guile in place of any Combat-based Skill when Parrying attacks.,
   log.Println("applying Beguiler")
   return state
 }

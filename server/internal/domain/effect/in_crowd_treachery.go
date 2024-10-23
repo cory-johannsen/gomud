@@ -13,7 +13,7 @@ type InCrowdTreachery struct {
 func NewInCrowdTreachery() *InCrowdTreachery {
   return &InCrowdTreachery{
     name: "In Crowd Treachery",
-    description: "Effect1",
+    description: "Your first successful Attack Action against a foe adds a 1D6 Fury Die to your Damage results. This can be used against multiple foes during combat, taking advantage of your traitorous ways!,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *InCrowdTreachery) Applier() domain.Applier {
 }
 
 func (e *InCrowdTreachery) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Your first successful Attack Action against a foe adds a 1D6 Fury Die to your Damage results. This can be used against multiple foes during combat, taking advantage of your traitorous ways!,
   log.Println("applying In Crowd Treachery")
   return state
 }

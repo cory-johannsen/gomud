@@ -1,5 +1,4 @@
 name: Deadly Aim
-description: "This is a description of the trait."
+description: The world around your seems to fade to a blur as you fire your weapons, striking between the chinks in their foe’s armor with perfection. You may pridefully blind one eye with a bandana to illustrate your skills… or should you grow insane, gouge it out entirely with a spoon.
 effects:
-  - Effect1
-goType: DeadlyAim
+  - Whenever you make an Attack Action or Perilous Stunt using a ranged weapon, foes must flip the results to fail to Dodge, Parry or Resist it.,

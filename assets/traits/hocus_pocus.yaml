@@ -1,5 +1,4 @@
 name: Hocus Pocus
-description: "This is a description of the trait."
+description: You have a penchant for manifesting sorcerous falsehoods which cannot be ignored.
 effects:
-  - Effect1
-goType: HocusPocus
+  - Whenever a foe fails to Resist your Magicks, they Critically Fail instead.,

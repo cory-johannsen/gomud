@@ -13,7 +13,7 @@ type FrighteningBellow struct {
 func NewFrighteningBellow() *FrighteningBellow {
   return &FrighteningBellow{
     name: "Frightening Bellow",
-    description: "Effect1",
+    description: "Whenever you succeed at an Intimidate Test, the foes you intimidated also suffer from Stress. If it is a Critical Success, they suffer from Fear instead.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *FrighteningBellow) Applier() domain.Applier {
 }
 
 func (e *FrighteningBellow) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - Whenever you succeed at an Intimidate Test, the foes you intimidated also suffer from Stress. If it is a Critical Success, they suffer from Fear instead.,
   log.Println("applying Frightening Bellow")
   return state
 }

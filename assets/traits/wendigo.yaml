@@ -1,5 +1,4 @@
 name: Wendigo
-description: "This is a description of the trait."
+description: You have grown protective layers of blubber fat and thick white hair grows in large tufts all over their bodies. You are often called Wendigo and you are isolationist and even a little xenophobic.
 effects:
-  - Effect1
-goType: Wendigo
+  - You are immune from the effects of Frostbite, and automatically succeed at Toughness Tests to withstand cold weather.,

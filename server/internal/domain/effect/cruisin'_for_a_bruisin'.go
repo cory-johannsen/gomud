@@ -13,7 +13,7 @@ type CruisinforaBruisin struct {
 func NewCruisinforaBruisin() *CruisinforaBruisin {
   return &CruisinforaBruisin{
     name: "Cruisin' for a Bruisin'",
-    description: "Effect1",
+    description: "You may reference either [BB] or [BB] with any melee weapons you wield, including those which possess the Throwing Quality.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *CruisinforaBruisin) Applier() domain.Applier {
 }
 
 func (e *CruisinforaBruisin) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - You may reference either [BB] or [BB] with any melee weapons you wield, including those which possess the Throwing Quality.,
   log.Println("applying Cruisin' for a Bruisin'")
   return state
 }

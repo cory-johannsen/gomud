@@ -1,5 +1,4 @@
 name: Blessing in Disguise
-description: "This is a description of the trait."
+description: You have been watched over by a god who favors them above all other Backgrounds. But perhaps this blessing represents the attentions of Abyssal fiends acting of their own accord, waiting to turn you into a thrall once your fate runs dry.
 effects:
-  - Effect1
-goType: BlessinginDisguise
+  - Whenever the time calls for you to suffer a debilitating Injury or face death, you may alternatively gain 1 permanent Chaos Rank (instead of spending a Fate Point) to ignore it entirely.,

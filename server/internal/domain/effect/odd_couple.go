@@ -13,7 +13,7 @@ type OddCouple struct {
 func NewOddCouple() *OddCouple {
   return &OddCouple{
     name: "Odd Couple",
-    description: "Effect1",
+    description: "When fighting alongside Halfling allies, you gain a +10 Base Chance to strike with Attack Actions and Perilous Stunts.,",
   }
 }
 
@@ -30,7 +30,7 @@ func (e *OddCouple) Applier() domain.Applier {
 }
 
 func (e *OddCouple) Apply(state domain.State) domain.State {
-  // - Effect1
+  // - When fighting alongside Halfling allies, you gain a +10 Base Chance to strike with Attack Actions and Perilous Stunts.,
   log.Println("applying Odd Couple")
   return state
 }

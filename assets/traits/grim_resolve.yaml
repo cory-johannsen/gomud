@@ -1,5 +1,4 @@
 name: Grim Resolve
-description: "This is a description of the trait."
+description: When the chips are down, you manage to pull themselves up by the bootstraps.
 effects:
-  - Effect1
-goType: GrimResolve
+  - Immediately after you suffer Damage from a melee or ranged weapon, spend a Fortune Point to ignore it entirely, therefore negating both Damage and any Injuries you may have suffered. You may even use this after failing to Dodge or Parry.,
