@@ -1,7 +1,8 @@
 Alchemy Reasoning Special Gunpowder, Medicine, Poison, Wytchstone
 Athletics Muscle Common Climb, Lift, Row, Swim, Wrestle
 Awareness Savvy Common Count, Discern Details
-Bargain Flair Common Bribery, Courtly Intrigue, Diplomacy, Evaluate, Haggle Charm Flair Common Acting, Begging, Comedy, Mime, Mimic, Play Music, Seduce, Sing, Storytelling, Write Poetry
+Bargain Flair Common Bribery, Courtly Intrigue, Diplomacy, Evaluate,
+Haggle Charm Flair Common Acting, Begging, Comedy, Mime, Mimic, Play Music, Seduce, Sing, Storytelling, Write Poetry
 Coordination Quickness Common Acrobatics, Balance, Contortion, Dance, Dodge Attack, Juggle
 Counterfeit Reasoning Special Clip Coins, Embezzle, Forgery
 Disguise Flair Special Act, Assume Identity, Hide Social Class

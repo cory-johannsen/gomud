@@ -88,6 +88,9 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 	skillsHandler := NewSkillsHandler(dispatcher.State, skills)
 	dispatcher.Register("skills", skillsHandler)
 
+	useHandler := NewUseHandler(dispatcher.State, skills)
+	dispatcher.Register("use", useHandler)
+
 	helpHandler := &HelpHandler{stateProvider: dispatcher.State, handlers: dispatcher.handlers}
 	dispatcher.Register("help", helpHandler)
 	helpAliases := CreateAliases(helpHandler, "?", "h")

@@ -3,6 +3,7 @@ package domain
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"strings"
 )
 
 type SkillType string
@@ -38,6 +39,16 @@ type RankedSkill struct {
 	SuccessPercentage int
 }
 type RankedSkills []*RankedSkill
+
+func (r RankedSkills) Find(name string) *RankedSkill {
+	n := strings.ToLower(name)
+	for _, skill := range r {
+		if strings.ToLower(skill.Skill.Name) == n {
+			return skill
+		}
+	}
+	return nil
+}
 
 func RankSkillsString(skills RankedSkills) string {
 	cyan := color.New(color.FgCyan)

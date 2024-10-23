@@ -256,6 +256,8 @@ func (p *Player) GetProperty(key string) (Property, error) {
 
 func (p *Player) String() string {
 	cyan := color.New(color.FgCyan).SprintFunc()
+	magenta := color.New(color.FgMagenta).SprintFunc()
+	yellow := color.New(color.FgYellow).SprintFunc()
 	msg := fmt.Sprintf("%s: %s\n", cyan("Name"), p.Name)
 	// Enforce the ordering of the character properties
 	properties := []string{
@@ -315,7 +317,7 @@ func (p *Player) String() string {
 		case BackgroundTraitProperty:
 			msg += fmt.Sprintf("  %s - \n\t%s\n\t%s\n", cyan("Background Trait"), v.(*Trait).Name, v.(*Trait).Description)
 			for _, effect := range v.(*Trait).Effects {
-				msg += fmt.Sprintf("\t\t%s\n\t\t%s\n", effect.Name(), effect.Description())
+				msg += fmt.Sprintf("\t\t%s\n", yellow(effect.Description()))
 			}
 		case BirthSeasonProperty:
 			msg += fmt.Sprintf("  %s - %s\n", cyan("Birth Season"), v.(Season))
@@ -349,7 +351,7 @@ func (p *Player) String() string {
 				msg += fmt.Sprintf("\t%s\n", mark)
 			}
 		case DrawbackProperty:
-			msg += fmt.Sprintf("  %s - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s\n", cyan("Drawback"), v.(*Drawback).Name, v.(*Drawback).Description, v.(*Drawback).Effect.Description())
+			msg += fmt.Sprintf("  %s - \n\t%s\n\tDescription: %s\n\tEffect: \n\t\t%s\n", cyan("Drawback"), magenta(v.(*Drawback).Name), v.(*Drawback).Description, yellow(v.(*Drawback).Effect.Description()))
 		case ExperienceProperty:
 			msg += fmt.Sprintf("  %s - %d\n", cyan("Experience"), v.(*BaseProperty).Val.(int))
 		case InventoryProperty:
@@ -413,7 +415,7 @@ func (p *Player) String() string {
 				msg += "\tNone\n"
 			}
 			for _, talent := range v.(Talents) {
-				msg += fmt.Sprintf("\t%s\n\t\t%s\n\t\t%s\n", talent.Name, talent.Description, talent.Effect.Description())
+				msg += fmt.Sprintf("\t%s\n\t\t%s\n\t\t%s\n", magenta(talent.Name), talent.Description, yellow(talent.Effect.Description()))
 			}
 		case TeamProperty:
 			msg += fmt.Sprintf("  %s - %s\n", cyan("Team"), v.(*Team).Name)
