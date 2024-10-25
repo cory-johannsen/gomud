@@ -8,6 +8,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain/effect"
 	"github.com/cory-johannsen/gomud/internal/engine"
+	"github.com/cory-johannsen/gomud/internal/event"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
@@ -19,6 +20,6 @@ func InitializeEngine() (*engine.Engine, error) {
 		effect.EffectsSet, effect.NewEffects,
 		loader.LoaderSet, loader.NewLoaders,
 		generator.NewPlayerGenerator,
-		eventbus.New, engine.NewClock, engine.NewServer, engine.NewEngine)
+		eventbus.New, event.NewClock, engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil
 }

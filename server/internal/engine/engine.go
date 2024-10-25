@@ -7,6 +7,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/cli"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/event"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
@@ -134,11 +135,11 @@ type Server struct {
 	playerGenerator *generator.PlayerGenerator
 	dispatcher      *cli.Dispatcher
 	eventBus        eventbus.Bus
-	clock           *Clock
+	clock           *event.Clock
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, loaders *loader.Loaders,
-	playerGenerator *generator.PlayerGenerator, eventBus eventbus.Bus, clock *Clock) *Server {
+	playerGenerator *generator.PlayerGenerator, eventBus eventbus.Bus, clock *event.Clock) *Server {
 	return &Server{
 		port:            config.Port,
 		db:              db,
@@ -163,8 +164,10 @@ func (s *Server) Start() {
 	}
 	defer l.Close()
 
-	s.clock.Start()
-	defer s.clock.Stop()
+	go func() {
+		s.clock.Start()
+		defer s.clock.Stop()
+	}()
 
 	for {
 		c, err := l.Accept()

@@ -3,6 +3,7 @@ package domain
 import (
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
+	"github.com/cory-johannsen/gomud/internal/event"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -48,9 +49,16 @@ type RoomResolver func(name string) *Room
 type Rooms map[string]*Room
 
 func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room {
-	err := eventBus.Subscribe(spec.Name, func(player *Player, action string) {
+	err := eventBus.SubscribeAsync(spec.Name, func(player *Player, action string) {
 		log.Printf("room %s received action %s from player %s", spec.Name, action, player.Name)
-	})
+	}, false)
+	if err != nil {
+		log.Printf("error subscribing to event bus: %s", err)
+		panic(err)
+	}
+	err = eventBus.SubscribeAsync(event.TickChannel, func(tick int64) {
+		log.Debugf("room %s received tick %d", spec.Name, tick)
+	}, false)
 	if err != nil {
 		log.Printf("error subscribing to event bus: %s", err)
 		panic(err)
@@ -99,11 +107,11 @@ func (r *Room) AddPlayer(player *Player) {
 	}
 	id := *player.Id
 	r.Players[id] = player
-	err := r.eventBus.Subscribe(r.Name, player.RoomHandler)
+	err := r.eventBus.SubscribeAsync(r.Name, player.RoomHandler, false)
 	if err != nil {
 		log.Errorf("error subscribing player %s to room %s: %s", player.Name, r.Name, err)
 	}
-	r.broadcast(player, RoomEventEnter)
+	r.eventBus.Publish(r.Name, player, RoomEventEnter)
 }
 
 func (r *Room) RemovePlayer(player *Player) {
@@ -118,9 +126,9 @@ func (r *Room) RemovePlayer(player *Player) {
 		log.Errorf("error unsubscribing player %s from room %s: %s", player.Name, r.Name, err)
 	}
 
-	r.broadcast(player, RoomEventExit)
+	r.eventBus.Publish(r.Name, player, RoomEventExit)
 }
 
 func (r *Room) broadcast(player *Player, action string) {
-	r.eventBus.Publish(r.Name, player, action)
+
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain/effect"
 	"github.com/cory-johannsen/gomud/internal/engine"
+	"github.com/cory-johannsen/gomud/internal/event"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
@@ -359,7 +360,7 @@ func InitializeEngine() (*engine.Engine, error) {
 	loaders := loader.NewLoaders(appearanceLoader, alignmentLoader, archetypeLoader, backgroundLoader, disorderLoader, effectLoader, equipmentLoader, injuryLoader, inventoryLoader, jobLoader, qualityLoader, roomLoader, skillLoader, talentLoader, traitLoader, teamLoader, upbringingLoader)
 	players := storage.NewPlayers(database, loaders)
 	playerGenerator := generator.NewPlayerGenerator(loaders)
-	clock := engine.NewClock(bus, configConfig)
+	clock := event.NewClock(bus, configConfig)
 	server := engine.NewServer(configConfig, database, players, loaders, playerGenerator, bus, clock)
 	engineEngine := engine.NewEngine(configConfig, server, bus)
 	return engineEngine, nil
