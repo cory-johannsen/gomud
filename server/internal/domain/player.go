@@ -243,10 +243,17 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 		}
 		log.Printf("room %s received action %s from player %s", r.Room.Name, r.Action, r.Player.Name)
 		switch r.Action {
-		case RoomEventEnter:
-			p.Connection.Writeln(fmt.Sprintf("%s the %s enters the room", r.Player.Name, r.Player.Job().Name))
-		case RoomEventExit:
-			p.Connection.Writeln(fmt.Sprintf("%s the %s leaves the room", r.Player.Name, r.Player.Job().Name))
+		case event.RoomEventEnter:
+			p.Connection.Writeln(fmt.Sprintf("%s the %s enters the room\n%s", r.Player.Name, r.Player.Job().Name, p.Prompt()))
+		case event.RoomEventExit:
+			p.Connection.Writeln(fmt.Sprintf("%s the %s leaves the room\n%s", r.Player.Name, r.Player.Job().Name, p.Prompt()))
+		case event.RoomEventSay:
+			args := make([]string, 0)
+			for _, arg := range r.Args {
+				args = append(args, arg.(string))
+			}
+			msg := strings.Join(args, " ")
+			p.Connection.Writeln(fmt.Sprintf("%s says \"%s\"\n%s", r.Player.Name, msg, p.Prompt()))
 		}
 	}, false)
 	if err != nil {
@@ -797,4 +804,14 @@ func (p *Player) Skills(allSkills Skills) RankedSkills {
 		rankedSkills = append(rankedSkills, skills...)
 	}
 	return rankedSkills
+}
+
+func (p *Player) Prompt() string {
+	cyan := color.New(color.FgCyan).SprintFunc()
+	if p == nil || !p.LoggedIn {
+		return fmt.Sprintf("%s ", cyan(">"))
+	}
+	player := p
+	green := color.New(color.FgGreen).SprintFunc()
+	return fmt.Sprintf("%s [%s, %s]%s ", cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()), cyan(">"))
 }

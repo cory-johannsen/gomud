@@ -7,11 +7,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const (
-	RoomEventEnter = "enter"
-	RoomEventExit  = "exit"
-)
-
 type ExitSpec struct {
 	Direction   string `yaml:"direction"`
 	Name        string `yaml:"name"`
@@ -52,6 +47,7 @@ type RoomEvent struct {
 	Room   *Room
 	Player *Player
 	Action string
+	Args   []interface{}
 }
 
 type RoomEventHandler func(*RoomEvent)
@@ -123,7 +119,7 @@ func (r *Room) AddPlayer(player *Player) {
 	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
 		Room:   r,
 		Player: player,
-		Action: RoomEventEnter,
+		Action: event.RoomEventEnter,
 	})
 }
 
@@ -137,6 +133,6 @@ func (r *Room) RemovePlayer(player *Player) {
 	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
 		Room:   r,
 		Player: player,
-		Action: RoomEventExit,
+		Action: event.RoomEventExit,
 	})
 }

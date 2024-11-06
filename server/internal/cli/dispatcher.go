@@ -82,6 +82,9 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 		}
 	}
 
+	sayHandler := NewSayHandler(dispatcher.State)
+	dispatcher.Register("say", sayHandler)
+
 	statsHandler := NewStatsHandler(dispatcher.State)
 	dispatcher.Register("stats", statsHandler)
 
@@ -110,9 +113,7 @@ func (d *Dispatcher) Prompt() string {
 	if d.State() == nil || d.State().Player() == nil || !d.State().Player().LoggedIn {
 		return fmt.Sprintf("%s ", cyan(">"))
 	}
-	player := d.State().Player()
-	green := color.New(color.FgGreen).SprintFunc()
-	return fmt.Sprintf("%s [%s, %s]%s ", cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()), cyan(">"))
+	return d.State().Player().Prompt()
 }
 
 func (d *Dispatcher) Tab(buffer string) string {

@@ -1,3 +1,8 @@
 package event
 
-const RoomChannel = "room"
+const (
+	RoomChannel    = "room"
+	RoomEventEnter = "enter"
+	RoomEventExit  = "exit"
+	RoomEventSay   = "say"
+)
