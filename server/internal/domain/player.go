@@ -3,6 +3,7 @@ package domain
 import (
 	"errors"
 	"fmt"
+	"github.com/cory-johannsen/gomud/internal/event"
 	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/fatih/color"
 	log "github.com/sirupsen/logrus"
@@ -235,6 +236,22 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 	}
 	if _, ok := p.Data[InventoryProperty]; !ok {
 		p.Data[InventoryProperty] = NewInventory()
+	}
+	err := conn.EventBus().SubscribeAsync(event.RoomChannel, func(r *RoomEvent) {
+		if r == nil || r.Room == nil || r.Room != p.Room() || r.Player == nil || r.Player == p {
+			return
+		}
+		log.Printf("room %s received action %s from player %s", r.Room.Name, r.Action, r.Player.Name)
+		switch r.Action {
+		case RoomEventEnter:
+			p.Connection.Writeln(fmt.Sprintf("%s the %s enters the room", r.Player.Name, r.Player.Job().Name))
+		case RoomEventExit:
+			p.Connection.Writeln(fmt.Sprintf("%s the %s leaves the room", r.Player.Name, r.Player.Job().Name))
+		}
+	}, false)
+	if err != nil {
+		log.Warnf("error subscribing to room channel: %s", err)
+		return nil
 	}
 	return p
 }
@@ -638,13 +655,6 @@ func (p *Player) SetRoom(r *Room) {
 		return
 	}
 	p.Data[RoomProperty] = r
-}
-
-func (p *Player) RoomHandler(player *Player, action string) {
-	if player == p {
-		return
-	}
-	p.Connection.Writeln(fmt.Sprintf("\n%s the %s %ss the room", player.Name, player.Job().Name, action))
 }
 
 func (p *Player) Peril() *Peril {

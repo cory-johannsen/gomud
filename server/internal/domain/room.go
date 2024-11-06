@@ -48,23 +48,16 @@ type RoomResolver func(name string) *Room
 
 type Rooms map[string]*Room
 
-func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room {
-	err := eventBus.SubscribeAsync(spec.Name, func(player *Player, action string) {
-		log.Printf("room %s received action %s from player %s", spec.Name, action, player.Name)
-	}, false)
-	if err != nil {
-		log.Printf("error subscribing to event bus: %s", err)
-		panic(err)
-	}
-	err = eventBus.SubscribeAsync(event.TickChannel, func(tick int64) {
-		log.Debugf("room %s received tick %d", spec.Name, tick)
-	}, false)
-	if err != nil {
-		log.Printf("error subscribing to event bus: %s", err)
-		panic(err)
-	}
+type RoomEvent struct {
+	Room   *Room
+	Player *Player
+	Action string
+}
 
-	return &Room{
+type RoomEventHandler func(*RoomEvent)
+
+func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room {
+	room := &Room{
 		ID:          spec.ID,
 		Name:        spec.Name,
 		Description: spec.Description,
@@ -74,6 +67,26 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room
 		resolver:    resolver,
 		eventBus:    eventBus,
 	}
+	err := eventBus.SubscribeAsync(event.RoomChannel, func(r *RoomEvent) {
+		if r == nil || r.Room == nil || r.Room != room || r.Player == nil {
+			return
+		}
+		log.Debugf("room %s received action %s from player %s", spec.Name, r.Action, r.Player.Name)
+	}, false)
+	if err != nil {
+		log.Printf("error subscribing to event bus: %s", err)
+		panic(err)
+	}
+	err = eventBus.SubscribeAsync(event.TickChannel, func(tick int64) {
+		log.Debugf("room %s received tick %d", spec.Name, tick)
+		eventBus.Publish(spec.Name, nil, fmt.Sprintf("tick %d", tick))
+	}, false)
+	if err != nil {
+		log.Printf("error subscribing to event bus: %s", err)
+		panic(err)
+	}
+
+	return room
 }
 
 func (r *Room) Value() interface{} {
@@ -107,11 +120,11 @@ func (r *Room) AddPlayer(player *Player) {
 	}
 	id := *player.Id
 	r.Players[id] = player
-	err := r.eventBus.SubscribeAsync(r.Name, player.RoomHandler, false)
-	if err != nil {
-		log.Errorf("error subscribing player %s to room %s: %s", player.Name, r.Name, err)
-	}
-	r.eventBus.Publish(r.Name, player, RoomEventEnter)
+	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
+		Room:   r,
+		Player: player,
+		Action: RoomEventEnter,
+	})
 }
 
 func (r *Room) RemovePlayer(player *Player) {
@@ -121,14 +134,9 @@ func (r *Room) RemovePlayer(player *Player) {
 	}
 	id := *player.Id
 	delete(r.Players, id)
-	err := r.eventBus.Unsubscribe(r.Name, player.RoomHandler)
-	if err != nil {
-		log.Errorf("error unsubscribing player %s from room %s: %s", player.Name, r.Name, err)
-	}
-
-	r.eventBus.Publish(r.Name, player, RoomEventExit)
-}
-
-func (r *Room) broadcast(player *Player, action string) {
-
+	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
+		Room:   r,
+		Player: player,
+		Action: RoomEventExit,
+	})
 }
