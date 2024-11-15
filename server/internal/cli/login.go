@@ -66,6 +66,13 @@ func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error
 		}
 		_ = h.conn.Writeln(fmt.Sprintf("Created player \n%s", player.String()))
 	} else {
+		loggedIn, err := h.players.IsLoggedIn(ctx, name, h.conn)
+		if err != nil {
+			return "failed to look up player", err
+		}
+		if loggedIn {
+			return fmt.Sprintf("%s is already logged in", name), nil
+		}
 		player = h.validatePassword(name)
 	}
 	h.state = h.stateConstructor(player)

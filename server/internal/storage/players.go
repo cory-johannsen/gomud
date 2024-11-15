@@ -110,6 +110,14 @@ func (p *Players) Exists(ctx context.Context, name string) (bool, error) {
 	return count > 0, nil
 }
 
+func (p *Players) IsLoggedIn(ctx context.Context, name string, conn io.Connection) (bool, error) {
+	player, err := p.FetchPlayerByName(ctx, name, conn)
+	if err != nil {
+		return false, nil
+	}
+	return player.LoggedIn, nil
+}
+
 type PlayerSpec struct {
 	Id       *int
 	Name     string
