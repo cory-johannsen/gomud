@@ -1,7 +1,23 @@
 name: Drifter
-description: ""
-trappings:
-  - Knife
-  - Fine Clothes
+description: "A rolling stone gathers no moss."
+startingEquipment:
+  oneEach:
+    - Animal repellent
+    - Antivenom
+    - Backpack
+    - Bullwhip
+    - Heavy boots
+    - Holy symbol
+    - Hide armor
+    - Survival kit
+    - Torch
+    - Traveling clothes
+    - Waterskin
+    - Wilderness cloak
+    - Wolfsbane
+  oneOf:
+    - Fire-Hardened spear
+    - Hunting bow
+    - Woodsman's axe
 traits:
   - Murdery

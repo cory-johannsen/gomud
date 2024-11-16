@@ -1,15 +1,15 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Machete
-  description: The most common weapon for explorers, it is useful and evokes little fuss. Not surprisingly, it tends to cleave violently – thus its namesake.
-  handling: One-handed
-  distance: Engaged
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 200
-  load: 0
-  qualities:
-    - Vicious
+category: Melee
+level: Martial
+type: Bladed
+name: Machete
+description: The most common weapon for explorers, it is useful and evokes little fuss. Not surprisingly, it tends to cleave violently – thus its namesake.
+handling: One-handed
+distance: Engaged
+skill: Martial Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 200
+load: 0
+qualities:
+  - Vicious

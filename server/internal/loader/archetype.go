@@ -10,16 +10,18 @@ import (
 )
 
 type ArchetypeLoader struct {
-	config      *config.Config
-	archetypes  domain.Archetypes
-	traitLoader *TraitLoader
+	config          *config.Config
+	archetypes      domain.Archetypes
+	traitLoader     *TraitLoader
+	equipmentLoader *EquipmentLoader
 }
 
-func NewArchetypeLoader(cfg *config.Config, traitLoader *TraitLoader) *ArchetypeLoader {
+func NewArchetypeLoader(cfg *config.Config, traitLoader *TraitLoader, equipmentLoader *EquipmentLoader) *ArchetypeLoader {
 	return &ArchetypeLoader{
-		config:      cfg,
-		archetypes:  make(domain.Archetypes, 0),
-		traitLoader: traitLoader,
+		config:          cfg,
+		archetypes:      make(domain.Archetypes, 0),
+		traitLoader:     traitLoader,
+		equipmentLoader: equipmentLoader,
 	}
 }
 
@@ -51,7 +53,11 @@ func (l *ArchetypeLoader) LoadArchetypes() (domain.Archetypes, error) {
 		archetype := &domain.Archetype{
 			Name:        spec.Name,
 			Description: spec.Description,
-			Traits:      make(domain.Traits, 0),
+			StartingEquipment: domain.StartingEquipment{
+				OneEach: make(domain.Items, 0),
+				OneOf:   make(domain.Items, 0),
+			},
+			Traits: make(domain.Traits, 0),
 		}
 		for _, traitName := range spec.Traits {
 			trait, err := l.traitLoader.GetTrait(traitName)
@@ -63,6 +69,28 @@ func (l *ArchetypeLoader) LoadArchetypes() (domain.Archetypes, error) {
 				continue
 			}
 			archetype.Traits = append(archetype.Traits, trait)
+		}
+		for _, itemName := range spec.StartingEquipment.OneEach {
+			i, err := l.equipmentLoader.ItemFromName(itemName)
+			if err != nil {
+				return nil, err
+			}
+			if i == nil {
+				log.Printf("item %s not found", itemName)
+				continue
+			}
+			archetype.StartingEquipment.OneEach = append(archetype.StartingEquipment.OneEach, i)
+		}
+		for _, itemName := range spec.StartingEquipment.OneOf {
+			i, err := l.equipmentLoader.ItemFromName(itemName)
+			if err != nil {
+				return nil, err
+			}
+			if i == nil {
+				log.Printf("item %s not found", itemName)
+				continue
+			}
+			archetype.StartingEquipment.OneOf = append(archetype.StartingEquipment.OneOf, i)
 		}
 		archetypes = append(archetypes, archetype)
 	}

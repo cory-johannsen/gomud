@@ -1,17 +1,17 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Brawling
-  name: Garrotte
-  description: Often made from cat muscle or steel wire attached between two spools, this is an assassin’s weapon. The skilled can put people to sleep permanently, whereas the unskilled will butcher the victim’s neck in the process, to the sound of much gurgling and screaming.
-  handling: Two-handed
-  distance: Engaged
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 40
-  load: 0
-  qualities:
-    - Entangling
-    - Fast
-    - Ineffective
+category: Melee
+level: Simple
+type: Brawling
+name: Garrotte
+description: Often made from cat muscle or steel wire attached between two spools, this is an assassin’s weapon. The skilled can put people to sleep permanently, whereas the unskilled will butcher the victim’s neck in the process, to the sound of much gurgling and screaming.
+handling: Two-handed
+distance: Engaged
+skill: Simple Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 40
+load: 0
+qualities:
+  - Entangling
+  - Fast
+  - Ineffective

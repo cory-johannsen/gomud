@@ -1,17 +1,17 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Crushing
-  name: Staff
-  description: Mostly used as walking sticks by the scholarly and elderly, travelers swear by it (particularly ten-foot long poles). Proper ones are beautifully designed and weighted, while poor ones are simply gnarled tree limbs.
-  handling: 0
-  distance: Engaged
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 2
-  cost: 20
-  load: One or two-handed
-  qualities:
-    - Adaptable
-    - Defensive
-    - Pummeling
+category: Melee
+level: Simple
+type: Crushing
+name: Staff
+description: Mostly used as walking sticks by the scholarly and elderly, travelers swear by it (particularly ten-foot long poles). Proper ones are beautifully designed and weighted, while poor ones are simply gnarled tree limbs.
+handling: One or two-handed
+distance: Engaged
+skill: Simple Melee
+target: Single Target
+encumbrance: 2
+mass: 0
+cost: 20
+load: 0
+qualities:
+  - Adaptable
+  - Defensive
+  - Pummeling

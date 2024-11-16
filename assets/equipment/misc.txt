@@ -1,0 +1,161 @@
+Balaclava mask| |0|0|480
+Cheap necklace| |0|0|480
+Cheap ring| |0|0|240
+Cheap shoes| |0|0|20
+Coin purse| |0|0|2
+Dark clothes| |0|0|480
+Entertainer’s mask| |0|0|960
+Expensive necklace| |0|0|480
+Expensive ring| |0|0|21120
+Fancy shoes| |0|0|3840
+Fancy wig| |0|0|1920
+Fashionable clothing| |0|0|2400
+Fine clothing| |0|0|9600
+Fine perfume| |0|0|1920
+Foppish hat| |0|0|960
+Garish attire| |0|0|1440
+Heavy boots| |0|0|2400
+Holy symbol| |0|0|60
+Leather sandals| |0|0|480
+Loose robes| |0|0|960
+Mantle| |0|0|1440
+Military attire| |0|0|1920
+Monocle| |0|0|2400
+Priest’s mitre| |0|0|1440
+Second-hand attire| |0|0|140
+Simple attire| |0|0|480
+Smallclothes| |0|0|60
+Snuff box| |0|0|7
+Soft shoes| |0|0|960
+Spectacles| |0|0|960
+Stinky perfume| |0|0|480
+Straight razor| |0|0|60
+Traveling clothes| |0|0|300
+Tattered rags| |0|0|60
+Walking cane| |0|0|1440
+Warm vest| |0|0|60
+Wilderness cloak| |0|0|960
+Witchhunter’s coat & mantle| |0|0|1920
+Witchhunter’s hat| |0|0|80
+Box of matches| |0|0|1
+Candle| |0|0|20
+Charcoal| |0|0|20
+Firewood| |0|0|20
+Flint and steel striker| |0|0|80
+Lamp| |0|0|40
+Lantern| |0|0|960
+Oil pot| |0|0|20
+Powderkeg of gunpowder| |0|0|6240
+Storm lantern| |0|0|1920
+Torch| |0|0|3
+Wolfsbane| |0|0|40
+Animal trap| |0|0|960
+Astrolabe| |0|0|19680
+Backpack| |0|0|180
+Bandolier| |0|0|20
+Barrel| |0|0|140
+Box| |0|0|140
+Coffin| |0|0|140
+Bedroll| |0|0|960
+Blowing horn| |0|0|3840
+Camouflage| |0|0|1440
+Climbing crampons| |0|0|40
+Climbing rope| |0|0|100
+Compass| |0|0|2400
+Fishing hook and pole| |0|0|20
+Flask| |0|0|40
+Gaff bag| |0|0|80
+Grappling hook| |0|0|480
+Hammer & nails| |0|0|20
+Horse tack and saddle| |0|0|5280
+Iron manacles| |0|0|480
+Large bag| |0|0|20
+Length of rope| |0|0|40
+Lock with key| |0|0|480
+Pavilion tent| |0|0|67200
+Pitons or spikes| |0|0|140
+Pot of glue| |0|0|140
+Powder flask for gunpowder| |0|0|260
+Preserved rations| |0|0|280
+Quiver| |0|0|120
+Rucksack| |0|0|140
+Scabbard for one handed weapon| |0|0|5280
+Scabbard for two handed weapon| |0|0|1960
+Shoulder bag| |0|0|120
+Signal whistle| |0|0|1100
+Skies & poles| |0|0|11440
+Slitted goggles| |0|0|1100
+Snowshoes| |0|0|5280
+Survival kit| |0|0|6720
+Telescope| |0|0|55200
+Tent for one| |0|0|7200
+Tent for two| |0|0|8160
+Watch dog| |0|0|5280
+Waterskin| |0|0|18
+Wooden skates| |0|0|11440
+Antivenom| |0|0|8640
+Bandage| |0|0|20
+Bottle of aspirin| |0|0|60
+Cinnabar| |0|0|140
+Epsom salt| |0|0|40
+Holy water| |0|0|80
+Honey pot| |0|0|60
+Laudanum| |0|0|1980
+Antidepressants| |0|0|140
+Opium| |0|0|480
+Plague mask| |0|0|960
+Antibiotics| |0|0|480
+Ragged cloth| |0|0|1
+Rotgut| |0|0|80
+Robitussin| |0|0|8640
+Saltpeter| |0|0|20
+Smelling salts| |0|0|140
+Surgical tools| |0|0|13840
+Tincture| |0|0|480
+Veteran’s eye patch| |0|0|2
+Veteran’s guilded nose| |0|0|140
+Veteran’s hand| |0|0|180
+Veteran’s boot| |0|0|180
+Veteran’s leg| |0|0|480
+Animal repellent| |0|0|1440
+Beast repellent| |0|0|1440
+Ayahuasca| |0|0|960
+Teargas| |0|0|1440
+Demon repellent| |0|0|1440
+Folkbane| |0|0|1440
+Formaldehyde| |0|0|1440
+Lock picks| |0|0|1920
+Red cap mushrooms| |0|0|160
+Scorpion venom| |0|0|480
+Snake venom| |0|0|960
+Spider venom| |0|0|960
+Abacus| |0|0|140
+Academic book| |0|0|480
+Arcane tome| |0|0|3840
+Atlas of the known world| |0|0|25920
+Bailiff ’s lockbox| |0|0|1440
+Chalkboard| |0|0|60
+Cheap map| |0|0|260
+City map| |0|0|480
+Hand mirror| |0|0|960
+Homing pigeon| |0|0|140
+Hourglass| |0|0|480
+Ink pot| |0|0|140
+Key & padlock| |0|0|480
+Looking glass| |0|0|260
+Magnet| |0|0|140
+Paper| |0|0|2
+Pilot’s chart| |0|0|2400
+Prayer book| |0|0|3840
+Printing press| |0|0|639840
+Provincial map| |0|0|140
+Quills or brush| |0|0|4
+Religious scripture| |0|0|2880
+Rune stones| |0|0|60
+Scales and weights | |0|0|3840
+Scroll case| |0|0|60
+Torture device| |0|0|960
+Trade tools| |0|0|8160
+Wanted poster| |0|0|2
+War medal| |0|0|40
+Writing kit| |0|0|1440

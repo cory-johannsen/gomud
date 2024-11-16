@@ -1,0 +1,7 @@
+name: Protective
+conditions:
+  - Equipped
+effects:
+  - Shields of this Quality may be used to Parry any Attack Action made with a ranged weapon.
+targets:
+  - single

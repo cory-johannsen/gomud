@@ -1,16 +1,16 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Estoc
-  description: This needle-like sword is useless for slashing anything more than loose parchment. Its thrust, however, is deadly sharp.
-  handling: One or two-handed
-  distance: Engaged
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 2
-  cost: 140
-  load: 0
-  qualities:
-    - Adaptable
-    - Finesse
+category: Melee
+level: Martial
+type: Bladed
+name: Estoc
+description: This needle-like sword is useless for slashing anything more than loose parchment. Its thrust, however, is deadly sharp.
+handling: One or two-handed
+distance: Engaged
+skill: Martial Melee
+target: Single Target
+encumbrance: 2
+mass: 0
+cost: 140
+load: 0
+qualities:
+  - Adaptable
+  - Finesse

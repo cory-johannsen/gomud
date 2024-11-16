@@ -1,7 +1,19 @@
 name: Normie
-description: ""
-trappings:
-  - Knife
-  - Fine Clothes
+description: "Status quo is the way to go!"
+startingEquipment:
+  oneEach:
+    - Bandage
+    - Bottle bomb
+    - Formaldehyde
+    - Holy symbol
+    - Heavy boots
+    - Rucksack
+    - Shiv
+    - Simple attire
+    - Warm vest
+  oneOf:
+    - Slingshot
+    - Maul
+    - Threshing flail
 traits:
   - Dirty Secret

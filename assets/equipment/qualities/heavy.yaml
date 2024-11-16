@@ -1,0 +1,7 @@
+name: Heavy
+conditions:
+  - Equipped
+effects:
+  - Armor of this Quality prohibits the use of the Incantation Skill to cast Magick and Coordination in order to Dodge attacks.
+targets:
+  - single

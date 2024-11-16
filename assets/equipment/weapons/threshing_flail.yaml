@@ -1,16 +1,16 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Crushing
-  name: Threshing Flail
-  description: As a farmer’s tool, it’s used to separate grain from husks. In other hands, it can be used to bash about raiders who steal farming supplies or foolish lords that demand too much grain. Although it possesses a long reach, it looks rather foolish when whirled around above the head.
-  handling: One or two-handed
-  distance: Engaged
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 2
-  cost: 20
-  load: 0
-  qualities:
-    - Adaptable
-    - Weak
+category: Melee
+level: Simple
+type: Crushing
+name: Threshing flail
+description: As a farmer’s tool, it’s used to separate grain from husks. In other hands, it can be used to bash about raiders who steal farming supplies or foolish lords that demand too much grain. Although it possesses a long reach, it looks rather foolish when whirled around above the head.
+handling: One or two-handed
+distance: Engaged
+skill: Simple Melee
+target: Single Target
+encumbrance: 2
+mass: 0
+cost: 20
+load: 0
+qualities:
+  - Adaptable
+  - Weak

@@ -1,0 +1,8 @@
+name: Munitions plate
+description: This is none other than second-hand plate armor used to outfit state-sponsored soldiers in a hurry. Although it only covers the torso and upper limbs, it is still the best armor you can get if you weren’t born with a silver spoon in your mouth. It tends to rattle terribly when running and grates annoyingly when walking.
+damageThresholdModifier: 5
+encumbrance: 6
+mass: 0
+cost: 42240
+qualities:
+  - Heavy

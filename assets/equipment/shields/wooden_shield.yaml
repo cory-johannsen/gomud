@@ -1,0 +1,9 @@
+name: Wooden shield
+description: These shields are bought and painted beautifully, though among poorer soldiers they’re simply barrel lids or rotted, reappropriated oak doors. It actually provides a solid amount of defense – as long as they are not splintered or set ablaze.
+handling: One-handed
+encumbrance: 1
+mass: 0
+cost: 960
+qualities:
+  - Defensive
+  - Light

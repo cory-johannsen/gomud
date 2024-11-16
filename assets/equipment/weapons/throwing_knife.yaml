@@ -1,0 +1,18 @@
+category: Ranged
+level: Simple
+type: Missile
+name: Throwing knife
+description: This small blade is the staple of vagabonds and cut throats. Well-balanced ones can be juggled and pierce any thrown apple… often to reluctant applause.
+handling: One-handed
+distance: 1+[SB] meters
+skill: Simple Ranged
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 480
+load: 1
+qualities:
+  - Fast
+  - Finesse
+  - Throwing
+  - Weak

@@ -1,16 +1,16 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Battle Axe
-  description: This weapon is vicious and heavy, often favored by dwarves and Berserkers. Overly-cumbersome, they’re usually adorned with skulls – just for the hell of it.
-  handling: One or two-handed
-  distance: Engaged
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 2
-  cost: 40
-  load: 0
-  qualities:
-    - Adaptable
-    - Slow
+category: Melee
+level: Martial
+type: Bladed
+name: Battle Axe
+description: This weapon is vicious and heavy, often favored by dwarves and Berserkers. Overly-cumbersome, they’re usually adorned with skulls – just for the hell of it.
+handling: One or two-handed
+distance: Engaged
+skill: Martial Melee
+target: Single Target
+encumbrance: 2
+mass: 0
+cost: 40
+load: 0
+qualities:
+  - Adaptable
+  - Slow

@@ -1,16 +1,16 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Brawling
-  name: Bare-Handed
-  description: You were born with two hands and feet, and (hopefully) will live with all of them intact. Real weapons are far more effective, but a cross to the jaw, roundhouse kick to the kidney or knee to the groin sometimes speaks louder than words alone.
-  handling: One-handed
-  distance: Engaged
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 0
-  cost: 0
-  load: 0
-  qualities:
-    - Pummeling
-    - Slow
+category: Melee
+level: Simple
+type: Brawling
+name: Bare-Handed
+description: You were born with two hands and feet, and (hopefully) will live with all of them intact. Real weapons are far more effective, but a cross to the jaw, roundhouse kick to the kidney or knee to the groin sometimes speaks louder than words alone.
+handling: One-handed
+distance: Engaged
+skill: Simple Melee
+target: Single Target
+encumbrance: 0
+mass: 0
+cost: 0
+load: 0
+qualities:
+  - Pummeling
+  - Slow

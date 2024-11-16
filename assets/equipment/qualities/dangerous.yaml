@@ -1,0 +1,7 @@
+name: Dangerous
+conditions:
+  - Equipped
+effects:
+  - Clothing or armor of this Quality cannot adequately protect you from harm. Should you suffer an Injury during this time without wearing a suit of armor, you begin to Bleed.
+targets:
+  - single

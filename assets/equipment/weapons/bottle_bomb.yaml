@@ -1,18 +1,18 @@
-weapon:
-  category: Ranged
-  level: Simple
-  type: Explosive
-  name: Bottle bomb
-  description: Generally sparked by a demagogue’s fiery rhetoric, this rudimentary incendiary sets its enemies aflame upon contact.
-  handling: One-handed
-  distance: 1+[SB] meters
-  skill: Simple Ranged
-  target: Single Target
-  encumbrance: 1
-  cost: 240
-  load: 1
-  qualities:
-    - Fiery
-    - Ineffective
-    - Throwing
-    - Volatile
+category: Ranged
+level: Simple
+type: Explosive
+name: Bottle bomb
+description: Generally sparked by a demagogue’s fiery rhetoric, this rudimentary incendiary sets its enemies aflame upon contact.
+handling: One-handed
+distance: 1+[SB] meters
+skill: Simple Ranged
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 240
+load: 1
+qualities:
+  - Fiery
+  - Ineffective
+  - Throwing
+  - Volatile

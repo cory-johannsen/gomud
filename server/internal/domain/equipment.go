@@ -3,34 +3,41 @@ package domain
 type ItemType string
 
 const (
-	ItemTypeWeapon     ItemType = "weapon"
-	ItemTypeArmor      ItemType = "armor"
-	ItemTypeConsumable ItemType = "consumable"
+	ItemTypeWeapon        ItemType = "weapon"
+	ItemTypeArmor         ItemType = "armor"
+	ItemTypeShield        ItemType = "shield"
+	ItemTypeMiscellaneous ItemType = "miscellaneous"
+	ItemTypeConsumable    ItemType = "consumable"
 )
 
 type ItemSpec struct {
 	Name        string   `yaml:"name"`
 	Description string   `yaml:"description"`
 	Type        ItemType `yaml:"type"`
-	Mass        float64  `yaml:"mass"`
+	Mass        int      `yaml:"mass"`
+	Encumbrance int      `yaml:"encumbrance"`
+	Cost        int      `yaml:"cost"`
 }
 
 type Item interface {
 	Id() int
 	Name() string
 	Description() string
-	Mass() float64
+	Encumbrance() int
+	MassInGrams() int
 	Type() ItemType
+	Cost() int
 }
 
 type Items []Item
 
 type BaseItem struct {
-	ItemId          int     `json:"ItemId"`
-	ItemName        string  `json:"name"`
-	ItemDescription string  `json:"description"`
-	ItemMass        float64 `json:"mass"`
-	ItemCost        float64 `json:"cost"`
+	ItemId          int    `json:"id"`
+	ItemName        string `json:"name"`
+	ItemDescription string `json:"description"`
+	ItemMass        int    `json:"mass"`
+	ItemEncumbrance int    `json:"encumbrance"`
+	ItemCost        int    `json:"cost"`
 }
 
 func (i *BaseItem) Id() int {
@@ -49,13 +56,27 @@ func (i *BaseItem) Description() string {
 	return i.ItemDescription
 }
 
-func (i *BaseItem) Mass() float64 {
+func (i *BaseItem) MassInGrams() int {
 	return i.ItemMass
 }
 
-func (i *BaseItem) Cost() float64 {
+func (i *BaseItem) Encumbrance() int {
+	return i.ItemEncumbrance
+}
+
+func (i *BaseItem) Cost() int {
 	return i.ItemCost
 }
+
+type MiscellaneousItem struct {
+	BaseItem
+}
+
+func (m *MiscellaneousItem) Type() ItemType {
+	return ItemTypeMiscellaneous
+}
+
+var _ Item = &MiscellaneousItem{}
 
 type QualitySpec struct {
 	Name       string   `json:"name"`
@@ -187,12 +208,59 @@ func (w *Weapon) Qualities() Qualities {
 
 var _ Item = &Weapon{}
 
+type ArmorSpec struct {
+	BaseItem
+	DamageThresholdModifier int      `json:"damageThresholdModifier"`
+	Qualities               []string `json:"qualities"`
+}
+
 type Armor struct {
 	BaseItem
+	damageThresholdModifier int
+	qualities               Qualities
 }
 
 func (a *Armor) Type() ItemType {
 	return ItemTypeArmor
 }
 
+func (a *Armor) DamageThresholdModifier() int {
+	return a.damageThresholdModifier
+}
+
+func (a *Armor) Qualities() Qualities {
+	return a.qualities
+}
+
+func NewArmor(spec *ArmorSpec, qualities Qualities) *Armor {
+	return &Armor{
+		BaseItem:                spec.BaseItem,
+		damageThresholdModifier: spec.DamageThresholdModifier,
+		qualities:               qualities,
+	}
+}
+
 var _ Item = &Armor{}
+
+type ShieldSpec struct {
+	BaseItem
+	WeaponHandling WeaponHandling `json:"handling"`
+}
+
+type Shield struct {
+	BaseItem
+	handling WeaponHandling
+}
+
+func (s *Shield) Type() ItemType {
+	return ItemTypeShield
+}
+
+func NewShield(spec *ShieldSpec) *Shield {
+	return &Shield{
+		BaseItem: spec.BaseItem,
+		handling: spec.WeaponHandling,
+	}
+}
+
+var _ Item = &Shield{}

@@ -1,17 +1,17 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Crushing
-  name: Torch
-  description: Swabbed in oil and rough cloth, torches are oftentimes used by peasants and witch hunters to burn cruel lords and heretics. Rarely are torches employed otherwise, unless one is so inclined to descend into a tomb to rob it.
-  handling: One-handed
-  distance: Engaged
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 30
-  load: 0
-  qualities:
-    - Immolate
-    - Ineffective
-    - Slow
+category: Melee
+level: Simple
+type: Crushing
+name: Torch
+description: Swabbed in oil and rough cloth, torches are oftentimes used by peasants and witch hunters to burn cruel lords and heretics. Rarely are torches employed otherwise, unless one is so inclined to descend into a tomb to rob it.
+handling: One-handed
+distance: Engaged
+skill: Simple Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 30
+load: 0
+qualities:
+  - Immolate
+  - Ineffective
+  - Slow

@@ -1,15 +1,15 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Pole Cleaver
-  description: A very long stick with an axe on the end. It’s far more intimidating than a pike, but less embarrassing than a mere butcher’s cleaver. Soldiers often partake in ‘Gygaxian musings’ over the vast array of pole arms that dominate weapon racks – in which the pole cleaver is called by a variety of names.
-  handling: Two-handed
-  distance: Engaged or 1 meter
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 3
-  cost: 80
-  load: 0
-  qualities:
-    - Reach
+category: Melee
+level: Martial
+type: Bladed
+name: Pole Cleaver
+description: A very long stick with an axe on the end. It’s far more intimidating than a pike, but less embarrassing than a mere butcher’s cleaver. Soldiers often partake in ‘Gygaxian musings’ over the vast array of pole arms that dominate weapon racks – in which the pole cleaver is called by a variety of names.
+handling: Two-handed
+distance: Engaged or 1 meter
+skill: Martial Melee
+target: Single Target
+encumbrance: 3
+mass: 0
+cost: 80
+load: 0
+qualities:
+  - Reach

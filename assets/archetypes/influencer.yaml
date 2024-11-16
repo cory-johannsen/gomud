@@ -1,7 +1,20 @@
 name: Influencer
-description: ""
-trappings:
-  - Knife
-  - Fine Clothes
+description: "Like, OMG, pay attention to me!"
+startingEquipment:
+  oneEach:
+    - Coin purse
+    - Fancy shoes
+    - Fashionable clothing
+    - Foppish hat
+    - Holy symbol
+    - Knuckleduster
+    - Antidepressants
+    - Mantle
+    - Shoulder bag
+    - Writing kit
+  oneOf:
+    - Throwing knife
+    - Rapier
+    - Walking cane
 traits:
   - Chatty

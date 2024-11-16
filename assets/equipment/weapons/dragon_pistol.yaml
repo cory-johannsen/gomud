@@ -1,18 +1,18 @@
-weapon:
-  category: Ranged
-  level: Martial
-  type: Gunpowder
-  name: Dragon pistol
-  description: This wheellock scattergun is used for kicking arse and chewing tobacco – especially when you are all out of tobacco.
-  handling: One-handed
-  distance: 1+[SB] meters
-  skill: Martial Ranged
-  target: Single Target
-  encumbrance: 2
-  cost: 19200
-  load: 4
-  qualities:
-    - Gunpowder
-    - Shrapnel
-    - Volatile
-    - Weak
+category: Ranged
+level: Martial
+type: Gunpowder
+name: Dragon pistol
+description: This wheellock scattergun is used for kicking arse and chewing tobacco – especially when you are all out of tobacco.
+handling: One-handed
+distance: 1+[SB] meters
+skill: Martial Ranged
+target: Single Target
+encumbrance: 2
+mass: 0
+cost: 19200
+load: 4
+qualities:
+  - Gunpowder
+  - Shrapnel
+  - Volatile
+  - Weak

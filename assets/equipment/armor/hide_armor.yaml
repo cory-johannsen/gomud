@@ -1,0 +1,7 @@
+name: Hide armor
+description: Made from heavy skins, often bear or wolves pelts, this armor is common in colder climes. Most of its protection comes from the sheer amount of hair and layering of furs, though the skin is tanned beneath.
+damageThresholdModifier: 1
+encumbrance: 3
+mass: 0
+cost: 2880
+qualities:

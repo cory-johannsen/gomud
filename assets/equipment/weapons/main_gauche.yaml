@@ -1,17 +1,17 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Main Gauche
-  description: Now this is a knife. Favored by swashbucklers and daredevils, they’re wielded in an off-hand to parry blows.
-  handling: One-handed
-  distance: Engaged
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 20
-  load: 0
-  qualities:
-    - Defensive
-    - Finesse
-    - Weak
+category: Melee
+level: Martial
+type: Bladed
+name: Main Gauche
+description: Now this is a knife. Favored by swashbucklers and daredevils, they’re wielded in an off-hand to parry blows.
+handling: One-handed
+distance: Engaged
+skill: Martial Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 20
+load: 0
+qualities:
+  - Defensive
+  - Finesse
+  - Weak

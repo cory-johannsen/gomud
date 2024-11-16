@@ -1,17 +1,17 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Bladed
-  name: Stiletto
-  description: Another weapon favored by the assassin, it’s concealable and designed for quick stabbing thrusts. An intended victim can bleed like a stuck pig if this weapon is thrust in the right way.
-  handling: One-handed
-  distance: Engaged
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 480
-  load: 0
-  qualities:
-    - Fast
-    - Vicious
-    - Weak
+category: Melee
+level: Simple
+type: Bladed
+name: Stiletto
+description: Another weapon favored by the assassin, it’s concealable and designed for quick stabbing thrusts. An intended victim can bleed like a stuck pig if this weapon is thrust in the right way.
+handling: One-handed
+distance: Engaged
+skill: Simple Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 480
+load: 0
+qualities:
+  - Fast
+  - Vicious
+  - Weak

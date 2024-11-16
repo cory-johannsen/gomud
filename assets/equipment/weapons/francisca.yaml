@@ -1,16 +1,16 @@
-weapon:
-  category: Ranged
-  level: Simple
-  type: Missile
-  name: Francisca
-  description: A balanced throwing axe, it’s good for splitting pumpkins or noggins at range. Strangely, both make similar sounds when struck.
-  handling: One-handed
-  distance: 1+[SB] meters
-  skill: Simple Ranged
-  target: Single Target
-  encumbrance: 1
-  cost: 960
-  load: 1
-  qualities:
-    - Throwing
-    - Weak
+category: Ranged
+level: Simple
+type: Missile
+name: Francisca
+description: A balanced throwing axe, it’s good for splitting pumpkins or noggins at range. Strangely, both make similar sounds when struck.
+handling: One-handed
+distance: 1+[SB] meters
+skill: Simple Ranged
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 960
+load: 1
+qualities:
+  - Throwing
+  - Weak

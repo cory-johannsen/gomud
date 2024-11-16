@@ -1,17 +1,17 @@
-weapon:
-  category: Ranged
-  level: Simple
-  type: Missile
-  name: Bolas
-  description: Useful for capturing dogs or prey on the run; both despicable curs.
-  handling: One-handed
-  distance: 1+[SB] meters
-  skill: Simple Ranged
-  target: Single Target
-  encumbrance: 1
-  cost: 40
-  load: 1
-  qualities:
-    - Entangling
-    - Ineffective
-    - Throwing
+category: Ranged
+level: Simple
+type: Missile
+name: Bolas
+description: Useful for capturing dogs or prey on the run; both despicable curs.
+handling: One-handed
+distance: 1+[SB] meters
+skill: Simple Ranged
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 40
+load: 1
+qualities:
+  - Entangling
+  - Ineffective
+  - Throwing

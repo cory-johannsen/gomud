@@ -1,17 +1,17 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Zweihänder
-  description: Sometimes, it is called a bastard sword (mostly because you will be cursing whoever wields it). Other times, it’s called a great sword (partially because it requires wide berth to swing it). However, it is far more efficient and wieldy than its predecessor, the ubiquitous war hammer.
-  handling: Two-handed
-  distance: Engaged or 1 meter
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 3
-  cost: 240
-  load: 0
-  qualities:
-    - Punishing
-    - Reach
-    - Slow
+category: Melee
+level: Martial
+type: Bladed
+name: Zweihänder
+description: Sometimes, it is called a bastard sword (mostly because you will be cursing whoever wields it). Other times, it’s called a great sword (partially because it requires wide berth to swing it). However, it is far more efficient and wieldy than its predecessor, the ubiquitous war hammer.
+handling: Two-handed
+distance: Engaged or 1 meter
+skill: Martial Melee
+target: Single Target
+encumbrance: 3
+mass: 0
+cost: 240
+load: 0
+qualities:
+  - Punishing
+  - Reach
+  - Slow

@@ -1,7 +1,22 @@
 name: Nerd
-description: "A master of knowledge and technology, the Nerd uses intellect and gadgets to solve problems and outsmart opponents."
-trappings:
-  - Knife
-  - Fine Clothes
+description: "Ummmmm, ACTUALLY, the correct term is..."
+startingEquipment:
+  oneEach:
+    - Ayahuasca
+    - Bottle of aspirin
+    - Coin purse
+    - Dirk
+    - Fine clothing
+    - Holy symbol
+    - Loose robes
+    - Antibiotics
+    - Robitussin
+    - Shoulder bag
+    - Smelling salts
+    - Cheap shoes
+  oneOf:
+    - Cudgel
+    - Staff
+    - Throwing knife
 traits:
   - Smart

@@ -1,16 +1,16 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Brawling
-  name: Knuckleduster
-  description: The ‘gentleman’s friend’ is for the more discerning brawler. It can be bought on the open market, but is often improvised from gloves stitched with weighty rings or even a few skeleton keys gripped between the fingers.
-  handling: One-handed
-  distance: Engaged
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 140
-  load: 0
-  qualities:
-    - Fast
-    - Pummeling
+category: Melee
+level: Simple
+type: Brawling
+name: Knuckleduster
+description: The ‘gentleman’s friend’ is for the more discerning brawler. It can be bought on the open market, but is often improvised from gloves stitched with weighty rings or even a few skeleton keys gripped between the fingers.
+handling: One-handed
+distance: Engaged
+skill: Simple Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 140
+load: 0
+qualities:
+  - Fast
+  - Pummeling

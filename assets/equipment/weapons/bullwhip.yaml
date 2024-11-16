@@ -1,17 +1,17 @@
-weapon:
-  category: Melee
-  level: Simple
-  type: Brawling
-  name: Bullwhip
-  description: This is a common tool for ranchers and animal tamers; more intimidating than useful. Despite the fanciful stories Antiquarians have spun, it cannot hold your weight if used to swing across a chasm.
-  handling: One-handed
-  distance: Engaged or 1 meter
-  skill: Simple Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 100
-  load: 0
-  qualities:
-    - Entangling
-    - Ineffective
-    - Reach
+category: Melee
+level: Simple
+type: Brawling
+name: Bullwhip
+description: This is a common tool for ranchers and animal tamers; more intimidating than useful. Despite the fanciful stories Antiquarians have spun, it cannot hold your weight if used to swing across a chasm.
+handling: One-handed
+distance: Engaged or 1 meter
+skill: Simple Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 100
+load: 0
+qualities:
+  - Entangling
+  - Ineffective
+  - Reach

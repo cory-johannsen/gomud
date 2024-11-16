@@ -1,16 +1,16 @@
-weapon:
-  category: Ranged
-  level: Martial
-  type: Missile
-  name: Arbalest crossbow
-  description: Wound by hand and cranequin-driven, the bolt unleashed by this weapon can decapitate nearly anything at a pace of a few meters. Any further, and it produces merely a bloody ruin.
-  handling: Two-handed
-  distance: 9+[SB] meters
-  skill: Martial Ranged
-  target: Single Target
-  encumbrance: 3
-  cost: 2400
-  load: 2
-  qualities:
-    - Fast
-    - Punishing
+category: Ranged
+level: Martial
+type: Missile
+name: Arbalest crossbow
+description: Wound by hand and cranequin-driven, the bolt unleashed by this weapon can decapitate nearly anything at a pace of a few meters. Any further, and it produces merely a bloody ruin.
+handling: Two-handed
+distance: 9+[SB] meters
+skill: Martial Ranged
+target: Single Target
+encumbrance: 3
+mass: 0
+cost: 2400
+load: 2
+qualities:
+  - Fast
+  - Punishing

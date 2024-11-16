@@ -1,16 +1,16 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Misericorde
-  description: This ancient word translates into mercy blade, used commonly to grant swift death to fatally-wounded knights. It grants a swift death to peasants, too.
-  handling: One-handed
-  distance: Engaged
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 40
-  load: 0
-  qualities:
-    - Fast
-    - Finesse
+category: Melee
+level: Martial
+type: Bladed
+name: Misericorde
+description: This ancient word translates into mercy blade, used commonly to grant swift death to fatally-wounded knights. It grants a swift death to peasants, too.
+handling: One-handed
+distance: Engaged
+skill: Martial Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 40
+load: 0
+qualities:
+  - Fast
+  - Finesse

@@ -1,0 +1,8 @@
+name: Full plate
+description: Expensive and clunky, it covers the entire body from toe to crown. It generally requires help to don and doff, and unfortunately can only be worn for short periods of time because it is so uncomfortable. It is often found gathering dust in alcoves of mansions or harnessed to knights that demand an impeccable appearance.
+damageThresholdModifier: 6
+encumbrance: 7
+mass: 0
+cost: 85920
+qualities:
+  - Heavy

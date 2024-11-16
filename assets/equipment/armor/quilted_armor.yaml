@@ -1,0 +1,7 @@
+name: Quilted armor
+description: Cheap and easy to move around in, this is standard equipment for penny-poor soldiers. Those who die wearing this armor often look like gutted rag dolls.
+damageThresholdModifier: 1
+encumbrance: 2
+mass: 0
+cost: 5280
+qualities:

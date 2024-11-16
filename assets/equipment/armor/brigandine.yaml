@@ -1,0 +1,7 @@
+name: Brigandine
+description: Cloth on the outside, metal plates on the inside. Worn often by travelling lords, this otherwise studded or banded leather offers protection whilst reflecting the latest of fashion. It’s by far the best set of armor you can wear without feeling like an overturned tortoise. Oftentimes, this armor is accompanied by a codpiece shaped into a grinning moon-like face.
+damageThresholdModifier: 3
+encumbrance: 4
+mass: 0
+cost: 15840
+qualities:

@@ -1,16 +1,16 @@
-weapon:
-  category: Melee
-  level: Martial
-  type: Bladed
-  name: Court Sword
-  description: Fast and efficient, this blade is carried by both blue-bloods and dandies. Many are unsharpened, carried as status symbol by the latter (but just as dangerous as a poisoned word with the former). Beware ill words with the fop whose expertise in fencing may result in a duel to the death.
-  handling: One-handed
-  distance: Engaged
-  skill: Martial Melee
-  target: Single Target
-  encumbrance: 1
-  cost: 140
-  load: 0
-  qualities:
-    - Fast
-    - Finesse
+category: Melee
+level: Martial
+type: Bladed
+name: Court Sword
+description: Fast and efficient, this blade is carried by both blue-bloods and dandies. Many are unsharpened, carried as status symbol by the latter (but just as dangerous as a poisoned word with the former). Beware ill words with the fop whose expertise in fencing may result in a duel to the death.
+handling: One-handed
+distance: Engaged
+skill: Martial Melee
+target: Single Target
+encumbrance: 1
+mass: 0
+cost: 140
+load: 0
+qualities:
+  - Fast
+  - Finesse

@@ -94,6 +94,13 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 	useHandler := NewUseHandler(dispatcher.State, skills)
 	dispatcher.Register("use", useHandler)
 
+	inventoryHandler := NewInventoryHandler(dispatcher.State)
+	dispatcher.Register("inventory", inventoryHandler)
+	inventoryAliases := CreateAliases(inventoryHandler, "i", "inv", "equipment", "eq")
+	for _, alias := range inventoryAliases {
+		dispatcher.Register(alias.Alias, alias)
+	}
+
 	helpHandler := &HelpHandler{stateProvider: dispatcher.State, handlers: dispatcher.handlers}
 	dispatcher.Register("help", helpHandler)
 	helpAliases := CreateAliases(helpHandler, "?", "h")

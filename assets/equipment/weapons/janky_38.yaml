@@ -1,17 +1,17 @@
-weapon:
-  category: Ranged
-  level: Martial
-  type: Gunpowder
-  name: Janky 38
-  description: Although considered to be the king of all pistols, they are inaccurate and make an incredibly intimidating explosive sound when fired. Given the amount of gunpowder stuffed into the three barrels, it is no wonder that they’re notorious for exploding in the wielder’s hand.
-  handling: One-handed
-  distance: 3+[SB] meters
-  skill: Martial Ranged
-  target: Single Target
-  encumbrance: 2
-  cost: 83gc
-  load: 4
-  qualities:
-    - Gunpowder
-    - Repeating
-    - Volatile
+category: Ranged
+level: Martial
+type: Gunpowder
+name: Janky 38
+description: Although considered to be the king of all pistols, they are inaccurate and make an incredibly intimidating explosive sound when fired. Given the amount of gunpowder stuffed into the three barrels, it is no wonder that they’re notorious for exploding in the wielder’s hand.
+handling: One-handed
+distance: 3+[SB] meters
+skill: Martial Ranged
+target: Single Target
+encumbrance: 2
+mass: 0
+cost: 39840
+load: 4
+qualities:
+  - Gunpowder
+  - Repeating
+  - Volatile

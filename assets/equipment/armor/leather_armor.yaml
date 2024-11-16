@@ -1,0 +1,7 @@
+name: Leather armor
+description: This is the standard issue armor for well-paid mercenaries. The leather type depends on the location; most of it is boiled and hardened cowhide, but sets made from sharkskin on the coast or lizardhide in the deep south are not uncommon.
+damageThresholdModifier: 2
+encumbrance: 3
+mass: 0
+cost: 9600
+qualities:

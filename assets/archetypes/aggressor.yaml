@@ -1,7 +1,21 @@
 name: Aggressor
 description: "Violence solves everything."
-trappings:
-  - Knife
-  - Fine Clothes
+startingEquipment:
+  oneEach:
+    - Fire-Hardened spear
+    - Heavy boots
+    - Lantern
+    - Laudanum
+    - Military attire
+    - Oil pot
+    - Red cap mushrooms
+    - Rucksack
+    - Leather armor
+    - Tincture
+    - Wooden shield
+  oneOf:
+    - Arbalest crossbow
+    - Machete
+    - Pike
 traits:
   - Violent

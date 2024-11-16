@@ -1,7 +1,20 @@
 name: Criminal
-description: ""
-trappings:
-  - Knife
-  - Fine Clothes
+description: "Crime is a way of life."
+startingEquipment:
+  oneEach:
+    - Antivenom
+    - Dark clothes
+    - Folkbane
+    - Gaff bag
+    - Second-hand attire
+    - Holy symbol
+    - Lock picks
+    - Mantle
+    - Cheap shoes
+    - Stiletto
+  oneOf:
+    - Fire-Hardened spear
+    - Hunting bow
+    - Woodsman's axe
 traits:
   - Recidivist

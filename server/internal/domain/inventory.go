@@ -12,6 +12,10 @@ type Pack struct {
 	maxSize int
 }
 
+func (p *Pack) Items() Items {
+	return p.items
+}
+
 func (p *Pack) AddItem(item Item) error {
 	if len(p.items) < p.maxSize {
 		p.items = append(p.items, item)
