@@ -173,7 +173,7 @@ func (l *EquipmentLoader) LoadShields() (map[string]*domain.Shield, error) {
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
 			continue
 		}
-		log.Printf("loading armor %s", item.Name())
+		log.Printf("loading shield %s", item.Name())
 		spec := &domain.ShieldSpec{}
 		data, err := os.ReadFile(l.config.AssetPath + "/equipment/shields/" + item.Name())
 		if err != nil {

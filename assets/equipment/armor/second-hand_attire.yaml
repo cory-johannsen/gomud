@@ -1,0 +1,9 @@
+name: Second-hand attire
+description: Unfortunately, this is nothing more than the attire you’re wearing and the skin on your back. Obviously not very good for deflecting anything other than a scrape from a fall, but it keeps your organs and blood inside where it belongs – you can’t fault it for that. If you are wearing any other sort of armor over your clothing (which your Character likely is), you ignore both its Dangerous and Natural Qualities.
+damageThresholdModifier: 0
+encumbrance: 0
+mass: 0
+cost: 0
+qualities:
+  - Dangerous
+  - Natural

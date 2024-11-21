@@ -199,7 +199,7 @@ func SpecFromInventory(inventory *Inventory) *InventorySpec {
 func NewInventory() *Inventory {
 	return &Inventory{
 		pack: &Pack{
-			maxSize: 5,
+			maxSize: 25,
 		},
 	}
 }

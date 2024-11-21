@@ -3,35 +3,26 @@ Cheap necklace| |0|0|480
 Cheap ring| |0|0|240
 Cheap shoes| |0|0|20
 Coin purse| |0|0|2
-Dark clothes| |0|0|480
 Entertainer’s mask| |0|0|960
 Expensive necklace| |0|0|480
 Expensive ring| |0|0|21120
 Fancy shoes| |0|0|3840
 Fancy wig| |0|0|1920
-Fashionable clothing| |0|0|2400
-Fine clothing| |0|0|9600
 Fine perfume| |0|0|1920
 Foppish hat| |0|0|960
-Garish attire| |0|0|1440
 Heavy boots| |0|0|2400
 Holy symbol| |0|0|60
 Leather sandals| |0|0|480
-Loose robes| |0|0|960
 Mantle| |0|0|1440
 Military attire| |0|0|1920
 Monocle| |0|0|2400
 Priest’s mitre| |0|0|1440
-Second-hand attire| |0|0|140
-Simple attire| |0|0|480
 Smallclothes| |0|0|60
 Snuff box| |0|0|7
 Soft shoes| |0|0|960
 Spectacles| |0|0|960
 Stinky perfume| |0|0|480
 Straight razor| |0|0|60
-Traveling clothes| |0|0|300
-Tattered rags| |0|0|60
 Walking cane| |0|0|1440
 Warm vest| |0|0|60
 Wilderness cloak| |0|0|960

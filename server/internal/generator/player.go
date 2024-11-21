@@ -116,7 +116,8 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 
 	// generate the starting equipment
 	for _, i := range archetype.StartingEquipment.OneEach {
-		switch i.Type() {
+		itemType := i.Type()
+		switch itemType {
 		case domain.ItemTypeArmor:
 			armor := i.(*domain.Armor)
 			err := inventory.EquipArmor(armor)
