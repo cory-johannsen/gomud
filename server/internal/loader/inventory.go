@@ -1,9 +1,12 @@
 package loader
 
 import (
+	"context"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
 )
+
+type ItemResolver func(ctx context.Context, id int) (domain.Item, error)
 
 type InventoryLoader struct {
 	config    *config.Config
@@ -17,27 +20,14 @@ func NewInventoryLoader(cfg *config.Config) *InventoryLoader {
 	}
 }
 
-func (l *InventoryLoader) LoadInventory() (map[int]domain.Item, error) {
-	if len(l.inventory) > 0 {
-		return l.inventory, nil
-	}
-	return l.inventory, nil
-}
-
 func (l *InventoryLoader) GetItem(id int) (domain.Item, error) {
-	if len(l.inventory) == 0 {
-		_, err := l.LoadInventory()
-		if err != nil {
-			return nil, err
-		}
-	}
 	return l.inventory[id], nil
 }
 
-func (l *InventoryLoader) InventoryFromSpec(spec *domain.InventorySpec) (*domain.Inventory, error) {
+func (l *InventoryLoader) InventoryFromSpec(ctx context.Context, spec *domain.InventorySpec, resolver ItemResolver) (*domain.Inventory, error) {
 	inventory := domain.NewInventory()
 	if spec.MainHand != 0 {
-		item, err := l.GetItem(spec.MainHand)
+		item, err := resolver(ctx, spec.MainHand)
 		if err != nil {
 			return nil, err
 		}
@@ -48,7 +38,7 @@ func (l *InventoryLoader) InventoryFromSpec(spec *domain.InventorySpec) (*domain
 		}
 	}
 	if spec.OffHand != 0 {
-		item, err := l.GetItem(spec.OffHand)
+		item, err := resolver(ctx, spec.OffHand)
 		if err != nil {
 			return nil, err
 		}
@@ -59,7 +49,7 @@ func (l *InventoryLoader) InventoryFromSpec(spec *domain.InventorySpec) (*domain
 		}
 	}
 	if spec.Armor != 0 {
-		item, err := l.GetItem(spec.Armor)
+		item, err := resolver(ctx, spec.Armor)
 		if err != nil {
 			return nil, err
 		}
@@ -70,7 +60,7 @@ func (l *InventoryLoader) InventoryFromSpec(spec *domain.InventorySpec) (*domain
 		}
 	}
 	for _, id := range spec.Pack {
-		item, err := l.GetItem(id)
+		item, err := resolver(ctx, id)
 		if err != nil {
 			return nil, err
 		}

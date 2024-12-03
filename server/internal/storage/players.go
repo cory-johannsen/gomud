@@ -11,21 +11,23 @@ import (
 )
 
 type Players struct {
-	database *Database
-	loaders  *loader.Loaders
-	players  map[string]*domain.Player
+	database  *Database
+	loaders   *loader.Loaders
+	equipment *Equipment
+	players   map[string]*domain.Player
 }
 
-func NewPlayers(database *Database, loaders *loader.Loaders) *Players {
+func NewPlayers(database *Database, loaders *loader.Loaders, equipment *Equipment) *Players {
 	return &Players{
-		database: database,
-		players:  make(map[string]*domain.Player),
-		loaders:  loaders,
+		database:  database,
+		players:   make(map[string]*domain.Player),
+		loaders:   loaders,
+		equipment: equipment,
 	}
 }
 
 func (p *Players) CreatePlayer(ctx context.Context, name string, password string, data map[string]domain.Property, conn io.Connection) (*domain.Player, error) {
-	specData := propertiesToData(data)
+	specData := p.propertiesToData(data)
 	encoded, err := json.Marshal(specData)
 	if err != nil {
 		log.Errorf("failed to marshal player data: %s", err)
@@ -68,7 +70,9 @@ func (p *Players) FetchPlayerById(ctx context.Context, id int, conn io.Connectio
 		Password: password,
 		Data:     specProps,
 	}
-	player := p.PlayerFromSpec(spec, conn)
+	player := p.PlayerFromSpec(ctx, spec, conn)
+
+	// todo: load equipment
 
 	return player, nil
 }
@@ -91,7 +95,7 @@ func (p *Players) FetchPlayerByName(ctx context.Context, name string, conn io.Co
 		log.Errorf("failed to unmarshal player data: %s", err)
 		return nil, err
 	}
-	props := p.dataToProperties(specProps)
+	props := p.dataToProperties(ctx, specProps)
 	player := domain.NewPlayer(&id, name, password, props, conn)
 	// Peril threshold is calculated from Grit Bonus
 	player.Peril().Threshold = player.StatBonuses().Grit + 3
@@ -125,18 +129,18 @@ type PlayerSpec struct {
 	Data     map[string]interface{}
 }
 
-func SpecFromPlayer(player *domain.Player) *PlayerSpec {
-	data := propertiesToData(player.Data)
-	p := &PlayerSpec{
+func (p *Players) SpecFromPlayer(player *domain.Player) *PlayerSpec {
+	data := p.propertiesToData(player.Data)
+	spec := &PlayerSpec{
 		Id:       player.Id,
 		Name:     player.Name,
 		Password: player.Password,
 		Data:     data,
 	}
-	return p
+	return spec
 }
 
-func propertiesToData(props map[string]domain.Property) map[string]interface{} {
+func (p *Players) propertiesToData(props map[string]domain.Property) map[string]interface{} {
 	data := make(map[string]interface{})
 	for k, v := range props {
 		switch k {
@@ -161,7 +165,55 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 			}
 			data[k] = disorders
 		case domain.InventoryProperty:
-			data[k] = domain.SpecFromInventory(v.(*domain.Inventory))
+			inv := v.(*domain.Inventory)
+			// ensure the inventory items have been persisted
+			if inv.MainHand() != nil && inv.MainHand().Id() == 0 {
+				item, err := p.equipment.CreateItem(context.Background(), inv.MainHand())
+				if err != nil {
+					log.Printf("failed to create main hand item: %s", err)
+				}
+				err = inv.EquipMainHand(item.(*domain.Weapon))
+				if err != nil {
+					log.Printf("failed to update main hand item: %s", err)
+				}
+			}
+			if inv.OffHand() != nil && inv.OffHand().Id() == 0 {
+				item, err := p.equipment.CreateItem(context.Background(), inv.OffHand())
+				if err != nil {
+					log.Printf("failed to create off hand item: %s", err)
+				}
+				err = inv.EquipOffHand(item.(*domain.Weapon))
+				if err != nil {
+					log.Printf("failed to update off hand item: %s", err)
+				}
+			}
+			if inv.Armor() != nil && inv.Armor().Id() == 0 {
+				item, err := p.equipment.CreateItem(context.Background(), inv.Armor())
+				if err != nil {
+					log.Printf("failed to create armor item: %s", err)
+				}
+				err = inv.EquipArmor(item.(*domain.Armor))
+				if err != nil {
+					log.Printf("failed to update armor item: %s", err)
+				}
+			}
+			for _, item := range inv.Pack().Items() {
+				if item.Id() == 0 {
+					i, err := p.equipment.CreateItem(context.Background(), item)
+					if err != nil {
+						log.Printf("failed to create pack item: %s", err)
+					}
+					err = inv.Pack().RemoveItem(item)
+					if err != nil {
+						log.Printf("failed to remove item from pack: %s", err)
+					}
+					err = inv.Pack().AddItem(i)
+					if err != nil {
+						log.Printf("failed to add item to pack: %s", err)
+					}
+				}
+			}
+			data[k] = domain.SpecFromInventory(inv)
 		case domain.JobProperty:
 			data[k] = v.(*domain.Job).Name
 		case domain.PoornessProperty:
@@ -207,7 +259,7 @@ func propertiesToData(props map[string]domain.Property) map[string]interface{} {
 	return data
 }
 
-func (p *Players) dataToProperties(data map[string]interface{}) map[string]domain.Property {
+func (p *Players) dataToProperties(ctx context.Context, data map[string]interface{}) map[string]domain.Property {
 	props := make(map[string]domain.Property)
 	for k, v := range data {
 		switch k {
@@ -378,7 +430,7 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 				Pack:     pack,
 				Cash:     cash,
 			}
-			inventory, err := p.loaders.InventoryLoader.InventoryFromSpec(spec)
+			inventory, err := p.loaders.InventoryLoader.InventoryFromSpec(ctx, spec, p.equipment.FetchItemByID)
 			if err != nil {
 				log.Printf("failed to load inventory: %s", err)
 				continue
@@ -514,8 +566,8 @@ func (p *Players) dataToProperties(data map[string]interface{}) map[string]domai
 	return props
 }
 
-func (p *Players) PlayerFromSpec(spec *PlayerSpec, conn io.Connection) *domain.Player {
-	data := p.dataToProperties(spec.Data)
+func (p *Players) PlayerFromSpec(ctx context.Context, spec *PlayerSpec, conn io.Connection) *domain.Player {
+	data := p.dataToProperties(ctx, spec.Data)
 	return domain.NewPlayer(spec.Id, spec.Name, spec.Password, data, conn)
 }
 
@@ -523,7 +575,7 @@ func (p *Players) StorePlayer(ctx context.Context, player *domain.Player, conn i
 	if player.Id == nil {
 		return p.CreatePlayer(ctx, player.Name, player.Password, player.Data, conn)
 	}
-	data := SpecFromPlayer(player).Data
+	data := p.SpecFromPlayer(player).Data
 	encoded, err := json.Marshal(data)
 	if err != nil {
 		return nil, err

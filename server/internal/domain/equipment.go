@@ -27,6 +27,7 @@ type Item interface {
 	MassInGrams() int
 	Type() ItemType
 	Cost() int
+	NewInstance(id int) Item
 }
 
 type Items []Item
@@ -42,10 +43,6 @@ type BaseItem struct {
 
 func (i *BaseItem) Id() int {
 	return i.ItemId
-}
-
-func (i *BaseItem) SetId(id int) {
-	i.ItemId = id
 }
 
 func (i *BaseItem) Name() string {
@@ -70,6 +67,19 @@ func (i *BaseItem) Cost() int {
 
 type MiscellaneousItem struct {
 	BaseItem
+}
+
+func (m *MiscellaneousItem) NewInstance(id int) Item {
+	return &MiscellaneousItem{
+		BaseItem: BaseItem{
+			ItemId:          id,
+			ItemName:        m.ItemName,
+			ItemDescription: m.ItemDescription,
+			ItemMass:        m.ItemMass,
+			ItemEncumbrance: m.ItemEncumbrance,
+			ItemCost:        m.ItemCost,
+		},
+	}
 }
 
 func (m *MiscellaneousItem) Type() ItemType {
@@ -206,6 +216,27 @@ func (w *Weapon) Qualities() Qualities {
 	return w.qualities
 }
 
+func (w *Weapon) NewInstance(id int) Item {
+	return &Weapon{
+		BaseItem: BaseItem{
+			ItemId:          id,
+			ItemName:        w.ItemName,
+			ItemDescription: w.ItemDescription,
+			ItemMass:        w.ItemMass,
+			ItemEncumbrance: w.ItemEncumbrance,
+			ItemCost:        w.ItemCost,
+		},
+		category:         w.category,
+		level:            w.level,
+		weaponType:       w.weaponType,
+		handling:         w.handling,
+		distance:         w.distance,
+		skill:            w.skill,
+		loadActionPoints: w.loadActionPoints,
+		qualities:        w.qualities,
+	}
+}
+
 var _ Item = &Weapon{}
 
 type ArmorSpec struct {
@@ -218,6 +249,21 @@ type Armor struct {
 	BaseItem
 	damageThresholdModifier int
 	qualities               Qualities
+}
+
+func (a *Armor) NewInstance(id int) Item {
+	return &Armor{
+		BaseItem: BaseItem{
+			ItemId:          id,
+			ItemName:        a.ItemName,
+			ItemDescription: a.ItemDescription,
+			ItemMass:        a.ItemMass,
+			ItemEncumbrance: a.ItemEncumbrance,
+			ItemCost:        a.ItemCost,
+		},
+		damageThresholdModifier: a.damageThresholdModifier,
+		qualities:               a.qualities,
+	}
 }
 
 func (a *Armor) Type() ItemType {
@@ -250,6 +296,20 @@ type ShieldSpec struct {
 type Shield struct {
 	BaseItem
 	handling WeaponHandling
+}
+
+func (s *Shield) NewInstance(id int) Item {
+	return &Shield{
+		BaseItem: BaseItem{
+			ItemId:          id,
+			ItemName:        s.ItemName,
+			ItemDescription: s.ItemDescription,
+			ItemMass:        s.ItemMass,
+			ItemEncumbrance: s.ItemEncumbrance,
+			ItemCost:        s.ItemCost,
+		},
+		handling: s.handling,
+	}
 }
 
 func (s *Shield) Type() ItemType {

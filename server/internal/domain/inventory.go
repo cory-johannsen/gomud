@@ -154,6 +154,58 @@ func (i *Inventory) UnequipArmor() (*Armor, error) {
 	return armor, nil
 }
 
+func (i *Inventory) EquipItem(item Item) error {
+	itemType := item.Type()
+	switch itemType {
+	case ItemTypeArmor:
+		armor := item.(*Armor)
+		err := i.EquipArmor(armor)
+		if err != nil {
+			log.Printf("failed to equip armor %s: %s", armor.Name(), err)
+			return err
+		}
+	case ItemTypeShield:
+		shield := item.(*Shield)
+		err := i.Pack().AddItem(shield)
+		if err != nil {
+			log.Printf("failed to add shield %s to inventory: %s", item.Name(), err)
+			return err
+		}
+		// TODO equip shield
+	case ItemTypeWeapon:
+		weapon := item.(*Weapon)
+		if i.MainHand() == nil {
+			err := i.EquipMainHand(weapon)
+			if err != nil {
+				log.Printf("failed to equip weapon %s: %s", weapon.Name(), err)
+				return err
+			}
+		} else if i.OffHand() == nil {
+			// TODO check for off hand usability
+			err := i.EquipOffHand(weapon)
+			if err != nil {
+				log.Printf("failed to equip offhand weapon %s: %s", weapon.Name(), err)
+				return err
+			}
+		} else {
+			err := i.Pack().AddItem(weapon)
+			if err != nil {
+				log.Printf("failed to add weapon %s to inventory: %s", weapon.Name(), err)
+				return err
+			}
+		}
+	case ItemTypeMiscellaneous:
+		fallthrough
+	default:
+		err := i.Pack().AddItem(item)
+		if err != nil {
+			log.Printf("failed to add item %s to inventory: %s", item.Name(), err)
+			return err
+		}
+	}
+	return nil
+}
+
 func (i *Inventory) Value() interface{} {
 	return i
 }

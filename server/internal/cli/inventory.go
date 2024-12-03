@@ -46,7 +46,11 @@ func (i *InventoryHandler) Handle(ctx context.Context, args []string) (string, e
 		msg += "\t\tempty\n"
 	} else {
 		for _, item := range inventory.Pack().Items() {
-			msg += fmt.Sprintf("\t\t%s - %s, %f kg\n", item.Name(), item.Description(), item.MassInGrams()/1000.0)
+			itemMsg := fmt.Sprintf("\t\t%s", item.Name())
+			if item.Description() != "" {
+				itemMsg += fmt.Sprintf(" - %s", item.Description())
+			}
+			msg += fmt.Sprintf("%s, %.2f kg\n", itemMsg, float64(item.MassInGrams())/1000.0)
 		}
 	}
 	return msg, nil

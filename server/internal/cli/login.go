@@ -98,8 +98,18 @@ func (h *LoginHandler) createPlayer(name string) (*domain.Player, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	_ = h.conn.Writeln(fmt.Sprintf("Created player %s", player.String()))
+
+	// Select one-of equipment
+	selectedItem, err := h.selectOneOfEquipment(player)
+	if err != nil {
+		return nil, err
+	}
+	err = player.Inventory().EquipItem(selectedItem)
+	if err != nil {
+		return nil, err
+	}
+
 	_ = h.conn.Writeln(fmt.Sprintf("You now get to select your skills, bonuses and talents.  You have %d experience to spend, each selection costs 100 experience.", player.Experience()))
 	for {
 		if player.Experience() < 100 {
@@ -417,6 +427,30 @@ func (h *LoginHandler) selectTalents(player *domain.Player) error {
 		player.ConsumeTalent(player.Job(), talent, 100)
 	}
 	return nil
+}
+
+func (h *LoginHandler) selectOneOfEquipment(player *domain.Player) (domain.Item, error) {
+	var itemIndex int
+	for {
+		_ = h.conn.Writeln("You get to select one piece of equipment from the following list:")
+		for i, it := range player.Job().Archetype.StartingEquipment.OneOf {
+			_ = h.conn.Writeln(fmt.Sprintf("%d) %s", i, it.Name()))
+		}
+		_ = h.conn.Write("> ")
+		choice := h.conn.Read()
+		index, err := strconv.Atoi(choice)
+		if err != nil {
+			_ = h.conn.Writeln("Invalid choice")
+			continue
+		}
+		if index < 0 || index >= len(player.Job().Archetype.StartingEquipment.OneOf) {
+			_ = h.conn.Writeln("Invalid choice")
+			continue
+		}
+		itemIndex = index
+		break
+	}
+	return player.Job().Archetype.StartingEquipment.OneOf[itemIndex], nil
 }
 
 func (h *LoginHandler) Help(args []string) string {

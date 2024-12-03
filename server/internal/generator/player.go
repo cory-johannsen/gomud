@@ -116,54 +116,11 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 
 	// generate the starting equipment
 	for _, i := range archetype.StartingEquipment.OneEach {
-		itemType := i.Type()
-		switch itemType {
-		case domain.ItemTypeArmor:
-			armor := i.(*domain.Armor)
-			err := inventory.EquipArmor(armor)
-			if err != nil {
-				log.Printf("failed to equip armor %s: %s", armor.Name(), err)
-				return nil, err
-			}
-		case domain.ItemTypeShield:
-			shield := i.(*domain.Shield)
-			err := inventory.Pack().AddItem(shield)
-			if err != nil {
-				log.Printf("failed to add shield %s to inventory: %s", i.Name(), err)
-				return nil, err
-			}
-			// TODO equip shield
-		case domain.ItemTypeWeapon:
-			weapon := i.(*domain.Weapon)
-			if inventory.MainHand() == nil {
-				err := inventory.EquipMainHand(weapon)
-				if err != nil {
-					log.Printf("failed to equip weapon %s: %s", weapon.Name(), err)
-					return nil, err
-				}
-			} else if inventory.OffHand() == nil {
-				err := inventory.EquipOffHand(weapon)
-				if err != nil {
-					log.Printf("failed to equip weapon %s: %s", weapon.Name(), err)
-					return nil, err
-				}
-			} else {
-				err := inventory.Pack().AddItem(weapon)
-				if err != nil {
-					log.Printf("failed to add weapon %s to inventory: %s", weapon.Name(), err)
-					return nil, err
-				}
-			}
-		case domain.ItemTypeMiscellaneous:
-			fallthrough
-		default:
-			err := inventory.Pack().AddItem(i)
-			if err != nil {
-				log.Printf("failed to add item %s to inventory: %s", i.Name(), err)
-				return nil, err
-			}
+		err = inventory.EquipItem(i)
+		if err != nil {
+			log.Printf("failed to equip item %s: %s", i.Name(), err)
+			return nil, err
 		}
-
 	}
 
 	return player, nil

@@ -33,6 +33,39 @@ func NewEquipmentLoader(cfg *config.Config, skillLoader *SkillLoader, qualityLoa
 	}
 }
 
+func (l *EquipmentLoader) LoadEquipment() (map[string]domain.Item, error) {
+	weapons, err := l.LoadWeapons()
+	if err != nil {
+		return nil, err
+	}
+	armor, err := l.LoadArmor()
+	if err != nil {
+		return nil, err
+	}
+	shields, err := l.LoadShields()
+	if err != nil {
+		return nil, err
+	}
+	misc, err := l.LoadMisc()
+	if err != nil {
+		return nil, err
+	}
+	items := make(map[string]domain.Item)
+	for k, v := range weapons {
+		items[k] = v
+	}
+	for k, v := range armor {
+		items[k] = v
+	}
+	for k, v := range shields {
+		items[k] = v
+	}
+	for k, v := range misc {
+		items[k] = v
+	}
+	return items, nil
+}
+
 func (l *EquipmentLoader) LoadWeapons() (map[string]*domain.Weapon, error) {
 	if len(l.weapons) > 0 {
 		return l.weapons, nil
