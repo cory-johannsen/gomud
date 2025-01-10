@@ -10,6 +10,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jackc/pgx/v4"
 	log "github.com/sirupsen/logrus"
+	url2 "net/url"
 )
 
 type Database struct {
@@ -17,7 +18,8 @@ type Database struct {
 }
 
 func NewDatabase(config *config.Config) (*Database, error) {
-	connectionString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable&search_path=%s", config.DatabaseUser, config.DatabasePassword, config.DatabaseHost, config.DatabasePort, config.DatabaseName, config.DatabaseSchema)
+	pw := url2.QueryEscape(config.DatabasePassword)
+	connectionString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable&search_path=%s", config.DatabaseUser, pw, config.DatabaseHost, config.DatabasePort, config.DatabaseName, config.DatabaseSchema)
 	conn, err := pgx.Connect(
 		context.Background(),
 		connectionString,
@@ -26,7 +28,7 @@ func NewDatabase(config *config.Config) (*Database, error) {
 		return nil, err
 	}
 
-	log.Printf("connected to database %s\n", config.DatabaseName)
+	log.Printf("connected to database %s", config.DatabaseName)
 	log.Println("running migrations")
 
 	url := fmt.Sprintf("file://%s", config.DatabaseMigrationsPath)

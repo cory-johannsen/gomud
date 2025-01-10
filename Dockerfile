@@ -5,11 +5,11 @@ FROM gcr.io/distroless/base:latest
 WORKDIR /app
 
 # Copy the Go binary into the container
-COPY bin/gunchete /app/
+COPY bin/gunchete.linux.amd64 /app/gunchete
 
 # Copy static assets into the container
 COPY assets /app/assets
-COPY server /app/server
+COPY server/migrations /app/migrations
 
 # Specify the port your application listens on
 EXPOSE 7000

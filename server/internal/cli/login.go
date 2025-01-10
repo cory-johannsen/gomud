@@ -78,7 +78,7 @@ func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error
 	h.state = h.stateConstructor(player)
 	player.LoggedIn = true
 	player.Room().AddPlayer(player)
-	msg := fmt.Sprintf("Welcome %s!\n%s", name, Look(player))
+	msg := fmt.Sprintf("Welcome %s!\n%s", name, Look(player, nil))
 	return msg, nil
 }
 

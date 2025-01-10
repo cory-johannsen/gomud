@@ -1,9 +1,9 @@
 name: {{ .name }}
 statistics:
   - brutality:
-    value: { .combat.value }}
+    value: { .brutality.value }}
     modifiers:
-      {{- range .combat.modifiers }}
+      {{- range .brutality.modifiers }}
       - {{ . }}
       {{- end }}
   - muscle:

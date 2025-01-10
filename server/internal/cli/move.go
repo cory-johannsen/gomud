@@ -44,7 +44,7 @@ func (m *MoveHandler) Handle(ctx context.Context, args []string) (string, error)
 	}
 	room.RemovePlayer(player)
 	destination.AddPlayer(player)
-	return Look(player), nil
+	return Look(player, nil), nil
 }
 
 func (m *MoveHandler) Help(args []string) string {

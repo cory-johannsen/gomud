@@ -49,7 +49,7 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 
 	lookHandler := NewLookHandler(dispatcher.State)
 	dispatcher.Register("look", lookHandler)
-	lookAliases := CreateAliases(lookHandler, "l")
+	lookAliases := CreateAliases(lookHandler, "l", "evaluate", "examine", "inspect", "consider")
 	for _, alias := range lookAliases {
 		dispatcher.Register(alias.Alias, alias)
 	}

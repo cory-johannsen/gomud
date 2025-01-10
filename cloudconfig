@@ -1,0 +1,24 @@
+#cloud-config
+users:
+- name: gunchete
+  uid: 2000
+
+write_files:
+- path: /etc/systemd/system/gunchete.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=Start gunchete
+    Wants=gcr-online.target
+    After=gcr-online.target
+
+    [Service]
+    ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
+    ExecStart=/usr/bin/docker run --rm -p 7000:7000 -e DATABASE_HOST=dbhost -e DATABASE_USER=postgres -e DATABASE_PASSWORD=dbpass -e DATABASE_NAME=gunchete -e DATABASE_PORT=5432 -e DATABASE_MIGRATIONS_PATH=/app/migrations -e ASSET_PATH=/app/assets --name=gunchete us-west1-docker.pkg.dev/big-formula-443619-k0/gunchete/gunchete.linux.amd64:latest
+    ExecStop=/usr/bin/docker stop gunchete
+    ExecStopPost=/usr/bin/docker rm gunchete
+
+runcmd:
+- systemctl daemon-reload
+- systemctl start gunchete.service
