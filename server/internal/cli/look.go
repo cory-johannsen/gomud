@@ -91,20 +91,20 @@ func LookPlayer(player *domain.Player, target *domain.Player) string {
 	default:
 		fallthrough
 	case domain.PerilConditionUnhindered:
-		perilDescription = "cool as a cucumber."
+		perilDescription = green("cool as a cucumber.")
 	case domain.PerilConditionImperiled:
-		perilDescription = "kinda concerned."
+		perilDescription = yellow("kinda concerned.")
 	case domain.PerilConditionIgnore1SkillRank:
-		perilDescription = "pretty freaked out."
+		perilDescription = yellow("pretty freaked out.")
 	case domain.PerilConditionIgnore2SkillRanks:
-		perilDescription = "super freaked out."
+		perilDescription = red("super freaked out.")
 	case domain.PerilConditionIgnore3SkillRanks:
-		perilDescription = "freaked out of their damn mind!"
+		perilDescription = red("freaked out of their damn mind!")
 	case domain.PerilConditionIncapacitated:
-		perilDescription = "totally incapacitated by all this shit!"
+		perilDescription = red("totally incapacitated by all this shit!")
 	}
 
-	msg := fmt.Sprintf("%s the %s looks %s.  They are wearing %s and wield %s.  \n  They are %s", cyan(target.Name), green(target.Job().Name),
+	msg := fmt.Sprintf("%s the %s looks %s  They are wearing %s and wield %s.  \n  They are %s", cyan(target.Name), green(target.Job().Name),
 		perilDescription, magenta(armor), magenta(wields), yellow(target.Condition()))
 	if len(target.Injuries()) == 0 {
 		msg += " and unscathed."
