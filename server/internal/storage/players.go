@@ -406,18 +406,29 @@ func (p *Players) dataToProperties(ctx context.Context, data map[string]interfac
 			var armor = 0
 			var cash = 0
 			if _, ok := m["MainHand"]; ok {
-				mainHand = int(m["MainHand"].(float64))
+				id := int(m["MainHand"].(float64))
+				if id != 0 {
+					mainHand = id
+				}
 			}
 			if _, ok := m["OffHand"]; ok {
-				offHand = int(m["OffHand"].(float64))
+				id := int(m["OffHand"].(float64))
+				if id != 0 {
+					offHand = id
+				}
 			}
 			if _, ok := m["Armor"]; ok {
-				armor = int(m["Armor"].(float64))
+				id := int(m["Armor"].(float64))
+				if id != 0 {
+					armor = id
+				}
 			}
 			if _, ok := m["Pack"]; ok {
 				ids := m["Pack"].([]interface{})
 				for _, id := range ids {
-					pack = append(pack, int(id.(float64)))
+					if id != 0 {
+						pack = append(pack, int(id.(float64)))
+					}
 				}
 			}
 			if _, ok := m["Cash"]; ok {

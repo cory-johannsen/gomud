@@ -1,6 +1,6 @@
 name: Metal shield
 description: Sturdy and able to actually deflect blows instead of absorb them, many of these metal-rimmed escutcheons are dented and rusted from use. In a pinch, it can also be used to bash someone’s face in.
-handling: One-handed
+type: Medium
 encumbrance: 2
 mass: 0
 cost: 1440

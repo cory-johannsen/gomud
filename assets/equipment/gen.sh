@@ -160,7 +160,7 @@ done < "$filename"
 create_shield() {
   name="$1"
   description="$2"
-  handedness="$3"
+  type="$3"
   encumbrance="$4"
   mass="$5"
   cost="$6"
@@ -170,7 +170,7 @@ create_shield() {
 cat <<EOL > "shields/$filename"
 name: $name
 description: $description
-handling: $handedness
+type: $type
 encumbrance: $encumbrance
 mass: $mass
 cost: $cost
@@ -194,19 +194,19 @@ while read -r line; do
   IFS='|' read -r -a parts <<< "$line"
   name=${parts[0]}
   description=${parts[1]}
-  handedness=${parts[2]}
+  type=${parts[2]}
   squals=${parts[3]}
   encumbrance=${parts[4]}
   mass=${parts[5]}
   cost=${parts[6]}
   echo "creating $name"
   echo "    description: $description"
-  echo "    handedness: $handedness"
-  echo "    qualities: $aquals"
+  echo "    type: $type"
+  echo "    qualities: $squals"
   echo "    encumbrance: $encumbrance"
   echo "    mass: $mass"
   echo "    cost: $cost"
-  create_shield "$name" "$description" "$handedness" "$encumbrance" "$mass" "$cost" "$squals"
+  create_shield "$name" "$description" "$type" "$encumbrance" "$mass" "$cost" "$squals"
 done < "$filename"
 
 
@@ -215,9 +215,9 @@ done < "$filename"
 create_misc() {
   name="$1"
   description="$2"
-  encumbrance="$4"
-  mass="$5"
-  cost="$6"
+  encumbrance="$3"
+  mass="$4"
+  cost="$5"
   filename=$(echo "$name" | tr '[:upper:]' '[:lower:]' | tr ' ' '_').yaml
 cat <<EOL > "misc/$filename"
 name: $name

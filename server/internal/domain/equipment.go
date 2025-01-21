@@ -288,14 +288,22 @@ func NewArmor(spec *ArmorSpec, qualities Qualities) *Armor {
 
 var _ Item = &Armor{}
 
+type ShieldType string
+
+const (
+	ShieldTypeBuckler ShieldType = "Buckler"
+	ShieldTypeMedium  ShieldType = "Medium"
+	ShieldTypeLarge   ShieldType = "Large"
+)
+
 type ShieldSpec struct {
 	BaseItem
-	WeaponHandling WeaponHandling `json:"handling"`
+	ShieldType ShieldType `json:"type"`
 }
 
 type Shield struct {
 	BaseItem
-	handling WeaponHandling
+	shieldType ShieldType
 }
 
 func (s *Shield) NewInstance(id int) Item {
@@ -308,7 +316,7 @@ func (s *Shield) NewInstance(id int) Item {
 			ItemEncumbrance: s.ItemEncumbrance,
 			ItemCost:        s.ItemCost,
 		},
-		handling: s.handling,
+		shieldType: s.shieldType,
 	}
 }
 
@@ -318,8 +326,8 @@ func (s *Shield) Type() ItemType {
 
 func NewShield(spec *ShieldSpec) *Shield {
 	return &Shield{
-		BaseItem: spec.BaseItem,
-		handling: spec.WeaponHandling,
+		BaseItem:   spec.BaseItem,
+		shieldType: spec.ShieldType,
 	}
 }
 

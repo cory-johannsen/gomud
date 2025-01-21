@@ -38,6 +38,7 @@ func (p *Pack) RemoveItem(item Item) error {
 type Inventory struct {
 	mainHand *Weapon
 	offHand  *Weapon
+	shield   *Shield
 	armor    *Armor
 	pack     *Pack
 	cash     int
@@ -49,6 +50,10 @@ func (i *Inventory) MainHand() *Weapon {
 
 func (i *Inventory) OffHand() *Weapon {
 	return i.offHand
+}
+
+func (i *Inventory) Shield() *Shield {
+	return i.shield
 }
 
 func (i *Inventory) Armor() *Armor {
@@ -109,6 +114,24 @@ func (i *Inventory) EquipOffHand(weapon *Weapon) error {
 	return nil
 }
 
+func (i *Inventory) EquipShield(shield *Shield) error {
+	if shield == nil {
+		return errors.New("shield is nil")
+	}
+	if i.shield != nil {
+		err := i.pack.AddItem(i.shield)
+		if err != nil {
+			if errors.Is(err, PackFullError) {
+				return err
+			}
+			log.Errorf("error adding shield to pack: %v", err)
+			return err
+		}
+	}
+	i.shield = shield
+	return nil
+}
+
 func (i *Inventory) EquipArmor(armor *Armor) error {
 	if armor == nil {
 		return errors.New("armor is nil")
@@ -145,6 +168,15 @@ func (i *Inventory) UnequipOffHand() (*Weapon, error) {
 	return weapon, nil
 }
 
+func (i *Inventory) UnequipShield() (*Shield, error) {
+	if i.shield == nil {
+		return nil, errors.New("shield is nil")
+	}
+	shield := i.shield
+	i.shield = nil
+	return shield, nil
+}
+
 func (i *Inventory) UnequipArmor() (*Armor, error) {
 	if i.armor == nil {
 		return nil, errors.New("armor is nil")
@@ -166,12 +198,11 @@ func (i *Inventory) EquipItem(item Item) error {
 		}
 	case ItemTypeShield:
 		shield := item.(*Shield)
-		err := i.Pack().AddItem(shield)
+		err := i.EquipShield(shield)
 		if err != nil {
-			log.Printf("failed to add shield %s to inventory: %s", item.Name(), err)
+			log.Printf("failed to equip shield %s: %s", item.Name(), err)
 			return err
 		}
-		// TODO equip shield
 	case ItemTypeWeapon:
 		weapon := item.(*Weapon)
 		if i.MainHand() == nil {
@@ -182,9 +213,9 @@ func (i *Inventory) EquipItem(item Item) error {
 			}
 		} else if i.OffHand() == nil {
 			// TODO check for off hand usability
-			err := i.EquipOffHand(weapon)
+			err := i.Pack().AddItem(weapon)
 			if err != nil {
-				log.Printf("failed to equip offhand weapon %s: %s", weapon.Name(), err)
+				log.Printf("failed to store weapon in pack %s: %s", weapon.Name(), err)
 				return err
 			}
 		} else {

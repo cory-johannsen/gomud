@@ -60,13 +60,15 @@ func (l *InventoryLoader) InventoryFromSpec(ctx context.Context, spec *domain.In
 		}
 	}
 	for _, id := range spec.Pack {
-		item, err := resolver(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		err = inventory.Pack().AddItem(item)
-		if err != nil {
-			return nil, err
+		if id != 0 {
+			item, err := resolver(ctx, id)
+			if err != nil {
+				return nil, err
+			}
+			err = inventory.Pack().AddItem(item)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 	inventory.AddCash(spec.Cash)

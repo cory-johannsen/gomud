@@ -226,7 +226,7 @@ func (l *EquipmentLoader) LoadShields() (map[string]*domain.Shield, error) {
 		spec.ItemEncumbrance = m["encumbrance"].(int)
 		spec.ItemCost = m["cost"].(int)
 		spec.ItemMass = m["mass"].(int)
-		spec.WeaponHandling = domain.WeaponHandling(m["handling"].(string))
+		spec.ShieldType = domain.ShieldType(m["type"].(string))
 
 		shield := domain.NewShield(spec)
 		l.shields[shield.Name()] = shield
