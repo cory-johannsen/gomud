@@ -119,14 +119,24 @@ func (i *Inventory) EquipShield(shield *Shield) error {
 		return errors.New("shield is nil")
 	}
 	if i.shield != nil {
-		err := i.pack.AddItem(i.shield)
+		s, err := i.UnequipShield()
 		if err != nil {
-			if errors.Is(err, PackFullError) {
-				return err
-			}
 			log.Errorf("error adding shield to pack: %v", err)
 			return err
 		}
+		err = i.Pack().AddItem(s)
+		if err != nil {
+			log.Errorf("error adding shield to pack: %v", err)
+			return err
+		}
+	}
+	if i.offHand != nil && i.shield != nil && i.shield.shieldType != ShieldTypeBuckler {
+		offhand, err := i.UnequipOffHand()
+		if err != nil {
+			log.Errorf("error unequipping off hand weapon: %v", err)
+			return err
+		}
+		err = i.Pack().AddItem(offhand)
 	}
 	i.shield = shield
 	return nil
