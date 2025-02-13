@@ -14,10 +14,6 @@ type Disorder struct {
 	Effects     Effects
 }
 
-func (d *Disorder) Value() interface{} {
-	return d
-}
-
 func (d *Disorder) String() string {
 	return fmt.Sprintf("%s: %s", d.Name, d.Description)
 }
@@ -25,10 +21,6 @@ func (d *Disorder) String() string {
 var _ Property = &Disorder{}
 
 type Disorders []*Disorder
-
-func (d Disorders) Value() interface{} {
-	return d
-}
 
 func (d Disorders) String() string {
 	var msg string

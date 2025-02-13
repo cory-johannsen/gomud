@@ -2,6 +2,8 @@ package engine
 
 import (
 	"bufio"
+	"database/sql"
+	"errors"
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/cli"
@@ -12,6 +14,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
+	"golang.org/x/net/context"
 	"net"
 	"strings"
 )
@@ -131,6 +134,7 @@ type Server struct {
 	port            string
 	db              *storage.Database
 	players         *storage.Players
+	npcs            *storage.NPCs
 	loaders         *loader.Loaders
 	playerGenerator *generator.PlayerGenerator
 	dispatcher      *cli.Dispatcher
@@ -138,12 +142,13 @@ type Server struct {
 	clock           *event.Clock
 }
 
-func NewServer(config *config.Config, db *storage.Database, players *storage.Players, loaders *loader.Loaders,
+func NewServer(config *config.Config, db *storage.Database, players *storage.Players, npcs *storage.NPCs, loaders *loader.Loaders,
 	playerGenerator *generator.PlayerGenerator, eventBus eventbus.Bus, clock *event.Clock) *Server {
 	return &Server{
 		port:            config.Port,
 		db:              db,
 		players:         players,
+		npcs:            npcs,
 		loaders:         loaders,
 		playerGenerator: playerGenerator,
 		eventBus:        eventBus,
@@ -152,9 +157,45 @@ func NewServer(config *config.Config, db *storage.Database, players *storage.Pla
 }
 
 func (s *Server) Start() {
+	// preload the assets
 	err := s.loaders.Preload()
 	if err != nil {
 		panic(err)
+	}
+
+	// load the NPCs
+	npcs, err := s.loaders.NPCLoader.LoadNPCs()
+	if err != nil {
+		panic(err)
+	}
+	for _, npcSpec := range npcs {
+		npc, err := s.npcs.FetchNPCByName(context.Background(), npcSpec.Name)
+		if err != nil && !errors.Is(err, sql.ErrNoRows) {
+			panic(err)
+		}
+		if npc == nil {
+			properties, err := npcSpec.ToProperties(s.loaders)
+			if err != nil {
+				panic(err)
+			}
+
+			newNpc, err := s.npcs.CreateNPC(context.Background(), npcSpec.Name, properties)
+			if err != nil {
+				panic(err)
+			}
+			log.Printf("created npc %s\n", newNpc.Name)
+			npc = newNpc
+		} else {
+			log.Printf("npc %s loaded with ID %d\n", npc.Name, npc.Id)
+		}
+		room := npc.Room()
+		if room == nil {
+			panic(errors.New(fmt.Sprintf("npc %s room not found", npc.Name)))
+		}
+		err = room.AddNPC(npc)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	log.Printf("Starting server on port %s\n", s.port)

@@ -25,3 +25,4 @@ go.work.sum
 
 db/
 bin/
+/server/mud

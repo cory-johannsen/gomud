@@ -14,10 +14,6 @@ type Injury struct {
 	Effect   Effect
 }
 
-func (i Injury) Value() interface{} {
-	return i
-}
-
 func (i Injury) String() string {
 	return i.Name
 }
@@ -25,10 +21,6 @@ func (i Injury) String() string {
 var _ Property = &Injury{}
 
 type Injuries []*Injury
-
-func (i Injuries) Value() interface{} {
-	return i
-}
 
 func (i Injuries) String() string {
 	var msg string

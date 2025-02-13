@@ -33,18 +33,10 @@ func (s Season) String() string {
 	return string(s)
 }
 
-func (s Season) Value() interface{} {
-	return s
-}
-
 var _ Property = Season("")
 
 type DistinguishingMark string
 type DistinguishingMarks []DistinguishingMark
-
-func (d DistinguishingMarks) Value() interface{} {
-	return d
-}
 
 func (d DistinguishingMarks) String() string {
 	msg := ""
@@ -59,10 +51,6 @@ func (d DistinguishingMarks) String() string {
 
 func (d DistinguishingMark) String() string {
 	return string(d)
-}
-
-func (d DistinguishingMark) Value() interface{} {
-	return d
 }
 
 var _ Property = DistinguishingMark("")
@@ -99,10 +87,6 @@ func (t *Tattoo) String() string {
 	return fmt.Sprintf("%s on the %s", t.Description, t.Location)
 }
 
-func (t *Tattoo) Value() interface{} {
-	return t
-}
-
 var _ Property = &Tattoo{}
 
 func (t Tattoos) Random(locations TattooLocations) Tattoo {
@@ -134,10 +118,6 @@ type Drawbacks []*Drawback
 
 func (d Drawback) String() string {
 	return d.Name
-}
-
-func (d Drawback) Value() interface{} {
-	return d
 }
 
 func (d Drawbacks) Random() *Drawback {

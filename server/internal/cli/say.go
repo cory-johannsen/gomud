@@ -19,10 +19,10 @@ func (s *SayHandler) Handle(ctx context.Context, args []string) (string, error) 
 		a = append(a, arg)
 	}
 	s.stateProvider().Player().Connection.EventBus().Publish(event.RoomChannel, &domain.RoomEvent{
-		Room:   s.stateProvider().Player().Room(),
-		Player: s.stateProvider().Player(),
-		Action: "say",
-		Args:   a,
+		Room:      s.stateProvider().Player().Room(),
+		Character: &s.stateProvider().Player().Character,
+		Action:    "say",
+		Args:      a,
 	})
 	return "", nil
 }

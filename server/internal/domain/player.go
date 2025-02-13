@@ -12,64 +12,56 @@ import (
 )
 
 type Property interface {
-	Value() interface{}
 	String() string
 }
 
 const PropertyNotFound = "property not found"
 
 const (
-	AgeProperty                = "age"
-	AlignmentProperty          = "alignment"
-	ArchetypeProperty          = "archetype"
-	BackgroundProperty         = "background"
-	BackgroundTraitProperty    = "backgroundTrait"
-	BirthSeasonProperty        = "birthSeason"
-	ConditionProperty          = "condition"
-	ConsumedAdvancesProperty   = "consumedAdvances"
-	DisordersProperty          = "disorders"
-	DistinguishingMarkProperty = "distinguishingMark"
-	DrawbackProperty           = "drawback"
-	ExperienceProperty         = "experience"
-	FatePointsProperty         = "fatePoints"
-	InjuriesProperty           = "injuries"
-	InventoryProperty          = "inventory"
-	JobProperty                = "job"
-	PerilProperty              = "peril"
-	PoornessProperty           = "poorness"
-	ReputationPointsProperty   = "reputationPoints"
-	RoomProperty               = "room"
-	TeamProperty               = "team"
-	TattooProperty             = "tattoo"
-	SkillRanksProperty         = "skillRanks"
-	StatsProperty              = "stats"
-	TalentsProperty            = "talents"
-	UpbringingProperty         = "upbringing"
+	AgeProperty                 = "age"
+	AlignmentProperty           = "alignment"
+	ArchetypeProperty           = "archetype"
+	BackgroundProperty          = "background"
+	BackgroundTraitProperty     = "backgroundTrait"
+	BirthSeasonProperty         = "birthSeason"
+	ConditionProperty           = "condition"
+	ConsumedAdvancesProperty    = "consumedAdvances"
+	DisordersProperty           = "disorders"
+	DistinguishingMarksProperty = "distinguishingMarks"
+	DrawbackProperty            = "drawback"
+	ExperienceProperty          = "experience"
+	FatePointsProperty          = "fatePoints"
+	InjuriesProperty            = "injuries"
+	InventoryProperty           = "inventory"
+	JobProperty                 = "job"
+	PerilProperty               = "peril"
+	PoornessProperty            = "poorness"
+	ReputationPointsProperty    = "reputationPoints"
+	RoomProperty                = "room"
+	TeamProperty                = "team"
+	TattooProperty              = "tattoo"
+	SkillRanksProperty          = "skillRanks"
+	StatsProperty               = "stats"
+	TalentsProperty             = "talents"
+	UpbringingProperty          = "upbringing"
 )
 
 type BaseProperty struct {
 	Val interface{}
 }
 
-func (p *BaseProperty) Value() interface{} {
-	return p.Val
-}
 func (p *BaseProperty) String() string {
 	return fmt.Sprintf("%v", p.Val)
 }
 
 var _ Property = &BaseProperty{}
 
-type Character struct {
-	Name string
-	Data map[string]Property
-}
-
 type ConsumedAdvance struct {
 	Job    string
 	Stat   string
 	Amount int
 }
+
 type ConsumedAdvances map[string][]*ConsumedAdvance
 
 func (c ConsumedAdvances) String() string {
@@ -81,9 +73,6 @@ func (c ConsumedAdvances) String() string {
 		}
 	}
 	return msg
-}
-func (c ConsumedAdvances) Value() interface{} {
-	return c
 }
 
 func (c ConsumedAdvances) ConsumedAdvance(job string, stat string) int {
@@ -105,6 +94,7 @@ type SkillRank struct {
 	Job   *Job
 	Skill *Skill
 }
+
 type SkillRanks []*SkillRank
 
 func (s SkillRanks) String() string {
@@ -113,9 +103,6 @@ func (s SkillRanks) String() string {
 		msg += fmt.Sprintf("%s\n%s\n", rank.Skill.Name, rank.Skill.Description)
 	}
 	return msg
-}
-func (s SkillRanks) Value() interface{} {
-	return s
 }
 
 var _ Property = &SkillRanks{}
@@ -149,13 +136,27 @@ func (p PerilCondition) String() string {
 	return "undefined"
 }
 
+func PerilConditionFromString(condition string) PerilCondition {
+	switch condition {
+	case "Unhindered":
+		return PerilConditionUnhindered
+	case "Imperiled":
+		return PerilConditionImperiled
+	case "Ignore 1 Skill Rank":
+		return PerilConditionIgnore1SkillRank
+	case "Ignore 2 Skill Ranks":
+		return PerilConditionIgnore2SkillRanks
+	case "Ignore 3 Skill Ranks":
+		return PerilConditionIgnore3SkillRanks
+	case "INCAPACITATED!":
+		return PerilConditionIncapacitated
+	}
+	return PerilConditionUnhindered
+}
+
 type Peril struct {
 	Threshold int
 	Condition PerilCondition
-}
-
-func (p Peril) Value() interface{} {
-	return p
 }
 
 func (p Peril) String() string {
@@ -165,10 +166,6 @@ func (p Peril) String() string {
 var _ Property = &Peril{}
 
 type Condition string
-
-func (c Condition) Value() interface{} {
-	return c
-}
 
 func (c Condition) String() string {
 	return string(c)
@@ -210,9 +207,276 @@ func (c Condition) LessSeriousThan(other Condition) bool {
 
 var _ Property = Condition("")
 
+type CharacterSpec struct {
+	Id   int
+	Name string
+	Data map[string]interface{}
+}
+
+type CharacterSpecs []*CharacterSpecs
+
+// Character a character in the game that contains all the core properties
+type Character struct {
+	Id   *int
+	Name string
+	Data map[string]Property
+}
+
+type Characters []*Character
+
+func NewCharacter(id *int, name string, data map[string]Property) *Character {
+	return &Character{
+		Id:   id,
+		Name: name,
+		Data: data,
+	}
+}
+
+func (c *Character) Alignment() *Alignment {
+	return c.Data[AlignmentProperty].(*Alignment)
+}
+
+func (c *Character) AddCorruption(corruption int) {
+	rank := c.Alignment().Chaos.Rank
+	c.Alignment().AddCorruption(corruption)
+	if c.Alignment().Chaos.Rank > rank {
+		// TODO: add a disorder
+		c.Alignment().ResetCorruption()
+	}
+}
+
+func (c *Character) AddOrderRank(rank int) {
+	c.Alignment().AddOrderRank(rank)
+	if c.Alignment().Order.Rank >= 10 {
+		c.AddFatePoints(1)
+		c.Alignment().ResetOrderRank()
+	}
+}
+
+func (c *Character) Condition() Condition {
+	condition, ok := c.Data[ConditionProperty]
+	if !ok {
+		condition = ConditionUnharmed
+		c.Data[ConditionProperty] = ConditionUnharmed
+	}
+	return condition.(Condition)
+}
+
+func (c *Character) Injuries() Injuries {
+	if _, ok := c.Data[InjuriesProperty]; !ok {
+		c.Data[InjuriesProperty] = make(Injuries, 0)
+	}
+	return c.Data[InjuriesProperty].(Injuries)
+}
+
+func (c *Character) Inventory() *Inventory {
+	return c.Data[InventoryProperty].(*Inventory)
+}
+
+func (c *Character) Poorness() Poorness {
+	return c.Data[PoornessProperty].(Poorness)
+}
+
+func (c *Character) Upbringing() *Upbringing {
+	return c.Data[UpbringingProperty].(*Upbringing)
+}
+
+func (c *Character) Drawback() *Drawback {
+	return c.Data[DrawbackProperty].(*Drawback)
+}
+
+func (c *Character) DistinguishingMarks() DistinguishingMarks {
+	return c.Data[DistinguishingMarksProperty].(DistinguishingMarks)
+}
+
+func (c *Character) PrimaryStat() string {
+	return c.Upbringing().Stat
+}
+
+func (c *Character) Skills(allSkills Skills) RankedSkills {
+	byStat := make(map[string]RankedSkills)
+	stats := c.Stats()
+	for _, skill := range allSkills {
+		if _, ok := byStat[skill.Stat]; !ok {
+			byStat[skill.Stat] = make(RankedSkills, 0)
+		}
+		statValue := stats.StatValue(skill.Stat)
+		byStat[skill.Stat] = append(byStat[skill.Stat], &RankedSkill{
+			Skill:             skill,
+			Rank:              0,
+			SuccessPercentage: statValue,
+		})
+	}
+	for _, skillRank := range c.SkillRanks() {
+		rankedSkills, ok := byStat[skillRank.Skill.Stat]
+		if !ok {
+			log.Printf("skill %s not found in stats", skillRank.Skill.Name)
+			continue
+		}
+		var skill *RankedSkill
+		for _, s := range rankedSkills {
+			if s.Skill == skillRank.Skill {
+				skill = s
+				break
+			}
+		}
+		if skill == nil {
+			log.Printf("skill %s not found in stats", skillRank.Skill.Name)
+			continue
+		}
+		skill.Rank++
+		skill.SuccessPercentage += 10
+	}
+	rankedSkills := make(RankedSkills, 0)
+	for _, skills := range byStat {
+		rankedSkills = append(rankedSkills, skills...)
+	}
+	return rankedSkills
+}
+func (c *Character) Job() *Job {
+	return c.Data[JobProperty].(*Job)
+}
+
+func (c *Character) SkillRanks() SkillRanks {
+	if _, ok := c.Data[SkillRanksProperty]; !ok {
+		c.Data[SkillRanksProperty] = make(SkillRanks, 0)
+	}
+	return c.Data[SkillRanksProperty].(SkillRanks)
+}
+
+func (c *Character) HasSkillRank(job *Job, skil *Skill) bool {
+	skillRanks := c.SkillRanks()
+	for _, rank := range skillRanks {
+		if rank.Job == job && rank.Skill == skil {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Character) Talents() Talents {
+	if _, ok := c.Data[TalentsProperty]; !ok {
+		c.Data[TalentsProperty] = make(Talents, 0)
+	}
+	return c.Data[TalentsProperty].(Talents)
+}
+
+func (c *Character) HasTalent(job *Job, talent *Talent) bool {
+	talents := c.Talents()
+	for _, t := range talents {
+		if t == talent {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Character) Stats() *Stats {
+	if _, ok := c.Data[StatsProperty]; !ok {
+		c.Data[StatsProperty] = &Stats{}
+	}
+	return c.Data[StatsProperty].(*Stats)
+}
+
+func bonusFromStat(stat int) int {
+	return stat / 10
+}
+
+func (c *Character) FatePoints() int {
+	return c.Data[FatePointsProperty].(*BaseProperty).Val.(int)
+}
+
+func (c *Character) AddFatePoints(points int) {
+	c.Data[FatePointsProperty] = &BaseProperty{Val: c.FatePoints() + points}
+}
+
+func (c *Character) SubtractFatePoints(points int) {
+	result := c.FatePoints() - points
+	if result < 0 {
+		result = 0
+	}
+	c.Data[FatePointsProperty] = &BaseProperty{Val: result}
+}
+
+func (c *Character) ConsumedBonusAdvances() ConsumedAdvances {
+	if _, ok := c.Data[ConsumedAdvancesProperty]; !ok {
+		c.Data[ConsumedAdvancesProperty] = make(ConsumedAdvances)
+	}
+	return c.Data[ConsumedAdvancesProperty].(ConsumedAdvances)
+}
+
+func (c *Character) StatBonuses() *Stats {
+	stats := c.Stats()
+	bonuses := &Stats{
+		Brutality: bonusFromStat(stats.Brutality),
+		Muscle:    bonusFromStat(stats.Muscle),
+		Quickness: bonusFromStat(stats.Quickness),
+		Savvy:     bonusFromStat(stats.Savvy),
+		Reasoning: bonusFromStat(stats.Reasoning),
+		Grit:      bonusFromStat(stats.Grit),
+		Flair:     bonusFromStat(stats.Flair),
+	}
+	advances := c.ConsumedBonusAdvances()
+	for job, jobAdvances := range advances {
+		for _, advance := range jobAdvances {
+			switch advance.Stat {
+			case "Brutality":
+				bonuses.Brutality += advance.Amount
+			case "Muscle":
+				bonuses.Muscle += advance.Amount
+			case "Quickness":
+				bonuses.Quickness += advance.Amount
+			case "Savvy":
+				bonuses.Savvy += advance.Amount
+			case "Reasoning":
+				bonuses.Reasoning += advance.Amount
+			case "Grit":
+				bonuses.Grit += advance.Amount
+			case "Flair":
+				bonuses.Flair += advance.Amount
+			default:
+				log.Warnf("unknown stat %s for job %s", advance.Stat, job)
+			}
+		}
+	}
+	return bonuses
+}
+
+func (c *Character) Background() *Background {
+	return c.Data[BackgroundProperty].(*Background)
+}
+
+func (c *Character) BackgroundTrait() *Trait {
+	return c.Data[BackgroundTraitProperty].(*Trait)
+}
+
+func (c *Character) Room() *Room {
+	r := c.Data[RoomProperty]
+	if r == nil {
+		return nil
+	}
+	return r.(*Room)
+}
+
+func (c *Character) SetRoom(r *Room) {
+	currentRoom := c.Room()
+	if r == currentRoom {
+		return
+	}
+	c.Data[RoomProperty] = r
+}
+
+func (c *Character) Peril() *Peril {
+	return c.Data[PerilProperty].(*Peril)
+}
+
+func (c *Character) SetPeril(peril *Peril) {
+	c.Data[PerilProperty] = peril
+}
+
+// Player a Character that is controlled by a user
 type Player struct {
 	Character
-	Id         *int
 	Password   string
 	Connection io.Connection
 	LoggedIn   bool
@@ -223,10 +487,10 @@ type Players map[int]*Player
 func NewPlayer(id *int, name string, password string, data map[string]Property, conn io.Connection) *Player {
 	p := &Player{
 		Character: Character{
+			Id:   id,
 			Name: name,
 			Data: data,
 		},
-		Id:         id,
 		Password:   password,
 		Connection: conn,
 		LoggedIn:   false,
@@ -238,22 +502,22 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 		p.Data[InventoryProperty] = NewInventory()
 	}
 	err := conn.EventBus().SubscribeAsync(event.RoomChannel, func(r *RoomEvent) {
-		if r == nil || r.Room == nil || r.Room != p.Room() || r.Player == nil || r.Player == p {
+		if r == nil || r.Room == nil || r.Room != p.Room() || r.Character == nil || r.Character == &p.Character {
 			return
 		}
-		log.Printf("room %s received action %s from player %s", r.Room.Name, r.Action, r.Player.Name)
+		log.Printf("room %s received action %s from player %s", r.Room.Name, r.Action, r.Character.Name)
 		switch r.Action {
 		case event.RoomEventEnter:
-			p.Connection.Writeln(fmt.Sprintf("%s the %s enters the room\n%s", r.Player.Name, r.Player.Job().Name, p.Prompt()))
+			p.Connection.Writeln(fmt.Sprintf("%s the %s enters the room\n%s", r.Character.Name, r.Character.Job().Name, p.Prompt()))
 		case event.RoomEventExit:
-			p.Connection.Writeln(fmt.Sprintf("%s the %s leaves the room\n%s", r.Player.Name, r.Player.Job().Name, p.Prompt()))
+			p.Connection.Writeln(fmt.Sprintf("%s the %s leaves the room\n%s", r.Character.Name, r.Character.Job().Name, p.Prompt()))
 		case event.RoomEventSay:
 			args := make([]string, 0)
 			for _, arg := range r.Args {
 				args = append(args, arg.(string))
 			}
 			msg := strings.Join(args, " ")
-			p.Connection.Writeln(fmt.Sprintf("%s says \"%s\"\n%s", r.Player.Name, msg, p.Prompt()))
+			p.Connection.Writeln(fmt.Sprintf("%s says \"%s\"\n%s", r.Character.Name, msg, p.Prompt()))
 		}
 	}, false)
 	if err != nil {
@@ -279,7 +543,7 @@ func (p *Player) GetProperty(key string) (Property, error) {
 	return result, nil
 }
 
-func (p *Player) String() string {
+func (p Player) String() string {
 	cyan := color.New(color.FgCyan).SprintFunc()
 	magenta := color.New(color.FgMagenta).SprintFunc()
 	yellow := color.New(color.FgYellow).SprintFunc()
@@ -298,7 +562,7 @@ func (p *Player) String() string {
 		AgeProperty,
 		BackgroundProperty,
 		PoornessProperty,
-		DistinguishingMarkProperty,
+		DistinguishingMarksProperty,
 		TattooProperty,
 		DrawbackProperty,
 		UpbringingProperty,
@@ -393,7 +657,7 @@ func (p *Player) String() string {
 			for _, disorder := range v.(Disorders) {
 				msg += fmt.Sprintf("\t%s\n\t%s\n", disorder.Name, disorder.Description)
 			}
-		case DistinguishingMarkProperty:
+		case DistinguishingMarksProperty:
 			msg += fmt.Sprintf("  %s\n", cyan("Distinguishing Marks"))
 			if len(v.(DistinguishingMarks)) == 0 {
 				msg += "\tNone\n"
@@ -502,10 +766,6 @@ func (p *Player) DeductExperience(exp int) {
 	p.Data[ExperienceProperty] = &BaseProperty{Val: p.Experience() - exp}
 }
 
-func (p *Player) Job() *Job {
-	return p.Data[JobProperty].(*Job)
-}
-
 func (p *Player) PurchaseSkillRank(job *Job, skill *Skill, exp int) {
 	skillRanks := p.SkillRanks()
 	skillRanks = append(skillRanks, &SkillRank{
@@ -514,30 +774,6 @@ func (p *Player) PurchaseSkillRank(job *Job, skill *Skill, exp int) {
 	})
 	p.Data[SkillRanksProperty] = skillRanks
 	p.DeductExperience(exp)
-}
-
-func (p *Player) SkillRanks() SkillRanks {
-	if _, ok := p.Data[SkillRanksProperty]; !ok {
-		p.Data[SkillRanksProperty] = make(SkillRanks, 0)
-	}
-	return p.Data[SkillRanksProperty].(SkillRanks)
-}
-
-func (p *Player) HasSkillRank(job *Job, skil *Skill) bool {
-	skillRanks := p.SkillRanks()
-	for _, rank := range skillRanks {
-		if rank.Job == job && rank.Skill == skil {
-			return true
-		}
-	}
-	return false
-}
-
-func (p *Player) ConsumedBonusAdvances() ConsumedAdvances {
-	if _, ok := p.Data[ConsumedAdvancesProperty]; !ok {
-		p.Data[ConsumedAdvancesProperty] = make(ConsumedAdvances)
-	}
-	return p.Data[ConsumedAdvancesProperty].(ConsumedAdvances)
 }
 
 func (p *Player) ConsumeBonusAdvance(job string, stat string, exp int) {
@@ -575,119 +811,6 @@ func (p *Player) ConsumeTalent(job *Job, talent *Talent, exp int) {
 	p.DeductExperience(exp)
 }
 
-func (p *Player) Talents() Talents {
-	if _, ok := p.Data[TalentsProperty]; !ok {
-		p.Data[TalentsProperty] = make(Talents, 0)
-	}
-	return p.Data[TalentsProperty].(Talents)
-}
-
-func (p *Player) HasTalent(job *Job, talent *Talent) bool {
-	talents := p.Talents()
-	for _, t := range talents {
-		if t == talent {
-			return true
-		}
-	}
-	return false
-}
-
-func (p *Player) Stats() *Stats {
-	if _, ok := p.Data[StatsProperty]; !ok {
-		p.Data[StatsProperty] = &Stats{}
-	}
-	return p.Data[StatsProperty].(*Stats)
-}
-
-func bonusFromStat(stat int) int {
-	return stat / 10
-}
-
-func (p *Player) StatBonuses() *Stats {
-	stats := p.Stats()
-	bonuses := &Stats{
-		Brutality: bonusFromStat(stats.Brutality),
-		Muscle:    bonusFromStat(stats.Muscle),
-		Quickness: bonusFromStat(stats.Quickness),
-		Savvy:     bonusFromStat(stats.Savvy),
-		Reasoning: bonusFromStat(stats.Reasoning),
-		Grit:      bonusFromStat(stats.Grit),
-		Flair:     bonusFromStat(stats.Flair),
-	}
-	advances := p.ConsumedBonusAdvances()
-	for job, jobAdvances := range advances {
-		for _, advance := range jobAdvances {
-			switch advance.Stat {
-			case "Brutality":
-				bonuses.Brutality += advance.Amount
-			case "Muscle":
-				bonuses.Muscle += advance.Amount
-			case "Quickness":
-				bonuses.Quickness += advance.Amount
-			case "Savvy":
-				bonuses.Savvy += advance.Amount
-			case "Reasoning":
-				bonuses.Reasoning += advance.Amount
-			case "Grit":
-				bonuses.Grit += advance.Amount
-			case "Flair":
-				bonuses.Flair += advance.Amount
-			default:
-				log.Warnf("unknown stat %s for job %s", advance.Stat, job)
-			}
-		}
-	}
-	return bonuses
-}
-
-func (p *Player) Background() *Background {
-	return p.Data[BackgroundProperty].(*Background)
-}
-
-func (p *Player) BackgroundTrait() *Trait {
-	return p.Data[BackgroundTraitProperty].(*Trait)
-}
-
-func (p *Player) Room() *Room {
-	r := p.Data[RoomProperty]
-	if r == nil {
-		return nil
-	}
-	return r.(*Room)
-}
-
-func (p *Player) SetRoom(r *Room) {
-	currentRoom := p.Room()
-	if r == currentRoom {
-		return
-	}
-	p.Data[RoomProperty] = r
-}
-
-func (p *Player) Peril() *Peril {
-	return p.Data[PerilProperty].(*Peril)
-}
-
-func (p *Player) SetPeril(peril *Peril) {
-	p.Data[PerilProperty] = peril
-}
-
-func (p *Player) FatePoints() int {
-	return p.Data[FatePointsProperty].(*BaseProperty).Val.(int)
-}
-
-func (p *Player) AddFatePoints(points int) {
-	p.Data[FatePointsProperty] = &BaseProperty{Val: p.FatePoints() + points}
-}
-
-func (p *Player) SubtractFatePoints(points int) {
-	result := p.FatePoints() - points
-	if result < 0 {
-		result = 0
-	}
-	p.Data[FatePointsProperty] = &BaseProperty{Val: result}
-}
-
 func (p *Player) ReputationPoints() int {
 	return p.Data[ReputationPointsProperty].(*BaseProperty).Val.(int)
 }
@@ -702,108 +825,6 @@ func (p *Player) SubtractReputationPoints(points int) {
 		result = 0
 	}
 	p.Data[ReputationPointsProperty] = &BaseProperty{Val: result}
-}
-
-func (p *Player) Alignment() *Alignment {
-	return p.Data[AlignmentProperty].(*Alignment)
-}
-
-func (p *Player) AddCorruption(corruption int) {
-	rank := p.Alignment().Chaos.Rank
-	p.Alignment().AddCorruption(corruption)
-	if p.Alignment().Chaos.Rank > rank {
-		// add a disorder
-		p.Alignment().ResetCorruption()
-	}
-}
-
-func (p *Player) AddOrderRank(rank int) {
-	p.Alignment().AddOrderRank(rank)
-	if p.Alignment().Order.Rank >= 10 {
-		p.AddFatePoints(1)
-		p.Alignment().ResetOrderRank()
-	}
-}
-
-func (p *Player) Condition() Condition {
-	condition, ok := p.Data[ConditionProperty]
-	if !ok {
-		condition = ConditionUnharmed
-		p.Data[ConditionProperty] = ConditionUnharmed
-	}
-	return condition.(Condition)
-}
-
-func (p *Player) Injuries() Injuries {
-	if _, ok := p.Data[InjuriesProperty]; !ok {
-		p.Data[InjuriesProperty] = make(Injuries, 0)
-	}
-	return p.Data[InjuriesProperty].(Injuries)
-}
-
-func (p *Player) Inventory() *Inventory {
-	return p.Data[InventoryProperty].(*Inventory)
-}
-
-func (p *Player) Poorness() Poorness {
-	return p.Data[PoornessProperty].(Poorness)
-}
-
-func (p *Player) Upbringing() *Upbringing {
-	return p.Data[UpbringingProperty].(*Upbringing)
-}
-
-func (p *Player) Drawback() *Drawback {
-	return p.Data[DrawbackProperty].(*Drawback)
-}
-
-func (p *Player) DistinguishingMark() DistinguishingMark {
-	return p.Data[DistinguishingMarkProperty].(DistinguishingMark)
-}
-
-func (p *Player) PrimaryStat() string {
-	return p.Upbringing().Stat
-}
-
-func (p *Player) Skills(allSkills Skills) RankedSkills {
-	byStat := make(map[string]RankedSkills)
-	stats := p.Stats()
-	for _, skill := range allSkills {
-		if _, ok := byStat[skill.Stat]; !ok {
-			byStat[skill.Stat] = make(RankedSkills, 0)
-		}
-		statValue := stats.StatValue(skill.Stat)
-		byStat[skill.Stat] = append(byStat[skill.Stat], &RankedSkill{
-			Skill:             skill,
-			Rank:              0,
-			SuccessPercentage: statValue,
-		})
-	}
-	for _, skillRank := range p.SkillRanks() {
-		rankedSkills, ok := byStat[skillRank.Skill.Stat]
-		if !ok {
-			log.Printf("skill %s not found in stats", skillRank.Skill.Name)
-			continue
-		}
-		var skill *RankedSkill
-		for _, s := range rankedSkills {
-			if s.Skill == skillRank.Skill {
-				skill = s
-				break
-			}
-		}
-		if skill == nil {
-			log.Printf("skill %s not found in stats", skillRank.Skill.Name)
-			continue
-		}
-		skill.Rank++
-		skill.SuccessPercentage += 10
-	}
-	rankedSkills := make(RankedSkills, 0)
-	for _, skills := range byStat {
-		rankedSkills = append(rankedSkills, skills...)
-	}
-	return rankedSkills
 }
 
 func (p *Player) Prompt() string {

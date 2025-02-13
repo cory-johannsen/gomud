@@ -44,7 +44,7 @@ func (g *PlayerGenerator) Generate(name string, pw string, team *domain.Team, ta
 		log.Printf("failed to load distinguishing marks: %s", err)
 		return nil, err
 	}
-	player.Data[domain.DistinguishingMarkProperty] = marks.Random(age)
+	player.Data[domain.DistinguishingMarksProperty] = marks.Random(age)
 
 	tatLocations, err := g.loaders.AppearanceLoader.LoadTattooLocations()
 	if err != nil {

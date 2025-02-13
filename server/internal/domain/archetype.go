@@ -32,10 +32,6 @@ func (a *Archetype) String() string {
 	return a.Name
 }
 
-func (a *Archetype) Value() interface{} {
-	return a
-}
-
 var _ Property = &Archetype{}
 
 func (a Archetypes) Random() *Archetype {

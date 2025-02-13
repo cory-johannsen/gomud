@@ -25,10 +25,6 @@ type Stats struct {
 	Flair     int `json:"flair"`
 }
 
-func (s *Stats) Value() interface{} {
-	return s
-}
-
 func (s *Stats) String() string {
 	return fmt.Sprintf("Brutality: %d\nMuscle: %d\nQuickness: %d\nSavvy: %d\nReasoning: %d\nGrit: %d\nFlair: %d\n", s.Brutality, s.Muscle, s.Quickness, s.Savvy, s.Reasoning, s.Grit, s.Flair)
 }

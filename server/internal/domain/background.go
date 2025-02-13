@@ -8,10 +8,6 @@ type BackgroundSpec struct {
 	Traits      []string `yaml:"traits"`
 }
 
-func (b *BackgroundSpec) Value() interface{} {
-	return b
-}
-
 func (b *BackgroundSpec) String() string {
 	return fmt.Sprintf("%s: %s", b.Name, b.Description)
 }
@@ -34,10 +30,6 @@ type Background struct {
 	Name        string
 	Description string
 	Traits      Traits
-}
-
-func (b *Background) Value() interface{} {
-	return b
 }
 
 func (b *Background) String() string {

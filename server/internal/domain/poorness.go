@@ -7,10 +7,6 @@ const PACKS_PER_CASE = 24
 
 type Poorness string
 
-func (p Poorness) Value() interface{} {
-	return p
-}
-
 func (p Poorness) String() string {
 	return string(p)
 }

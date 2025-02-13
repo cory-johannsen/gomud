@@ -8,7 +8,7 @@
   description: "Your blood doesn’t easily clot. This means you bruise like a peach when hurt, and spurt like a stuck pig whenever you are injured."
   effect: "Whenever you are treated with the Heal Skill, a caregiver suffers an additional -20 Base Chance, unless they expend an additional bandage during treatment."
 - name: "Branded"
-  description: "ou are one of the disenfranchised of society; the bonded, a serf, slave or thrall. You are looked upon poorly by most of society, treated with some manner of contempt or apprehension, if acknowledged at all. Most of those Branded take great pains to hide the shame of their past. Perhaps you were even the bastard born progeny of an unknown father! It is up to you to decide why you were branded."
+  description: "You are one of the disenfranchised of society; the bonded, a serf, slave or thrall. You are looked upon poorly by most of society, treated with some manner of contempt or apprehension, if acknowledged at all. Most of those Branded take great pains to hide the shame of their past. Perhaps you were even the bastard born progeny of an unknown father! It is up to you to decide why you were branded."
   effect: "Whenever you interact with those who know you’re Branded and hold you in contempt due to it, you cannot succeed at Fellowship-based Skill Tests to interact with them."
 - name: "Choleric Temperament"
   description: "You have a tendency of one-upmanship, are rather prickly and frankly, bossy. When things don’t go your way in a fight, you grow irritated, which only further pushes you towards embracing your Chaos Alignment."

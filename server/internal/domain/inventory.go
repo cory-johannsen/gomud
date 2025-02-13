@@ -247,17 +247,13 @@ func (i *Inventory) EquipItem(item Item) error {
 	return nil
 }
 
-func (i *Inventory) Value() interface{} {
-	return i
-}
-
 func (i *Inventory) String() string {
 	return "Inventory"
 }
 
 type InventorySpec struct {
-	MainHand int   `yaml:"main_hand"`
-	OffHand  int   `yaml:"off_hand"`
+	MainHand int   `yaml:"mainHand"`
+	OffHand  int   `yaml:"offHand"`
 	Armor    int   `yaml:"armor"`
 	Pack     []int `yaml:"pack"`
 	Cash     int   `yaml:"cash"`

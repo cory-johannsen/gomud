@@ -16,7 +16,7 @@ import (
 )
 
 func InitializeEngine() (*engine.Engine, error) {
-	wire.Build(config.NewConfigFromEnv, storage.NewDatabase, storage.NewPlayers, storage.NewEquipment,
+	wire.Build(config.NewConfigFromEnv, storage.NewDatabase, storage.NewNPCs, storage.NewPlayers, storage.NewEquipment,
 		effect.EffectsSet, effect.NewEffects,
 		loader.LoaderSet, loader.NewLoaders,
 		generator.NewPlayerGenerator,

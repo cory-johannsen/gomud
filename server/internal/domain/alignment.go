@@ -61,10 +61,6 @@ func (a *Alignment) ResetCorruption() {
 	a.Corruption = 0
 }
 
-func (a *Alignment) Value() interface{} {
-	return a
-}
-
 func (a *Alignment) String() string {
 	return fmt.Sprintf("%s - %s", a.Order.Name, a.Chaos.Name)
 }

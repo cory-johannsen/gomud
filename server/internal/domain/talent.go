@@ -16,9 +16,6 @@ type Talents []*Talent
 func (t *Talent) String() string {
 	return t.Name
 }
-func (t *Talent) Value() interface{} {
-	return t
-}
 
 var _ Property = &Talent{}
 
@@ -28,9 +25,6 @@ func (t Talents) String() string {
 		msg += talent.Name + "\n"
 	}
 	return msg
-}
-func (t Talents) Value() interface{} {
-	return t
 }
 
 var _ Property = &Talents{}

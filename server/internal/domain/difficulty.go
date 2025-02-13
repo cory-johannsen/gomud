@@ -2,10 +2,6 @@ package domain
 
 type Difficulty string
 
-func (d Difficulty) Value() interface{} {
-	return d
-}
-
 func (d Difficulty) String() string {
 	return string(d)
 }

@@ -1,0 +1,69 @@
+name: Wayne Dawg
+age: 45
+alignment:
+  order: Independence
+  orderRank: 0
+  chaos: Rebellion
+  chaosRank: 0
+  rank: 0
+archetype: Drifter
+background: Pacific Northwest
+backgroundTrait: Memento
+birthSeason: Winter
+condition: Unharmed
+consumedAdvances:
+  Dealer:
+    - Job: Dealer
+      Stat: savvy
+      Amount: 1
+    - Job: Dealer
+      Stat: grit
+      Amount: 1
+    - Job: Dealer
+      Stat: flair
+      Amount: 1
+distinguishingMarks:
+  - Embarrassing tattoo on face
+  - Blood-shot eyes
+  - Long sideburns
+  - Nervous tic
+  - Rancid breath
+  - Terribly crooked teeth
+  - Yellow scum on teeth
+drawback: Painkiller
+fatePoints: 0
+inventory:
+  mainHand: Woodsman's axe
+  armor: Traveling clothes
+  cash: 3
+job: Dealer
+peril: Unhindered
+poorness: Poor
+room: Filth Court
+team: Machete
+tattoo:
+  name: Six of one, half a dozen of the other
+  location: face
+  season: Winter
+skillRanks:
+  - Job: Dealer
+    Skill: Rumor
+  - Job: Dealer
+    Skill: Simple Melee
+  - Job: Dealer
+    Skill: Survival
+  - Job: Dealer
+    Skill: Tradecraft
+stats:
+  brutality: 30
+  muscle: 30
+  quickness: 30
+  savvy: 30
+  reasoning: 30
+  grit: 30
+  flair: 30
+talents:
+  - Determination
+  - Indifference
+  - Secret Signs
+upbringing: Opportunistic

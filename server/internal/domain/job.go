@@ -23,9 +23,6 @@ type JobSpec struct {
 func (s *JobSpec) String() string {
 	return s.Name
 }
-func (s *JobSpec) Value() interface{} {
-	return s
-}
 
 type BonusAdvances struct {
 	Fighting int
@@ -47,10 +44,6 @@ type Job struct {
 	SkillRanks     Skills
 	BonusAdvances  BonusAdvances
 	Talents        Talents
-}
-
-func (j *Job) Value() interface{} {
-	return j
 }
 
 func (j *Job) String() string {

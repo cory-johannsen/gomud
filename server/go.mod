@@ -7,16 +7,17 @@ toolchain go1.23.2
 require (
 	github.com/asaskevich/EventBus v0.0.0-20200907212545-49d423059eef
 	github.com/caarlos0/env/v6 v6.10.1
+	github.com/fatih/color v1.18.0
 	github.com/golang-migrate/migrate/v4 v4.18.1
 	github.com/google/wire v0.6.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/sirupsen/logrus v1.9.3
 	golang.org/x/crypto v0.27.0
+	golang.org/x/net v0.29.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
-	github.com/fatih/color v1.18.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect

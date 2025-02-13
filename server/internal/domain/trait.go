@@ -18,10 +18,6 @@ type Trait struct {
 	Effects     Effects
 }
 
-func (t *Trait) Value() interface{} {
-	return t
-}
-
 func (t *Trait) String() string {
 	return fmt.Sprintf("%s - %s", t.Name, t.Description)
 }

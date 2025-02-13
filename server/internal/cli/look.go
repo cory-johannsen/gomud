@@ -61,6 +61,27 @@ func LookRoom(player *domain.Player, target *domain.Room) string {
 		}
 		msg += fmt.Sprintf("%s the %s is here.  They look %s\n", other.Name, other.Job().Name, perilDescription)
 	}
+	for _, other := range target.NPCs {
+		perilCondition := other.Peril().Condition
+		var perilDescription string
+		switch perilCondition {
+		default:
+			fallthrough
+		case domain.PerilConditionUnhindered:
+			perilDescription = "cool as a cucumber."
+		case domain.PerilConditionImperiled:
+			perilDescription = "kinda concerned."
+		case domain.PerilConditionIgnore1SkillRank:
+			perilDescription = "pretty freaked out."
+		case domain.PerilConditionIgnore2SkillRanks:
+			perilDescription = "super freaked out."
+		case domain.PerilConditionIgnore3SkillRanks:
+			perilDescription = "freaked out of their damn mind!"
+		case domain.PerilConditionIncapacitated:
+			perilDescription = "totally incapacitated by all this shit!"
+		}
+		msg += fmt.Sprintf("%s the %s is here.  They look %s\n", other.Name, other.Job().Name, perilDescription)
+	}
 	return msg
 }
 
@@ -84,6 +105,9 @@ func LookPlayer(player *domain.Player, target *domain.Player) string {
 		}
 	} else {
 		wields = "their bare fists"
+	}
+	if target.Inventory().Shield() != nil {
+		wields = fmt.Sprintf("%s. They are wearing a %s", target.Inventory().Shield().Name(), wields)
 	}
 	perilCondition := target.Peril().Condition
 	var perilDescription string

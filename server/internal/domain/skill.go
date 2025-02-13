@@ -21,10 +21,6 @@ type Skill struct {
 	Focuses     []string
 }
 
-func (s *Skill) Value() interface{} {
-	return s
-}
-
 func (s *Skill) String() string {
 	return fmt.Sprintf("Name: %s, Description: %s, Stat: %s, Type: %s, Focuses: %v", s.Name, s.Description, s.Stat, s.Type, s.Focuses)
 }

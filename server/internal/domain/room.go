@@ -29,25 +29,35 @@ type RoomSpec struct {
 	Exits       map[string]ExitSpec `yaml:"exits"`
 }
 
+type RoomNPCs map[int]*Character
+
 type Room struct {
 	ID          int64
 	Name        string
 	Description string
 	Players     Players
+	NPCs        RoomNPCs
 	exitSpecs   map[string]ExitSpec
 	exits       Exits
 	resolver    RoomResolver
 	eventBus    eventbus.Bus
 }
+
+func (r Room) String() string {
+	return fmt.Sprintf("%s: %s", r.Name, r.Description)
+}
+
+var _ Property = &Room{}
+
 type RoomResolver func(name string) *Room
 
 type Rooms map[string]*Room
 
 type RoomEvent struct {
-	Room   *Room
-	Player *Player
-	Action string
-	Args   []interface{}
+	Room      *Room
+	Character *Character
+	Action    string
+	Args      []interface{}
 }
 
 type RoomEventHandler func(*RoomEvent)
@@ -58,16 +68,17 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room
 		Name:        spec.Name,
 		Description: spec.Description,
 		Players:     make(Players),
+		NPCs:        make(RoomNPCs),
 		exitSpecs:   spec.Exits,
 		exits:       make(Exits),
 		resolver:    resolver,
 		eventBus:    eventBus,
 	}
 	err := eventBus.SubscribeAsync(event.RoomChannel, func(r *RoomEvent) {
-		if r == nil || r.Room == nil || r.Room != room || r.Player == nil {
+		if r == nil || r.Room == nil || r.Room != room || r.Character == nil {
 			return
 		}
-		log.Debugf("room %s received action %s from player %s", spec.Name, r.Action, r.Player.Name)
+		log.Debugf("room %s received action %s from player %s", spec.Name, r.Action, r.Character.Name)
 	}, false)
 	if err != nil {
 		log.Printf("error subscribing to event bus: %s", err)
@@ -83,14 +94,6 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room
 	}
 
 	return room
-}
-
-func (r *Room) Value() interface{} {
-	return r
-}
-
-func (r *Room) String() string {
-	return fmt.Sprintf("%s: %s", r.Name, r.Description)
 }
 
 func (r *Room) Exits() Exits {
@@ -117,9 +120,9 @@ func (r *Room) AddPlayer(player *Player) {
 	id := *player.Id
 	r.Players[id] = player
 	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
-		Room:   r,
-		Player: player,
-		Action: event.RoomEventEnter,
+		Room:      r,
+		Character: &player.Character,
+		Action:    event.RoomEventEnter,
 	})
 }
 
@@ -131,8 +134,47 @@ func (r *Room) RemovePlayer(player *Player) {
 	id := *player.Id
 	delete(r.Players, id)
 	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
-		Room:   r,
-		Player: player,
-		Action: event.RoomEventExit,
+		Room:      r,
+		Character: &player.Character,
+		Action:    event.RoomEventExit,
 	})
+}
+
+func (r *Room) AddNPC(npc *Character) error {
+	if npc.Id == nil {
+		log.Printf("npc %s has no Id", npc.Name)
+		return fmt.Errorf("npc %s has no Id", npc.Name)
+	}
+	if _, ok := r.NPCs[*npc.Id]; ok {
+		log.Printf("npc %s already exists in room %s", npc.Name, r.Name)
+		return fmt.Errorf("npc %s already exists in room %s", npc.Name, r.Name)
+	}
+	log.Printf("adding npc %s to room %s", npc.Name, r.Name)
+	id := *npc.Id
+	r.NPCs[id] = npc
+	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
+		Room:      r,
+		Character: npc,
+		Action:    event.RoomEventEnter,
+	})
+	return nil
+}
+
+func (r *Room) RemoveNPC(npc *Character) error {
+	if npc.Id == nil {
+		log.Printf("npc %s has no Id", npc.Name)
+		return fmt.Errorf("npc %s has no Id", npc.Name)
+	}
+	if _, ok := r.NPCs[*npc.Id]; !ok {
+		log.Printf("npc %s does not exist in room %s", npc.Name, r.Name)
+		return fmt.Errorf("npc %s does not exist in room %s", npc.Name, r.Name)
+	}
+	id := *npc.Id
+	delete(r.NPCs, id)
+	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
+		Room:      r,
+		Character: npc,
+		Action:    event.RoomEventExit,
+	})
+	return nil
 }
