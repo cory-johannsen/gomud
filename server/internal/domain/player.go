@@ -57,9 +57,9 @@ func (p *BaseProperty) String() string {
 var _ Property = &BaseProperty{}
 
 type ConsumedAdvance struct {
-	Job    string
-	Stat   string
-	Amount int
+	Job    string `yaml:"job"`
+	Stat   string `yaml:"stat"`
+	Amount int    `yaml:"amount"`
 }
 
 type ConsumedAdvances map[string][]*ConsumedAdvance

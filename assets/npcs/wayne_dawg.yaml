@@ -13,15 +13,15 @@ birthSeason: Winter
 condition: Unharmed
 consumedAdvances:
   Dealer:
-    - Job: Dealer
-      Stat: savvy
-      Amount: 1
-    - Job: Dealer
-      Stat: grit
-      Amount: 1
-    - Job: Dealer
-      Stat: flair
-      Amount: 1
+    - job: Dealer
+      stat: Savvy
+      amount: 1
+    - job: Dealer
+      stat: Grit
+      amount: 1
+    - job: Dealer
+      stat: Flair
+      amount: 1
 distinguishingMarks:
   - Embarrassing tattoo on face
   - Blood-shot eyes

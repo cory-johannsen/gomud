@@ -186,7 +186,7 @@ func (s *Server) Start() {
 			log.Printf("created npc %s\n", newNpc.Name)
 			npc = newNpc
 		} else {
-			log.Printf("npc %s loaded with ID %d\n", npc.Name, npc.Id)
+			log.Printf("npc %s loaded with ID %d\n", npc.Name, *npc.Id)
 		}
 		room := npc.Room()
 		if room == nil {
