@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/fatih/color"
+	"strings"
 )
 
 type LookHandler struct {
@@ -26,7 +27,10 @@ func Look(player *domain.Player, target *LookTarget) string {
 		return LookRoom(player, target.Room)
 	}
 	if target.Player != nil {
-		return LookPlayer(player, target.Player)
+		return LookCharacter(&target.Player.Character, false)
+	}
+	if target.NPC != nil {
+		return LookCharacter(target.NPC, true)
 	}
 	return LookRoom(player, player.Room())
 }
@@ -41,51 +45,15 @@ func LookRoom(player *domain.Player, target *domain.Room) string {
 		if other == player {
 			continue
 		}
-		perilCondition := other.Peril().Condition
-		var perilDescription string
-		switch perilCondition {
-		default:
-			fallthrough
-		case domain.PerilConditionUnhindered:
-			perilDescription = "cool as a cucumber."
-		case domain.PerilConditionImperiled:
-			perilDescription = "kinda concerned."
-		case domain.PerilConditionIgnore1SkillRank:
-			perilDescription = "pretty freaked out."
-		case domain.PerilConditionIgnore2SkillRanks:
-			perilDescription = "super freaked out."
-		case domain.PerilConditionIgnore3SkillRanks:
-			perilDescription = "freaked out of their damn mind!"
-		case domain.PerilConditionIncapacitated:
-			perilDescription = "totally incapacitated by all this shit!"
-		}
-		msg += fmt.Sprintf("%s the %s is here.  They look %s\n", other.Name, other.Job().Name, perilDescription)
+		msg += LookCharacter(&other.Character, false)
 	}
 	for _, other := range target.NPCs {
-		perilCondition := other.Peril().Condition
-		var perilDescription string
-		switch perilCondition {
-		default:
-			fallthrough
-		case domain.PerilConditionUnhindered:
-			perilDescription = "cool as a cucumber."
-		case domain.PerilConditionImperiled:
-			perilDescription = "kinda concerned."
-		case domain.PerilConditionIgnore1SkillRank:
-			perilDescription = "pretty freaked out."
-		case domain.PerilConditionIgnore2SkillRanks:
-			perilDescription = "super freaked out."
-		case domain.PerilConditionIgnore3SkillRanks:
-			perilDescription = "freaked out of their damn mind!"
-		case domain.PerilConditionIncapacitated:
-			perilDescription = "totally incapacitated by all this shit!"
-		}
-		msg += fmt.Sprintf("%s the %s is here.  They look %s\n", other.Name, other.Job().Name, perilDescription)
+		msg += LookCharacter(other, true)
 	}
 	return msg
 }
 
-func LookPlayer(player *domain.Player, target *domain.Player) string {
+func LookCharacter(target *domain.Character, npc bool) string {
 	cyan := color.New(color.FgCyan).SprintFunc()
 	magenta := color.New(color.FgMagenta).SprintFunc()
 	yellow := color.New(color.FgYellow).SprintFunc()
@@ -127,8 +95,11 @@ func LookPlayer(player *domain.Player, target *domain.Player) string {
 	case domain.PerilConditionIncapacitated:
 		perilDescription = red("totally incapacitated by all this shit!")
 	}
-
-	msg := fmt.Sprintf("%s the %s looks %s  They are wearing %s and wield %s.  \n  They are %s", cyan(target.Name), green(target.Job().Name),
+	name := cyan(target.Name)
+	if npc {
+		name = fmt.Sprintf("%s %s", cyan(target.Name), green("[NPC]"))
+	}
+	msg := fmt.Sprintf("%s the %s looks %s  They are wearing %s and wield %s.  \n  They are %s", name, green(target.Job().Name),
 		perilDescription, magenta(armor), magenta(wields), yellow(target.Condition()))
 	if len(target.Injuries()) == 0 {
 		msg += " and unscathed."
@@ -143,12 +114,9 @@ func LookPlayer(player *domain.Player, target *domain.Player) string {
 
 func (h *LookHandler) Handle(ctx context.Context, args []string) (string, error) {
 	var target *LookTarget
-	if len(args) > 1 {
-		return h.Help(args), nil
-	}
-	if len(args) == 1 {
+	if len(args) > 0 {
 		target = &LookTarget{
-			Target: args[0],
+			Target: strings.Join(args, " "),
 			Player: nil,
 			NPC:    nil,
 			Room:   nil,
@@ -174,7 +142,14 @@ func (h *LookHandler) Handle(ctx context.Context, args []string) (string, error)
 					}
 				}
 			}
-			// TODO: NPCs
+			if !found {
+				for _, npc := range room.NPCs {
+					if npc.Name == target.Target {
+						target.NPC = npc
+						break
+					}
+				}
+			}
 		}
 	}
 

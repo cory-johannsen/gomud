@@ -90,7 +90,54 @@ func (n *NPCSpec) ToProperties(loaders *Loaders) (map[string]domain.Property, er
 	props[domain.FatePointsProperty] = &domain.BaseProperty{
 		Val: n.FatePoints,
 	}
-	// TODO: inventory
+	inventory := domain.NewInventory()
+	if n.Inventory.MainHand != "" {
+		item, err := loaders.EquipmentLoader.ItemFromName(n.Inventory.MainHand)
+		if err != nil {
+			return nil, err
+		}
+		mainHand := item.(*domain.Weapon)
+		err = inventory.EquipMainHand(mainHand)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if n.Inventory.OffHand != "" {
+		item, err := loaders.EquipmentLoader.ItemFromName(n.Inventory.OffHand)
+		if err != nil {
+			return nil, err
+		}
+		offHand := item.(*domain.Weapon)
+		err = inventory.EquipOffHand(offHand)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if n.Inventory.Armor != "" {
+		item, err := loaders.EquipmentLoader.ItemFromName(n.Inventory.Armor)
+		if err != nil {
+			return nil, err
+		}
+		armor := item.(*domain.Armor)
+		err = inventory.EquipArmor(armor)
+		if err != nil {
+			return nil, err
+		}
+	}
+	for _, name := range n.Inventory.Pack {
+		if name != "" {
+			item, err := loaders.EquipmentLoader.ItemFromName(n.Inventory.Armor)
+			if err != nil {
+				return nil, err
+			}
+			err = inventory.Pack().AddItem(item)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+	inventory.AddCash(n.Inventory.Cash)
+	props[domain.InventoryProperty] = inventory
 	job, err := loaders.JobLoader.GetJob(n.Job)
 	if err != nil {
 		return nil, err
