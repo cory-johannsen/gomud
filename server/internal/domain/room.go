@@ -178,3 +178,21 @@ func (r *Room) RemoveNPC(npc *Character) error {
 	})
 	return nil
 }
+
+func (r *Room) HasNPC(npc *Character) bool {
+	if npc.Id == nil {
+		return false
+	}
+	_, ok := r.NPCs[*npc.Id]
+	return ok
+}
+
+func (r *Room) NPCCount(name string) int {
+	count := 0
+	for _, n := range r.NPCs {
+		if n.Name == name {
+			count++
+		}
+	}
+	return count
+}

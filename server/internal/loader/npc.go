@@ -8,50 +8,7 @@ import (
 	"strings"
 )
 
-type SkillRankSpec struct {
-	Job   string `yaml:"job"`
-	Skill string `yaml:"skill"`
-}
-
-type SkillRankSpecs []SkillRankSpec
-
-type InventorySpec struct {
-	MainHand string   `yaml:"mainHand"`
-	OffHand  string   `yaml:"offHand"`
-	Armor    string   `yaml:"armor"`
-	Pack     []string `yaml:"pack"`
-	Cash     int      `yaml:"cash"`
-}
-
-type NPCSpec struct {
-	Name                string                     `yaml:"name"`
-	Age                 int                        `yaml:"age"`
-	Alignment           domain.AlignmentSpec       `yaml:"alignment"`
-	Archetype           string                     `yaml:"archetype"`
-	Background          string                     `yaml:"background"`
-	BackgroundTrait     string                     `yaml:"backgroundTrait"`
-	BirthSeason         domain.Season              `yaml:"birthSeason"`
-	Condition           domain.Condition           `yaml:"condition"`
-	ConsumedAdvances    domain.ConsumedAdvances    `yaml:"consumedAdvances"`
-	DistinguishingMarks domain.DistinguishingMarks `yaml:"distinguishingMarks"`
-	Drawback            string                     `yaml:"drawback"`
-	FatePoints          int                        `yaml:"fatePoints"`
-	Inventory           InventorySpec              `yaml:"inventory"`
-	Job                 string                     `yaml:"job"`
-	Peril               string                     `yaml:"peril"`
-	Poorness            domain.Poorness            `yaml:"poorness"`
-	Room                string                     `yaml:"room"`
-	Team                string                     `yaml:"team"`
-	Tattoo              domain.Tattoo              `yaml:"tattoo"`
-	SkillRanks          SkillRankSpecs             `yaml:"skillRanks"`
-	Stats               domain.Stats               `yaml:"stats"`
-	Talents             []string                   `yaml:"talents"`
-	Upbringing          string                     `yaml:"upbringing"`
-}
-
-type NPCSpecs map[string]*NPCSpec
-
-func (n *NPCSpec) ToProperties(loaders *Loaders) (map[string]domain.Property, error) {
+func NPCSpecToProperties(n *domain.NPCSpec, loaders *Loaders) (map[string]domain.Property, error) {
 	props := make(map[string]domain.Property)
 	props[domain.AgeProperty] = &domain.BaseProperty{
 		Val: n.Age,
@@ -178,18 +135,18 @@ func (n *NPCSpec) ToProperties(loaders *Loaders) (map[string]domain.Property, er
 type NPCLoader struct {
 	config          *config.Config
 	alignmentLoader *AlignmentLoader
-	npcs            NPCSpecs
+	npcs            domain.NPCSpecs
 }
 
 func NewNPCLoader(cfg *config.Config, alignmentLoader *AlignmentLoader) *NPCLoader {
 	return &NPCLoader{
 		config:          cfg,
 		alignmentLoader: alignmentLoader,
-		npcs:            make(NPCSpecs),
+		npcs:            make(domain.NPCSpecs),
 	}
 }
 
-func (l *NPCLoader) LoadNPCs() (NPCSpecs, error) {
+func (l *NPCLoader) LoadNPCs() (domain.NPCSpecs, error) {
 	if l.npcs != nil && len(l.npcs) > 0 {
 		return l.npcs, nil
 	}
@@ -204,7 +161,7 @@ func (l *NPCLoader) LoadNPCs() (NPCSpecs, error) {
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
 			continue
 		}
-		spec := &NPCSpec{}
+		spec := &domain.NPCSpec{}
 		data, err := os.ReadFile(l.config.AssetPath + "/npcs/" + item.Name())
 		if err != nil {
 			return nil, err
@@ -218,7 +175,7 @@ func (l *NPCLoader) LoadNPCs() (NPCSpecs, error) {
 	return l.npcs, nil
 }
 
-func (l *NPCLoader) GetNPC(name string) (*NPCSpec, error) {
+func (l *NPCLoader) GetNPC(name string) (*domain.NPCSpec, error) {
 	if l.npcs == nil || len(l.npcs) == 0 {
 		_, err := l.LoadNPCs()
 		if err != nil {

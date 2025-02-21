@@ -2,8 +2,6 @@ package engine
 
 import (
 	"bufio"
-	"database/sql"
-	"errors"
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/cli"
@@ -14,7 +12,6 @@ import (
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
-	"golang.org/x/net/context"
 	"net"
 	"strings"
 )
@@ -163,39 +160,24 @@ func (s *Server) Start() {
 		panic(err)
 	}
 
-	// load the NPCs
-	npcs, err := s.loaders.NPCLoader.LoadNPCs()
+	// start the generators
+	specs, err := s.loaders.GeneratorLoader.LoadGenerators()
 	if err != nil {
 		panic(err)
 	}
-	for _, npcSpec := range npcs {
-		npc, err := s.npcs.FetchNPCByName(context.Background(), npcSpec.Name)
-		if err != nil && !errors.Is(err, sql.ErrNoRows) {
-			panic(err)
-		}
-		if npc == nil {
-			properties, err := npcSpec.ToProperties(s.loaders)
-			if err != nil {
-				panic(err)
-			}
-
-			newNpc, err := s.npcs.CreateNPC(context.Background(), npcSpec.Name, properties)
-			if err != nil {
-				panic(err)
-			}
-			log.Printf("created npc %s\n", newNpc.Name)
-			npc = newNpc
-		} else {
-			log.Printf("npc %s loaded with ID %d\n", npc.Name, *npc.Id)
-		}
-		room := npc.Room()
-		if room == nil {
-			panic(errors.New(fmt.Sprintf("npc %s room not found", npc.Name)))
-		}
-		err = room.AddNPC(npc)
+	for _, spec := range specs {
+		npcSpec, err := s.loaders.NPCLoader.GetNPC(spec.NPC)
 		if err != nil {
 			panic(err)
 		}
+		g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs)
+		go func() {
+			err := g.Start()
+			if err != nil {
+				panic(err)
+			}
+			defer g.Stop()
+		}()
 	}
 
 	log.Printf("Starting server on port %s\n", s.port)

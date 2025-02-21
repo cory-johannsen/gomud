@@ -28,7 +28,15 @@ func NewNPCs(db *Database, loaders *loader.Loaders, equipment *Equipment) *NPCs 
 	}
 }
 
-func (n *NPCs) CreateNPC(ctx context.Context, name string, data map[string]domain.Property) (*domain.Character, error) {
+func (n *NPCs) CreateNPC(ctx context.Context, spec *domain.NPCSpec) (*domain.Character, error) {
+	props, err := loader.NPCSpecToProperties(spec, n.loaders)
+	if err != nil {
+		return nil, err
+	}
+	return n.CreateNPCWithProps(ctx, spec.Name, props)
+}
+
+func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[string]domain.Property) (*domain.Character, error) {
 	if _, ok := n.npcs[name]; ok {
 		return nil, errors.New(fmt.Sprintf("npc %s already exists", name))
 	}
@@ -39,7 +47,8 @@ func (n *NPCs) CreateNPC(ctx context.Context, name string, data map[string]domai
 		return nil, err
 	}
 	var id int
-	err = n.database.Conn.QueryRow(ctx, "INSERT INTO npcs (name, data) VALUES ($1, $2) RETURNING id", name, encoded).Scan(&id)
+	err = n.database.Conn.QueryRow(ctx, "INSERT INTO npcs (name, data) VALUES ($1, $2) RETURNING id", name, encoded).
+		Scan(&id)
 	if err != nil {
 		log.Errorf("failed to insert player: %s", err)
 		return nil, err
@@ -56,7 +65,8 @@ func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.Character, err
 		}
 	}
 	var name, data string
-	err := n.database.Conn.QueryRow(ctx, "SELECT name, data FROM npcs WHERE id = $1", id).Scan(&name, &data)
+	err := n.database.Conn.QueryRow(ctx, "SELECT name, data FROM npcs WHERE id = $1", id).
+		Scan(&name, &data)
 	if err != nil {
 		log.Errorf("failed to fetch npc: %s", err)
 		return nil, err
@@ -85,7 +95,8 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.Charact
 	}
 	var id int
 	var data string
-	err := n.database.Conn.QueryRow(ctx, "SELECT id, data FROM npcs WHERE name = $1", name).Scan(&id, &data)
+	err := n.database.Conn.QueryRow(ctx, "SELECT id, data FROM npcs WHERE name = $1", name).
+		Scan(&id, &data)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, sql.ErrNoRows
@@ -118,7 +129,18 @@ func (n *NPCs) Exists(ctx context.Context, name string) (bool, error) {
 	return count > 0, nil
 }
 
-func (n *NPCs) NPCFromSpec(ctx context.Context, spec *loader.NPCSpec, id int, data map[string]interface{}) *domain.Character {
+func (n *NPCs) DeleteNPC(ctx context.Context, npc *domain.Character) error {
+	var count int
+	row := n.database.Conn.QueryRow(ctx, "DELETE FROM npcs WHERE id = $1", npc.Id)
+	err := row.Scan(&count)
+	if err != nil {
+		log.Errorf("failed to delete npc: %s", err)
+		return err
+	}
+	return nil
+}
+
+func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, data map[string]interface{}) *domain.Character {
 	props := n.DataToProperties(ctx, data)
 
 	// todo: prop loading/overloading?
@@ -130,6 +152,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *loader.NPCSpec, id int, da
 func (n *NPCs) PropertiesToData(props map[string]domain.Property) map[string]interface{} {
 	data := make(map[string]interface{})
 	for k, v := range props {
+		log.Printf("converting property %s", k)
 		switch k {
 		case domain.AgeProperty:
 			data[k] = v.(*domain.BaseProperty).Val
@@ -159,6 +182,7 @@ func (n *NPCs) PropertiesToData(props map[string]domain.Property) map[string]int
 			inv := v.(*domain.Inventory)
 			// ensure the inventory items have been persisted
 			if inv.MainHand() != nil && inv.MainHand().Id() == 0 {
+				log.Printf("creating main hand item %s", inv.MainHand().Name())
 				item, err := n.equipment.CreateItem(context.Background(), inv.MainHand())
 				if err != nil {
 					log.Printf("failed to create main hand item: %s", err)

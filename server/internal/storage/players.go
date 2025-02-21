@@ -36,7 +36,8 @@ func (p *Players) CreatePlayer(ctx context.Context, name string, password string
 		return nil, err
 	}
 	var id int
-	err = p.database.Conn.QueryRow(ctx, "INSERT INTO players (name, password, data) VALUES ($1, $2, $3) RETURNING id", name, password, encoded).Scan(&id)
+	err = p.database.Conn.QueryRow(ctx, "INSERT INTO players (name, password, data) VALUES ($1, $2, $3) RETURNING id", name, password, encoded).
+		Scan(&id)
 	if err != nil {
 		log.Errorf("failed to insert player: %s", err)
 		return nil, err
@@ -55,7 +56,8 @@ func (p *Players) FetchPlayerById(ctx context.Context, id int, conn io.Connectio
 		}
 	}
 	var name, password, data string
-	err := p.database.Conn.QueryRow(ctx, "SELECT name, password FROM players WHERE id = $1", id).Scan(&name, &password, &data)
+	err := p.database.Conn.QueryRow(ctx, "SELECT name, password FROM players WHERE id = $1", id).
+		Scan(&name, &password, &data)
 	if err != nil {
 		log.Errorf("failed to fetch player: %s", err)
 		return nil, err
@@ -88,7 +90,8 @@ func (p *Players) FetchPlayerByName(ctx context.Context, name string, conn io.Co
 	var id int
 	var password string
 	var data string
-	err := p.database.Conn.QueryRow(ctx, "SELECT id, password, data FROM players WHERE name = $1", name).Scan(&id, &password, &data)
+	err := p.database.Conn.QueryRow(ctx, "SELECT id, password, data FROM players WHERE name = $1", name).
+		Scan(&id, &password, &data)
 	if err != nil {
 		log.Errorf("failed to fetch player: %s", err)
 		return nil, err

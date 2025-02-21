@@ -11,4 +11,4 @@ var LoaderSet = wire.NewSet(
 	NewAppearanceLoader, NewAlignmentLoader, NewArchetypeLoader, NewBackgroundLoader, NewDisorderLoader,
 	NewEffectLoader, NewEquipmentLoader, NewInjuryLoader, NewInventoryLoader, NewJobLoader,
 	NewQualityLoader, NewRoomLoader, NewSkillLoader,
-	NewTalentLoader, NewTeamLoader, NewTraitLoader, NewUpbringingLoader, NewNPCLoader)
+	NewTalentLoader, NewTeamLoader, NewTraitLoader, NewUpbringingLoader, NewGeneratorLoader, NewNPCLoader)

@@ -10,6 +10,7 @@ type Loaders struct {
 	DisorderLoader   *DisorderLoader
 	EffectLoader     *EffectLoader
 	EquipmentLoader  *EquipmentLoader
+	GeneratorLoader  *GeneratorLoader
 	InjuryLoader     *InjuryLoader
 	InventoryLoader  *InventoryLoader
 	JobLoader        *JobLoader
@@ -24,7 +25,8 @@ type Loaders struct {
 }
 
 func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLoader, archetypeLoader *ArchetypeLoader,
-	backgroundLoader *BackgroundLoader, disorderLoader *DisorderLoader, effectLoader *EffectLoader, equipmentLoader *EquipmentLoader, injuryLoader *InjuryLoader,
+	backgroundLoader *BackgroundLoader, disorderLoader *DisorderLoader, effectLoader *EffectLoader, equipmentLoader *EquipmentLoader,
+	generatorLoader *GeneratorLoader, injuryLoader *InjuryLoader,
 	inventoryLoader *InventoryLoader, jobLoader *JobLoader, npcLoader *NPCLoader, qualityLoader *QualityLoader, roomLoader *RoomLoader, skillLoader *SkillLoader,
 	talentLoader *TalentLoader, traitLoader *TraitLoader, teamLoader *TeamLoader, upbringingLoader *UpbringingLoader) *Loaders {
 	return &Loaders{
@@ -35,6 +37,7 @@ func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLo
 		DisorderLoader:   disorderLoader,
 		EffectLoader:     effectLoader,
 		EquipmentLoader:  equipmentLoader,
+		GeneratorLoader:  generatorLoader,
 		InjuryLoader:     injuryLoader,
 		InventoryLoader:  inventoryLoader,
 		JobLoader:        jobLoader,
@@ -138,6 +141,11 @@ func (l *Loaders) Preload() error {
 	}
 	log.Info("loading NPCs")
 	_, err = l.NPCLoader.LoadNPCs()
+	if err != nil {
+		return err
+	}
+	log.Info("loading generators")
+	_, err = l.GeneratorLoader.LoadGenerators()
 	if err != nil {
 		return err
 	}
