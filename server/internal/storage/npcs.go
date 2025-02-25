@@ -64,7 +64,7 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 	if err != nil {
 		return nil, err
 	}
-	planner, err := n.planners.Get(name)
+	planner, err := n.planners.GetPlanner(name)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, er
 	if err != nil {
 		return nil, err
 	}
-	planner, err := n.planners.Get(name)
+	planner, err := n.planners.GetPlanner(name)
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +180,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 	if err != nil {
 		return nil, err
 	}
-	planner, err := n.planners.Get(spec.Name)
+	planner, err := n.planners.GetPlanner(spec.Name)
 	if err != nil {
 		return nil, err
 	}

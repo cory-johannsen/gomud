@@ -16,11 +16,14 @@ type TaskGraph struct {
 type Plan []Task
 
 type Planner struct {
+	Name  string
 	Tasks *TaskGraph
 }
 
+type Planners map[string]*Planner
+
 type PlannerResolver interface {
-	Get(name string) (*Planner, error)
+	GetPlanner(name string) (*Planner, error)
 }
 
 func evaluateNode(node *TaskNode, state *State) []Task {
