@@ -109,6 +109,7 @@ func LookCharacter(target *domain.Character, npc bool) string {
 			msg += fmt.Sprintf("\t%s\n", red(injury))
 		}
 	}
+	msg += "\n"
 	return msg
 }
 

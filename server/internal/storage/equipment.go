@@ -22,17 +22,31 @@ func NewEquipment(database *Database, loaders *loader.Loaders) *Equipment {
 }
 
 func (e *Equipment) CreateItem(ctx context.Context, item domain.Item) (domain.Item, error) {
+	log.Printf("Creating item %s", item.Name())
 	var id int
-	err := e.database.Conn.QueryRow(ctx, "INSERT INTO items (name, description, mass_in_grams, type, cost) VALUES ($1, $2, $3, $4, $5) RETURNING id", item.Name(), item.Description(), item.MassInGrams(), item.Type(), item.Cost()).
-		Scan(&id)
+	tx, err := e.database.Conn.Begin(ctx)
+	if err != nil {
+		log.Errorf("failed to start transaction: %s", err)
+		return nil, err
+	}
+	row := e.database.Conn.QueryRow(ctx, "INSERT INTO items (name, description, mass_in_grams, type, cost) VALUES ($1, $2, $3, $4, $5) RETURNING id",
+		item.Name(), item.Description(), item.MassInGrams(), item.Type(), item.Cost())
+	err = row.Scan(&id)
 	if err != nil {
 		log.Errorf("failed to insert item: %s", err)
+		return nil, err
+	}
+	log.Printf("Created item %s with id %d", item.Name(), id)
+	err = tx.Commit(ctx)
+	if err != nil {
+		log.Errorf("failed to commit transaction: %s", err)
 		return nil, err
 	}
 	return e.FetchItemByID(ctx, id)
 }
 
 func (e *Equipment) FetchItemByID(ctx context.Context, id int) (domain.Item, error) {
+	log.Printf("Fetching item %d", id)
 	if item, ok := e.items[id]; ok {
 		return item, nil
 	}

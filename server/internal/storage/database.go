@@ -8,22 +8,20 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/pgxpool"
 	log "github.com/sirupsen/logrus"
 	url2 "net/url"
 )
 
 type Database struct {
-	Conn *pgx.Conn
+	Conn *pgxpool.Pool
 }
 
 func NewDatabase(config *config.Config) (*Database, error) {
 	pw := url2.QueryEscape(config.DatabasePassword)
 	connectionString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable&search_path=%s", config.DatabaseUser, pw, config.DatabaseHost, config.DatabasePort, config.DatabaseName, config.DatabaseSchema)
-	conn, err := pgx.Connect(
-		context.Background(),
-		connectionString,
-	)
+	pool, err := pgxpool.Connect(context.Background(), connectionString)
+
 	if err != nil {
 		return nil, err
 	}
@@ -41,5 +39,5 @@ func NewDatabase(config *config.Config) (*Database, error) {
 		return nil, err
 	}
 
-	return &Database{Conn: conn}, nil
+	return &Database{Conn: pool}, nil
 }

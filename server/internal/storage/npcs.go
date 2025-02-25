@@ -37,6 +37,7 @@ func (n *NPCs) CreateNPC(ctx context.Context, spec *domain.NPCSpec) (*domain.Cha
 }
 
 func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[string]domain.Property) (*domain.Character, error) {
+	log.Printf("Creating NPC %s", name)
 	if _, ok := n.npcs[name]; ok {
 		return nil, errors.New(fmt.Sprintf("npc %s already exists", name))
 	}
@@ -59,6 +60,7 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 }
 
 func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.Character, error) {
+	log.Printf("Fetching NPC %d", id)
 	for _, npc := range n.npcs {
 		if npc.Id != nil && *npc.Id == id {
 			return npc, nil
@@ -90,6 +92,7 @@ func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.Character, err
 }
 
 func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.Character, error) {
+	log.Printf("Fetching NPC %s", name)
 	if npc, ok := n.npcs[name]; ok {
 		return npc, nil
 	}
@@ -119,6 +122,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.Charact
 }
 
 func (n *NPCs) Exists(ctx context.Context, name string) (bool, error) {
+	log.Printf("checking if NPC %s exists", name)
 	var count int
 	row := n.database.Conn.QueryRow(ctx, "SELECT count(*) FROM npcs WHERE name = $1", name)
 	err := row.Scan(&count)
@@ -130,6 +134,7 @@ func (n *NPCs) Exists(ctx context.Context, name string) (bool, error) {
 }
 
 func (n *NPCs) DeleteNPC(ctx context.Context, npc *domain.Character) error {
+	log.Printf("deleting NPC %s", npc.Name)
 	var count int
 	row := n.database.Conn.QueryRow(ctx, "DELETE FROM npcs WHERE id = $1", npc.Id)
 	err := row.Scan(&count)
@@ -152,7 +157,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 func (n *NPCs) PropertiesToData(props map[string]domain.Property) map[string]interface{} {
 	data := make(map[string]interface{})
 	for k, v := range props {
-		log.Printf("converting property %s", k)
+		//log.Printf("converting property %s", k)
 		switch k {
 		case domain.AgeProperty:
 			data[k] = v.(*domain.BaseProperty).Val
