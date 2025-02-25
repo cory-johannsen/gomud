@@ -29,7 +29,7 @@ func NewPlayers(database *Database, npcs *NPCs, loaders *loader.Loaders, equipme
 }
 
 func (p *Players) CreatePlayer(ctx context.Context, name string, password string, data map[string]domain.Property, conn io.Connection) (*domain.Player, error) {
-	log.Printf("creating player %s", name)
+	log.Debugf("creating player %s", name)
 	specData := p.npcs.PropertiesToData(data)
 	encoded, err := json.Marshal(specData)
 	if err != nil {
@@ -51,7 +51,7 @@ func (p *Players) CreatePlayer(ctx context.Context, name string, password string
 }
 
 func (p *Players) FetchPlayerById(ctx context.Context, id int, conn io.Connection) (*domain.Player, error) {
-	log.Printf("fetching player %d", id)
+	log.Debugf("fetching player %d", id)
 
 	for _, player := range p.players {
 		if player.Id != nil && *player.Id == id {
@@ -87,7 +87,7 @@ func (p *Players) FetchPlayerById(ctx context.Context, id int, conn io.Connectio
 }
 
 func (p *Players) FetchPlayerByName(ctx context.Context, name string, conn io.Connection) (*domain.Player, error) {
-	log.Printf("fetching player %s", name)
+	log.Debugf("fetching player %s", name)
 
 	if player, ok := p.players[name]; ok {
 		return player, nil
@@ -116,7 +116,7 @@ func (p *Players) FetchPlayerByName(ctx context.Context, name string, conn io.Co
 }
 
 func (p *Players) Exists(ctx context.Context, name string) (bool, error) {
-	log.Printf("checking if player %s exists", name)
+	log.Debugf("checking if player %s exists", name)
 
 	var count int
 	row := p.database.Conn.QueryRow(ctx, "SELECT count(*) FROM players WHERE name = $1", name)
@@ -129,7 +129,7 @@ func (p *Players) Exists(ctx context.Context, name string) (bool, error) {
 }
 
 func (p *Players) IsLoggedIn(ctx context.Context, name string, conn io.Connection) (bool, error) {
-	log.Printf("checking if player %s is logged in", name)
+	log.Debugf("checking if player %s is logged in", name)
 	player, err := p.FetchPlayerByName(ctx, name, conn)
 	if err != nil {
 		return false, nil
@@ -162,7 +162,7 @@ func (p *Players) PlayerFromSpec(ctx context.Context, spec *PlayerSpec, conn io.
 }
 
 func (p *Players) StorePlayer(ctx context.Context, player *domain.Player, conn io.Connection) (*domain.Player, error) {
-	log.Printf("storing player %s", player.Name)
+	log.Debugf("storing player %s", player.Name)
 	if player.Id == nil {
 		return p.CreatePlayer(ctx, player.Name, player.Password, player.Data, conn)
 	}

@@ -19,7 +19,7 @@ func InitializeEngine() (*engine.Engine, error) {
 	wire.Build(config.NewConfigFromEnv, storage.NewDatabase, storage.NewNPCs, storage.NewPlayers, storage.NewEquipment,
 		effect.EffectsSet, effect.NewEffects,
 		loader.LoaderSet, loader.NewLoaders,
-		generator.NewPlayerGenerator,
+		generator.NewPlayerGenerator, generator.NewStateGenerator, generator.NewPlannerGenerator,
 		eventbus.New, event.NewClock, engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil
 }

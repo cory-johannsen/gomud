@@ -22,7 +22,7 @@ func NewEquipment(database *Database, loaders *loader.Loaders) *Equipment {
 }
 
 func (e *Equipment) CreateItem(ctx context.Context, item domain.Item) (domain.Item, error) {
-	log.Printf("Creating item %s", item.Name())
+	log.Debugf("Creating item %s", item.Name())
 	var id int
 	tx, err := e.database.Conn.Begin(ctx)
 	if err != nil {
@@ -36,7 +36,7 @@ func (e *Equipment) CreateItem(ctx context.Context, item domain.Item) (domain.It
 		log.Errorf("failed to insert item: %s", err)
 		return nil, err
 	}
-	log.Printf("Created item %s with id %d", item.Name(), id)
+	log.Debugf("Created item %s with id %d", item.Name(), id)
 	err = tx.Commit(ctx)
 	if err != nil {
 		log.Errorf("failed to commit transaction: %s", err)
@@ -46,7 +46,7 @@ func (e *Equipment) CreateItem(ctx context.Context, item domain.Item) (domain.It
 }
 
 func (e *Equipment) FetchItemByID(ctx context.Context, id int) (domain.Item, error) {
-	log.Printf("Fetching item %d", id)
+	log.Debugf("Fetching item %d", id)
 	if item, ok := e.items[id]; ok {
 		return item, nil
 	}

@@ -15,7 +15,7 @@ type LookHandler struct {
 type LookTarget struct {
 	Target string
 	Player *domain.Player
-	NPC    *domain.Character
+	NPC    *domain.NPC
 	Room   *domain.Room
 }
 
@@ -30,7 +30,7 @@ func Look(player *domain.Player, target *LookTarget) string {
 		return LookCharacter(&target.Player.Character, false)
 	}
 	if target.NPC != nil {
-		return LookCharacter(target.NPC, true)
+		return LookCharacter(&target.NPC.Character, true)
 	}
 	return LookRoom(player, player.Room())
 }
@@ -48,7 +48,7 @@ func LookRoom(player *domain.Player, target *domain.Room) string {
 		msg += LookCharacter(&other.Character, false)
 	}
 	for _, other := range target.NPCs {
-		msg += LookCharacter(other, true)
+		msg += LookCharacter(&other.Character, true)
 	}
 	return msg
 }

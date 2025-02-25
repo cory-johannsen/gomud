@@ -1,5 +1,7 @@
 package domain
 
+import "github.com/cory-johannsen/gomud/internal/domain/htn"
+
 type SkillRankSpec struct {
 	Job   string `yaml:"job"`
 	Skill string `yaml:"skill"`
@@ -42,3 +44,23 @@ type NPCSpec struct {
 }
 
 type NPCSpecs map[string]*NPCSpec
+
+type NPC struct {
+	Character
+	State *htn.State
+}
+
+func (n *NPC) IsPlayer() bool {
+	return false
+}
+
+func (n *NPC) IsNPC() bool {
+	return true
+}
+
+func NewNPC(character *Character, state *htn.State, planner *htn.Planner) *NPC {
+	return &NPC{
+		Character: *character,
+		State:     state,
+	}
+}

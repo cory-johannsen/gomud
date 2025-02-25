@@ -29,7 +29,7 @@ type RoomSpec struct {
 	Exits       map[string]ExitSpec `yaml:"exits"`
 }
 
-type RoomNPCs map[int]*Character
+type RoomNPCs map[int]*NPC
 
 type Room struct {
 	ID          int64
@@ -140,7 +140,7 @@ func (r *Room) RemovePlayer(player *Player) {
 	})
 }
 
-func (r *Room) AddNPC(npc *Character) error {
+func (r *Room) AddNPC(npc *NPC) error {
 	if npc.Id == nil {
 		log.Printf("npc %s has no Id", npc.Name)
 		return fmt.Errorf("npc %s has no Id", npc.Name)
@@ -154,13 +154,13 @@ func (r *Room) AddNPC(npc *Character) error {
 	r.NPCs[id] = npc
 	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
 		Room:      r,
-		Character: npc,
+		Character: &npc.Character,
 		Action:    event.RoomEventEnter,
 	})
 	return nil
 }
 
-func (r *Room) RemoveNPC(npc *Character) error {
+func (r *Room) RemoveNPC(npc *NPC) error {
 	if npc.Id == nil {
 		log.Printf("npc %s has no Id", npc.Name)
 		return fmt.Errorf("npc %s has no Id", npc.Name)
@@ -173,7 +173,7 @@ func (r *Room) RemoveNPC(npc *Character) error {
 	delete(r.NPCs, id)
 	r.eventBus.Publish(event.RoomChannel, &RoomEvent{
 		Room:      r,
-		Character: npc,
+		Character: &npc.Character,
 		Action:    event.RoomEventExit,
 	})
 	return nil

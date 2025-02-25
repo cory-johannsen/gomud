@@ -13,7 +13,7 @@ import (
 
 type NPCGenerator struct {
 	mutex             sync.Mutex
-	npcPool           map[int]*domain.Character
+	npcPool           map[int]*domain.NPC
 	running           bool
 	Name              string
 	loaders           *loader.Loaders
@@ -32,7 +32,7 @@ type CharacterLifecycle interface {
 func NewNPCGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs) *NPCGenerator {
 	return &NPCGenerator{
 		running:           false,
-		npcPool:           make(map[int]*domain.Character),
+		npcPool:           make(map[int]*domain.NPC),
 		Name:              spec.Name,
 		Spec:              npcSpec,
 		npcs:              npcs,
@@ -64,6 +64,7 @@ func (g *NPCGenerator) Start() error {
 			if err != nil {
 				return err
 			}
+			// assign the NPC the Planner
 			g.npcPool[*newNPC.Id] = newNPC
 			err = room.AddNPC(newNPC)
 			if err != nil {
@@ -72,7 +73,7 @@ func (g *NPCGenerator) Start() error {
 		} else if count > g.Maximum {
 			log.Printf("room %s has %d NPCs for generator %s, maximum is %d", room.Name, count, g.Name, g.Maximum)
 			index := rand.Intn(len(g.npcPool))
-			var toRemove *domain.Character
+			var toRemove *domain.NPC
 			for _, npc := range g.npcPool {
 				if index == 0 {
 					toRemove = npc

@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/jackc/pgx/v4"
 	log "github.com/sirupsen/logrus"
@@ -16,19 +17,23 @@ type NPCs struct {
 	database  *Database
 	loaders   *loader.Loaders
 	equipment *Equipment
-	npcs      map[string]*domain.Character
+	npcs      map[string]*domain.NPC
+	planners  htn.PlannerResolver
+	states    htn.StateResolver
 }
 
-func NewNPCs(db *Database, loaders *loader.Loaders, equipment *Equipment) *NPCs {
+func NewNPCs(db *Database, loaders *loader.Loaders, equipment *Equipment, planners htn.PlannerResolver, states htn.StateResolver) *NPCs {
 	return &NPCs{
 		database:  db,
 		loaders:   loaders,
 		equipment: equipment,
-		npcs:      make(map[string]*domain.Character),
+		npcs:      make(map[string]*domain.NPC),
+		planners:  planners,
+		states:    states,
 	}
 }
 
-func (n *NPCs) CreateNPC(ctx context.Context, spec *domain.NPCSpec) (*domain.Character, error) {
+func (n *NPCs) CreateNPC(ctx context.Context, spec *domain.NPCSpec) (*domain.NPC, error) {
 	props, err := loader.NPCSpecToProperties(spec, n.loaders)
 	if err != nil {
 		return nil, err
@@ -36,8 +41,8 @@ func (n *NPCs) CreateNPC(ctx context.Context, spec *domain.NPCSpec) (*domain.Cha
 	return n.CreateNPCWithProps(ctx, spec.Name, props)
 }
 
-func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[string]domain.Property) (*domain.Character, error) {
-	log.Printf("Creating NPC %s", name)
+func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[string]domain.Property) (*domain.NPC, error) {
+	log.Debugf("Creating NPC %s", name)
 	if _, ok := n.npcs[name]; ok {
 		return nil, errors.New(fmt.Sprintf("npc %s already exists", name))
 	}
@@ -54,13 +59,22 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 		log.Errorf("failed to insert player: %s", err)
 		return nil, err
 	}
-	npc := domain.NewCharacter(&id, name, data)
+	char := domain.NewCharacter(&id, name, data)
+	state, err := n.states.Get(name)
+	if err != nil {
+		return nil, err
+	}
+	planner, err := n.planners.Get(name)
+	if err != nil {
+		return nil, err
+	}
+	npc := domain.NewNPC(char, state, planner)
 	n.npcs[name] = npc
 	return npc, nil
 }
 
-func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.Character, error) {
-	log.Printf("Fetching NPC %d", id)
+func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.NPC, error) {
+	log.Debugf("Fetching NPC %d", id)
 	for _, npc := range n.npcs {
 		if npc.Id != nil && *npc.Id == id {
 			return npc, nil
@@ -84,15 +98,17 @@ func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.Character, err
 		log.Errorf("failed to load npc: %s", err)
 		return nil, err
 	}
-	npc := n.NPCFromSpec(ctx, spec, id, specProps)
-
+	npc, err := n.NPCFromSpec(ctx, spec, id, specProps)
+	if err != nil {
+		return nil, err
+	}
 	// todo: load equipment
 
 	return npc, nil
 }
 
-func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.Character, error) {
-	log.Printf("Fetching NPC %s", name)
+func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, error) {
+	log.Debugf("Fetching NPC %s", name)
 	if npc, ok := n.npcs[name]; ok {
 		return npc, nil
 	}
@@ -114,7 +130,16 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.Charact
 		return nil, err
 	}
 	props := n.DataToProperties(ctx, specProps)
-	npc := domain.NewCharacter(&id, name, props)
+	char := domain.NewCharacter(&id, name, props)
+	state, err := n.states.Get(name)
+	if err != nil {
+		return nil, err
+	}
+	planner, err := n.planners.Get(name)
+	if err != nil {
+		return nil, err
+	}
+	npc := domain.NewNPC(char, state, planner)
 	// Peril threshold is calculated from Grit Bonus
 	npc.Peril().Threshold = npc.StatBonuses().Grit + 3
 	n.npcs[name] = npc
@@ -122,7 +147,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.Charact
 }
 
 func (n *NPCs) Exists(ctx context.Context, name string) (bool, error) {
-	log.Printf("checking if NPC %s exists", name)
+	log.Debugf("checking if NPC %s exists", name)
 	var count int
 	row := n.database.Conn.QueryRow(ctx, "SELECT count(*) FROM npcs WHERE name = $1", name)
 	err := row.Scan(&count)
@@ -133,8 +158,8 @@ func (n *NPCs) Exists(ctx context.Context, name string) (bool, error) {
 	return count > 0, nil
 }
 
-func (n *NPCs) DeleteNPC(ctx context.Context, npc *domain.Character) error {
-	log.Printf("deleting NPC %s", npc.Name)
+func (n *NPCs) DeleteNPC(ctx context.Context, npc *domain.NPC) error {
+	log.Debugf("deleting NPC %s", npc.Name)
 	var count int
 	row := n.database.Conn.QueryRow(ctx, "DELETE FROM npcs WHERE id = $1", npc.Id)
 	err := row.Scan(&count)
@@ -145,13 +170,22 @@ func (n *NPCs) DeleteNPC(ctx context.Context, npc *domain.Character) error {
 	return nil
 }
 
-func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, data map[string]interface{}) *domain.Character {
+func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, data map[string]interface{}) (*domain.NPC, error) {
 	props := n.DataToProperties(ctx, data)
 
 	// todo: prop loading/overloading?
 
-	npc := domain.NewCharacter(&id, spec.Name, props)
-	return npc
+	char := domain.NewCharacter(&id, spec.Name, props)
+	state, err := n.states.Get(spec.Name)
+	if err != nil {
+		return nil, err
+	}
+	planner, err := n.planners.Get(spec.Name)
+	if err != nil {
+		return nil, err
+	}
+	npc := domain.NewNPC(char, state, planner)
+	return npc, nil
 }
 
 func (n *NPCs) PropertiesToData(props map[string]domain.Property) map[string]interface{} {
