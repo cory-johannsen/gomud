@@ -22,13 +22,20 @@ type Loaders struct {
 	TeamLoader       *TeamLoader
 	TraitLoader      *TraitLoader
 	UpbringingLoader *UpbringingLoader
+
+	ActionLoader    *ActionLoader
+	ConditionLoader *ConditionLoader
+	MethodLoader    *MethodLoader
+	TaskLoader      *TaskLoader
+	TaskGraphLoader *TaskGraphLoader
 }
 
 func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLoader, archetypeLoader *ArchetypeLoader,
 	backgroundLoader *BackgroundLoader, disorderLoader *DisorderLoader, effectLoader *EffectLoader, equipmentLoader *EquipmentLoader,
 	generatorLoader *GeneratorLoader, injuryLoader *InjuryLoader,
 	inventoryLoader *InventoryLoader, jobLoader *JobLoader, npcLoader *NPCLoader, qualityLoader *QualityLoader, roomLoader *RoomLoader, skillLoader *SkillLoader,
-	talentLoader *TalentLoader, traitLoader *TraitLoader, teamLoader *TeamLoader, upbringingLoader *UpbringingLoader) *Loaders {
+	talentLoader *TalentLoader, traitLoader *TraitLoader, teamLoader *TeamLoader, upbringingLoader *UpbringingLoader,
+	actionLoader *ActionLoader, conditionLoader *ConditionLoader, methodLoader *MethodLoader, taskLoader *TaskLoader, taskGraphLoader *TaskGraphLoader) *Loaders {
 	return &Loaders{
 		AppearanceLoader: appearanceLoader,
 		AlignmentLoader:  alignmentLoader,
@@ -49,6 +56,12 @@ func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLo
 		TeamLoader:       teamLoader,
 		TraitLoader:      traitLoader,
 		UpbringingLoader: upbringingLoader,
+
+		ActionLoader:    actionLoader,
+		ConditionLoader: conditionLoader,
+		MethodLoader:    methodLoader,
+		TaskLoader:      taskLoader,
+		TaskGraphLoader: taskGraphLoader,
 	}
 }
 
@@ -141,6 +154,16 @@ func (l *Loaders) Preload() error {
 	}
 	log.Info("loading NPCs")
 	_, err = l.NPCLoader.LoadNPCs()
+	if err != nil {
+		return err
+	}
+	log.Info("loading actions")
+	_, err = l.ActionLoader.LoadActions()
+	if err != nil {
+		return err
+	}
+	log.Info("loading conditions")
+	_, err = l.ConditionLoader.LoadConditions()
 	if err != nil {
 		return err
 	}

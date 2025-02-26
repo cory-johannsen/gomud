@@ -17,8 +17,8 @@ type Sensors map[string]any
 
 // SimpleSensor stores a single float64 Value and allows it to be set
 type SimpleSensor struct {
-	Value      float64 `json:"value"`
-	SensorName string  `json:"name"`
+	Value      float64 `yaml:"value"`
+	SensorName string  `yaml:"name"`
 }
 
 func (s *SimpleSensor) Get() (float64, error) {

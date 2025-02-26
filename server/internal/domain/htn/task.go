@@ -17,16 +17,35 @@ type Tasks map[string]Task
 type TaskResolver func() (Task, error)
 type TaskResolvers map[string]TaskResolver
 
+type TaskType string
+
+const (
+	PrimitiveTaskType TaskType = "primitive"
+	CompoundTaskType  TaskType = "compound"
+	GoalTaskType      TaskType = "goal"
+)
+
+type TaskSpec struct {
+	Preconditions []string `yaml:"preconditions"`
+	Complete      bool     `yaml:"complete,omitempty"`
+	Action        string   `yaml:"action,omitempty"`
+	TaskName      string   `yaml:"name"`
+	TaskType      TaskType `yaml:"type,omitempty"`
+}
+
+type TaskSpecs map[string]*TaskSpec
+
 // Action is an action applied by a Task.
 type Action func(state *State) error
+type Actions map[string]Action
 
 // PrimitiveTask implements the HTN primitive Task.   It contains a set of preconditions that must be met
 // before it will execute.  Once the preconditions are met, the Action is applied, then the completion flag is set.
 type PrimitiveTask struct {
-	Preconditions []Condition `json:"preconditions"`
-	Complete      bool        `json:"complete"`
-	Action        Action      `json:"action"`
-	TaskName      string      `json:"name"`
+	Preconditions []Condition `yaml:"preconditions"`
+	Complete      bool        `yaml:"complete"`
+	Action        Action      `yaml:"action"`
+	TaskName      string      `yaml:"name"`
 }
 
 func (t *PrimitiveTask) Execute(state *State) (*State, error) {
@@ -76,9 +95,9 @@ func (t *PrimitiveTask) String() string {
 // GoalTask implements the HTN goal Task, composed of preconditions that are other TaskResolvers.  The goal Task is considered
 // complete when all condition TaskResolvers are themselves complete.
 type GoalTask struct {
-	Preconditions []*TaskCondition `json:"preconditions"`
-	Complete      bool             `json:"complete"`
-	TaskName      string           `json:"name"`
+	Preconditions []*TaskCondition `yaml:"preconditions"`
+	Complete      bool             `yaml:"complete"`
+	TaskName      string           `yaml:"name"`
 }
 
 func (g *GoalTask) Execute(state *State) (*State, error) {
@@ -113,11 +132,19 @@ func (g *GoalTask) String() string {
 	return fmt.Sprintf("goal: preconditions: [%s], complete: %t", strings.Join(preconditions, ","), g.Complete)
 }
 
+type MethodSpec struct {
+	Name       string   `yaml:"name"`
+	Conditions []string `yaml:"conditions"`
+	Tasks      []string `yaml:"tasks"`
+}
+
 type Method struct {
 	Conditions    []Condition
 	TaskResolvers TaskResolvers
 	Name          string
 }
+
+type Methods map[string]*Method
 
 func (m *Method) Applies(state *State) bool {
 	log.Printf("checking if method {%s} applies", m.Name)
@@ -170,9 +197,9 @@ func (m *Method) String() string {
 // The task selects a method at execution time by checking the conditions on each.  Since the method list
 // is in priority order, the first match is selected when more than one apply.
 type CompoundTask struct {
-	Methods  []*Method `json:"methods"`
-	TaskName string    `json:"name"`
-	Complete bool      `json:"complete"`
+	Methods  []*Method `yaml:"methods"`
+	TaskName string    `yaml:"name"`
+	Complete bool      `yaml:"complete"`
 }
 
 func (c *CompoundTask) Execute(state *State) (*State, error) {

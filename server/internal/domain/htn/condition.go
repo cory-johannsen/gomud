@@ -6,13 +6,21 @@ import (
 )
 
 type Condition interface {
+	Name() string
 	IsMet(state *State) bool
 	String() string
 }
 
+type Conditions map[string]Condition
+
 // FlagCondition is a simple condition that is gated by a boolean Value that can be set
 type FlagCondition struct {
-	Value bool `json:"value"`
+	FlagName string `yaml:"name"`
+	Value    bool   `yaml:"value"`
+}
+
+func (f *FlagCondition) Name() string {
+	return f.FlagName
 }
 
 func (f *FlagCondition) IsMet(state *State) bool {
@@ -29,7 +37,7 @@ func (f *FlagCondition) String() string {
 
 // NotFlagCondition embeds a FlagCondition and inverts the behavior
 type NotFlagCondition struct {
-	FlagCondition `json:"flag_condition"`
+	FlagCondition `yaml:"flag_condition"`
 }
 
 func (n *NotFlagCondition) IsMet(state *State) bool {
@@ -91,10 +99,15 @@ var Int64Comparator = func(value int64, property int64, comparison Comparison) b
 
 // ComparisonCondition is a condition that is met if the given Property compares to the specified Value using the given Comparison function
 type ComparisonCondition[T any] struct {
-	Comparison Comparison
-	Value      T
-	Property   string
-	Comparator Comparator[T]
+	ConditionName string
+	Comparison    Comparison
+	Value         T
+	Property      string
+	Comparator    Comparator[T]
+}
+
+func (c *ComparisonCondition[T]) Name() string {
+	return c.ConditionName
 }
 
 func (c *ComparisonCondition[T]) IsMet(state *State) bool {
@@ -113,9 +126,14 @@ func (c *ComparisonCondition[T]) String() string {
 
 // PropertyComparisonCondition is a condition that compares to Property values
 type PropertyComparisonCondition struct {
-	Comparison Comparison `json:"comparison"`
-	LHS        string     `json:"lhs"`
-	RHS        string     `json:"rhs"`
+	ConditionName string     `yaml:"name"`
+	Comparison    Comparison `yaml:"comparison"`
+	LHS           string     `yaml:"lhs"`
+	RHS           string     `yaml:"rhs"`
+}
+
+func (p *PropertyComparisonCondition) Name() string {
+	return p.ConditionName
 }
 
 func (p *PropertyComparisonCondition) IsMet(state *State) bool {
@@ -160,9 +178,14 @@ const (
 )
 
 type LogicalCondition struct {
-	Operator    LogicalOperator `json:"operator"`
-	LHSProperty string          `json:"lhs"`
-	RHSProperty string          `json:"rhs"`
+	ConditionName string          `yaml:"name"`
+	Operator      LogicalOperator `yaml:"operator"`
+	LHSProperty   string          `yaml:"lhs"`
+	RHSProperty   string          `yaml:"rhs"`
+}
+
+func (l *LogicalCondition) Name() string {
+	return l.ConditionName
 }
 
 func (l *LogicalCondition) IsMet(state *State) bool {
@@ -201,7 +224,7 @@ func (l *LogicalCondition) String() string {
 
 // TaskCondition is a condition that is met when the given Task is complete
 type TaskCondition struct {
-	Task Task `json:"task"`
+	Task Task `yaml:"task"`
 }
 
 func (t *TaskCondition) IsMet(state *State) bool {
@@ -215,8 +238,8 @@ func (t *TaskCondition) String() string {
 type Evaluator func(state *State) bool
 
 type FuncCondition struct {
-	Name      string    `json:"name"`
-	Evaluator Evaluator `json:"evaluator"`
+	Name      string    `yaml:"name"`
+	Evaluator Evaluator `yaml:"evaluator"`
 }
 
 func (f *FuncCondition) IsMet(state *State) bool {
