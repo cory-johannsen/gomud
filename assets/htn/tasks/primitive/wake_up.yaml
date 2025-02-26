@@ -1,6 +1,6 @@
-name: WakeUp,
+name: WakeUp
 preconditions:
-  AfterWake,
-  BeforeSleep
-action: WakeUp,
+  - AfterWake
+  - BeforeSleep
+action: WakeUp
 complete: false

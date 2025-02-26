@@ -167,6 +167,16 @@ func (l *Loaders) Preload() error {
 	if err != nil {
 		return err
 	}
+	log.Info("loading tasks")
+	_, err = l.TaskLoader.LoadTaskResolvers()
+	if err != nil {
+		return err
+	}
+	log.Info("loading methods")
+	_, err = l.MethodLoader.LoadMethods(l.TaskLoader)
+	if err != nil {
+		return err
+	}
 	log.Info("loading generators")
 	_, err = l.GeneratorLoader.LoadGenerators()
 	if err != nil {

@@ -41,7 +41,7 @@ func (l *MethodLoader) LoadMethods(taskLoader *TaskLoader) (htn.Methods, error) 
 		}
 
 		spec := &htn.MethodSpec{}
-		data, err := os.ReadFile(l.config.AssetPath + "/htn/methods" + item.Name())
+		data, err := os.ReadFile(l.config.AssetPath + "/htn/methods/" + item.Name())
 		if err != nil {
 			log.Errorf("error reading method spec file %s: %v", item.Name(), err)
 			continue

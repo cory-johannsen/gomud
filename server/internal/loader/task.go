@@ -99,7 +99,7 @@ func (l *TaskLoader) loadPrimitiveSpecs() (htn.TaskSpecs, error) {
 		}
 
 		spec := &htn.TaskSpec{}
-		data, err := os.ReadFile(l.config.AssetPath + "/htn/tasks/primitive" + item.Name())
+		data, err := os.ReadFile(l.config.AssetPath + "/htn/tasks/primitive/" + item.Name())
 		if err != nil {
 			log.Errorf("error reading task spec file %s: %v", item.Name(), err)
 			continue
@@ -129,7 +129,7 @@ func (l *TaskLoader) loadCompoundSpecs() (htn.TaskSpecs, error) {
 		}
 
 		spec := &htn.TaskSpec{}
-		data, err := os.ReadFile(l.config.AssetPath + "/htn/tasks/compound" + item.Name())
+		data, err := os.ReadFile(l.config.AssetPath + "/htn/tasks/compound/" + item.Name())
 		if err != nil {
 			log.Errorf("error reading task spec file %s: %v", item.Name(), err)
 			continue
@@ -159,7 +159,7 @@ func (l *TaskLoader) loadGoalSpecs() (htn.TaskSpecs, error) {
 		}
 
 		spec := &htn.TaskSpec{}
-		data, err := os.ReadFile(l.config.AssetPath + "/htn/tasks/goal" + item.Name())
+		data, err := os.ReadFile(l.config.AssetPath + "/htn/tasks/goal/" + item.Name())
 		if err != nil {
 			log.Errorf("error reading task spec file %s: %v", item.Name(), err)
 			continue
