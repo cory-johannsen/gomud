@@ -1,0 +1,7 @@
+name: CustomerEngaged
+conditions:
+  - AwakeHours
+  - PlayersInRange
+  - PlayerEngaged
+tasks:
+  - Greet

@@ -1,0 +1,9 @@
+name: GreetPlayer
+conditions: 
+  - AwakeHours
+  - PlayersInRange
+  - PlayersAvailable
+  - NotEngaged
+  - IsPlayer
+tasks:
+  - GreetPlayer

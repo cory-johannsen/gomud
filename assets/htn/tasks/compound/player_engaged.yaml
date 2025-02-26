@@ -1,0 +1,6 @@
+name: PlayerEngaged
+preconditions:
+  - PlayerInRange
+  - PlayerIsPlayer
+  - Default
+complete: false

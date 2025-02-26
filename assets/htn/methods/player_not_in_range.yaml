@@ -1,0 +1,6 @@
+name: PlayerNotInRange
+conditions:
+  - AwakeHours
+  - NoPlayersInRange
+tasks:
+  - Observe

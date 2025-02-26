@@ -1,0 +1,9 @@
+name: PlayerConversation
+conditions: 
+  - AwakeHours
+  - PlayersInRange
+  - Engaged
+  - PlayerEngaged
+  - IsPlayer
+tasks: 
+  - PlayerConversation

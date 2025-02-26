@@ -363,7 +363,7 @@ func InitializeEngine() (*engine.Engine, error) {
 	equipment := storage.NewEquipment(database, loaders)
 	plannerResolver := generator.NewPlannerGenerator()
 	stateResolver := generator.NewStateGenerator()
-	npCs := storage.NewNPCs(database, loaders, equipment, plannerResolver, stateResolver)
+	npCs := storage.NewNPCs(configConfig, database, loaders, equipment, plannerResolver, stateResolver)
 	players := storage.NewPlayers(database, npCs, loaders, equipment)
 	playerGenerator := generator.NewPlayerGenerator(loaders)
 	clock := event.NewClock(bus, configConfig)

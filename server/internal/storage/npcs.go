@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/cory-johannsen/gomud/internal/loader"
@@ -14,6 +15,7 @@ import (
 )
 
 type NPCs struct {
+	cfg       *config.Config
 	database  *Database
 	loaders   *loader.Loaders
 	equipment *Equipment
@@ -22,8 +24,9 @@ type NPCs struct {
 	states    htn.StateResolver
 }
 
-func NewNPCs(db *Database, loaders *loader.Loaders, equipment *Equipment, planners htn.PlannerResolver, states htn.StateResolver) *NPCs {
+func NewNPCs(cfg *config.Config, db *Database, loaders *loader.Loaders, equipment *Equipment, planners htn.PlannerResolver, states htn.StateResolver) *NPCs {
 	return &NPCs{
+		cfg:       cfg,
 		database:  db,
 		loaders:   loaders,
 		equipment: equipment,
@@ -68,7 +71,7 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 	if err != nil {
 		return nil, err
 	}
-	npc := domain.NewNPC(char, state, planner)
+	npc := domain.NewNPC(char, state, planner, n.cfg.TickDurationMillis)
 	n.npcs[name] = npc
 	return npc, nil
 }
@@ -139,7 +142,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, er
 	if err != nil {
 		return nil, err
 	}
-	npc := domain.NewNPC(char, state, planner)
+	npc := domain.NewNPC(char, state, planner, n.cfg.TickDurationMillis)
 	// Peril threshold is calculated from Grit Bonus
 	npc.Peril().Threshold = npc.StatBonuses().Grit + 3
 	n.npcs[name] = npc
@@ -184,7 +187,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 	if err != nil {
 		return nil, err
 	}
-	npc := domain.NewNPC(char, state, planner)
+	npc := domain.NewNPC(char, state, planner, n.cfg.TickDurationMillis)
 	return npc, nil
 }
 

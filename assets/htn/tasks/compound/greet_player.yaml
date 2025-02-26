@@ -1,0 +1,6 @@
+name: GreetPlayer
+preconditions:
+  - PlayerNotInRange
+  - PlayerConversation
+  - Default
+complete: false

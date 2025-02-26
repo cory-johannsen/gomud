@@ -1,0 +1,6 @@
+name: PlayerConversation
+preconditions:
+  - PlayerNotInRange
+  - PlayerDisengage
+  - Default
+complete: false

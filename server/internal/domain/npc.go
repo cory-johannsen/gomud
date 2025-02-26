@@ -1,6 +1,11 @@
 package domain
 
-import "github.com/cory-johannsen/gomud/internal/domain/htn"
+import (
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
+	log "github.com/sirupsen/logrus"
+	"sync"
+	"time"
+)
 
 type SkillRankSpec struct {
 	Job   string `yaml:"job"`
@@ -46,8 +51,12 @@ type NPCSpec struct {
 type NPCSpecs map[string]*NPCSpec
 
 type NPC struct {
+	mutex      sync.Mutex
+	running    bool
+	tickMillis int
 	Character
-	State *htn.State
+	State   *htn.State
+	Planner *htn.Planner
 }
 
 func (n *NPC) IsPlayer() bool {
@@ -58,9 +67,58 @@ func (n *NPC) IsNPC() bool {
 	return true
 }
 
-func NewNPC(character *Character, state *htn.State, planner *htn.Planner) *NPC {
+func (n *NPC) Start() error {
+	if n.running {
+		return nil
+	}
+	n.mutex.Lock()
+	defer n.mutex.Unlock()
+	n.running = true
+	go func() {
+		for {
+			if !n.running {
+				break
+			}
+			// Plan the next action
+			plan, err := n.Planner.Plan(n.State)
+			if err != nil {
+				log.Errorf("error planning NPC action: %v", err)
+			}
+			// Execute the plan
+			if plan != nil {
+				newState, err := htn.Execute(plan, n.State)
+				if err != nil {
+					log.Errorf("error executing NPC plan: %v", err)
+				}
+				if newState != nil {
+					n.mutex.Lock()
+					n.State = newState
+					n.mutex.Unlock()
+				}
+			}
+			// Sleep until the next tick
+			time.Sleep(time.Duration(n.tickMillis) * time.Millisecond)
+		}
+	}()
+	return nil
+}
+
+func (n *NPC) Stop() error {
+	if !n.running {
+		return nil
+	}
+	n.mutex.Lock()
+	defer n.mutex.Unlock()
+	n.running = false
+	return nil
+}
+
+func NewNPC(character *Character, state *htn.State, planner *htn.Planner, tickMillis int) *NPC {
 	return &NPC{
-		Character: *character,
-		State:     state,
+		Character:  *character,
+		State:      state,
+		Planner:    planner,
+		running:    false,
+		tickMillis: tickMillis,
 	}
 }

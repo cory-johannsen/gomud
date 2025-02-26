@@ -1,0 +1,5 @@
+operator: AND
+lhs: AfterWake
+lhsType: condition
+rhs: BeforeSleep
+rhdType: condition

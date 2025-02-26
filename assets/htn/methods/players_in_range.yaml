@@ -1,0 +1,9 @@
+name: PlayersInRange
+conditions:
+  - WorkHours
+  - PlayersInRange
+  - PlayersAvailable
+  - NotEngaged
+tasks:
+  - Greet
+  - Observe

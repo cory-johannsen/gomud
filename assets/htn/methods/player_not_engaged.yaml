@@ -1,0 +1,7 @@
+name: PlayerNotInRange
+conditions: 
+  - AwakeHours
+  - PlayersInRange
+  - PlayerNotEngaged
+tasks:
+  - Greet

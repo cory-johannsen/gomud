@@ -1,0 +1,6 @@
+name: Observe
+preconditions:
+  - PlayerInRange
+  - PlayerNotInRange
+  - Default
+complete: false
