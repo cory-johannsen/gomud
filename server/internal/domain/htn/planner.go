@@ -1,7 +1,7 @@
 package htn
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 )
 
 type TaskNodeSpec struct {
@@ -43,10 +43,10 @@ func evaluateNode(node *TaskNode, state *State) []Task {
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("evaluating task node {%s}", task.String())
+	log.Printf("evaluating task node {%s}", task.Name())
 	tasks := make([]Task, 0)
 	if !task.IsComplete() {
-		log.Printf("task node {%s} is not complete", task.String())
+		log.Debugf("task node {%s} is not complete", task.String())
 		tasks = append(tasks, task)
 	}
 	for _, child := range node.Children {
@@ -59,7 +59,7 @@ func evaluateNode(node *TaskNode, state *State) []Task {
 }
 
 func (p *Planner) Plan(state *State) (Plan, error) {
-	log.Println("building plan")
+	log.Printf("building plan %s", p.Name)
 	plan := make(Plan, 0)
 	// walk the Task graph, starting at the root, and find the executable plan
 	node := p.Tasks.Root

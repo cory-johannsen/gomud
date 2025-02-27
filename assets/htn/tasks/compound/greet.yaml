@@ -1,6 +1,6 @@
 name: Greet
 preconditions:
-  - PlayerNotInRange
+  - PlayerInRange
   - GreetPlayer
   - Default
 complete: false

@@ -1,3 +1,4 @@
+name: PlayersAvailable
 comparison: >
 lhs: PlayersInRange
 rhs: PlayersEngaged

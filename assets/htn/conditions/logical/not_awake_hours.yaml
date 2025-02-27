@@ -1,3 +1,4 @@
+name: NotAwakeHours
 operator: AND
 lhs: AfterWake
 lhsType: condition

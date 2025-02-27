@@ -66,27 +66,12 @@ func (g *NPCGenerator) Start() error {
 		count := room.NPCCount(g.Spec.Name)
 		if count < g.Minimum {
 			log.Printf("room %s has %d NPCs for generator %s, minimum is %d", room.Name, count, g.Name, g.Minimum)
-			newNPC, err := g.npcs.CreateNPC(context.Background(), g.Spec)
-			if err != nil {
-				return err
-			}
-			// create the new state for the NPC and add it to the state generator
-			sensors := make(htn.Sensors)
-			hodSensor, err := g.loaders.SensorLoader.GetSensor("HourOfDay")
-			if err != nil {
-				return err
-			}
-			sensors["HourOfDay"] = hodSensor
-			sensors["PlayersEngaged"] = domain.PlayersEngagedSensor{
-				NPC: newNPC,
-			}
-			sensors["PlayersInRange"] = domain.PlayersInRangeSensor{
-				NPC: newNPC,
-			}
-			g.stateGenerator.AddState(newNPC, &htn.State{
-				Sensors:    sensors,
+			state := &htn.State{
+				Sensors:    make(htn.Sensors),
 				Properties: make(map[string]interface{}),
-			})
+			}
+			g.stateGenerator.AddState(g.Spec.Name, state)
+
 			// fetch the NPC task graph
 			taskGraph, err := g.loaders.TaskGraphLoader.GetTaskGraph(g.Spec.Name)
 			if err != nil {
@@ -97,7 +82,25 @@ func (g *NPCGenerator) Start() error {
 				Name:  g.Spec.Name,
 				Tasks: taskGraph,
 			}
-			g.plannerGenerator.AddPlanner(newNPC, planner)
+			g.plannerGenerator.AddPlanner(g.Spec.Name, planner)
+
+			newNPC, err := g.npcs.CreateNPC(context.Background(), g.Spec)
+			if err != nil {
+				return err
+			}
+			// create the new state for the NPC and add it to the state generator
+			hodSensor, err := g.loaders.SensorLoader.GetSensor("HourOfDay")
+			if err != nil {
+				return err
+			}
+			state.Sensors["HourOfDay"] = hodSensor
+			state.Sensors["PlayersEngaged"] = domain.PlayersEngagedSensor{
+				NPC: newNPC,
+			}
+			state.Sensors["PlayersInRange"] = domain.PlayersInRangeSensor{
+				NPC: newNPC,
+			}
+
 			// Start the NPC running
 			err = newNPC.Start()
 			if err != nil {
@@ -135,8 +138,8 @@ func (g *NPCGenerator) Start() error {
 				return err
 			}
 			// clean up the state and planner
-			g.stateGenerator.DeleteState(toRemove)
-			g.plannerGenerator.DeletePlanner(toRemove)
+			g.stateGenerator.DeleteState(toRemove.Name)
+			g.plannerGenerator.DeletePlanner(toRemove.Name)
 		}
 		time.Sleep(time.Duration(g.SpawnDelaySeconds) * time.Second)
 	}

@@ -194,7 +194,7 @@ func (s *Server) Start() {
 				return property <= value
 			},
 		},
-		"PlayersNotInRange": &htn.ComparisonCondition[int64]{
+		"NoPlayersInRange": &htn.ComparisonCondition[int64]{
 			Comparison: htn.EQ,
 			Value:      0,
 			Property:   "PlayersInRange",
@@ -222,6 +222,10 @@ func (s *Server) Start() {
 		},
 		"Sleep": func(state *htn.State) error {
 			log.Println("sleeping")
+			return nil
+		},
+		"Greet": func(state *htn.State) error {
+			log.Println("greeting")
 			return nil
 		},
 	}

@@ -37,7 +37,7 @@ func (f *FlagCondition) String() string {
 
 // NotFlagCondition embeds a FlagCondition and inverts the behavior
 type NotFlagCondition struct {
-	FlagCondition `yaml:"flag_condition"`
+	FlagCondition
 }
 
 func (n *NotFlagCondition) IsMet(state *State) bool {
@@ -45,7 +45,7 @@ func (n *NotFlagCondition) IsMet(state *State) bool {
 }
 
 func (n *NotFlagCondition) String() string {
-	return fmt.Sprintf("NotFlagCondition: %t", n.FlagCondition.Value)
+	return fmt.Sprintf("NotFlagCondition %s: %t", n.FlagName, n.FlagCondition.Value)
 }
 
 type Comparison string
@@ -121,7 +121,7 @@ func (c *ComparisonCondition[T]) IsMet(state *State) bool {
 }
 
 func (c *ComparisonCondition[T]) String() string {
-	return fmt.Sprintf("ComparisonCondition: property %s %s value %v", c.Property, c.Comparison, c.Value)
+	return fmt.Sprintf("ComparisonCondition %s: property %s %s value %v", c.ConditionName, c.Property, c.Comparison, c.Value)
 }
 
 // PropertyComparisonCondition is a condition that compares to Property values
@@ -165,7 +165,7 @@ func (p *PropertyComparisonCondition) IsMet(state *State) bool {
 }
 
 func (p *PropertyComparisonCondition) String() string {
-	return fmt.Sprintf("PropertyComparisonCondition:  %s %s %s", p.LHS, p.Comparison, p.RHS)
+	return fmt.Sprintf("PropertyComparisonCondition %s:  %s %s %s", p.ConditionName, p.LHS, p.Comparison, p.RHS)
 }
 
 type LogicalOperator string
@@ -219,7 +219,7 @@ func (l *LogicalCondition) IsMet(state *State) bool {
 }
 
 func (l *LogicalCondition) String() string {
-	return fmt.Sprintf("LogicalCondition: %s %s %s", l.LHSProperty, l.Operator, l.RHSProperty)
+	return fmt.Sprintf("LogicalCondition %s: %s %s %s", l.ConditionName, l.LHSProperty, l.Operator, l.RHSProperty)
 }
 
 // TaskCondition is a condition that is met when the given Task is complete
@@ -251,5 +251,5 @@ func (f *FuncCondition) IsMet(state *State) bool {
 }
 
 func (f *FuncCondition) String() string {
-	return fmt.Sprintf("FuncCondition: %s", f.Name)
+	return fmt.Sprintf("FuncCondition: %s", f.ConditionName)
 }

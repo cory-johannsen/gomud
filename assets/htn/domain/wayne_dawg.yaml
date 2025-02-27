@@ -1,14 +1,12 @@
 name: Wayne Dawg
 root:
-  task: OnDuty
+  task: WakeUp
   children:
     - task: Observe
       children:
     - task: Idle
       children:
-    - task: Greet
-      children:
-    - task: OffDuty
+    - task: Sleep
       children:
       
     

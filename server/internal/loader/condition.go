@@ -121,7 +121,7 @@ func (l *ConditionLoader) loadNotFlags() (htn.Conditions, error) {
 		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
 			continue
 		}
-		condition := &htn.NotFlagCondition{}
+		condition := &htn.FlagCondition{}
 		data, err := os.ReadFile(l.config.AssetPath + "/htn/conditions/notflag/" + item.Name())
 		if err != nil {
 			log.Errorf("error reading condition file %s: %v", item.Name(), err)
@@ -132,7 +132,10 @@ func (l *ConditionLoader) loadNotFlags() (htn.Conditions, error) {
 			log.Errorf("error unmarshalling condition file %s: %v", item.Name(), err)
 			continue
 		}
-		conditions[condition.Name()] = condition
+
+		conditions[condition.Name()] = &htn.NotFlagCondition{
+			FlagCondition: *condition,
+		}
 	}
 	return conditions, nil
 }

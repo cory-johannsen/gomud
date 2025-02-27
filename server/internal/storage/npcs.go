@@ -24,7 +24,8 @@ type NPCs struct {
 	states    htn.StateResolver
 }
 
-func NewNPCs(cfg *config.Config, db *Database, loaders *loader.Loaders, equipment *Equipment, planners htn.PlannerResolver, states htn.StateResolver) *NPCs {
+func NewNPCs(cfg *config.Config, db *Database, loaders *loader.Loaders, equipment *Equipment,
+	planners htn.PlannerResolver, states htn.StateResolver) *NPCs {
 	return &NPCs{
 		cfg:       cfg,
 		database:  db,
@@ -67,9 +68,17 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 	if err != nil {
 		return nil, err
 	}
+	if state == nil {
+		log.Errorf("state not found for npc %s", name)
+		return nil, errors.New(fmt.Sprintf("state not found for npc %s", name))
+	}
 	planner, err := n.planners.GetPlanner(name)
 	if err != nil {
 		return nil, err
+	}
+	if planner == nil {
+		log.Errorf("planner not found for npc %s", name)
+		return nil, errors.New(fmt.Sprintf("planner not found for npc %s", name))
 	}
 	npc := domain.NewNPC(char, state, planner, n.cfg.TickDurationMillis)
 	n.npcs[name] = npc
@@ -106,6 +115,16 @@ func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.NPC, error) {
 		return nil, err
 	}
 	// todo: load equipment
+	state, err := n.states.GetState(name)
+	if err != nil {
+		return nil, err
+	}
+	planner, err := n.planners.GetPlanner(name)
+	if err != nil {
+		return nil, err
+	}
+	npc.State = state
+	npc.Planner = planner
 
 	return npc, nil
 }

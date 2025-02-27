@@ -1,6 +1,6 @@
 name: PlayerEngaged
 preconditions:
   - PlayerInRange
-  - PlayerIsPlayer
+  - IsPlayer
   - Default
 complete: false

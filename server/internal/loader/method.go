@@ -56,9 +56,13 @@ func (l *MethodLoader) LoadMethods(taskLoader *TaskLoader) (htn.Methods, error) 
 		for _, conditionName := range spec.Conditions {
 			condition, err := l.conditionLoader.GetCondition(conditionName)
 			if err != nil {
-				return nil, fmt.Errorf("unknown condition: %s", conditionName)
+				return nil, fmt.Errorf("error fetching condition: %s - %s", conditionName, err)
 			}
-			conditions = append(conditions, condition)
+			if condition != nil {
+				conditions = append(conditions, condition)
+			} else {
+				log.Errorf("condition %s not found loading method %s", conditionName, spec.Name)
+			}
 		}
 		resolvers := make(htn.TaskResolvers)
 		for _, taskName := range spec.Conditions {

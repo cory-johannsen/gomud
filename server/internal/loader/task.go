@@ -72,7 +72,7 @@ func (l *TaskLoader) LoadTaskResolvers() (htn.TaskResolvers, error) {
 				return existing, nil
 			}
 			log.Printf("instantiating compound task %s", k)
-			t, err := l.loadPrimitiveTask(v)
+			t, err := l.loadCompoundTask(v)
 			if err != nil {
 				return nil, err
 			}
@@ -109,6 +109,7 @@ func (l *TaskLoader) loadPrimitiveSpecs() (htn.TaskSpecs, error) {
 			log.Errorf("error unmarshalling task spec file %s: %v", item.Name(), err)
 			continue
 		}
+		spec.TaskType = htn.PrimitiveTaskType
 		tasks[spec.TaskName] = spec
 	}
 	return tasks, nil
@@ -139,6 +140,7 @@ func (l *TaskLoader) loadCompoundSpecs() (htn.TaskSpecs, error) {
 			log.Errorf("error unmarshalling task spec file %s: %v", item.Name(), err)
 			continue
 		}
+		spec.TaskType = htn.CompoundTaskType
 		tasks[spec.TaskName] = spec
 	}
 	return tasks, nil
@@ -169,6 +171,7 @@ func (l *TaskLoader) loadGoalSpecs() (htn.TaskSpecs, error) {
 			log.Errorf("error unmarshalling task spec file %s: %v", item.Name(), err)
 			continue
 		}
+		spec.TaskType = htn.GoalTaskType
 		tasks[spec.TaskName] = spec
 	}
 	return tasks, nil
