@@ -7,6 +7,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/cli"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/cory-johannsen/gomud/internal/event"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/loader"
@@ -14,6 +15,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"net"
 	"strings"
+	"time"
 )
 
 type State struct {
@@ -128,34 +130,114 @@ func (c *Client) Connect() {
 }
 
 type Server struct {
-	port            string
-	db              *storage.Database
-	players         *storage.Players
-	npcs            *storage.NPCs
-	loaders         *loader.Loaders
-	playerGenerator *generator.PlayerGenerator
-	dispatcher      *cli.Dispatcher
-	eventBus        eventbus.Bus
-	clock           *event.Clock
+	port             string
+	db               *storage.Database
+	players          *storage.Players
+	npcs             *storage.NPCs
+	loaders          *loader.Loaders
+	playerGenerator  *generator.PlayerGenerator
+	stateGenerator   *generator.StateGenerator
+	plannerGenerator *generator.PlannerGenerator
+	dispatcher       *cli.Dispatcher
+	eventBus         eventbus.Bus
+	clock            *event.Clock
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, npcs *storage.NPCs, loaders *loader.Loaders,
-	playerGenerator *generator.PlayerGenerator, eventBus eventbus.Bus, clock *event.Clock) *Server {
+	playerGenerator *generator.PlayerGenerator, stateGenerator *generator.StateGenerator, plannerGenerator *generator.PlannerGenerator, eventBus eventbus.Bus, clock *event.Clock) *Server {
 	return &Server{
-		port:            config.Port,
-		db:              db,
-		players:         players,
-		npcs:            npcs,
-		loaders:         loaders,
-		playerGenerator: playerGenerator,
-		eventBus:        eventBus,
-		clock:           clock,
+		port:             config.Port,
+		db:               db,
+		players:          players,
+		npcs:             npcs,
+		loaders:          loaders,
+		playerGenerator:  playerGenerator,
+		stateGenerator:   stateGenerator,
+		plannerGenerator: plannerGenerator,
+		eventBus:         eventBus,
+		clock:            clock,
 	}
 }
 
 func (s *Server) Start() {
+	// Define the non-asset conditions
+	conditions := htn.Conditions{
+		"AfterWake": &htn.ComparisonCondition[int64]{
+			Comparison: htn.GTE,
+			Value:      1,
+			Property:   "HourOfDay",
+			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
+				return property >= value
+			},
+		},
+		"BeforeSleep": &htn.ComparisonCondition[int64]{
+			Comparison: htn.GTE,
+			Value:      1,
+			Property:   "HourOfDay",
+			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
+				return property <= value
+			},
+		},
+		"PlayerNotEngaged": &htn.ComparisonCondition[int64]{
+			Comparison: htn.EQ,
+			Value:      0,
+			Property:   "PlayersEngaged",
+			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
+				return property <= value
+			},
+		},
+		"PlayersInRange": &htn.ComparisonCondition[int64]{
+			Comparison: htn.GT,
+			Value:      0,
+			Property:   "PlayersInRange",
+			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
+				return property <= value
+			},
+		},
+		"PlayersNotInRange": &htn.ComparisonCondition[int64]{
+			Comparison: htn.EQ,
+			Value:      0,
+			Property:   "PlayersInRange",
+			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
+				return property <= value
+			},
+		},
+		"IsPlayer": &htn.FuncCondition{
+			ConditionName: "IsNPC",
+			Evaluator: func(state *htn.State) bool {
+				// TODO: fetch the current customer for the vendor and check if they are the player
+				return true
+			},
+		},
+	}
+
+	actions := htn.Actions{
+		"Wait": func(state *htn.State) error {
+			log.Println("waiting")
+			return nil
+		},
+		"WakeUp": func(state *htn.State) error {
+			log.Println("waking up")
+			return nil
+		},
+		"Sleep": func(state *htn.State) error {
+			log.Println("sleeping")
+			return nil
+		},
+	}
+
+	now := time.Now()
+	sensors := htn.Sensors{
+		"HourOfDay": htn.HourOfDaySensor{
+			TickSensor: htn.TickSensor{
+				StartedAt:    now,
+				TickDuration: 10 * time.Second,
+			},
+		},
+	}
+
 	// preload the assets
-	err := s.loaders.Preload()
+	err := s.loaders.Preload(conditions, actions, sensors)
 	if err != nil {
 		panic(err)
 	}
@@ -170,7 +252,7 @@ func (s *Server) Start() {
 		if err != nil {
 			panic(err)
 		}
-		g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs)
+		g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs, s.stateGenerator, s.plannerGenerator)
 		go func() {
 			err := g.Start()
 			if err != nil {

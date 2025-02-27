@@ -140,6 +140,10 @@ func (r *Room) RemovePlayer(player *Player) {
 	})
 }
 
+func (r *Room) PlayerCount() int {
+	return len(r.Players)
+}
+
 func (r *Room) AddNPC(npc *NPC) error {
 	if npc.Id == nil {
 		log.Printf("npc %s has no Id", npc.Name)

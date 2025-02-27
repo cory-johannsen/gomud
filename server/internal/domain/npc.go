@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	log "github.com/sirupsen/logrus"
 	"sync"
@@ -113,6 +114,10 @@ func (n *NPC) Stop() error {
 	return nil
 }
 
+func (n *NPC) PlayersEngaged() int {
+	return 0
+}
+
 func NewNPC(character *Character, state *htn.State, planner *htn.Planner, tickMillis int) *NPC {
 	return &NPC{
 		Character:  *character,
@@ -122,3 +127,42 @@ func NewNPC(character *Character, state *htn.State, planner *htn.Planner, tickMi
 		tickMillis: tickMillis,
 	}
 }
+
+// PlayersEngagedSensor contains a NPC that can queried to calculate the number of engaged customers that NPC has
+type PlayersEngagedSensor struct {
+	NPC *NPC
+}
+
+func (s *PlayersEngagedSensor) Get() (int, error) {
+	return s.NPC.PlayersEngaged(), nil
+}
+
+func (s *PlayersEngagedSensor) Name() string {
+	return "PlayersEngaged"
+}
+
+func (s *PlayersEngagedSensor) String() string {
+	value, _ := s.Get()
+	return fmt.Sprintf("PlayersEngaged: %d", value)
+}
+
+var _ htn.Sensor[int] = &PlayersEngagedSensor{}
+
+type PlayersInRangeSensor struct {
+	NPC *NPC
+}
+
+func (s *PlayersInRangeSensor) Get() (int, error) {
+	return s.NPC.Room().PlayerCount(), nil
+}
+
+func (s *PlayersInRangeSensor) Name() string {
+	return "PlayersInRange"
+}
+
+func (s *PlayersInRangeSensor) String() string {
+	value, _ := s.Get()
+	return fmt.Sprintf("PlayersInRange: %d", value)
+}
+
+var _ htn.Sensor[int] = &PlayersInRangeSensor{}

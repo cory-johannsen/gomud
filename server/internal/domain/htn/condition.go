@@ -238,8 +238,12 @@ func (t *TaskCondition) String() string {
 type Evaluator func(state *State) bool
 
 type FuncCondition struct {
-	Name      string    `yaml:"name"`
-	Evaluator Evaluator `yaml:"evaluator"`
+	ConditionName string    `yaml:"name"`
+	Evaluator     Evaluator `yaml:"evaluator"`
+}
+
+func (f *FuncCondition) Name() string {
+	return f.ConditionName
 }
 
 func (f *FuncCondition) IsMet(state *State) bool {

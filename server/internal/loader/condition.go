@@ -75,6 +75,10 @@ func (l *ConditionLoader) GetCondition(name string) (htn.Condition, error) {
 	return condition, nil
 }
 
+func (l *ConditionLoader) SetCondition(name string, condition htn.Condition) {
+	l.conditions[name] = condition
+}
+
 func (l *ConditionLoader) loadFlags() (htn.Conditions, error) {
 	items, err := os.ReadDir(l.config.AssetPath + "/htn/conditions/flag")
 	if err != nil {

@@ -34,3 +34,7 @@ func (l *ActionLoader) GetAction(name string) (htn.Action, error) {
 	}
 	return l.actions[name], nil
 }
+
+func (l *ActionLoader) SetAction(name string, action htn.Action) {
+	l.actions[name] = action
+}

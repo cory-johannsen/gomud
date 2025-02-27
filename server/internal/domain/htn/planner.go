@@ -4,14 +4,26 @@ import (
 	"log"
 )
 
+type TaskNodeSpec struct {
+	Task     string          `yaml:"task,omitempty"`
+	Children []*TaskNodeSpec `yaml:"children,omitempty"`
+}
+
+type TaskGraphSpec struct {
+	Name string        `yaml:"name"`
+	Root *TaskNodeSpec `yaml:"root"`
+}
+
 type TaskNode struct {
 	TaskResolver TaskResolver
 	Children     []*TaskNode
 }
 
 type TaskGraph struct {
+	Name string
 	Root *TaskNode
 }
+type TaskGraphs map[string]*TaskGraph
 
 type Plan []Task
 

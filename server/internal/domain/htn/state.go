@@ -50,5 +50,5 @@ func (s *State) String() string {
 }
 
 type StateResolver interface {
-	Get(name string) (*State, error)
+	GetState(name string) (*State, error)
 }

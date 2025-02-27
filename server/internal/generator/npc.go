@@ -3,6 +3,7 @@ package generator
 import (
 	"context"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
@@ -15,10 +16,12 @@ type NPCGenerator struct {
 	mutex             sync.Mutex
 	npcPool           map[int]*domain.NPC
 	running           bool
-	Name              string
 	loaders           *loader.Loaders
-	Spec              *domain.NPCSpec
 	npcs              *storage.NPCs
+	stateGenerator    *StateGenerator
+	plannerGenerator  *PlannerGenerator
+	Name              string
+	Spec              *domain.NPCSpec
 	Minimum           int
 	Maximum           int
 	SpawnDelaySeconds int
@@ -29,7 +32,8 @@ type CharacterLifecycle interface {
 	DeleteCharacter(ctx context.Context, character *domain.Character) error
 }
 
-func NewNPCGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs) *NPCGenerator {
+func NewNPCGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs,
+	stateGenerator *StateGenerator, plannerGenerator *PlannerGenerator) *NPCGenerator {
 	return &NPCGenerator{
 		running:           false,
 		npcPool:           make(map[int]*domain.NPC),
@@ -37,6 +41,8 @@ func NewNPCGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpe
 		Spec:              npcSpec,
 		npcs:              npcs,
 		loaders:           loaders,
+		stateGenerator:    stateGenerator,
+		plannerGenerator:  plannerGenerator,
 		Minimum:           spec.Minimum,
 		Maximum:           spec.Maximum,
 		SpawnDelaySeconds: spec.SpawnDelaySeconds,
@@ -64,7 +70,39 @@ func (g *NPCGenerator) Start() error {
 			if err != nil {
 				return err
 			}
-			// assign the NPC the Planner
+			// create the new state for the NPC and add it to the state generator
+			sensors := make(htn.Sensors)
+			hodSensor, err := g.loaders.SensorLoader.GetSensor("HourOfDay")
+			if err != nil {
+				return err
+			}
+			sensors["HourOfDay"] = hodSensor
+			sensors["PlayersEngaged"] = domain.PlayersEngagedSensor{
+				NPC: newNPC,
+			}
+			sensors["PlayersInRange"] = domain.PlayersInRangeSensor{
+				NPC: newNPC,
+			}
+			g.stateGenerator.AddState(newNPC, &htn.State{
+				Sensors:    sensors,
+				Properties: make(map[string]interface{}),
+			})
+			// fetch the NPC task graph
+			taskGraph, err := g.loaders.TaskGraphLoader.GetTaskGraph(g.Spec.Name)
+			if err != nil {
+				return err
+			}
+			// create a new planner for the NPC and add it to the planner generator
+			planner := &htn.Planner{
+				Name:  g.Spec.Name,
+				Tasks: taskGraph,
+			}
+			g.plannerGenerator.AddPlanner(newNPC, planner)
+			// Start the NPC running
+			err = newNPC.Start()
+			if err != nil {
+				return err
+			}
 			g.npcPool[*newNPC.Id] = newNPC
 			err = room.AddNPC(newNPC)
 			if err != nil {
@@ -81,14 +119,24 @@ func (g *NPCGenerator) Start() error {
 				}
 				index--
 			}
-			err := room.RemoveNPC(toRemove)
+			// stop the NPC
+			err := toRemove.Stop()
 			if err != nil {
 				return err
 			}
+			// remove the NPC from the room
+			err = room.RemoveNPC(toRemove)
+			if err != nil {
+				return err
+			}
+			// delete the NPC from storage
 			err = g.npcs.DeleteNPC(context.Background(), toRemove)
 			if err != nil {
 				return err
 			}
+			// clean up the state and planner
+			g.stateGenerator.DeleteState(toRemove)
+			g.plannerGenerator.DeletePlanner(toRemove)
 		}
 		time.Sleep(time.Duration(g.SpawnDelaySeconds) * time.Second)
 	}

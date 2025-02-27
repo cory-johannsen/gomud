@@ -1,6 +1,9 @@
 package loader
 
-import log "github.com/sirupsen/logrus"
+import (
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
+	log "github.com/sirupsen/logrus"
+)
 
 type Loaders struct {
 	AppearanceLoader *AppearanceLoader
@@ -24,6 +27,7 @@ type Loaders struct {
 	UpbringingLoader *UpbringingLoader
 
 	ActionLoader    *ActionLoader
+	SensorLoader    *SensorLoader
 	ConditionLoader *ConditionLoader
 	MethodLoader    *MethodLoader
 	TaskLoader      *TaskLoader
@@ -35,7 +39,7 @@ func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLo
 	generatorLoader *GeneratorLoader, injuryLoader *InjuryLoader,
 	inventoryLoader *InventoryLoader, jobLoader *JobLoader, npcLoader *NPCLoader, qualityLoader *QualityLoader, roomLoader *RoomLoader, skillLoader *SkillLoader,
 	talentLoader *TalentLoader, traitLoader *TraitLoader, teamLoader *TeamLoader, upbringingLoader *UpbringingLoader,
-	actionLoader *ActionLoader, conditionLoader *ConditionLoader, methodLoader *MethodLoader, taskLoader *TaskLoader, taskGraphLoader *TaskGraphLoader) *Loaders {
+	actionLoader *ActionLoader, sensorLoader *SensorLoader, conditionLoader *ConditionLoader, methodLoader *MethodLoader, taskLoader *TaskLoader, taskGraphLoader *TaskGraphLoader) *Loaders {
 	return &Loaders{
 		AppearanceLoader: appearanceLoader,
 		AlignmentLoader:  alignmentLoader,
@@ -58,6 +62,7 @@ func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLo
 		UpbringingLoader: upbringingLoader,
 
 		ActionLoader:    actionLoader,
+		SensorLoader:    sensorLoader,
 		ConditionLoader: conditionLoader,
 		MethodLoader:    methodLoader,
 		TaskLoader:      taskLoader,
@@ -65,7 +70,7 @@ func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLo
 	}
 }
 
-func (l *Loaders) Preload() error {
+func (l *Loaders) Preload(conditions htn.Conditions, actions htn.Actions, sensors htn.Sensors) error {
 	log.Println("Pre-loading assets")
 	log.Info("loading alignments")
 	_, err := l.AlignmentLoader.LoadAlignments()
@@ -157,26 +162,51 @@ func (l *Loaders) Preload() error {
 	if err != nil {
 		return err
 	}
+	log.Info("loading sensors")
+	_, err = l.SensorLoader.LoadSensors()
+	if err != nil {
+		return err
+	}
+	for sensorName, sensor := range sensors {
+		l.SensorLoader.SetSensor(sensorName, sensor)
+	}
+
 	log.Info("loading actions")
 	_, err = l.ActionLoader.LoadActions()
 	if err != nil {
 		return err
 	}
+	for actionName, action := range actions {
+		l.ActionLoader.SetAction(actionName, action)
+	}
+
 	log.Info("loading conditions")
 	_, err = l.ConditionLoader.LoadConditions()
 	if err != nil {
 		return err
 	}
+	for conditionName, condition := range conditions {
+		l.ConditionLoader.SetCondition(conditionName, condition)
+	}
+
 	log.Info("loading tasks")
 	_, err = l.TaskLoader.LoadTaskResolvers()
 	if err != nil {
 		return err
 	}
+
+	log.Info("loading task graphs")
+	_, err = l.TaskGraphLoader.LoadTaskGraphs()
+	if err != nil {
+		return err
+	}
+
 	log.Info("loading methods")
 	_, err = l.MethodLoader.LoadMethods(l.TaskLoader)
 	if err != nil {
 		return err
 	}
+
 	log.Info("loading generators")
 	_, err = l.GeneratorLoader.LoadGenerators()
 	if err != nil {

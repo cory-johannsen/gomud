@@ -63,7 +63,7 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 		return nil, err
 	}
 	char := domain.NewCharacter(&id, name, data)
-	state, err := n.states.Get(name)
+	state, err := n.states.GetState(name)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +134,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, er
 	}
 	props := n.DataToProperties(ctx, specProps)
 	char := domain.NewCharacter(&id, name, props)
-	state, err := n.states.Get(name)
+	state, err := n.states.GetState(name)
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 	// todo: prop loading/overloading?
 
 	char := domain.NewCharacter(&id, spec.Name, props)
-	state, err := n.states.Get(spec.Name)
+	state, err := n.states.GetState(spec.Name)
 	if err != nil {
 		return nil, err
 	}
