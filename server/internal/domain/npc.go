@@ -2,6 +2,7 @@ package domain
 
 import (
 	"fmt"
+	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	log "github.com/sirupsen/logrus"
 	"sync"
@@ -56,8 +57,9 @@ type NPC struct {
 	running    bool
 	tickMillis int
 	Character
-	State   *htn.State
-	Planner *htn.Planner
+	State    *htn.State
+	Planner  *htn.Planner
+	EventBus eventbus.Bus
 }
 
 func (n *NPC) IsPlayer() bool {
@@ -118,11 +120,12 @@ func (n *NPC) PlayersEngaged() int {
 	return 0
 }
 
-func NewNPC(character *Character, state *htn.State, planner *htn.Planner, tickMillis int) *NPC {
+func NewNPC(character *Character, state *htn.State, planner *htn.Planner, eventBus eventbus.Bus, tickMillis int) *NPC {
 	return &NPC{
 		Character:  *character,
 		State:      state,
 		Planner:    planner,
+		EventBus:   eventBus,
 		running:    false,
 		tickMillis: tickMillis,
 	}

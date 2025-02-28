@@ -225,12 +225,23 @@ func (s *Server) Start() {
 		"WakeUp": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
 			log.Printf("%s waking up", owner.Name)
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    "say",
+				Args:      []interface{}{"Mornin' dawgs!"},
+			})
 			return nil
 		},
 		"Sleep": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
 			log.Printf("%s sleeping", owner.Name)
-			log.Println("sleeping")
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    "say",
+				Args:      []interface{}{"Imma crash now, feelin' busted."},
+			})
 			return nil
 		},
 		"Greet": func(state *htn.State) error {

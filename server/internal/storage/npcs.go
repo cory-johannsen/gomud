@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
@@ -22,10 +23,11 @@ type NPCs struct {
 	npcs      map[string]*domain.NPC
 	planners  htn.PlannerResolver
 	states    htn.StateResolver
+	eventBus  eventbus.Bus
 }
 
 func NewNPCs(cfg *config.Config, db *Database, loaders *loader.Loaders, equipment *Equipment,
-	planners htn.PlannerResolver, states htn.StateResolver) *NPCs {
+	planners htn.PlannerResolver, states htn.StateResolver, eventBus eventbus.Bus) *NPCs {
 	return &NPCs{
 		cfg:       cfg,
 		database:  db,
@@ -34,6 +36,7 @@ func NewNPCs(cfg *config.Config, db *Database, loaders *loader.Loaders, equipmen
 		npcs:      make(map[string]*domain.NPC),
 		planners:  planners,
 		states:    states,
+		eventBus:  eventBus,
 	}
 }
 
@@ -80,7 +83,7 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 		log.Errorf("planner not found for npc %s", name)
 		return nil, errors.New(fmt.Sprintf("planner not found for npc %s", name))
 	}
-	npc := domain.NewNPC(char, state, planner, n.cfg.TickDurationMillis)
+	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
 	n.npcs[name] = npc
 	return npc, nil
 }
@@ -161,7 +164,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, er
 	if err != nil {
 		return nil, err
 	}
-	npc := domain.NewNPC(char, state, planner, n.cfg.TickDurationMillis)
+	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
 	// Peril threshold is calculated from Grit Bonus
 	npc.Peril().Threshold = npc.StatBonuses().Grit + 3
 	n.npcs[name] = npc
@@ -206,7 +209,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 	if err != nil {
 		return nil, err
 	}
-	npc := domain.NewNPC(char, state, planner, n.cfg.TickDurationMillis)
+	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
 	return npc, nil
 }
 
