@@ -1,6 +1,6 @@
 name: PlayersInRange
 conditions:
-  - WorkHours
+  - AwakeHours
   - PlayersInRange
   - PlayersAvailable
   - NotEngaged

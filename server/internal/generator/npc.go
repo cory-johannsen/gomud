@@ -66,10 +66,7 @@ func (g *NPCGenerator) Start() error {
 		count := room.NPCCount(g.Spec.Name)
 		if count < g.Minimum {
 			log.Printf("room %s has %d NPCs for generator %s, minimum is %d", room.Name, count, g.Name, g.Minimum)
-			state := &htn.State{
-				Sensors:    make(htn.Sensors),
-				Properties: make(map[string]interface{}),
-			}
+			state := initializeState()
 			g.stateGenerator.AddState(g.Spec.Name, state)
 
 			// fetch the NPC task graph
@@ -88,16 +85,19 @@ func (g *NPCGenerator) Start() error {
 			if err != nil {
 				return err
 			}
-			// create the new state for the NPC and add it to the state generator
+			// set the state owner to the new NPC
+			state.Owner = newNPC
+
+			// initialize the NPC sensors
 			hodSensor, err := g.loaders.SensorLoader.GetSensor("HourOfDay")
 			if err != nil {
 				return err
 			}
 			state.Sensors["HourOfDay"] = hodSensor
-			state.Sensors["PlayersEngaged"] = domain.PlayersEngagedSensor{
+			state.Sensors["PlayersEngaged"] = &domain.PlayersEngagedSensor{
 				NPC: newNPC,
 			}
-			state.Sensors["PlayersInRange"] = domain.PlayersInRangeSensor{
+			state.Sensors["PlayersInRange"] = &domain.PlayersInRangeSensor{
 				NPC: newNPC,
 			}
 
@@ -145,6 +145,44 @@ func (g *NPCGenerator) Start() error {
 	}
 	log.Printf("Generator %s exiting", g.Name)
 	return nil
+}
+
+func initializeState() *htn.State {
+	properties := make(map[string]any)
+	properties["HourOfDay"] = &htn.Property[int64]{
+		Name: "HourOfDay",
+		Value: func(state *htn.State) int64 {
+			sensor, err := state.Sensor("HourOfDay")
+			if err != nil {
+				log.Fatal(err)
+			}
+			val, err := sensor.(*htn.HourOfDaySensor).Get()
+			if err != nil {
+				log.Fatal(err)
+			}
+			return val
+		},
+	}
+	properties["PlayersInRange"] = &htn.Property[int64]{
+		Name: "PlayersInRange",
+		Value: func(state *htn.State) int64 {
+			sensor, err := state.Sensor("PlayersInRange")
+			if err != nil {
+				log.Fatal(err)
+			}
+			val, err := sensor.(*domain.PlayersInRangeSensor).Get()
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Printf("PlayersInRange property: %d players in range", val)
+			return int64(val)
+		},
+	}
+	state := &htn.State{
+		Sensors:    make(htn.Sensors),
+		Properties: properties,
+	}
+	return state
 }
 
 func (g *NPCGenerator) Stop() error {

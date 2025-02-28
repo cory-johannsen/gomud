@@ -2,7 +2,7 @@ package htn
 
 import (
 	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"strings"
 )
 
@@ -53,18 +53,18 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 	for _, condition := range t.Preconditions {
 		preconditions = append(preconditions, condition.String())
 	}
-	log.Printf("executing Task {%s}, preconditions {%s}", t.Name(), strings.Join(preconditions, ","))
+	log.Debugf("executing task {%s}, preconditions {%s}", t.Name(), strings.Join(preconditions, ","))
 	// Determine if the Task preconditions have been met
 	var ready = true
 	for _, condition := range t.Preconditions {
-		log.Printf("evaluating condition {%s}", condition.String())
+		log.Debugf("evaluating condition {%s}", condition.String())
 		if !condition.IsMet(state) {
 			ready = false
 			break
 		}
 	}
 	if ready {
-		log.Printf("Task {%s} preconditions met, applying Task action", t.Name())
+		log.Printf("task {%s} preconditions met, applying task action", t.Name())
 		// Apply the Task action and update the state
 		err := t.Action(state)
 		if err != nil {
@@ -101,16 +101,16 @@ type GoalTask struct {
 }
 
 func (g *GoalTask) Execute(state *State) (*State, error) {
-	log.Println("executing goal Task")
+	log.Printf("executing goal task %s", g.TaskName)
 	if !g.Complete {
-		log.Println("goal Task is not complete checking preconditions")
+		log.Printf("goal task %s is not complete checking preconditions", g.TaskName)
 		for _, condition := range g.Preconditions {
 			if !condition.IsMet(state) {
-				log.Println("goal precondition not met, exiting")
+				log.Printf("goal task %s precondition not met, exiting", g.TaskName)
 				return state, nil
 			}
 		}
-		log.Println("goal conditions met, goal Task is complete.")
+		log.Printf("goal %s conditions met, goal Task is complete.", g.TaskName)
 		g.Complete = true
 	}
 	return state, nil
@@ -150,7 +150,7 @@ func (m *Method) Applies(state *State) bool {
 	log.Printf("checking if method {%s} applies", m.Name)
 	for _, condition := range m.Conditions {
 		if !condition.IsMet(state) {
-			log.Printf("method {%s} condition {%s} not met, exiting", m.Name, condition.String())
+			log.Printf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
 			return false
 		}
 	}
@@ -170,7 +170,7 @@ func (m *Method) Execute(state *State) (int64, error) {
 	}
 	for _, task := range tasks {
 		if !task.IsComplete() {
-			log.Printf("method {%s} task {%s} not complete, executing it", m.Name, task.String())
+			log.Printf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
 			_, err := task.Execute(state)
 			if err != nil {
 				return -1, err

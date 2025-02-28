@@ -15,6 +15,7 @@ type Property[T any] struct {
 
 // State is represented as an array of Sensors and a map of named Properties.
 type State struct {
+	Owner      any
 	Sensors    map[string]any
 	Properties map[string]any
 }

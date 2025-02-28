@@ -163,47 +163,52 @@ func (s *Server) Start() {
 	// Define the non-asset conditions
 	conditions := htn.Conditions{
 		"AfterWake": &htn.ComparisonCondition[int64]{
-			Comparison: htn.GTE,
-			Value:      1,
-			Property:   "HourOfDay",
+			ConditionName: "AfterAwake",
+			Comparison:    htn.GTE,
+			Value:         1,
+			Property:      "HourOfDay",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
 				return property >= value
 			},
 		},
 		"BeforeSleep": &htn.ComparisonCondition[int64]{
-			Comparison: htn.GTE,
-			Value:      1,
-			Property:   "HourOfDay",
+			ConditionName: "BeforeSleep",
+			Comparison:    htn.GTE,
+			Value:         1,
+			Property:      "HourOfDay",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
 				return property <= value
 			},
 		},
 		"PlayerNotEngaged": &htn.ComparisonCondition[int64]{
-			Comparison: htn.EQ,
-			Value:      0,
-			Property:   "PlayersEngaged",
+			ConditionName: "PlayerNotEngaged",
+			Comparison:    htn.EQ,
+			Value:         0,
+			Property:      "PlayersEngaged",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
 				return property <= value
 			},
 		},
 		"PlayersInRange": &htn.ComparisonCondition[int64]{
-			Comparison: htn.GT,
-			Value:      0,
-			Property:   "PlayersInRange",
+			ConditionName: "PlayersInRange",
+			Comparison:    htn.GT,
+			Value:         0,
+			Property:      "PlayersInRange",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
 				return property <= value
 			},
 		},
 		"NoPlayersInRange": &htn.ComparisonCondition[int64]{
-			Comparison: htn.EQ,
-			Value:      0,
-			Property:   "PlayersInRange",
+			ConditionName: "NoPlayersInRange",
+			Comparison:    htn.EQ,
+			Value:         0,
+			Property:      "PlayersInRange",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
 				return property <= value
 			},
 		},
 		"IsPlayer": &htn.FuncCondition{
-			ConditionName: "IsNPC",
+			ConditionName: "IsPlayer",
 			Evaluator: func(state *htn.State) bool {
 				// TODO: fetch the current customer for the vendor and check if they are the player
 				return true
@@ -213,26 +218,31 @@ func (s *Server) Start() {
 
 	actions := htn.Actions{
 		"Wait": func(state *htn.State) error {
-			log.Println("waiting")
+			owner := state.Owner.(*domain.NPC)
+			log.Printf("%s waiting", owner.Name)
 			return nil
 		},
 		"WakeUp": func(state *htn.State) error {
-			log.Println("waking up")
+			owner := state.Owner.(*domain.NPC)
+			log.Printf("%s waking up", owner.Name)
 			return nil
 		},
 		"Sleep": func(state *htn.State) error {
+			owner := state.Owner.(*domain.NPC)
+			log.Printf("%s sleeping", owner.Name)
 			log.Println("sleeping")
 			return nil
 		},
 		"Greet": func(state *htn.State) error {
-			log.Println("greeting")
+			owner := state.Owner.(*domain.NPC)
+			log.Printf("%s issuing greeting", owner.Name)
 			return nil
 		},
 	}
 
 	now := time.Now()
 	sensors := htn.Sensors{
-		"HourOfDay": htn.HourOfDaySensor{
+		"HourOfDay": &htn.HourOfDaySensor{
 			TickSensor: htn.TickSensor{
 				StartedAt:    now,
 				TickDuration: 10 * time.Second,

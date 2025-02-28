@@ -2,7 +2,7 @@ package htn
 
 import (
 	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
 )
 
 type Condition interface {
@@ -116,7 +116,7 @@ func (c *ComparisonCondition[T]) IsMet(state *State) bool {
 		return false
 	}
 	value := property.(*Property[T]).Value(state)
-	log.Printf("ComparisonCondition comparing %s(%v) %s %v", c.Property, value, c.Comparison, c.Value)
+	log.Debugf("ComparisonCondition %s comparing %s(%v) %s %v", c.ConditionName, c.Property, value, c.Comparison, c.Value)
 	return c.Comparator(c.Value, value, c.Comparison)
 }
 
@@ -147,6 +147,7 @@ func (p *PropertyComparisonCondition) IsMet(state *State) bool {
 		return false
 	}
 	rhs := rhsProperty.(Property[any]).Value(state).(float64)
+	log.Printf("PropertyComparisonCondition %s comparing %s(%f) %s %s(%f)", p.ConditionName, p.LHS, lhs, p.Comparison, p.RHS, rhs)
 	switch p.Comparison {
 	case EQ:
 		return lhs == rhs
@@ -193,7 +194,8 @@ func (l *LogicalCondition) IsMet(state *State) bool {
 	if err != nil {
 		return false
 	}
-	lhs := lhsProperty.(Property[any]).Value(state).(float64) > 0
+	lhsFloat := lhsProperty.(Property[any]).Value(state).(float64)
+	lhs := lhsFloat > 0
 	rhsProperty, err := state.Property(l.RHSProperty)
 	rhsFloat := float64(0)
 	if err != nil {
@@ -204,6 +206,7 @@ func (l *LogicalCondition) IsMet(state *State) bool {
 		}
 	}
 	rhs := rhsFloat > 0
+	log.Printf("LogicalCondition %s comparing %s(%f) %s %s(%f)", l.ConditionName, l.LHSProperty, lhsFloat, l.Operator, l.RHSProperty, rhsFloat)
 
 	switch l.Operator {
 	case AND:

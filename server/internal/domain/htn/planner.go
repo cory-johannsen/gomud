@@ -25,7 +25,12 @@ type TaskGraph struct {
 }
 type TaskGraphs map[string]*TaskGraph
 
-type Plan []Task
+type PrioritizedTasks []Task
+
+type Plan struct {
+	Name  string
+	Tasks PrioritizedTasks
+}
 
 type Planner struct {
 	Name  string
@@ -43,12 +48,13 @@ func evaluateNode(node *TaskNode, state *State) []Task {
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("evaluating task node {%s}", task.Name())
+	log.Debugf("evaluating task node {%s}", task.Name())
 	tasks := make([]Task, 0)
 	if !task.IsComplete() {
-		log.Debugf("task node {%s} is not complete", task.String())
+		log.Debugf("task node {%s} is not complete, adding to tasks", task.Name())
 		tasks = append(tasks, task)
 	}
+	log.Debugf("evaluating task node {%s} children", task.Name())
 	for _, child := range node.Children {
 		childTasks := evaluateNode(child, state)
 		for _, childTask := range childTasks {
@@ -58,24 +64,27 @@ func evaluateNode(node *TaskNode, state *State) []Task {
 	return tasks
 }
 
-func (p *Planner) Plan(state *State) (Plan, error) {
-	log.Printf("building plan %s", p.Name)
-	plan := make(Plan, 0)
+func (p *Planner) Plan(state *State) (*Plan, error) {
+	log.Debugf("building plan %s", p.Name)
+	plan := &Plan{
+		Name:  p.Name,
+		Tasks: make(PrioritizedTasks, 0),
+	}
 	// walk the Task graph, starting at the root, and find the executable plan
 	node := p.Tasks.Root
 	if node != nil {
 		tasks := evaluateNode(node, state)
 		for _, task := range tasks {
-			plan = append(plan, task)
+			plan.Tasks = append(plan.Tasks, task)
 		}
 	}
-	log.Printf("plan contains %d TaskResolvers", len(plan))
+	log.Debugf("plan %s contains %d tasks", plan.Name, len(plan.Tasks))
 	return plan, nil
 }
 
-func Execute(plan Plan, state *State) (*State, error) {
-	log.Printf("executing plan with %d TaskResolvers", len(plan))
-	for _, task := range plan {
+func Execute(plan *Plan, state *State) (*State, error) {
+	log.Debugf("executing plan %s with %d tasks", plan.Name, len(plan.Tasks))
+	for _, task := range plan.Tasks {
 		_, err := task.Execute(state)
 		if err != nil {
 			return nil, err

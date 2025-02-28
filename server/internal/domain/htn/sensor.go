@@ -2,7 +2,7 @@ package htn
 
 import (
 	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -72,8 +72,8 @@ func (s *HourOfDaySensor) Get() (int64, error) {
 	now := time.Now()
 	elapsed := now.Sub(s.StartedAt)
 	ticks := elapsed.Nanoseconds() / s.TickDuration.Nanoseconds()
-	log.Printf("HourOfDaySensor: tick %d", ticks)
 	hour := ticks % 24
+	log.Debugf("HourOfDaySensor: %d (tick %d)", hour, ticks)
 	return hour, nil
 }
 
