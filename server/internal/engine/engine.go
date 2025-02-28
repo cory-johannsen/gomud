@@ -165,7 +165,7 @@ func (s *Server) Start() {
 		"AfterWake": &htn.ComparisonCondition[int64]{
 			ConditionName: "AfterAwake",
 			Comparison:    htn.GTE,
-			Value:         1,
+			Value:         8,
 			Property:      "HourOfDay",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
 				return property >= value
@@ -174,7 +174,7 @@ func (s *Server) Start() {
 		"BeforeSleep": &htn.ComparisonCondition[int64]{
 			ConditionName: "BeforeSleep",
 			Comparison:    htn.GTE,
-			Value:         1,
+			Value:         10,
 			Property:      "HourOfDay",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
 				return property <= value
