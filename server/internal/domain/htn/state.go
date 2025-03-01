@@ -13,11 +13,17 @@ type Property[T any] struct {
 	Value Value[T]
 }
 
+type Properties map[string]any
+
 // State is represented as an array of Sensors and a map of named Properties.
 type State struct {
 	Owner      any
-	Sensors    map[string]any
-	Properties map[string]any
+	Sensors    Sensors
+	Properties Properties
+}
+
+type StateResolver interface {
+	GetState(name string) (*State, error)
 }
 
 type States map[string]*State
@@ -25,7 +31,7 @@ type States map[string]*State
 func (s *State) Property(name string) (any, error) {
 	property, ok := s.Properties[name]
 	if !ok {
-		return 0, fmt.Errorf("no Property with name %s", name)
+		return nil, fmt.Errorf("no Property with name %s", name)
 	}
 	return property, nil
 }
@@ -48,8 +54,4 @@ func (s *State) String() string {
 		properties = append(properties, fmt.Sprintf("%s", k))
 	}
 	return fmt.Sprintf("sensors: %s, properties: %s", strings.Join(sensors, ","), strings.Join(properties, ","))
-}
-
-type StateResolver interface {
-	GetState(name string) (*State, error)
 }

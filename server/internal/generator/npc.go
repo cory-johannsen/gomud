@@ -174,7 +174,7 @@ func initializeState() *htn.State {
 			if err != nil {
 				log.Fatal(err)
 			}
-			log.Printf("PlayersInRange property: %d players in range", val)
+			log.Debugf("PlayersInRange property: %d players in range", val)
 			return int64(val)
 		},
 	}

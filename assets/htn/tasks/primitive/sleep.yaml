@@ -1,5 +1,6 @@
 name: Sleep
 preconditions: 
-  - NotAwakeHours
+  - AfterSleep
+  - BeforeWake
 action: Sleep
 complete: false

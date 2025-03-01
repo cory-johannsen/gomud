@@ -5,6 +5,7 @@ import (
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
@@ -25,7 +26,7 @@ func (d *Dispatcher) State() domain.State {
 }
 
 func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, rooms *loader.RoomLoader, skills *loader.SkillLoader, conn io.Connection, eventBus eventbus.Bus) *Dispatcher {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, skills *loader.SkillLoader, conn io.Connection, eventBus eventbus.Bus, sensors htn.Sensors) *Dispatcher {
 	dispatcher := &Dispatcher{
 		handlers: make(map[string]Handler),
 		ctx:      context.Background(),
@@ -38,7 +39,7 @@ func NewDispatcher(stateConstructor domain.StateConstructor, players *storage.Pl
 		dispatcher.Register(alias.Alias, alias)
 	}
 
-	dispatcher.Register("login", NewLoginHandler(stateConstructor, players, generator, teams, rooms, skills, conn))
+	dispatcher.Register("login", NewLoginHandler(stateConstructor, players, generator, teams, rooms, skills, conn, sensors))
 
 	characterHandler := CharacterHandler{stateProvider: dispatcher.State}
 	dispatcher.Register("character", &characterHandler)

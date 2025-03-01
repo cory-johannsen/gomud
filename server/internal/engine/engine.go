@@ -19,34 +19,46 @@ import (
 )
 
 type State struct {
-	player *domain.Player
-	vars   map[string]domain.Property
+	player  *domain.Player
+	sensors htn.Sensors
+	vars    map[string]domain.Property
 }
 
 func (s *State) Player() *domain.Player {
 	return s.player
 }
 
+func (s *State) Sensor(name string) any {
+	return s.sensors[name]
+}
+
+func (s *State) AddSensor(name string, value any) {
+	s.sensors[name] = value
+}
+
 func (s *State) Property(key string) domain.Property {
 	return s.vars[key]
 }
 
-func NewState(player *domain.Player) domain.State {
+func NewState(player *domain.Player, sensors htn.Sensors) domain.State {
 	return &State{
-		player: player,
-		vars:   make(map[string]domain.Property),
+		player:  player,
+		sensors: sensors,
+		vars:    make(map[string]domain.Property),
 	}
 }
 
 type ClientConnection struct {
 	Connection net.Conn
 	eventBus   eventbus.Bus
+	sensors    htn.Sensors
 }
 
-func NewClientConnection(conn net.Conn, bus eventbus.Bus) *ClientConnection {
+func NewClientConnection(conn net.Conn, bus eventbus.Bus, sensors htn.Sensors) *ClientConnection {
 	return &ClientConnection{
 		Connection: conn,
 		eventBus:   bus,
+		sensors:    sensors,
 	}
 }
 
@@ -75,6 +87,10 @@ func (c *ClientConnection) EventBus() eventbus.Bus {
 	return c.eventBus
 }
 
+func (c *ClientConnection) Sensors() htn.Sensors {
+	return c.sensors
+}
+
 type Client struct {
 	Connection net.Conn
 	EventBus   eventbus.Bus
@@ -82,8 +98,8 @@ type Client struct {
 }
 
 func NewClient(players *storage.Players, generator *generator.PlayerGenerator, teams *loader.TeamLoader, rooms *loader.RoomLoader,
-	skills *loader.SkillLoader, conn net.Conn, eventBus eventbus.Bus) *Client {
-	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, rooms, skills, NewClientConnection(conn, eventBus), eventBus)
+	skills *loader.SkillLoader, conn net.Conn, eventBus eventbus.Bus, sensors htn.Sensors) *Client {
+	dispatcher := cli.NewDispatcher(NewState, players, generator, teams, rooms, skills, NewClientConnection(conn, eventBus, sensors), eventBus, sensors)
 	return &Client{
 		Connection: conn,
 		Dispatcher: dispatcher,
@@ -141,6 +157,7 @@ type Server struct {
 	dispatcher       *cli.Dispatcher
 	eventBus         eventbus.Bus
 	clock            *event.Clock
+	config           *config.Config
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, npcs *storage.NPCs, loaders *loader.Loaders,
@@ -156,29 +173,42 @@ func NewServer(config *config.Config, db *storage.Database, players *storage.Pla
 		plannerGenerator: plannerGenerator,
 		eventBus:         eventBus,
 		clock:            clock,
+		config:           config,
 	}
 }
 
 func (s *Server) Start() {
 	// Define the non-asset conditions
+	afterWake := &htn.ComparisonCondition[int64]{
+		ConditionName: "AfterWake",
+		Comparison:    htn.GTE,
+		Value:         8,
+		Property:      "HourOfDay",
+		Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
+			return property >= value
+		},
+	}
+	beforeSleep := &htn.ComparisonCondition[int64]{
+		ConditionName: "BeforeSleep",
+		Comparison:    htn.LTE,
+		Value:         9,
+		Property:      "HourOfDay",
+		Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
+			return property <= value
+		},
+	}
 	conditions := htn.Conditions{
-		"AfterWake": &htn.ComparisonCondition[int64]{
-			ConditionName: "AfterAwake",
-			Comparison:    htn.GTE,
-			Value:         8,
-			Property:      "HourOfDay",
-			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
-				return property >= value
+		"AfterWake": afterWake,
+		"BeforeWake": &htn.FuncCondition{
+			ConditionName: "BeforeWake",
+			Evaluator: func(state *htn.State) bool {
+				return !afterWake.IsMet(state)
 			},
 		},
-		"BeforeSleep": &htn.ComparisonCondition[int64]{
+		"BeforeSleep": beforeSleep,
+		"AfterSleep": &htn.FuncCondition{
 			ConditionName: "BeforeSleep",
-			Comparison:    htn.GTE,
-			Value:         10,
-			Property:      "HourOfDay",
-			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
-				return property <= value
-			},
+			Evaluator:     func(state *htn.State) bool { return !beforeSleep.IsMet(state) },
 		},
 		"PlayerNotEngaged": &htn.ComparisonCondition[int64]{
 			ConditionName: "PlayerNotEngaged",
@@ -225,22 +255,26 @@ func (s *Server) Start() {
 		"WakeUp": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
 			log.Printf("%s waking up", owner.Name)
+			msg := fmt.Sprintf("Mornin' dawgs! Who wants to get high?")
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
 				Room:      owner.Room(),
 				Character: &owner.Character,
-				Action:    "say",
-				Args:      []interface{}{"Mornin' dawgs!"},
+				Action:    event.RoomEventSay,
+				Args:      []interface{}{msg},
 			})
 			return nil
 		},
 		"Sleep": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
 			log.Printf("%s sleeping", owner.Name)
+
+			log.Printf("%s waking up", owner.Name)
+			msg := fmt.Sprintf("Imma crash now, feelin' busted.")
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
 				Room:      owner.Room(),
 				Character: &owner.Character,
-				Action:    "say",
-				Args:      []interface{}{"Imma crash now, feelin' busted."},
+				Action:    event.RoomEventSay,
+				Args:      []interface{}{msg},
 			})
 			return nil
 		},
@@ -256,7 +290,21 @@ func (s *Server) Start() {
 		"HourOfDay": &htn.HourOfDaySensor{
 			TickSensor: htn.TickSensor{
 				StartedAt:    now,
-				TickDuration: 10 * time.Second,
+				TickDuration: time.Duration(s.config.TickDurationMillis) * time.Millisecond,
+			},
+			TicksPerHour: 60,
+			Offset:       7,
+		},
+		"TimeOfDay": &htn.TimeOfDaySensor{
+			TickSensor: htn.TickSensor{
+				StartedAt:    now,
+				TickDuration: time.Duration(s.config.TickDurationMillis) * time.Millisecond,
+			},
+			TicksPerHour:   60,
+			TicksPerMinute: 1,
+			OffSet: htn.TimeOfDay{
+				Hour:   7,
+				Minute: 0,
 			},
 		},
 	}
@@ -304,7 +352,7 @@ func (s *Server) Start() {
 		if err != nil {
 			panic(err)
 		}
-		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, s.loaders.SkillLoader, c, s.eventBus)
+		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, s.loaders.SkillLoader, c, s.eventBus, sensors)
 		go client.Connect()
 	}
 }

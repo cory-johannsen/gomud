@@ -53,7 +53,7 @@ func (s *TickSensor) Get() (int64, error) {
 }
 
 func (s *TickSensor) Name() string {
-	return "TimeOfDay"
+	return "Tick"
 }
 
 func (s *TickSensor) String() string {
@@ -66,14 +66,16 @@ var _ Sensor[int64] = &TickSensor{}
 // HourOfDaySensor embeds TickSensor and converts ticks to hour of the day
 type HourOfDaySensor struct {
 	TickSensor
+	TicksPerHour int64
+	Offset       int64
 }
 
 func (s *HourOfDaySensor) Get() (int64, error) {
 	now := time.Now()
 	elapsed := now.Sub(s.StartedAt)
 	ticks := elapsed.Nanoseconds() / s.TickDuration.Nanoseconds()
-	hour := ticks % 24
-	log.Debugf("HourOfDaySensor: %d (tick %d)", hour, ticks)
+	hour := (ticks / s.TicksPerHour) + s.Offset
+	log.Debugf("HourOfDaySensor: %d (elapsed nanos: %d, tick %d)", hour, elapsed.Nanoseconds(), ticks)
 	return hour, nil
 }
 
@@ -82,3 +84,35 @@ func (s *HourOfDaySensor) Name() string {
 }
 
 var _ Sensor[int64] = &HourOfDaySensor{}
+
+type TimeOfDay struct {
+	Hour   int64
+	Minute int64
+}
+
+// TimeOfDaySensor embeds TickSensor and converts ticks to hour and minute of the day
+type TimeOfDaySensor struct {
+	TickSensor
+	TicksPerHour   int64
+	TicksPerMinute int64
+	OffSet         TimeOfDay
+}
+
+func (s *TimeOfDaySensor) Get() (TimeOfDay, error) {
+	now := time.Now()
+	elapsed := now.Sub(s.StartedAt)
+	ticks := elapsed.Nanoseconds() / s.TickDuration.Nanoseconds()
+	hour := (ticks / s.TicksPerHour) + s.OffSet.Hour
+	minute := ((ticks % s.TicksPerHour) / s.TicksPerMinute) + s.OffSet.Minute
+	log.Printf("TimeOfDaySensor: %2d:%2d (nanos %d, ticks %d)", hour, minute, elapsed.Nanoseconds(), ticks)
+	return TimeOfDay{
+		Hour:   hour,
+		Minute: minute,
+	}, nil
+}
+
+func (s *TimeOfDaySensor) Name() string {
+	return "TimeOfDay"
+}
+
+var _ Sensor[TimeOfDay] = &TimeOfDaySensor{}

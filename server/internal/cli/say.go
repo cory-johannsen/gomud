@@ -21,7 +21,7 @@ func (s *SayHandler) Handle(ctx context.Context, args []string) (string, error) 
 	s.stateProvider().Player().Connection.EventBus().Publish(event.RoomChannel, &domain.RoomEvent{
 		Room:      s.stateProvider().Player().Room(),
 		Character: &s.stateProvider().Player().Character,
-		Action:    "say",
+		Action:    event.RoomEventSay,
 		Args:      a,
 	})
 	return "", nil

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/cory-johannsen/gomud/internal/generator"
 	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/cory-johannsen/gomud/internal/loader"
@@ -23,10 +24,11 @@ type LoginHandler struct {
 	rooms            *loader.RoomLoader
 	skills           *loader.SkillLoader
 	conn             io.Connection
+	sensors          htn.Sensors
 }
 
 func NewLoginHandler(stateConstructor domain.StateConstructor, players *storage.Players, generator *generator.PlayerGenerator,
-	teams *loader.TeamLoader, rooms *loader.RoomLoader, skills *loader.SkillLoader, conn io.Connection) *LoginHandler {
+	teams *loader.TeamLoader, rooms *loader.RoomLoader, skills *loader.SkillLoader, conn io.Connection, sensors htn.Sensors) *LoginHandler {
 	return &LoginHandler{
 		stateConstructor: stateConstructor,
 		players:          players,
@@ -35,6 +37,7 @@ func NewLoginHandler(stateConstructor domain.StateConstructor, players *storage.
 		rooms:            rooms,
 		conn:             conn,
 		skills:           skills,
+		sensors:          sensors,
 	}
 }
 
@@ -75,7 +78,7 @@ func (h *LoginHandler) Handle(ctx context.Context, args []string) (string, error
 		}
 		player = h.validatePassword(name)
 	}
-	h.state = h.stateConstructor(player)
+	h.state = h.stateConstructor(player, h.sensors)
 	player.LoggedIn = true
 	player.Room().AddPlayer(player)
 	msg := fmt.Sprintf("Welcome %s!\n%s", name, Look(player, nil))

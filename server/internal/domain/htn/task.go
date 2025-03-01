@@ -59,6 +59,7 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 	for _, condition := range t.Preconditions {
 		log.Debugf("evaluating condition {%s}", condition.String())
 		if !condition.IsMet(state) {
+			log.Printf("condition {%s} not met", condition.String())
 			ready = false
 			break
 		}
@@ -72,6 +73,8 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 		}
 		// Set the Task to 'complete' so it doesn't execute again
 		t.Complete = true
+	} else {
+		log.Printf("task {%s} preconditions not met", t.Name())
 	}
 	return state, nil
 }

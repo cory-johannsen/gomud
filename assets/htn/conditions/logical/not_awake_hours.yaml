@@ -1,6 +1,4 @@
 name: NotAwakeHours
 operator: AND
-lhs: AfterWake
-lhsType: condition
-rhs: BeforeSleep
-rhdType: condition
+lhs: BeforeWake
+rhs: AfterSleep

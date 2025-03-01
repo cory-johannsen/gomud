@@ -3,6 +3,7 @@ package domain
 import (
 	"errors"
 	"fmt"
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/cory-johannsen/gomud/internal/event"
 	"github.com/cory-johannsen/gomud/internal/io"
 	"github.com/fatih/color"
@@ -517,7 +518,12 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 				args = append(args, arg.(string))
 			}
 			msg := strings.Join(args, " ")
-			p.Connection.Writeln(fmt.Sprintf("%s says \"%s\"\n%s", r.Character.Name, msg, p.Prompt()))
+			timeOfDaySensor := p.Connection.Sensors()["TimeOfDay"].(*htn.TimeOfDaySensor)
+			timeOfDay, err := timeOfDaySensor.Get()
+			if err != nil {
+				log.Errorf("error getting hour of day: %s", err)
+			}
+			p.Connection.Writeln(fmt.Sprintf("\n[%02d:%02d] %s says \"%s\"\n%s", timeOfDay.Hour, timeOfDay.Minute, r.Character.Name, msg, p.Prompt()))
 		}
 	}, false)
 	if err != nil {
@@ -834,5 +840,10 @@ func (p *Player) Prompt() string {
 	}
 	player := p
 	green := color.New(color.FgGreen).SprintFunc()
-	return fmt.Sprintf("%s [%s, %s]%s ", cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()), cyan(">"))
+	timeOfDay, err := p.Connection.Sensors()["TimeOfDay"].(*htn.TimeOfDaySensor).Get()
+	if err != nil {
+		log.Errorf("error getting hour of day: %s", err)
+	}
+	timestamp := fmt.Sprintf("[%02d:%02d]", timeOfDay.Hour, timeOfDay.Minute)
+	return fmt.Sprintf("%s %s [%s, %s]%s ", cyan(timestamp), cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()), cyan(">"))
 }
