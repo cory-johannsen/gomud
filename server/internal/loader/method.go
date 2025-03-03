@@ -62,6 +62,7 @@ func (l *MethodLoader) LoadMethods(taskLoader *TaskLoader) (htn.Methods, error) 
 				conditions = append(conditions, condition)
 			} else {
 				log.Errorf("condition %s not found loading method %s", conditionName, spec.Name)
+				return nil, fmt.Errorf("condition %s not found loading method %s", conditionName, spec.Name)
 			}
 		}
 		resolvers := make(htn.TaskResolvers)

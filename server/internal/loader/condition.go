@@ -6,6 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -47,6 +48,14 @@ func (l *ConditionLoader) LoadConditions() (htn.Conditions, error) {
 		return nil, err
 	}
 	for k, v := range notFlags {
+		l.conditions[k] = v
+	}
+
+	comparison, err := l.loadComparison()
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range comparison {
 		l.conditions[k] = v
 	}
 
@@ -164,6 +173,68 @@ func (l *ConditionLoader) loadLogical() (htn.Conditions, error) {
 			log.Errorf("error unmarshalling condition file %s: %v", item.Name(), err)
 			continue
 		}
+		conditions[condition.Name()] = condition
+	}
+	return conditions, nil
+}
+
+func (l *ConditionLoader) loadComparison() (htn.Conditions, error) {
+	items, err := os.ReadDir(l.config.AssetPath + "/htn/conditions/comparison")
+	if err != nil {
+		return nil, err
+	}
+	conditions := make(htn.Conditions)
+	for _, item := range items {
+		if item.IsDir() {
+			continue
+		}
+		if strings.HasSuffix(item.Name(), "tmpl.yaml") {
+			continue
+		}
+		spec := &htn.ComparisonConditionSpec{}
+		data, err := os.ReadFile(l.config.AssetPath + "/htn/conditions/comparison/" + item.Name())
+		if err != nil {
+			log.Errorf("error reading condition file %s: %v", item.Name(), err)
+			continue
+		}
+		err = yaml.Unmarshal(data, spec)
+		if err != nil {
+			log.Errorf("error unmarshalling condition file %s: %v", item.Name(), err)
+			continue
+		}
+
+		var condition htn.Condition
+		switch spec.Type {
+		case htn.Int64ConditionValueType:
+			value, err := strconv.Atoi(spec.Value)
+			if err != nil {
+				log.Errorf("error converting comparison value to int64: %v", err)
+				continue
+			}
+			newCondition := &htn.ComparisonCondition[int64]{
+				ConditionName: spec.ConditionName,
+				Comparison:    spec.Comparison,
+				Value:         int64(value),
+				Property:      spec.Property,
+				Comparator:    htn.Int64Comparator,
+			}
+			condition = newCondition
+		case htn.Float64ConditionValueType:
+			value, err := strconv.ParseFloat(spec.Value, 64)
+			if err != nil {
+				log.Errorf("error converting comparison value to float64: %v", err)
+				continue
+			}
+			newCondition := &htn.ComparisonCondition[float64]{
+				ConditionName: spec.ConditionName,
+				Comparison:    spec.Comparison,
+				Value:         value,
+				Property:      spec.Property,
+				Comparator:    htn.Float64Comparator,
+			}
+			condition = newCondition
+		}
+
 		conditions[condition.Name()] = condition
 	}
 	return conditions, nil

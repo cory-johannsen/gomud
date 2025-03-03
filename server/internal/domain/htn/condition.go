@@ -97,6 +97,39 @@ var Int64Comparator = func(value int64, property int64, comparison Comparison) b
 	return false
 }
 
+var Float64Comparator = func(value float64, property float64, comparison Comparison) bool {
+	switch comparison {
+	case EQ:
+		return value == property
+	case NEQ:
+		return value != property
+	case LT:
+		return value < property
+	case LTE:
+		return value <= property
+	case GT:
+		return value > property
+	case GTE:
+		return value >= property
+	}
+	return false
+}
+
+type ConditionValueType string
+
+const (
+	Int64ConditionValueType   ConditionValueType = "int64"
+	Float64ConditionValueType ConditionValueType = "float64"
+)
+
+type ComparisonConditionSpec struct {
+	ConditionName string             `yaml:"name"`
+	Comparison    Comparison         `yaml:"comparison"`
+	Value         string             `yaml:"value"`
+	Type          ConditionValueType `yaml:"type"`
+	Property      string             `yaml:"property"`
+}
+
 // ComparisonCondition is a condition that is met if the given Property compares to the specified Value using the given Comparison function
 type ComparisonCondition[T any] struct {
 	ConditionName string
@@ -124,7 +157,7 @@ func (c *ComparisonCondition[T]) String() string {
 	return fmt.Sprintf("ComparisonCondition %s: property %s %s value %v", c.ConditionName, c.Property, c.Comparison, c.Value)
 }
 
-// PropertyComparisonCondition is a condition that compares to Property values
+// PropertyComparisonCondition is a condition that compares two Property values
 type PropertyComparisonCondition struct {
 	ConditionName string     `yaml:"name"`
 	Comparison    Comparison `yaml:"comparison"`
@@ -178,6 +211,7 @@ const (
 	XOR LogicalOperator = "XOR"
 )
 
+// LogicalCondition is a condition that is met when the given LogicalOperator is true for the given Properties
 type LogicalCondition struct {
 	ConditionName string          `yaml:"name"`
 	Operator      LogicalOperator `yaml:"operator"`
