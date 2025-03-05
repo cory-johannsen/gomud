@@ -51,7 +51,7 @@ func (m *MoveHandler) Help(args []string) string {
 	return "move to another room.  Usage: move <exit>"
 }
 
-func (m *MoveHandler) State() domain.State {
+func (m *MoveHandler) State() domain.GameState {
 	return m.stateProvider()
 }
 

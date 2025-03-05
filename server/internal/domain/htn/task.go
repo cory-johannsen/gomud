@@ -59,7 +59,7 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 	for _, condition := range t.Preconditions {
 		log.Debugf("evaluating condition {%s}", condition.String())
 		if !condition.IsMet(state) {
-			log.Printf("condition {%s} not met", condition.String())
+			log.Debugf("condition {%s} not met", condition.String())
 			ready = false
 			break
 		}
@@ -74,7 +74,7 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 		// Set the Task to 'complete' so it doesn't execute again
 		t.Complete = true
 	} else {
-		log.Printf("task {%s} preconditions not met", t.Name())
+		log.Debugf("task {%s} preconditions not met", t.Name())
 	}
 	return state, nil
 }
@@ -150,10 +150,10 @@ type Method struct {
 type Methods map[string]*Method
 
 func (m *Method) Applies(state *State) bool {
-	log.Printf("checking if method {%s} applies", m.Name)
+	log.Debugf("checking if method {%s} applies", m.Name)
 	for _, condition := range m.Conditions {
 		if !condition.IsMet(state) {
-			log.Printf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
+			log.Debugf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
 			return false
 		}
 	}

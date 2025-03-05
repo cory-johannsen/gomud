@@ -10,7 +10,7 @@ import (
 type Handler interface {
 	Handle(ctx context.Context, args []string) (string, error)
 	Help(args []string) string
-	State() domain.State
+	State() domain.GameState
 }
 
 type Alias struct {
@@ -26,7 +26,7 @@ func (a *Alias) Help(args []string) string {
 	return a.Handler.Help(args)
 }
 
-func (a *Alias) State() domain.State {
+func (a *Alias) State() domain.GameState {
 	return a.Handler.State()
 }
 

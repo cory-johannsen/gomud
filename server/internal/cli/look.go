@@ -162,7 +162,7 @@ func (h *LookHandler) Help(args []string) string {
 	return "look around.  Usage: look <target>"
 }
 
-func (h *LookHandler) State() domain.State {
+func (h *LookHandler) State() domain.GameState {
 	return h.stateProvider()
 }
 

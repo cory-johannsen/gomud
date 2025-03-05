@@ -2,11 +2,11 @@ name: Wayne Dawg
 root:
   task: WakeUp
   children:
+    - task: Sleep
+      children:
     - task: Observe
       children:
     - task: Idle
-      children:
-    - task: Sleep
       children:
       
     

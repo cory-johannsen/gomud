@@ -2,12 +2,12 @@ package domain
 
 import "github.com/cory-johannsen/gomud/internal/domain/htn"
 
-type State interface {
+type GameState interface {
 	Player() *Player
 	Sensor(string) any
 	Property(string) Property
 }
 
-type StateProvider func() State
+type StateProvider func() GameState
 
-type StateConstructor func(player *Player, sensors htn.Sensors) State
+type StateConstructor func(player *Player, sensors htn.Sensors) GameState

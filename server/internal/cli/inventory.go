@@ -60,7 +60,7 @@ func (i *InventoryHandler) Help(args []string) string {
 	return "view your inventory"
 }
 
-func (i *InventoryHandler) State() domain.State {
+func (i *InventoryHandler) State() domain.GameState {
 	return i.stateProvider()
 }
 

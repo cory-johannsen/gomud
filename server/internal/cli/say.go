@@ -31,7 +31,7 @@ func (s *SayHandler) Help(args []string) string {
 	return "say something.  Usage: say <message>"
 }
 
-func (s *SayHandler) State() domain.State {
+func (s *SayHandler) State() domain.GameState {
 	return s.stateProvider()
 }
 

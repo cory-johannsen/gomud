@@ -41,7 +41,7 @@ func (e *$structName) Applier() domain.Applier {
   return e.Apply
 }
 
-func (e *$structName) Apply(state domain.State) domain.State {
+func (e *$structName) Apply(state domain.GameState) domain.GameState {
   // $effects
   log.Println("applying $name")
   return state

@@ -18,30 +18,32 @@ import (
 	"time"
 )
 
-type State struct {
+type PlayerState struct {
 	player  *domain.Player
 	sensors htn.Sensors
 	vars    map[string]domain.Property
 }
 
-func (s *State) Player() *domain.Player {
+func (s *PlayerState) Player() *domain.Player {
 	return s.player
 }
 
-func (s *State) Sensor(name string) any {
+func (s *PlayerState) Sensor(name string) any {
 	return s.sensors[name]
 }
 
-func (s *State) AddSensor(name string, value any) {
+func (s *PlayerState) AddSensor(name string, value any) {
 	s.sensors[name] = value
 }
 
-func (s *State) Property(key string) domain.Property {
+func (s *PlayerState) Property(key string) domain.Property {
 	return s.vars[key]
 }
 
-func NewState(player *domain.Player, sensors htn.Sensors) domain.State {
-	return &State{
+var _ domain.GameState = &PlayerState{}
+
+func NewState(player *domain.Player, sensors htn.Sensors) domain.GameState {
+	return &PlayerState{
 		player:  player,
 		sensors: sensors,
 		vars:    make(map[string]domain.Property),
@@ -178,7 +180,76 @@ func NewServer(config *config.Config, db *storage.Database, players *storage.Pla
 }
 
 func (s *Server) Start() {
-	// Define the non-asset conditions
+	// Define the non-asset conditions, global actions, and general purpose sensors
+	conditions := initializeConditions()
+	actions := initializeActions()
+	sensors := s.initializeSensors()
+
+	// preload the assets
+	err := s.loaders.Preload(conditions, actions, sensors)
+	if err != nil {
+		panic(err)
+	}
+
+	// start the generators
+	specs, err := s.loaders.GeneratorLoader.LoadGenerators()
+	if err != nil {
+		panic(err)
+	}
+	for _, spec := range specs {
+		s.startGenerator(spec)
+	}
+
+	log.Printf("Starting server on port %s\n", s.port)
+	l, err := net.Listen("tcp4", fmt.Sprintf(":%s", s.port))
+	if err != nil {
+		panic(err)
+	}
+	defer l.Close()
+
+	go func() {
+		s.clock.Start()
+		defer s.clock.Stop()
+	}()
+
+	for {
+		c, err := l.Accept()
+		if err != nil {
+			panic(err)
+		}
+		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, s.loaders.SkillLoader, c, s.eventBus, sensors)
+		go client.Connect()
+	}
+}
+
+func (s *Server) initializeSensors() htn.Sensors {
+	now := time.Now()
+	sensors := htn.Sensors{
+		"HourOfDay": &htn.HourOfDaySensor{
+			TickSensor: htn.TickSensor{
+				StartedAt:    now,
+				TickDuration: time.Duration(s.config.TickDurationMillis) * time.Millisecond,
+			},
+			TicksPerHour: 60,
+			Offset:       7,
+		},
+		"TimeOfDay": &htn.TimeOfDaySensor{
+			TickSensor: htn.TickSensor{
+				StartedAt:    now,
+				TickDuration: time.Duration(s.config.TickDurationMillis) * time.Millisecond,
+			},
+			TicksPerHour:   60,
+			TicksPerMinute: 1,
+			OffSet: htn.TimeOfDay{
+				Hour:   7,
+				Minute: 0,
+			},
+		},
+	}
+	return sensors
+}
+
+func initializeConditions() htn.Conditions {
 	afterWake := &htn.ComparisonCondition[int64]{
 		ConditionName: "AfterWake",
 		Comparison:    htn.GTE,
@@ -190,11 +261,11 @@ func (s *Server) Start() {
 	}
 	beforeSleep := &htn.ComparisonCondition[int64]{
 		ConditionName: "BeforeSleep",
-		Comparison:    htn.LTE,
+		Comparison:    htn.LT,
 		Value:         9,
 		Property:      "HourOfDay",
 		Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
-			return property <= value
+			return property < value
 		},
 	}
 	conditions := htn.Conditions{
@@ -207,11 +278,38 @@ func (s *Server) Start() {
 		},
 		"BeforeSleep": beforeSleep,
 		"AfterSleep": &htn.FuncCondition{
-			ConditionName: "BeforeSleep",
+			ConditionName: "AfterSleep",
 			Evaluator:     func(state *htn.State) bool { return !beforeSleep.IsMet(state) },
 		},
-		"PlayerNotEngaged": &htn.ComparisonCondition[int64]{
-			ConditionName: "PlayerNotEngaged",
+		"PlayerEngaged": &htn.FuncCondition{
+			ConditionName: "PlayerEngaged",
+			Evaluator: func(state *htn.State) bool {
+				if owner, ok := state.Owner.(*domain.Player); ok {
+					return owner.Engaged()
+				}
+				return false
+			},
+		},
+		"PlayerNotEngaged": &htn.FuncCondition{
+			ConditionName: "PlayerEngaged",
+			Evaluator: func(state *htn.State) bool {
+				if owner, ok := state.Owner.(*domain.Player); ok {
+					return !owner.Engaged()
+				}
+				return false
+			},
+		},
+		"PlayersEngaged": &htn.FuncCondition{
+			ConditionName: "PlayersEngaged",
+			Evaluator: func(state *htn.State) bool {
+				if owner, ok := state.Owner.(*domain.NPC); ok {
+					return owner.PlayersEngaged() > 0
+				}
+				return false
+			},
+		},
+		"PlayersNotEngaged": &htn.ComparisonCondition[int64]{
+			ConditionName: "PlayersNotEngaged",
 			Comparison:    htn.EQ,
 			Value:         0,
 			Property:      "PlayersEngaged",
@@ -240,12 +338,17 @@ func (s *Server) Start() {
 		"IsPlayer": &htn.FuncCondition{
 			ConditionName: "IsPlayer",
 			Evaluator: func(state *htn.State) bool {
-				// TODO: fetch the current customer for the vendor and check if they are the player
-				return true
+				if owner, ok := state.Owner.(*domain.Player); ok {
+					return owner != nil
+				}
+				return false
 			},
 		},
 	}
+	return conditions
+}
 
+func initializeActions() htn.Actions {
 	actions := htn.Actions{
 		"Wait": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
@@ -284,77 +387,22 @@ func (s *Server) Start() {
 			return nil
 		},
 	}
+	return actions
+}
 
-	now := time.Now()
-	sensors := htn.Sensors{
-		"HourOfDay": &htn.HourOfDaySensor{
-			TickSensor: htn.TickSensor{
-				StartedAt:    now,
-				TickDuration: time.Duration(s.config.TickDurationMillis) * time.Millisecond,
-			},
-			TicksPerHour: 60,
-			Offset:       7,
-		},
-		"TimeOfDay": &htn.TimeOfDaySensor{
-			TickSensor: htn.TickSensor{
-				StartedAt:    now,
-				TickDuration: time.Duration(s.config.TickDurationMillis) * time.Millisecond,
-			},
-			TicksPerHour:   60,
-			TicksPerMinute: 1,
-			OffSet: htn.TimeOfDay{
-				Hour:   7,
-				Minute: 0,
-			},
-		},
-	}
-
-	// preload the assets
-	err := s.loaders.Preload(conditions, actions, sensors)
+func (s *Server) startGenerator(spec *domain.GeneratorSpec) {
+	npcSpec, err := s.loaders.NPCLoader.GetNPC(spec.NPC)
 	if err != nil {
 		panic(err)
 	}
-
-	// start the generators
-	specs, err := s.loaders.GeneratorLoader.LoadGenerators()
-	if err != nil {
-		panic(err)
-	}
-	for _, spec := range specs {
-		npcSpec, err := s.loaders.NPCLoader.GetNPC(spec.NPC)
-		if err != nil {
-			panic(err)
-		}
-		g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs, s.stateGenerator, s.plannerGenerator)
-		go func() {
-			err := g.Start()
-			if err != nil {
-				panic(err)
-			}
-			defer g.Stop()
-		}()
-	}
-
-	log.Printf("Starting server on port %s\n", s.port)
-	l, err := net.Listen("tcp4", fmt.Sprintf(":%s", s.port))
-	if err != nil {
-		panic(err)
-	}
-	defer l.Close()
-
+	g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs, s.stateGenerator, s.plannerGenerator)
 	go func() {
-		s.clock.Start()
-		defer s.clock.Stop()
-	}()
-
-	for {
-		c, err := l.Accept()
+		err := g.Start()
 		if err != nil {
 			panic(err)
 		}
-		client := NewClient(s.players, s.playerGenerator, s.loaders.TeamLoader, s.loaders.RoomLoader, s.loaders.SkillLoader, c, s.eventBus, sensors)
-		go client.Connect()
-	}
+		defer g.Stop()
+	}()
 }
 
 type Engine struct {

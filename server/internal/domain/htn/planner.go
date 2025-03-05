@@ -83,9 +83,9 @@ func (p *Planner) Plan(state *State) (*Plan, error) {
 }
 
 func Execute(plan *Plan, state *State) (*State, error) {
-	log.Printf("executing plan %s with %d tasks", plan.Name, len(plan.Tasks))
+	log.Debugf("executing plan %s with %d tasks", plan.Name, len(plan.Tasks))
 	for _, task := range plan.Tasks {
-		log.Printf("executing task %s", task.Name())
+		log.Debugf("executing task %s", task.Name())
 		_, err := task.Execute(state)
 		if err != nil {
 			return nil, err

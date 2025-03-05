@@ -96,7 +96,7 @@ func (u *UseHandler) Help(args []string) string {
 	return "use a skill or item.  Usage: use [skill|item] [name]"
 }
 
-func (u *UseHandler) State() domain.State {
+func (u *UseHandler) State() domain.GameState {
 	return u.stateProvider()
 }
 

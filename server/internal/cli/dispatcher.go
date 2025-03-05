@@ -17,11 +17,11 @@ import (
 type Dispatcher struct {
 	handlers map[string]Handler
 	ctx      context.Context
-	state    domain.State
+	state    domain.GameState
 	eventBus eventbus.Bus
 }
 
-func (d *Dispatcher) State() domain.State {
+func (d *Dispatcher) State() domain.GameState {
 	return d.state
 }
 

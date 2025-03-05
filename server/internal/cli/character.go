@@ -17,7 +17,7 @@ func (c *CharacterHandler) Help(args []string) string {
 	return "display your character"
 }
 
-func (c *CharacterHandler) State() domain.State {
+func (c *CharacterHandler) State() domain.GameState {
 	return c.stateProvider()
 }
 

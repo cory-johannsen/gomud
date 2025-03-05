@@ -19,7 +19,7 @@ func (s *StatsHandler) Help(args []string) string {
 	return "display your stats"
 }
 
-func (s *StatsHandler) State() domain.State {
+func (s *StatsHandler) State() domain.GameState {
 	return s.stateProvider()
 }
 

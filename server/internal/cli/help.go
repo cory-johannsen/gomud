@@ -34,7 +34,7 @@ func (h *HelpHandler) Help(args []string) string {
 	return "help [command]"
 }
 
-func (h *HelpHandler) State() domain.State {
+func (h *HelpHandler) State() domain.GameState {
 	return h.stateProvider()
 }
 

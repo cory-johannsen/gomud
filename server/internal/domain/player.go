@@ -31,6 +31,7 @@ const (
 	DistinguishingMarksProperty = "distinguishingMarks"
 	DrawbackProperty            = "drawback"
 	ExperienceProperty          = "experience"
+	EngagedProperty             = "engaged"
 	FatePointsProperty          = "fatePoints"
 	InjuriesProperty            = "injuries"
 	InventoryProperty           = "inventory"
@@ -261,6 +262,14 @@ func (c *Character) Condition() Condition {
 		c.Data[ConditionProperty] = ConditionUnharmed
 	}
 	return condition.(Condition)
+}
+
+func (c *Character) Engaged() bool {
+	engaged, ok := c.Data[EngagedProperty]
+	if !ok {
+		return false
+	}
+	return engaged.(*BaseProperty).Val.(bool)
 }
 
 func (c *Character) Injuries() Injuries {

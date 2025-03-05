@@ -1,6 +1,6 @@
 package domain
 
-type Applier func(state State) State
+type Applier func(state GameState) GameState
 
 type Effect interface {
 	Name() string

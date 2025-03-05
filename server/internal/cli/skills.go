@@ -23,7 +23,7 @@ func (s *SkillsHandler) Help(args []string) string {
 	return "view your Skills"
 }
 
-func (s *SkillsHandler) State() domain.State {
+func (s *SkillsHandler) State() domain.GameState {
 	return s.stateProvider()
 }
 

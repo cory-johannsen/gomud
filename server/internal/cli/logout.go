@@ -34,7 +34,7 @@ func (l *LogoutHandler) Help(args []string) string {
 	return "abandon your dawgs to the streets"
 }
 
-func (l *LogoutHandler) State() domain.State {
+func (l *LogoutHandler) State() domain.GameState {
 	return l.stateProvider()
 }
 

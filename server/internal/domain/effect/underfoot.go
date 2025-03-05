@@ -29,7 +29,7 @@ func (e *Underfoot) Applier() domain.Applier {
 	return e.Apply
 }
 
-func (e *Underfoot) Apply(state domain.State) domain.State {
+func (e *Underfoot) Apply(state domain.GameState) domain.GameState {
 	// - Add +3 to your Initiative.
 	log.Println("applying Underfoot")
 	return state
