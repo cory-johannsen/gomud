@@ -1,5 +1,5 @@
 name: Observe
 preconditions:
-  - PlayerNotInRange
   - Default
+  - PlayerNotInRange
 complete: false

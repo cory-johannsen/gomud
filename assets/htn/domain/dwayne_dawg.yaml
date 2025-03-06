@@ -1,4 +1,10 @@
 name: Dwayne Dawg
 root:
-  task: Idle
+  task: WakeUp
   children:
+    - task: Sleep
+      children:
+    - task: Observe
+      children:
+    - task: Idle
+      children:

@@ -104,7 +104,7 @@ func (s *TimeOfDaySensor) Get() (TimeOfDay, error) {
 	ticks := elapsed.Nanoseconds() / s.TickDuration.Nanoseconds()
 	hour := (ticks / s.TicksPerHour) + s.OffSet.Hour
 	minute := ((ticks % s.TicksPerHour) / s.TicksPerMinute) + s.OffSet.Minute
-	log.Printf("TimeOfDaySensor: %2d:%2d (nanos %d, ticks %d)", hour, minute, elapsed.Nanoseconds(), ticks)
+	log.Debugf("TimeOfDaySensor: %2d:%2d (nanos %d, ticks %d)", hour, minute, elapsed.Nanoseconds(), ticks)
 	return TimeOfDay{
 		Hour:   hour,
 		Minute: minute,

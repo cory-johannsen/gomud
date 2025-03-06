@@ -53,15 +53,17 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 	for _, condition := range t.Preconditions {
 		preconditions = append(preconditions, condition.String())
 	}
-	log.Debugf("executing task {%s}, preconditions {%s}", t.Name(), strings.Join(preconditions, ","))
+	log.Debugf("executing task {%s}", t.Name())
 	// Determine if the Task preconditions have been met
 	var ready = true
 	for _, condition := range t.Preconditions {
 		log.Debugf("evaluating condition {%s}", condition.String())
 		if !condition.IsMet(state) {
-			log.Debugf("condition {%s} not met", condition.String())
+			log.Debugf("task %s condition {%s} not met", t.Name(), condition.String())
 			ready = false
 			break
+		} else {
+			log.Debugf("task %s condition {%s} met", t.Name(), condition.String())
 		}
 	}
 	if ready {
@@ -206,7 +208,7 @@ type CompoundTask struct {
 }
 
 func (c *CompoundTask) Execute(state *State) (*State, error) {
-	log.Printf("executing compound task {%s}", c.Name())
+	log.Debugf("executing compound task {%s}", c.Name())
 	applicableMethods := make([]*Method, 0)
 	for _, method := range c.Methods {
 		if method.Applies(state) {
@@ -214,7 +216,7 @@ func (c *CompoundTask) Execute(state *State) (*State, error) {
 		}
 	}
 	if len(applicableMethods) == 0 {
-		log.Println("no applicable methods found")
+		log.Debugf("no applicable methods found")
 		c.Complete = true
 		return state, nil
 	}
@@ -225,7 +227,7 @@ func (c *CompoundTask) Execute(state *State) (*State, error) {
 		return nil, err
 	}
 	if executedTasks == 0 {
-		log.Printf("method {%s} execute zero tasks", c.Name())
+		log.Printf("method {%s} executed zero tasks", c.Name())
 	}
 
 	return state, nil

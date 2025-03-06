@@ -1,6 +1,5 @@
 name: WakeUp
 preconditions:
-  - AfterWake
-  - BeforeSleep
+  - AwakeHours
 action: WakeUp
 complete: false

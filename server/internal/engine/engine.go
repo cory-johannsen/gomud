@@ -231,7 +231,7 @@ func (s *Server) initializeSensors() htn.Sensors {
 				TickDuration: time.Duration(s.config.TickDurationMillis) * time.Millisecond,
 			},
 			TicksPerHour: 60,
-			Offset:       7,
+			Offset:       8,
 		},
 		"TimeOfDay": &htn.TimeOfDaySensor{
 			TickSensor: htn.TickSensor{
@@ -241,7 +241,7 @@ func (s *Server) initializeSensors() htn.Sensors {
 			TicksPerHour:   60,
 			TicksPerMinute: 1,
 			OffSet: htn.TimeOfDay{
-				Hour:   7,
+				Hour:   8,
 				Minute: 0,
 			},
 		},
@@ -250,36 +250,30 @@ func (s *Server) initializeSensors() htn.Sensors {
 }
 
 func initializeConditions() htn.Conditions {
-	afterWake := &htn.ComparisonCondition[int64]{
-		ConditionName: "AfterWake",
-		Comparison:    htn.GTE,
-		Value:         8,
-		Property:      "HourOfDay",
-		Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
-			return property >= value
-		},
-	}
-	beforeSleep := &htn.ComparisonCondition[int64]{
-		ConditionName: "BeforeSleep",
-		Comparison:    htn.LT,
-		Value:         9,
-		Property:      "HourOfDay",
-		Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
-			return property < value
+	awakeHours := &htn.FuncCondition{
+		ConditionName: "awakeHours",
+		Evaluator: func(state *htn.State) bool {
+			sensor, err := state.Sensor("HourOfDay")
+			if err != nil {
+				log.Errorf("AfterSleep: could not get HourOfDay sensor")
+				return false
+			}
+			hourOfDaySensor := sensor.(*htn.HourOfDaySensor)
+			hourOfDay, err := hourOfDaySensor.Get()
+			if err != nil {
+				log.Errorf("AfterSleep: could not get HourOfDay sensor value")
+				return false
+			}
+			return hourOfDay >= 9 && hourOfDay < 22
 		},
 	}
 	conditions := htn.Conditions{
-		"AfterWake": afterWake,
-		"BeforeWake": &htn.FuncCondition{
-			ConditionName: "BeforeWake",
+		"AwakeHours": awakeHours,
+		"AsleepHours": &htn.FuncCondition{
+			ConditionName: "AsleepHours",
 			Evaluator: func(state *htn.State) bool {
-				return !afterWake.IsMet(state)
+				return !awakeHours.IsMet(state)
 			},
-		},
-		"BeforeSleep": beforeSleep,
-		"AfterSleep": &htn.FuncCondition{
-			ConditionName: "AfterSleep",
-			Evaluator:     func(state *htn.State) bool { return !beforeSleep.IsMet(state) },
 		},
 		"PlayerEngaged": &htn.FuncCondition{
 			ConditionName: "PlayerEngaged",
@@ -370,8 +364,6 @@ func initializeActions() htn.Actions {
 		"Sleep": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
 			log.Printf("%s sleeping", owner.Name)
-
-			log.Printf("%s waking up", owner.Name)
 			msg := fmt.Sprintf("Imma crash now, feelin' busted.")
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
 				Room:      owner.Room(),

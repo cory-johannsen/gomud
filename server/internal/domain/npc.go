@@ -57,9 +57,10 @@ type NPC struct {
 	running    bool
 	tickMillis int
 	Character
-	State    *htn.State
-	Planner  *htn.Planner
-	EventBus eventbus.Bus
+	State          *htn.State
+	Planner        *htn.Planner
+	EventBus       eventbus.Bus
+	playersEngaged map[int64]*Player
 }
 
 func (n *NPC) IsPlayer() bool {
@@ -77,6 +78,7 @@ func (n *NPC) Start() error {
 	n.mutex.Lock()
 	defer n.mutex.Unlock()
 	n.running = true
+	log.Printf("starting NPC %s", n.Name)
 	go func() {
 		for {
 			if !n.running {
@@ -117,17 +119,18 @@ func (n *NPC) Stop() error {
 }
 
 func (n *NPC) PlayersEngaged() int {
-	return 0
+	return len(n.playersEngaged)
 }
 
 func NewNPC(character *Character, state *htn.State, planner *htn.Planner, eventBus eventbus.Bus, tickMillis int) *NPC {
 	return &NPC{
-		Character:  *character,
-		State:      state,
-		Planner:    planner,
-		EventBus:   eventBus,
-		running:    false,
-		tickMillis: tickMillis,
+		Character:      *character,
+		State:          state,
+		Planner:        planner,
+		EventBus:       eventBus,
+		running:        false,
+		tickMillis:     tickMillis,
+		playersEngaged: make(map[int64]*Player),
 	}
 }
 

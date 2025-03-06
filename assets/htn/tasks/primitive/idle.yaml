@@ -1,7 +1,6 @@
 name: Idle
 preconditions: 
-  - AfterWake
-  - BeforeSleep
+  - AwakeHours
   - NoPlayersInRange
 action: Wait
 complete: false

@@ -1,4 +1,0 @@
-name: AwakeHours
-operator: AND
-lhs: AfterWake
-rhs: BeforeSleep
