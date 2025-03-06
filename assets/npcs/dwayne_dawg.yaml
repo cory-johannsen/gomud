@@ -75,3 +75,9 @@ dialog:
       - "Mornin' dawgs! Who wants to get high?"
       - "Yo my dawg! Wake up! We got a big day of getting loaded ahead of us."
       - "It's too damn early to be this sober, let's get fucked up."
+  Sleep:
+    task: Sleep
+    text:
+      - "I'm out, dawgs. I'll see you in the morning."
+      - "I'm going to bed, dawgs. Don't wake me up unless it's an emergency."
+      - "I'm going to sleep, dawgs. Don't let me wake up until the sun is high."

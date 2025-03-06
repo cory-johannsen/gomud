@@ -268,12 +268,28 @@ func initializeConditions() htn.Conditions {
 			return hourOfDay >= 9 && hourOfDay < 22
 		},
 	}
+	awake := &htn.FuncCondition{
+		ConditionName: "Awake",
+		Evaluator: func(state *htn.State) bool {
+			if owner, ok := state.Owner.(*domain.NPC); ok {
+				return !owner.Sleeping()
+			}
+			return false
+		},
+	}
 	conditions := htn.Conditions{
 		"AwakeHours": awakeHours,
+		"Awake":      awake,
 		"AsleepHours": &htn.FuncCondition{
 			ConditionName: "AsleepHours",
 			Evaluator: func(state *htn.State) bool {
 				return !awakeHours.IsMet(state)
+			},
+		},
+		"Asleep": &htn.FuncCondition{
+			ConditionName: "Asleep",
+			Evaluator: func(state *htn.State) bool {
+				return !awake.IsMet(state)
 			},
 		},
 		"PlayerEngaged": &htn.FuncCondition{
@@ -373,8 +389,15 @@ func initializeActions() htn.Actions {
 		"Sleep": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
 			owner.SetSleeping(true)
+			dialog := owner.Dialog
+			msg := "I'm out."
+			wakeUpDialog, ok := dialog["Sleep"]
+			if !ok {
+				log.Errorf("No Sleep dialog for %s", owner.Name)
+			} else {
+				msg = wakeUpDialog.Text[rand.Intn(len(wakeUpDialog.Text))]
+			}
 			log.Printf("%s sleeping", owner.Name)
-			msg := fmt.Sprintf("Imma crash now, feelin' busted.")
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
 				Room:      owner.Room(),
 				Character: &owner.Character,

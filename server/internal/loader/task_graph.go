@@ -8,9 +8,11 @@ import (
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
+	"sync"
 )
 
 type TaskGraphLoader struct {
+	mutex      sync.Mutex
 	config     *config.Config
 	taskGraphs htn.TaskGraphs
 	taskLoader *TaskLoader
@@ -52,10 +54,12 @@ func (l *TaskGraphLoader) LoadTaskGraphs() (htn.TaskGraphs, error) {
 			return nil, err
 		}
 		root, err := loadTaskNode(spec.Root, resolvers)
+		l.mutex.Lock()
 		l.taskGraphs[spec.Name] = &htn.TaskGraph{
 			Name: spec.Name,
 			Root: root,
 		}
+		l.mutex.Unlock()
 	}
 	return l.taskGraphs, nil
 }

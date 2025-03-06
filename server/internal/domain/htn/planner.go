@@ -53,6 +53,8 @@ func evaluateNode(node *TaskNode, state *State) []Task {
 	if !task.IsComplete() {
 		log.Debugf("task node {%s} is not complete, adding to tasks", task.Name())
 		tasks = append(tasks, task)
+	} else {
+		log.Debugf("task node {%s} is complete, omitting", task.Name())
 	}
 	log.Debugf("evaluating task node {%s} children", task.Name())
 	for _, child := range node.Children {
@@ -90,6 +92,11 @@ func Execute(plan *Plan, state *State) (*State, error) {
 		if err != nil {
 			return nil, err
 		}
+		err = task.Reset()
+		if err != nil {
+			return nil, err
+		}
 	}
+
 	return state, nil
 }

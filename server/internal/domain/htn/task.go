@@ -11,6 +11,7 @@ type Task interface {
 	IsComplete() bool
 	Name() string
 	String() string
+	Reset() error
 }
 
 type Tasks map[string]Task
@@ -97,6 +98,11 @@ func (t *PrimitiveTask) String() string {
 	return fmt.Sprintf("[%s] preconditions: [%s], complete: %t", t.Name(), strings.Join(preconditions, ","), t.Complete)
 }
 
+func (t *PrimitiveTask) Reset() error {
+	t.Complete = false
+	return nil
+}
+
 // GoalTask implements the HTN goal Task, composed of preconditions that are other TaskResolvers.  The goal Task is considered
 // complete when all condition TaskResolvers are themselves complete.
 type GoalTask struct {
@@ -135,6 +141,11 @@ func (g *GoalTask) String() string {
 		preconditions = append(preconditions, fmt.Sprintf("{%s}", condition.String()))
 	}
 	return fmt.Sprintf("goal: preconditions: [%s], complete: %t", strings.Join(preconditions, ","), g.Complete)
+}
+
+func (g *GoalTask) Reset() error {
+	g.Complete = false
+	return nil
 }
 
 type MethodSpec struct {
@@ -181,6 +192,8 @@ func (m *Method) Execute(state *State) (int64, error) {
 				return -1, err
 			}
 			executed++
+		} else {
+			log.Printf("method {%s} task {%s} is complete, skipping", m.Name, task.Name())
 		}
 	}
 	return executed, nil
@@ -247,4 +260,9 @@ func (c *CompoundTask) String() string {
 		methods = append(methods, fmt.Sprintf("{%s}", method.String()))
 	}
 	return fmt.Sprintf("CompoundTask %s: methods: \n %s\n", c.Name(), strings.Join(methods, ",\n "))
+}
+
+func (c *CompoundTask) Reset() error {
+	c.Complete = false
+	return nil
 }
