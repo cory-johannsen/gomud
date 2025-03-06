@@ -24,6 +24,13 @@ type NPCInventorySpec struct {
 	Cash     int      `yaml:"cash"`
 }
 
+type TaskDialog struct {
+	Task string   `yaml:"task"`
+	Text []string `yaml:"text"`
+}
+
+type Dialog map[string]TaskDialog
+
 type NPCSpec struct {
 	Name                string              `yaml:"name"`
 	Age                 int                 `yaml:"age"`
@@ -48,6 +55,7 @@ type NPCSpec struct {
 	Stats               Stats               `yaml:"stats"`
 	Talents             []string            `yaml:"talents"`
 	Upbringing          string              `yaml:"upbringing"`
+	Dialog              Dialog              `yaml:"dialog"`
 }
 
 type NPCSpecs map[string]*NPCSpec
@@ -61,6 +69,7 @@ type NPC struct {
 	Planner        *htn.Planner
 	EventBus       eventbus.Bus
 	playersEngaged map[int64]*Player
+	Dialog         Dialog
 }
 
 func (n *NPC) IsPlayer() bool {
@@ -82,6 +91,7 @@ func (n *NPC) Start() error {
 	go func() {
 		for {
 			if !n.running {
+				log.Printf("NPC %s is not running", n.Name)
 				break
 			}
 			// Plan the next action
@@ -89,6 +99,7 @@ func (n *NPC) Start() error {
 			if err != nil {
 				log.Errorf("error planning NPC action: %v", err)
 			}
+			log.Debugf("NPC %s plan: %v", n.Name, plan)
 			// Execute the plan
 			if plan != nil {
 				newState, err := htn.Execute(plan, n.State)
@@ -115,6 +126,7 @@ func (n *NPC) Stop() error {
 	n.mutex.Lock()
 	defer n.mutex.Unlock()
 	n.running = false
+	log.Printf("stopping NPC %s", n.Name)
 	return nil
 }
 
@@ -122,7 +134,7 @@ func (n *NPC) PlayersEngaged() int {
 	return len(n.playersEngaged)
 }
 
-func NewNPC(character *Character, state *htn.State, planner *htn.Planner, eventBus eventbus.Bus, tickMillis int) *NPC {
+func NewNPC(character *Character, state *htn.State, planner *htn.Planner, dialog Dialog, eventBus eventbus.Bus, tickMillis int) *NPC {
 	return &NPC{
 		Character:      *character,
 		State:          state,
@@ -131,6 +143,7 @@ func NewNPC(character *Character, state *htn.State, planner *htn.Planner, eventB
 		running:        false,
 		tickMillis:     tickMillis,
 		playersEngaged: make(map[int64]*Player),
+		Dialog:         dialog,
 	}
 }
 

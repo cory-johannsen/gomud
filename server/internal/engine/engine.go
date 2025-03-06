@@ -13,6 +13,7 @@ import (
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/cory-johannsen/gomud/internal/storage"
 	log "github.com/sirupsen/logrus"
+	"math/rand"
 	"net"
 	"strings"
 	"time"
@@ -352,8 +353,15 @@ func initializeActions() htn.Actions {
 		"WakeUp": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
 			owner.SetSleeping(false)
+			dialog := owner.Dialog
+			msg := "I'm up."
+			wakeUpDialog, ok := dialog["WakeUp"]
+			if !ok {
+				log.Errorf("No WakeUp dialog for %s", owner.Name)
+			} else {
+				msg = wakeUpDialog.Text[rand.Intn(len(wakeUpDialog.Text))]
+			}
 			log.Printf("%s waking up", owner.Name)
-			msg := fmt.Sprintf("Mornin' dawgs! Who wants to get high?")
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
 				Room:      owner.Room(),
 				Character: &owner.Character,

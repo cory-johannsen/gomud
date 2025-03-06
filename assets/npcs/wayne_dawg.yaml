@@ -68,3 +68,10 @@ talents:
   - Indifference
   - Secret Signs
 upbringing: Opportunistic
+dialog:
+  WakeUp:
+    task: WakeUp
+    text:
+      - "Mornin' dawgs! Who wants to get high?"
+      - "Yo my dawg! Wake up! We got a big day of getting loaded ahead of us."
+      - "It's too damn early to be this sober, let's get fucked up."

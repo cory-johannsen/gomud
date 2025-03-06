@@ -45,13 +45,13 @@ func (n *NPCs) CreateNPC(ctx context.Context, spec *domain.NPCSpec) (*domain.NPC
 	if err != nil {
 		return nil, err
 	}
-	return n.CreateNPCWithProps(ctx, spec.Name, props)
+	return n.CreateNPCWithProps(ctx, spec, props)
 }
 
-func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[string]domain.Property) (*domain.NPC, error) {
-	log.Debugf("Creating NPC %s", name)
-	if _, ok := n.npcs[name]; ok {
-		return nil, errors.New(fmt.Sprintf("npc %s already exists", name))
+func (n *NPCs) CreateNPCWithProps(ctx context.Context, spec *domain.NPCSpec, data map[string]domain.Property) (*domain.NPC, error) {
+	log.Debugf("Creating NPC %s", spec.Name)
+	if _, ok := n.npcs[spec.Name]; ok {
+		return nil, errors.New(fmt.Sprintf("npc %s already exists", spec.Name))
 	}
 	specData := n.PropertiesToData(data)
 	encoded, err := json.Marshal(specData)
@@ -60,32 +60,32 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 		return nil, err
 	}
 	var id int
-	err = n.database.Conn.QueryRow(ctx, "INSERT INTO npcs (name, data) VALUES ($1, $2) RETURNING id", name, encoded).
+	err = n.database.Conn.QueryRow(ctx, "INSERT INTO npcs (name, data) VALUES ($1, $2) RETURNING id", spec.Name, encoded).
 		Scan(&id)
 	if err != nil {
 		log.Errorf("failed to insert player: %s", err)
 		return nil, err
 	}
-	char := domain.NewCharacter(&id, name, data)
-	state, err := n.states.GetState(name)
+	char := domain.NewCharacter(&id, spec.Name, data)
+	state, err := n.states.GetState(spec.Name)
 	if err != nil {
 		return nil, err
 	}
 	if state == nil {
-		log.Errorf("state not found for npc %s", name)
-		return nil, errors.New(fmt.Sprintf("state not found for npc %s", name))
+		log.Errorf("state not found for npc %s", spec.Name)
+		return nil, errors.New(fmt.Sprintf("state not found for npc %s", spec.Name))
 	}
-	planner, err := n.planners.GetPlanner(name)
+	planner, err := n.planners.GetPlanner(spec.Name)
 	if err != nil {
 		return nil, err
 	}
 	if planner == nil {
-		log.Errorf("planner not found for npc %s", name)
-		return nil, errors.New(fmt.Sprintf("planner not found for npc %s", name))
+		log.Errorf("planner not found for npc %s", spec.Name)
+		return nil, errors.New(fmt.Sprintf("planner not found for npc %s", spec.Name))
 	}
-	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
+	npc := domain.NewNPC(char, state, planner, spec.Dialog, n.eventBus, n.cfg.TickDurationMillis)
 	npc.SetSleeping(false)
-	n.npcs[name] = npc
+	n.npcs[spec.Name] = npc
 	return npc, nil
 }
 
@@ -165,7 +165,13 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, er
 	if err != nil {
 		return nil, err
 	}
-	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
+
+	spec, err := n.loaders.NPCLoader.GetNPC(name)
+	if err != nil {
+		return nil, err
+	}
+
+	npc := domain.NewNPC(char, state, planner, spec.Dialog, n.eventBus, n.cfg.TickDurationMillis)
 	// Peril threshold is calculated from Grit Bonus
 	npc.Peril().Threshold = npc.StatBonuses().Grit + 3
 	n.npcs[name] = npc
@@ -211,7 +217,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 	if err != nil {
 		return nil, err
 	}
-	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
+	npc := domain.NewNPC(char, state, planner, spec.Dialog, n.eventBus, n.cfg.TickDurationMillis)
 	npc.SetSleeping(false)
 	return npc, nil
 }
