@@ -99,8 +99,12 @@ func LookCharacter(target *domain.Character, npc bool) string {
 	if npc {
 		name = fmt.Sprintf("%s %s", cyan(target.Name), green("[NPC]"))
 	}
-	msg := fmt.Sprintf("%s the %s looks %s  They are wearing %s and wield %s.  \n  They are %s", name, green(target.Job().Name),
-		perilDescription, magenta(armor), magenta(wields), yellow(target.Condition()))
+	asleep := ""
+	if target.Sleeping() {
+		asleep = "They are asleep. "
+	}
+	msg := fmt.Sprintf("%s the %s looks %s %sThey are wearing %s and wield %s.  \n  They are %s", name, green(target.Job().Name),
+		perilDescription, yellow(asleep), magenta(armor), magenta(wields), yellow(target.Condition()))
 	if len(target.Injuries()) == 0 {
 		msg += " and unscathed."
 	} else {

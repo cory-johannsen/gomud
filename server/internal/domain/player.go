@@ -44,6 +44,7 @@ const (
 	TattooProperty              = "tattoo"
 	SkillRanksProperty          = "skillRanks"
 	StatsProperty               = "stats"
+	SleepingProperty            = "sleeping"
 	TalentsProperty             = "talents"
 	UpbringingProperty          = "upbringing"
 )
@@ -343,6 +344,7 @@ func (c *Character) Skills(allSkills Skills) RankedSkills {
 	}
 	return rankedSkills
 }
+
 func (c *Character) Job() *Job {
 	return c.Data[JobProperty].(*Job)
 }
@@ -482,6 +484,18 @@ func (c *Character) Peril() *Peril {
 
 func (c *Character) SetPeril(peril *Peril) {
 	c.Data[PerilProperty] = peril
+}
+
+func (c *Character) Sleeping() bool {
+	sleeping, ok := c.Data[SleepingProperty]
+	if !ok {
+		return false
+	}
+	return sleeping.(*BaseProperty).Val.(bool)
+}
+
+func (c *Character) SetSleeping(sleeping bool) {
+	c.Data[SleepingProperty] = &BaseProperty{Val: sleeping}
 }
 
 // Player a Character that is controlled by a user

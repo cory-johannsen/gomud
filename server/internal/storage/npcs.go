@@ -84,6 +84,7 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, name string, data map[str
 		return nil, errors.New(fmt.Sprintf("planner not found for npc %s", name))
 	}
 	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
+	npc.SetSleeping(false)
 	n.npcs[name] = npc
 	return npc, nil
 }
@@ -128,7 +129,7 @@ func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.NPC, error) {
 	}
 	npc.State = state
 	npc.Planner = planner
-
+	npc.SetSleeping(false)
 	return npc, nil
 }
 
@@ -168,6 +169,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, er
 	// Peril threshold is calculated from Grit Bonus
 	npc.Peril().Threshold = npc.StatBonuses().Grit + 3
 	n.npcs[name] = npc
+	npc.SetSleeping(false)
 	return npc, nil
 }
 
@@ -210,6 +212,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 		return nil, err
 	}
 	npc := domain.NewNPC(char, state, planner, n.eventBus, n.cfg.TickDurationMillis)
+	npc.SetSleeping(false)
 	return npc, nil
 }
 

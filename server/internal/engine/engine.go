@@ -351,6 +351,7 @@ func initializeActions() htn.Actions {
 		},
 		"WakeUp": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
+			owner.SetSleeping(false)
 			log.Printf("%s waking up", owner.Name)
 			msg := fmt.Sprintf("Mornin' dawgs! Who wants to get high?")
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
@@ -363,6 +364,7 @@ func initializeActions() htn.Actions {
 		},
 		"Sleep": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
+			owner.SetSleeping(true)
 			log.Printf("%s sleeping", owner.Name)
 			msg := fmt.Sprintf("Imma crash now, feelin' busted.")
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{

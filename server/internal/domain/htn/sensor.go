@@ -102,7 +102,7 @@ func (s *TimeOfDaySensor) Get() (TimeOfDay, error) {
 	now := time.Now()
 	elapsed := now.Sub(s.StartedAt)
 	ticks := elapsed.Nanoseconds() / s.TickDuration.Nanoseconds()
-	hour := (ticks / s.TicksPerHour) + s.OffSet.Hour
+	hour := ((ticks / s.TicksPerHour) + s.OffSet.Hour) % 24
 	minute := ((ticks % s.TicksPerHour) / s.TicksPerMinute) + s.OffSet.Minute
 	log.Debugf("TimeOfDaySensor: %2d:%2d (nanos %d, ticks %d)", hour, minute, elapsed.Nanoseconds(), ticks)
 	return TimeOfDay{
