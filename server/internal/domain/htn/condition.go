@@ -174,13 +174,13 @@ func (p *PropertyComparisonCondition) IsMet(state *State) bool {
 	if err != nil {
 		return false
 	}
-	lhs := lhsProperty.(Property[any]).Value(state).(float64)
+	lhs := lhsProperty.(*Property[int64]).Value(state)
 	rhsProperty, err := state.Property(p.RHS)
 	if err != nil {
 		return false
 	}
-	rhs := rhsProperty.(Property[any]).Value(state).(float64)
-	log.Printf("PropertyComparisonCondition %s comparing %s(%f) %s %s(%f)", p.ConditionName, p.LHS, lhs, p.Comparison, p.RHS, rhs)
+	rhs := rhsProperty.(*Property[int64]).Value(state)
+	log.Printf("PropertyComparisonCondition %s comparing %s(%d) %s %s(%d)", p.ConditionName, p.LHS, lhs, p.Comparison, p.RHS, rhs)
 	switch p.Comparison {
 	case EQ:
 		return lhs == rhs

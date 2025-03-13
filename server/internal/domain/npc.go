@@ -68,8 +68,9 @@ type NPC struct {
 	State          *htn.State
 	Planner        *htn.Planner
 	EventBus       eventbus.Bus
-	playersEngaged map[int64]*Player
 	Dialog         Dialog
+	playersEngaged map[int64]*Player
+	playersGreeted map[int64]*Player
 }
 
 func (n *NPC) IsPlayer() bool {
@@ -143,6 +144,7 @@ func NewNPC(character *Character, state *htn.State, planner *htn.Planner, dialog
 		running:        false,
 		tickMillis:     tickMillis,
 		playersEngaged: make(map[int64]*Player),
+		playersGreeted: make(map[int64]*Player),
 		Dialog:         dialog,
 	}
 }

@@ -302,7 +302,7 @@ func initializeConditions() htn.Conditions {
 			},
 		},
 		"PlayerNotEngaged": &htn.FuncCondition{
-			ConditionName: "PlayerEngaged",
+			ConditionName: "PlayerNotEngaged",
 			Evaluator: func(state *htn.State) bool {
 				if owner, ok := state.Owner.(*domain.Player); ok {
 					return !owner.Engaged()
@@ -334,7 +334,7 @@ func initializeConditions() htn.Conditions {
 			Value:         0,
 			Property:      "PlayersInRange",
 			Comparator: func(value int64, property int64, comparison htn.Comparison) bool {
-				return property <= value
+				return property > value
 			},
 		},
 		"NoPlayersInRange": &htn.ComparisonCondition[int64]{

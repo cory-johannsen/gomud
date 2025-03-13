@@ -168,13 +168,16 @@ func (m *Method) Applies(state *State) bool {
 		if !condition.IsMet(state) {
 			log.Debugf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
 			return false
+		} else {
+			log.Debugf("method {%s} condition {%s} met", m.Name, condition.Name())
 		}
 	}
+	log.Debugf("method {%s} allconditions {%s} met", m.Name)
 	return true
 }
 
 func (m *Method) Execute(state *State) (int64, error) {
-	log.Printf("executing method {%s}", m.Name)
+	log.Debugf("executing method {%s}", m.Name)
 	var executed = int64(0)
 	tasks := make([]Task, 0)
 	for _, taskResolver := range m.TaskResolvers {
@@ -186,14 +189,14 @@ func (m *Method) Execute(state *State) (int64, error) {
 	}
 	for _, task := range tasks {
 		if !task.IsComplete() {
-			log.Printf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
+			log.Debugf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
 			_, err := task.Execute(state)
 			if err != nil {
 				return -1, err
 			}
 			executed++
 		} else {
-			log.Printf("method {%s} task {%s} is complete, skipping", m.Name, task.Name())
+			log.Debugf("method {%s} task {%s} is complete, skipping", m.Name, task.Name())
 		}
 	}
 	return executed, nil
@@ -229,12 +232,13 @@ func (c *CompoundTask) Execute(state *State) (*State, error) {
 		}
 	}
 	if len(applicableMethods) == 0 {
-		log.Debugf("no applicable methods found")
+		log.Printf("no applicable methods found, task %s is complete", c.TaskName)
 		c.Complete = true
 		return state, nil
 	}
 	// The methods are stored in priority order, so the first one is the selected choice
 	selectedMethod := applicableMethods[0]
+	log.Printf("compound task %s method {%s} applies, executing it", c.TaskName, selectedMethod.Name)
 	executedTasks, err := selectedMethod.Execute(state)
 	if err != nil {
 		return nil, err

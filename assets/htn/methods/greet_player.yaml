@@ -6,4 +6,4 @@ conditions:
   - NotEngaged
   - IsPlayer
 tasks:
-  - GreetPlayer
+  - Holler

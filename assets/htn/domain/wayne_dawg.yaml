@@ -4,6 +4,8 @@ root:
   children:
     - task: Sleep
       children:
+    - task: Greet
+      children:
     - task: Observe
       children:
     - task: Idle

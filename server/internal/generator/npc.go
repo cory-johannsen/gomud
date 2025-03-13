@@ -178,6 +178,31 @@ func initializeState() *htn.State {
 			return int64(val)
 		},
 	}
+	properties["PlayersAvailable"] = &htn.Property[int64]{
+		Name: "PlayersAvailable",
+		Value: func(state *htn.State) int64 {
+			sensor, err := state.Sensor("PlayersEngaged")
+			if err != nil {
+				log.Fatal(err)
+			}
+			val, err := sensor.(*domain.PlayersEngagedSensor).Get()
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Debugf("PlayersAvailable property: %d players available", val)
+			npc := state.Owner.(*domain.NPC)
+			available := npc.Room().PlayerCount() - val
+			return int64(available)
+		},
+	}
+	properties["PlayersEngaged"] = &htn.Property[int64]{
+		Name: "PlayersEngaged",
+		Value: func(state *htn.State) int64 {
+			npc := state.Owner.(*domain.NPC)
+			engaged := npc.PlayersEngaged()
+			return int64(engaged)
+		},
+	}
 	state := &htn.State{
 		Sensors:    make(htn.Sensors),
 		Properties: properties,
