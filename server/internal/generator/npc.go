@@ -32,7 +32,7 @@ type CharacterLifecycle interface {
 	DeleteCharacter(ctx context.Context, character *domain.Character) error
 }
 
-func NewNPCGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs,
+func NewNpcGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs,
 	domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator) *NPCGenerator {
 	return &NPCGenerator{
 		running:           false,

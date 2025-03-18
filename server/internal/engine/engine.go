@@ -431,7 +431,7 @@ func (s *Server) startGenerator(spec *domain.GeneratorSpec) {
 	if err != nil {
 		panic(err)
 	}
-	g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs, s.domainGenerator, s.plannerGenerator)
+	g := generator.NewNpcGenerator(spec, s.loaders, npcSpec, s.npcs, s.domainGenerator, s.plannerGenerator)
 	go func() {
 		err := g.Start()
 		if err != nil {
