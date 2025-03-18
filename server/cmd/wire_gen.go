@@ -372,12 +372,12 @@ func InitializeEngine() (*engine.Engine, error) {
 	loaders := loader.NewLoaders(appearanceLoader, alignmentLoader, archetypeLoader, backgroundLoader, disorderLoader, effectLoader, equipmentLoader, generatorLoader, injuryLoader, inventoryLoader, jobLoader, npcLoader, qualityLoader, roomLoader, skillLoader, talentLoader, traitLoader, teamLoader, upbringingLoader, actionLoader, sensorLoader, conditionLoader, methodLoader, taskLoader, taskGraphLoader)
 	equipment := storage.NewEquipment(database, loaders)
 	plannerGenerator := generator.NewPlannerGenerator()
-	stateGenerator := generator.NewStateGenerator()
-	npCs := storage.NewNPCs(configConfig, database, loaders, equipment, plannerGenerator, stateGenerator, bus)
+	domainGenerator := generator.NewDomainGenerator()
+	npCs := storage.NewNPCs(configConfig, database, loaders, equipment, plannerGenerator, domainGenerator, bus)
 	players := storage.NewPlayers(database, npCs, loaders, equipment)
 	playerGenerator := generator.NewPlayerGenerator(loaders)
 	clock := event.NewClock(bus, configConfig)
-	server := engine.NewServer(configConfig, database, players, npCs, loaders, playerGenerator, stateGenerator, plannerGenerator, bus, clock)
+	server := engine.NewServer(configConfig, database, players, npCs, loaders, playerGenerator, domainGenerator, plannerGenerator, bus, clock)
 	engineEngine := engine.NewEngine(configConfig, server, bus)
 	return engineEngine, nil
 }

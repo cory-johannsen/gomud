@@ -22,12 +22,12 @@ type NPCs struct {
 	equipment *Equipment
 	npcs      map[string]*domain.NPC
 	planners  htn.PlannerResolver
-	states    htn.StateResolver
+	states    htn.DomainResolver
 	eventBus  eventbus.Bus
 }
 
 func NewNPCs(cfg *config.Config, db *Database, loaders *loader.Loaders, equipment *Equipment,
-	planners htn.PlannerResolver, states htn.StateResolver, eventBus eventbus.Bus) *NPCs {
+	planners htn.PlannerResolver, states htn.DomainResolver, eventBus eventbus.Bus) *NPCs {
 	return &NPCs{
 		cfg:       cfg,
 		database:  db,
@@ -67,7 +67,7 @@ func (n *NPCs) CreateNPCWithProps(ctx context.Context, spec *domain.NPCSpec, dat
 		return nil, err
 	}
 	char := domain.NewCharacter(&id, spec.Name, data)
-	state, err := n.states.GetState(spec.Name)
+	state, err := n.states.GetDomain(spec.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +119,7 @@ func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.NPC, error) {
 		return nil, err
 	}
 	// todo: load equipment
-	state, err := n.states.GetState(name)
+	state, err := n.states.GetDomain(name)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (n *NPCs) FetchNPCById(ctx context.Context, id int) (*domain.NPC, error) {
 	if err != nil {
 		return nil, err
 	}
-	npc.State = state
+	npc.Domain = state
 	npc.Planner = planner
 	npc.SetSleeping(false)
 	return npc, nil
@@ -157,7 +157,7 @@ func (n *NPCs) FetchNPCByName(ctx context.Context, name string) (*domain.NPC, er
 	}
 	props := n.DataToProperties(ctx, specProps)
 	char := domain.NewCharacter(&id, name, props)
-	state, err := n.states.GetState(name)
+	state, err := n.states.GetDomain(name)
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +209,7 @@ func (n *NPCs) NPCFromSpec(ctx context.Context, spec *domain.NPCSpec, id int, da
 	// todo: prop loading/overloading?
 
 	char := domain.NewCharacter(&id, spec.Name, props)
-	state, err := n.states.GetState(spec.Name)
+	state, err := n.states.GetDomain(spec.Name)
 	if err != nil {
 		return nil, err
 	}

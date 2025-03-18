@@ -65,7 +65,7 @@ type NPC struct {
 	running    bool
 	tickMillis int
 	Character
-	State          *htn.State
+	Domain         *htn.Domain
 	Planner        *htn.Planner
 	EventBus       eventbus.Bus
 	Dialog         Dialog
@@ -96,20 +96,20 @@ func (n *NPC) Start() error {
 				break
 			}
 			// Plan the next action
-			plan, err := n.Planner.Plan(n.State)
+			plan, err := n.Planner.Plan(n.Domain)
 			if err != nil {
 				log.Errorf("error planning NPC action: %v", err)
 			}
 			log.Debugf("NPC %s plan: %v", n.Name, plan)
 			// Execute the plan
 			if plan != nil {
-				newState, err := htn.Execute(plan, n.State)
+				newDomain, err := htn.Execute(plan, n.Domain)
 				if err != nil {
 					log.Errorf("error executing NPC plan: %v", err)
 				}
-				if newState != nil {
+				if newDomain != nil {
 					n.mutex.Lock()
-					n.State = newState
+					n.Domain = newDomain
 					n.mutex.Unlock()
 				}
 			}
@@ -149,10 +149,10 @@ func (n *NPC) SetPlayerLastGreeted(player *Player, t time.Time) {
 	n.playersGreeted[player] = t
 }
 
-func NewNPC(character *Character, state *htn.State, planner *htn.Planner, dialog Dialog, eventBus eventbus.Bus, tickMillis int) *NPC {
+func NewNPC(character *Character, domain *htn.Domain, planner *htn.Planner, dialog Dialog, eventBus eventbus.Bus, tickMillis int) *NPC {
 	return &NPC{
 		Character:      *character,
-		State:          state,
+		Domain:         domain,
 		Planner:        planner,
 		EventBus:       eventBus,
 		running:        false,

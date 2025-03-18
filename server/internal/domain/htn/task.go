@@ -7,7 +7,7 @@ import (
 )
 
 type Task interface {
-	Execute(state *State) (*State, error)
+	Execute(domain *Domain) (*Domain, error)
 	IsComplete() bool
 	Name() string
 	String() string
@@ -37,7 +37,7 @@ type TaskSpec struct {
 type TaskSpecs map[string]*TaskSpec
 
 // Action is an action applied by a Task.
-type Action func(state *State) error
+type Action func(domain *Domain) error
 type Actions map[string]Action
 
 // PrimitiveTask implements the HTN primitive Task.   It contains a set of preconditions that must be met
@@ -49,7 +49,7 @@ type PrimitiveTask struct {
 	TaskName      string      `yaml:"name"`
 }
 
-func (t *PrimitiveTask) Execute(state *State) (*State, error) {
+func (t *PrimitiveTask) Execute(domain *Domain) (*Domain, error) {
 	preconditions := make([]string, 0)
 	for _, condition := range t.Preconditions {
 		preconditions = append(preconditions, condition.String())
@@ -59,7 +59,7 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 	var ready = true
 	for _, condition := range t.Preconditions {
 		log.Debugf("evaluating condition {%s}", condition.String())
-		if !condition.IsMet(state) {
+		if !condition.IsMet(domain) {
 			log.Debugf("task %s condition {%s} not met", t.Name(), condition.String())
 			ready = false
 			break
@@ -68,9 +68,9 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 		}
 	}
 	if ready {
-		log.Printf("task {%s} preconditions met, applying task action", t.Name())
-		// Apply the Task action and update the state
-		err := t.Action(state)
+		log.Debugf("task {%s} preconditions met, applying task action", t.Name())
+		// Apply the Task action and update the domain
+		err := t.Action(domain)
 		if err != nil {
 			return nil, err
 		}
@@ -79,7 +79,7 @@ func (t *PrimitiveTask) Execute(state *State) (*State, error) {
 	} else {
 		log.Debugf("task {%s} preconditions not met", t.Name())
 	}
-	return state, nil
+	return domain, nil
 }
 
 func (t *PrimitiveTask) IsComplete() bool {
@@ -111,20 +111,20 @@ type GoalTask struct {
 	TaskName      string           `yaml:"name"`
 }
 
-func (g *GoalTask) Execute(state *State) (*State, error) {
-	log.Printf("executing goal task %s", g.TaskName)
+func (g *GoalTask) Execute(domain *Domain) (*Domain, error) {
+	log.Debugf("executing goal task %s", g.TaskName)
 	if !g.Complete {
-		log.Printf("goal task %s is not complete checking preconditions", g.TaskName)
+		log.Debugf("goal task %s is not complete checking preconditions", g.TaskName)
 		for _, condition := range g.Preconditions {
-			if !condition.IsMet(state) {
-				log.Printf("goal task %s precondition not met, exiting", g.TaskName)
-				return state, nil
+			if !condition.IsMet(domain) {
+				log.Debugf("goal task %s precondition not met, exiting", g.TaskName)
+				return domain, nil
 			}
 		}
-		log.Printf("goal %s conditions met, goal Task is complete.", g.TaskName)
+		log.Debugf("goal %s conditions met, goal Task is complete.", g.TaskName)
 		g.Complete = true
 	}
-	return state, nil
+	return domain, nil
 }
 
 func (g *GoalTask) IsComplete() bool {
@@ -162,10 +162,10 @@ type Method struct {
 
 type Methods map[string]*Method
 
-func (m *Method) Applies(state *State) bool {
+func (m *Method) Applies(domain *Domain) bool {
 	log.Debugf("checking if method {%s} applies", m.Name)
 	for _, condition := range m.Conditions {
-		if !condition.IsMet(state) {
+		if !condition.IsMet(domain) {
 			log.Debugf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
 			return false
 		} else {
@@ -176,7 +176,7 @@ func (m *Method) Applies(state *State) bool {
 	return true
 }
 
-func (m *Method) Execute(state *State) (int64, error) {
+func (m *Method) Execute(domain *Domain) (int64, error) {
 	log.Debugf("executing method {%s}", m.Name)
 	var executed = int64(0)
 	tasks := make([]Task, 0)
@@ -190,7 +190,7 @@ func (m *Method) Execute(state *State) (int64, error) {
 	for _, task := range tasks {
 		if !task.IsComplete() {
 			log.Debugf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
-			_, err := task.Execute(state)
+			_, err := task.Execute(domain)
 			if err != nil {
 				return -1, err
 			}
@@ -223,23 +223,23 @@ type CompoundTask struct {
 	Complete bool      `yaml:"complete"`
 }
 
-func (c *CompoundTask) Execute(state *State) (*State, error) {
+func (c *CompoundTask) Execute(domain *Domain) (*Domain, error) {
 	log.Debugf("executing compound task {%s}", c.Name())
 	applicableMethods := make([]*Method, 0)
 	for _, method := range c.Methods {
-		if method.Applies(state) {
+		if method.Applies(domain) {
 			applicableMethods = append(applicableMethods, method)
 		}
 	}
 	if len(applicableMethods) == 0 {
 		log.Debug("no applicable methods found, task %s is complete", c.TaskName)
 		c.Complete = true
-		return state, nil
+		return domain, nil
 	}
 	// The methods are stored in priority order, so the first one is the selected choice
 	selectedMethod := applicableMethods[0]
 	log.Debugf("compound task %s method {%s} applies, executing it", c.TaskName, selectedMethod.Name)
-	executedTasks, err := selectedMethod.Execute(state)
+	executedTasks, err := selectedMethod.Execute(domain)
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +247,7 @@ func (c *CompoundTask) Execute(state *State) (*State, error) {
 		log.Debugf("method {%s} executed zero tasks", c.Name())
 	}
 
-	return state, nil
+	return domain, nil
 }
 
 func (c *CompoundTask) Name() string {

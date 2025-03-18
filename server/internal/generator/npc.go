@@ -18,7 +18,7 @@ type NPCGenerator struct {
 	running           bool
 	loaders           *loader.Loaders
 	npcs              *storage.NPCs
-	stateGenerator    *StateGenerator
+	domainGenerator   *DomainGenerator
 	plannerGenerator  *PlannerGenerator
 	Name              string
 	Spec              *domain.NPCSpec
@@ -33,7 +33,7 @@ type CharacterLifecycle interface {
 }
 
 func NewNPCGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs,
-	stateGenerator *StateGenerator, plannerGenerator *PlannerGenerator) *NPCGenerator {
+	domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator) *NPCGenerator {
 	return &NPCGenerator{
 		running:           false,
 		npcPool:           make(map[int]*domain.NPC),
@@ -41,7 +41,7 @@ func NewNPCGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpe
 		Spec:              npcSpec,
 		npcs:              npcs,
 		loaders:           loaders,
-		stateGenerator:    stateGenerator,
+		domainGenerator:   domainGenerator,
 		plannerGenerator:  plannerGenerator,
 		Minimum:           spec.Minimum,
 		Maximum:           spec.Maximum,
@@ -66,8 +66,8 @@ func (g *NPCGenerator) Start() error {
 		count := room.NPCCount(g.Spec.Name)
 		if count < g.Minimum {
 			log.Printf("room %s has %d NPCs for generator %s, minimum is %d", room.Name, count, g.Name, g.Minimum)
-			state := initializeState()
-			g.stateGenerator.AddState(g.Spec.Name, state)
+			state := initializeDomain()
+			g.domainGenerator.AddDomain(g.Spec.Name, state)
 
 			// fetch the NPC task graph
 			taskGraph, err := g.loaders.TaskGraphLoader.GetTaskGraph(g.Spec.Name)
@@ -138,7 +138,7 @@ func (g *NPCGenerator) Start() error {
 				return err
 			}
 			// clean up the state and planner
-			g.stateGenerator.DeleteState(toRemove.Name)
+			g.domainGenerator.DeleteDomain(toRemove.Name)
 			g.plannerGenerator.DeletePlanner(toRemove.Name)
 		}
 		time.Sleep(time.Duration(g.SpawnDelaySeconds) * time.Second)
@@ -147,11 +147,11 @@ func (g *NPCGenerator) Start() error {
 	return nil
 }
 
-func initializeState() *htn.State {
+func initializeDomain() *htn.Domain {
 	properties := make(map[string]any)
 	properties["HourOfDay"] = &htn.Property[int64]{
 		Name: "HourOfDay",
-		Value: func(state *htn.State) int64 {
+		Value: func(state *htn.Domain) int64 {
 			sensor, err := state.Sensor("HourOfDay")
 			if err != nil {
 				log.Fatal(err)
@@ -165,7 +165,7 @@ func initializeState() *htn.State {
 	}
 	properties["PlayersInRange"] = &htn.Property[int64]{
 		Name: "PlayersInRange",
-		Value: func(state *htn.State) int64 {
+		Value: func(state *htn.Domain) int64 {
 			sensor, err := state.Sensor("PlayersInRange")
 			if err != nil {
 				log.Fatal(err)
@@ -180,7 +180,7 @@ func initializeState() *htn.State {
 	}
 	properties["PlayersAvailable"] = &htn.Property[int64]{
 		Name: "PlayersAvailable",
-		Value: func(state *htn.State) int64 {
+		Value: func(state *htn.Domain) int64 {
 			sensor, err := state.Sensor("PlayersEngaged")
 			if err != nil {
 				log.Fatal(err)
@@ -197,13 +197,13 @@ func initializeState() *htn.State {
 	}
 	properties["PlayersEngaged"] = &htn.Property[int64]{
 		Name: "PlayersEngaged",
-		Value: func(state *htn.State) int64 {
+		Value: func(state *htn.Domain) int64 {
 			npc := state.Owner.(*domain.NPC)
 			engaged := npc.PlayersEngaged()
 			return int64(engaged)
 		},
 	}
-	state := &htn.State{
+	state := &htn.Domain{
 		Sensors:    make(htn.Sensors),
 		Properties: properties,
 	}

@@ -4,29 +4,29 @@ import (
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
 )
 
-type StateGenerator struct {
-	states htn.States
+type DomainGenerator struct {
+	domains htn.Domains
 }
 
-func (s *StateGenerator) GetState(name string) (*htn.State, error) {
-	if state, ok := s.states[name]; ok {
-		return state, nil
+func (s *DomainGenerator) GetDomain(name string) (*htn.Domain, error) {
+	if domain, ok := s.domains[name]; ok {
+		return domain, nil
 	}
 	return nil, nil
 }
 
-func (s *StateGenerator) AddState(name string, state *htn.State) {
-	s.states[name] = state
+func (s *DomainGenerator) AddDomain(name string, domain *htn.Domain) {
+	s.domains[name] = domain
 }
 
-func (s *StateGenerator) DeleteState(name string) {
-	delete(s.states, name)
+func (s *DomainGenerator) DeleteDomain(name string) {
+	delete(s.domains, name)
 }
 
-var _ htn.StateResolver = &StateGenerator{}
+var _ htn.DomainResolver = &DomainGenerator{}
 
-func NewStateGenerator() *StateGenerator {
-	return &StateGenerator{
-		states: make(htn.States),
+func NewDomainGenerator() *DomainGenerator {
+	return &DomainGenerator{
+		domains: make(htn.Domains),
 	}
 }

@@ -7,7 +7,7 @@ import (
 
 type Condition interface {
 	Name() string
-	IsMet(state *State) bool
+	IsMet(state *Domain) bool
 	String() string
 }
 
@@ -23,7 +23,7 @@ func (f *FlagCondition) Name() string {
 	return f.FlagName
 }
 
-func (f *FlagCondition) IsMet(state *State) bool {
+func (f *FlagCondition) IsMet(state *Domain) bool {
 	return f.Value
 }
 
@@ -40,7 +40,7 @@ type NotFlagCondition struct {
 	FlagCondition
 }
 
-func (n *NotFlagCondition) IsMet(state *State) bool {
+func (n *NotFlagCondition) IsMet(state *Domain) bool {
 	return !n.FlagCondition.IsMet(state)
 }
 
@@ -143,7 +143,7 @@ func (c *ComparisonCondition[T]) Name() string {
 	return c.ConditionName
 }
 
-func (c *ComparisonCondition[T]) IsMet(state *State) bool {
+func (c *ComparisonCondition[T]) IsMet(state *Domain) bool {
 	property, err := state.Property(c.Property)
 	if err != nil {
 		return false
@@ -169,7 +169,7 @@ func (p *PropertyComparisonCondition) Name() string {
 	return p.ConditionName
 }
 
-func (p *PropertyComparisonCondition) IsMet(state *State) bool {
+func (p *PropertyComparisonCondition) IsMet(state *Domain) bool {
 	lhsProperty, err := state.Property(p.LHS)
 	if err != nil {
 		return false
@@ -223,7 +223,7 @@ func (l *LogicalCondition) Name() string {
 	return l.ConditionName
 }
 
-func (l *LogicalCondition) IsMet(state *State) bool {
+func (l *LogicalCondition) IsMet(state *Domain) bool {
 	lhsProperty, err := state.Property(l.LHSProperty)
 	if err != nil {
 		return false
@@ -264,7 +264,7 @@ type TaskCondition struct {
 	Task Task `yaml:"task"`
 }
 
-func (t *TaskCondition) IsMet(state *State) bool {
+func (t *TaskCondition) IsMet(state *Domain) bool {
 	return t.Task.IsComplete()
 }
 
@@ -272,7 +272,7 @@ func (t *TaskCondition) String() string {
 	return fmt.Sprintf("TaskCondition: %s, complete: %t", t.Task.Name(), t.Task.IsComplete())
 }
 
-type Evaluator func(state *State) bool
+type Evaluator func(state *Domain) bool
 
 type FuncCondition struct {
 	ConditionName string    `yaml:"name"`
@@ -283,7 +283,7 @@ func (f *FuncCondition) Name() string {
 	return f.ConditionName
 }
 
-func (f *FuncCondition) IsMet(state *State) bool {
+func (f *FuncCondition) IsMet(state *Domain) bool {
 	return f.Evaluator(state)
 }
 

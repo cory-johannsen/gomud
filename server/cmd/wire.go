@@ -21,7 +21,7 @@ func InitializeEngine() (*engine.Engine, error) {
 		effect.EffectsSet, effect.NewEffects,
 		loader.LoaderSet, loader.NewLoaders,
 		generator.NewPlayerGenerator,
-		generator.NewStateGenerator, wire.Bind(new(htn.StateResolver), new(*generator.StateGenerator)),
+		generator.NewDomainGenerator, wire.Bind(new(htn.DomainResolver), new(*generator.DomainGenerator)),
 		generator.NewPlannerGenerator, wire.Bind(new(htn.PlannerResolver), new(*generator.PlannerGenerator)),
 		eventbus.New, event.NewClock, engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil

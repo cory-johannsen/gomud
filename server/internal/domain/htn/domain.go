@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type Value[T any] func(state *State) T
+type Value[T any] func(domain *Domain) T
 
 // Property is a named function that accepts the state and returns a generic typed value.
 type Property[T any] struct {
@@ -15,20 +15,20 @@ type Property[T any] struct {
 
 type Properties map[string]any
 
-// State is represented as an array of Sensors and a map of named Properties.
-type State struct {
+// Domain is represented as an array of Sensors and a map of named Properties.
+type Domain struct {
 	Owner      any
 	Sensors    Sensors
 	Properties Properties
 }
 
-type StateResolver interface {
-	GetState(name string) (*State, error)
+type DomainResolver interface {
+	GetDomain(name string) (*Domain, error)
 }
 
-type States map[string]*State
+type Domains map[string]*Domain
 
-func (s *State) Property(name string) (any, error) {
+func (s *Domain) Property(name string) (any, error) {
 	property, ok := s.Properties[name]
 	if !ok {
 		return nil, fmt.Errorf("no Property with name %s", name)
@@ -36,7 +36,7 @@ func (s *State) Property(name string) (any, error) {
 	return property, nil
 }
 
-func (s *State) Sensor(name string) (any, error) {
+func (s *Domain) Sensor(name string) (any, error) {
 	sensor, ok := s.Sensors[name]
 	if !ok {
 		return nil, fmt.Errorf("no sensor with name %s", name)
@@ -44,7 +44,7 @@ func (s *State) Sensor(name string) (any, error) {
 	return sensor, nil
 }
 
-func (s *State) String() string {
+func (s *Domain) String() string {
 	sensors := make([]string, 0)
 	for sensor := range s.Sensors {
 		sensors = append(sensors, fmt.Sprintf("{%s}", sensor))

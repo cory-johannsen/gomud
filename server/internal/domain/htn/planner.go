@@ -61,7 +61,7 @@ type PlannerResolver interface {
 	GetPlanner(name string) (*Planner, error)
 }
 
-func evaluateNode(node *TaskNode, state *State) []Task {
+func evaluateNode(node *TaskNode, domain *Domain) []Task {
 	task, err := node.TaskResolver()
 	if err != nil {
 		panic(err)
@@ -76,7 +76,7 @@ func evaluateNode(node *TaskNode, state *State) []Task {
 	}
 	log.Debugf("evaluating task node {%s} children", task.Name())
 	for _, child := range node.Children {
-		childTasks := evaluateNode(child, state)
+		childTasks := evaluateNode(child, domain)
 		for _, childTask := range childTasks {
 			tasks = append([]Task{childTask}, tasks...)
 		}
@@ -84,21 +84,21 @@ func evaluateNode(node *TaskNode, state *State) []Task {
 	return tasks
 }
 
-func (p *Planner) Plan(state *State) (*Plan, error) {
+func (p *Planner) Plan(domain *Domain) (*Plan, error) {
 	log.Debugf("building plan %s", p.Name)
 	plan := &Plan{
 		Name:  p.Name,
 		Tasks: make(PrioritizedTasks, 0),
 	}
 	// clone the task graph and create new instances of the tasks
-	// this is necessary because the tasks may have state that is modified during execution.
+	// this is necessary because the tasks may have domain that is modified during execution.
 	// we want to start with a clean slate each time we plan
 	taskGraph := p.Tasks.Clone()
 
 	// walk the Task graph, starting at the root, and find the executable plan
 	node := taskGraph.Root
 	if node != nil {
-		tasks := evaluateNode(node, state)
+		tasks := evaluateNode(node, domain)
 		for _, task := range tasks {
 			plan.Tasks = append(plan.Tasks, task)
 		}
@@ -107,15 +107,15 @@ func (p *Planner) Plan(state *State) (*Plan, error) {
 	return plan, nil
 }
 
-func Execute(plan *Plan, state *State) (*State, error) {
+func Execute(plan *Plan, domain *Domain) (*Domain, error) {
 	log.Debugf("executing plan %s with %d tasks", plan.Name, len(plan.Tasks))
 	for _, task := range plan.Tasks {
 		log.Debugf("executing task %s", task.Name())
-		_, err := task.Execute(state)
+		_, err := task.Execute(domain)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	return state, nil
+	return domain, nil
 }

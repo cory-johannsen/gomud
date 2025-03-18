@@ -155,7 +155,7 @@ type Server struct {
 	npcs             *storage.NPCs
 	loaders          *loader.Loaders
 	playerGenerator  *generator.PlayerGenerator
-	stateGenerator   *generator.StateGenerator
+	domainGenerator  *generator.DomainGenerator
 	plannerGenerator *generator.PlannerGenerator
 	dispatcher       *cli.Dispatcher
 	eventBus         eventbus.Bus
@@ -164,7 +164,7 @@ type Server struct {
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, npcs *storage.NPCs, loaders *loader.Loaders,
-	playerGenerator *generator.PlayerGenerator, stateGenerator *generator.StateGenerator, plannerGenerator *generator.PlannerGenerator, eventBus eventbus.Bus, clock *event.Clock) *Server {
+	playerGenerator *generator.PlayerGenerator, stateGenerator *generator.DomainGenerator, plannerGenerator *generator.PlannerGenerator, eventBus eventbus.Bus, clock *event.Clock) *Server {
 	return &Server{
 		port:             config.Port,
 		db:               db,
@@ -172,7 +172,7 @@ func NewServer(config *config.Config, db *storage.Database, players *storage.Pla
 		npcs:             npcs,
 		loaders:          loaders,
 		playerGenerator:  playerGenerator,
-		stateGenerator:   stateGenerator,
+		domainGenerator:  stateGenerator,
 		plannerGenerator: plannerGenerator,
 		eventBus:         eventBus,
 		clock:            clock,
@@ -253,7 +253,7 @@ func (s *Server) initializeSensors() htn.Sensors {
 func initializeConditions() htn.Conditions {
 	awakeHours := &htn.FuncCondition{
 		ConditionName: "awakeHours",
-		Evaluator: func(state *htn.State) bool {
+		Evaluator: func(state *htn.Domain) bool {
 			sensor, err := state.Sensor("HourOfDay")
 			if err != nil {
 				log.Errorf("AfterSleep: could not get HourOfDay sensor")
@@ -270,7 +270,7 @@ func initializeConditions() htn.Conditions {
 	}
 	awake := &htn.FuncCondition{
 		ConditionName: "Awake",
-		Evaluator: func(state *htn.State) bool {
+		Evaluator: func(state *htn.Domain) bool {
 			if owner, ok := state.Owner.(*domain.NPC); ok {
 				return !owner.Sleeping()
 			}
@@ -282,19 +282,19 @@ func initializeConditions() htn.Conditions {
 		"Awake":      awake,
 		"AsleepHours": &htn.FuncCondition{
 			ConditionName: "AsleepHours",
-			Evaluator: func(state *htn.State) bool {
+			Evaluator: func(state *htn.Domain) bool {
 				return !awakeHours.IsMet(state)
 			},
 		},
 		"Asleep": &htn.FuncCondition{
 			ConditionName: "Asleep",
-			Evaluator: func(state *htn.State) bool {
+			Evaluator: func(state *htn.Domain) bool {
 				return !awake.IsMet(state)
 			},
 		},
 		"PlayerEngaged": &htn.FuncCondition{
 			ConditionName: "PlayerEngaged",
-			Evaluator: func(state *htn.State) bool {
+			Evaluator: func(state *htn.Domain) bool {
 				if owner, ok := state.Owner.(*domain.Player); ok {
 					return owner.Engaged()
 				}
@@ -303,7 +303,7 @@ func initializeConditions() htn.Conditions {
 		},
 		"PlayerNotEngaged": &htn.FuncCondition{
 			ConditionName: "PlayerNotEngaged",
-			Evaluator: func(state *htn.State) bool {
+			Evaluator: func(state *htn.Domain) bool {
 				if owner, ok := state.Owner.(*domain.Player); ok {
 					return !owner.Engaged()
 				}
@@ -312,7 +312,7 @@ func initializeConditions() htn.Conditions {
 		},
 		"PlayersEngaged": &htn.FuncCondition{
 			ConditionName: "PlayersEngaged",
-			Evaluator: func(state *htn.State) bool {
+			Evaluator: func(state *htn.Domain) bool {
 				if owner, ok := state.Owner.(*domain.NPC); ok {
 					return owner.PlayersEngaged() > 0
 				}
@@ -352,12 +352,12 @@ func initializeConditions() htn.Conditions {
 
 func initializeActions() htn.Actions {
 	actions := htn.Actions{
-		"Wait": func(state *htn.State) error {
+		"Wait": func(state *htn.Domain) error {
 			owner := state.Owner.(*domain.NPC)
 			log.Printf("%s waiting", owner.Name)
 			return nil
 		},
-		"WakeUp": func(state *htn.State) error {
+		"WakeUp": func(state *htn.Domain) error {
 			owner := state.Owner.(*domain.NPC)
 			owner.SetSleeping(false)
 			dialog := owner.Dialog
@@ -377,7 +377,7 @@ func initializeActions() htn.Actions {
 			})
 			return nil
 		},
-		"Sleep": func(state *htn.State) error {
+		"Sleep": func(state *htn.Domain) error {
 			owner := state.Owner.(*domain.NPC)
 			owner.SetSleeping(true)
 			dialog := owner.Dialog
@@ -397,7 +397,7 @@ func initializeActions() htn.Actions {
 			})
 			return nil
 		},
-		"Greet": func(state *htn.State) error {
+		"Greet": func(state *htn.Domain) error {
 			owner := state.Owner.(*domain.NPC)
 			dialog := owner.Dialog
 			players := owner.Room().Players
@@ -431,7 +431,7 @@ func (s *Server) startGenerator(spec *domain.GeneratorSpec) {
 	if err != nil {
 		panic(err)
 	}
-	g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs, s.stateGenerator, s.plannerGenerator)
+	g := generator.NewNPCGenerator(spec, s.loaders, npcSpec, s.npcs, s.domainGenerator, s.plannerGenerator)
 	go func() {
 		err := g.Start()
 		if err != nil {
