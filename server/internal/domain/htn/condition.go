@@ -180,7 +180,7 @@ func (p *PropertyComparisonCondition) IsMet(state *State) bool {
 		return false
 	}
 	rhs := rhsProperty.(*Property[int64]).Value(state)
-	log.Printf("PropertyComparisonCondition %s comparing %s(%d) %s %s(%d)", p.ConditionName, p.LHS, lhs, p.Comparison, p.RHS, rhs)
+	log.Debugf("PropertyComparisonCondition %s comparing %s(%d) %s %s(%d)", p.ConditionName, p.LHS, lhs, p.Comparison, p.RHS, rhs)
 	switch p.Comparison {
 	case EQ:
 		return lhs == rhs

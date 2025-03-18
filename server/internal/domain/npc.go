@@ -70,7 +70,7 @@ type NPC struct {
 	EventBus       eventbus.Bus
 	Dialog         Dialog
 	playersEngaged map[int64]*Player
-	playersGreeted map[int64]*Player
+	playersGreeted map[*Player]time.Time
 }
 
 func (n *NPC) IsPlayer() bool {
@@ -135,6 +135,20 @@ func (n *NPC) PlayersEngaged() int {
 	return len(n.playersEngaged)
 }
 
+func (n *NPC) PlayerLastGreeted(player *Player) time.Time {
+	last, ok := n.playersGreeted[player]
+	if !ok {
+		return time.Time{}
+	}
+	return last
+}
+
+func (n *NPC) SetPlayerLastGreeted(player *Player, t time.Time) {
+	n.mutex.Lock()
+	defer n.mutex.Unlock()
+	n.playersGreeted[player] = t
+}
+
 func NewNPC(character *Character, state *htn.State, planner *htn.Planner, dialog Dialog, eventBus eventbus.Bus, tickMillis int) *NPC {
 	return &NPC{
 		Character:      *character,
@@ -144,7 +158,7 @@ func NewNPC(character *Character, state *htn.State, planner *htn.Planner, dialog
 		running:        false,
 		tickMillis:     tickMillis,
 		playersEngaged: make(map[int64]*Player),
-		playersGreeted: make(map[int64]*Player),
+		playersGreeted: make(map[*Player]time.Time),
 		Dialog:         dialog,
 	}
 }

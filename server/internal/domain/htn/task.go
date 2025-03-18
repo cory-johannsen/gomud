@@ -156,7 +156,7 @@ type MethodSpec struct {
 
 type Method struct {
 	Conditions    []Condition
-	TaskResolvers TaskResolvers
+	TaskResolvers []TaskResolver
 	Name          string
 }
 
@@ -166,13 +166,13 @@ func (m *Method) Applies(state *State) bool {
 	log.Debugf("checking if method {%s} applies", m.Name)
 	for _, condition := range m.Conditions {
 		if !condition.IsMet(state) {
-			log.Debugf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
+			log.Printf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
 			return false
 		} else {
 			log.Debugf("method {%s} condition {%s} met", m.Name, condition.Name())
 		}
 	}
-	log.Debugf("method {%s} allconditions {%s} met", m.Name)
+	log.Printf("method {%s} all conditions met", m.Name)
 	return true
 }
 
@@ -185,11 +185,11 @@ func (m *Method) Execute(state *State) (int64, error) {
 		if err != nil {
 			return 0, err
 		}
-		tasks = append([]Task{task}, tasks...)
+		tasks = append(tasks, task)
 	}
 	for _, task := range tasks {
 		if !task.IsComplete() {
-			log.Debugf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
+			log.Printf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
 			_, err := task.Execute(state)
 			if err != nil {
 				return -1, err

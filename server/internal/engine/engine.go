@@ -346,15 +346,6 @@ func initializeConditions() htn.Conditions {
 				return property <= value
 			},
 		},
-		"IsPlayer": &htn.FuncCondition{
-			ConditionName: "IsPlayer",
-			Evaluator: func(state *htn.State) bool {
-				if owner, ok := state.Owner.(*domain.Player); ok {
-					return owner != nil
-				}
-				return false
-			},
-		},
 	}
 	return conditions
 }
@@ -408,7 +399,20 @@ func initializeActions() htn.Actions {
 		},
 		"Greet": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
-			log.Printf("%s issuing greeting", owner.Name)
+			players := owner.Room().Players
+			for _, player := range players {
+				lastGreeted := owner.PlayerLastGreeted(player)
+				if time.Since(lastGreeted) > 5*time.Minute {
+					log.Printf("%s issuing greeting to %s", owner.Name, player.Name)
+					msg := fmt.Sprintf("%s! My dawg! Whattup, yo!", player.Name)
+					owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+						Room:      owner.Room(),
+						Character: &owner.Character,
+						Action:    event.RoomEventSay,
+						Args:      []interface{}{msg},
+					})
+				}
+			}
 			return nil
 		},
 	}

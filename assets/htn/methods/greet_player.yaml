@@ -4,6 +4,5 @@ conditions:
   - PlayersInRange
   - PlayersAvailable
   - NotEngaged
-  - IsPlayer
 tasks:
   - Holler

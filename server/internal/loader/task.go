@@ -26,7 +26,6 @@ func NewTaskLoader(cfg *config.Config, actionLoader *ActionLoader, conditionLoad
 		config:          cfg,
 		specs:           make(htn.TaskSpecs),
 		resolvers:       make(htn.TaskResolvers),
-		tasks:           make(htn.Tasks),
 		actionLoader:    actionLoader,
 		conditionLoader: conditionLoader,
 		methodLoader:    methodLoader,
@@ -45,16 +44,11 @@ func (l *TaskLoader) LoadTaskResolvers() (htn.TaskResolvers, error) {
 	for k, v := range primitive {
 		l.specs[k] = v
 		resolver := func() (htn.Task, error) {
-			existing, ok := l.tasks[k]
-			if ok {
-				return existing, nil
-			}
-			log.Printf("instantiating primitive task %s", k)
+			log.Debugf("instantiating primitive task %s", k)
 			t, err := l.loadPrimitiveTask(v)
 			if err != nil {
 				return nil, err
 			}
-			l.tasks[k] = t
 			return t, nil
 		}
 		l.resolvers[k] = resolver
@@ -67,16 +61,10 @@ func (l *TaskLoader) LoadTaskResolvers() (htn.TaskResolvers, error) {
 	for k, v := range compound {
 		l.specs[k] = v
 		resolver := func() (htn.Task, error) {
-			existing, ok := l.tasks[k]
-			if ok {
-				return existing, nil
-			}
-			log.Printf("instantiating compound task %s", k)
 			t, err := l.loadCompoundTask(v)
 			if err != nil {
 				return nil, err
 			}
-			l.tasks[k] = t
 			return t, nil
 		}
 		l.resolvers[k] = resolver

@@ -65,7 +65,7 @@ func (l *MethodLoader) LoadMethods(taskLoader *TaskLoader) (htn.Methods, error) 
 				return nil, fmt.Errorf("condition %s not found loading method %s", conditionName, spec.Name)
 			}
 		}
-		resolvers := make(htn.TaskResolvers)
+		resolvers := make([]htn.TaskResolver, 0)
 		for _, taskName := range spec.Tasks {
 			resolver, err := taskLoader.GetTaskResolver(taskName)
 			if err != nil {
@@ -75,7 +75,7 @@ func (l *MethodLoader) LoadMethods(taskLoader *TaskLoader) (htn.Methods, error) 
 				log.Errorf("task %s not found loading method %s", taskName, spec.Name)
 				return nil, fmt.Errorf("task %s not found loading method %s", taskName, spec.Name)
 			}
-			resolvers[taskName] = resolver
+			resolvers = append(resolvers, resolver)
 		}
 
 		l.methods[spec.Name] = &htn.Method{

@@ -19,11 +19,29 @@ type TaskNode struct {
 	Children     []*TaskNode
 }
 
+func (t *TaskNode) Clone() *TaskNode {
+	children := make([]*TaskNode, 0)
+	for _, child := range t.Children {
+		children = append(children, child.Clone())
+	}
+	return &TaskNode{
+		TaskResolver: t.TaskResolver,
+		Children:     children,
+	}
+}
+
 type TaskGraph struct {
 	Name string
 	Root *TaskNode
 }
 type TaskGraphs map[string]*TaskGraph
+
+func (t *TaskGraph) Clone() *TaskGraph {
+	return &TaskGraph{
+		Name: t.Name,
+		Root: t.Root.Clone(),
+	}
+}
 
 type PrioritizedTasks []Task
 
@@ -72,8 +90,13 @@ func (p *Planner) Plan(state *State) (*Plan, error) {
 		Name:  p.Name,
 		Tasks: make(PrioritizedTasks, 0),
 	}
+	// clone the task graph and create new instances of the tasks
+	// this is necessary because the tasks may have state that is modified during execution.
+	// we want to start with a clean slate each time we plan
+	taskGraph := p.Tasks.Clone()
+
 	// walk the Task graph, starting at the root, and find the executable plan
-	node := p.Tasks.Root
+	node := taskGraph.Root
 	if node != nil {
 		tasks := evaluateNode(node, state)
 		for _, task := range tasks {
@@ -89,10 +112,6 @@ func Execute(plan *Plan, state *State) (*State, error) {
 	for _, task := range plan.Tasks {
 		log.Debugf("executing task %s", task.Name())
 		_, err := task.Execute(state)
-		if err != nil {
-			return nil, err
-		}
-		err = task.Reset()
 		if err != nil {
 			return nil, err
 		}

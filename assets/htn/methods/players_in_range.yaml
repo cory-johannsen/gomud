@@ -5,5 +5,5 @@ conditions:
   - PlayersAvailable
   - NotEngaged
 tasks:
-  - Greet
+  - GreetPlayer
   - Observe

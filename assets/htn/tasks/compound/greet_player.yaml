@@ -1,0 +1,5 @@
+name: GreetPlayer
+preconditions:
+  - GreetPlayer
+  - Default
+complete: false
