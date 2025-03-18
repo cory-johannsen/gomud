@@ -166,13 +166,13 @@ func (m *Method) Applies(state *State) bool {
 	log.Debugf("checking if method {%s} applies", m.Name)
 	for _, condition := range m.Conditions {
 		if !condition.IsMet(state) {
-			log.Printf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
+			log.Debugf("method {%s} condition {%s} not met, exiting", m.Name, condition.Name())
 			return false
 		} else {
 			log.Debugf("method {%s} condition {%s} met", m.Name, condition.Name())
 		}
 	}
-	log.Printf("method {%s} all conditions met", m.Name)
+	log.Debugf("method {%s} all conditions met", m.Name)
 	return true
 }
 
@@ -232,19 +232,19 @@ func (c *CompoundTask) Execute(state *State) (*State, error) {
 		}
 	}
 	if len(applicableMethods) == 0 {
-		log.Printf("no applicable methods found, task %s is complete", c.TaskName)
+		log.Debug("no applicable methods found, task %s is complete", c.TaskName)
 		c.Complete = true
 		return state, nil
 	}
 	// The methods are stored in priority order, so the first one is the selected choice
 	selectedMethod := applicableMethods[0]
-	log.Printf("compound task %s method {%s} applies, executing it", c.TaskName, selectedMethod.Name)
+	log.Debugf("compound task %s method {%s} applies, executing it", c.TaskName, selectedMethod.Name)
 	executedTasks, err := selectedMethod.Execute(state)
 	if err != nil {
 		return nil, err
 	}
 	if executedTasks == 0 {
-		log.Printf("method {%s} executed zero tasks", c.Name())
+		log.Debugf("method {%s} executed zero tasks", c.Name())
 	}
 
 	return state, nil
