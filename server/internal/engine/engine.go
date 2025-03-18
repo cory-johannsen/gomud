@@ -399,18 +399,24 @@ func initializeActions() htn.Actions {
 		},
 		"Greet": func(state *htn.State) error {
 			owner := state.Owner.(*domain.NPC)
+			dialog := owner.Dialog
 			players := owner.Room().Players
+			msg := "{TARGET}! My dawg! Whattup, yo!"
 			for _, player := range players {
 				lastGreeted := owner.PlayerLastGreeted(player)
 				if time.Since(lastGreeted) > 5*time.Minute {
 					owner.SetPlayerLastGreeted(player, time.Now())
-					log.Printf("%s issuing greeting to %s", owner.Name, player.Name)
-					msg := fmt.Sprintf("%s! My dawg! Whattup, yo!", player.Name)
+					log.Debugf("%s issuing greeting to %s", owner.Name, player.Name)
+					wakeUpDialog, ok := dialog["Greet"]
+					if ok {
+						msg = wakeUpDialog.Text[rand.Intn(len(wakeUpDialog.Text))]
+					}
+					formatted := strings.Replace(msg, "{TARGET}", player.Name, -1)
 					owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
 						Room:      owner.Room(),
 						Character: &owner.Character,
 						Action:    event.RoomEventSay,
-						Args:      []interface{}{msg},
+						Args:      []interface{}{formatted},
 					})
 				}
 			}

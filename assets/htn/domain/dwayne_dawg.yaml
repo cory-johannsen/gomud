@@ -6,5 +6,7 @@ root:
       children:
     - task: Observe
       children:
+    - task: Greet
+      children:
     - task: Idle
       children:

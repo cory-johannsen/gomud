@@ -189,7 +189,7 @@ func (m *Method) Execute(state *State) (int64, error) {
 	}
 	for _, task := range tasks {
 		if !task.IsComplete() {
-			log.Printf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
+			log.Debugf("method {%s} task {%s} not complete, executing it", m.Name, task.Name())
 			_, err := task.Execute(state)
 			if err != nil {
 				return -1, err

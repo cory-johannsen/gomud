@@ -81,3 +81,9 @@ dialog:
       - "I'm out, dawgs. I'll see you in the morning."
       - "I'm going to bed, dawgs. Don't wake me up unless it's an emergency."
       - "I'm going to sleep, dawgs. Don't let me wake up until the sun is high."
+  Greet:
+    task: Greet
+    text:
+      - "Hey there, {TARGET}! What's the word?"
+      - "What's up, {TARGET}? You look like you could use a hit."
+      - "Hey, {TARGET}! You look like you could use a friend with drugs."
