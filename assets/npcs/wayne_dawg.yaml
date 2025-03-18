@@ -73,7 +73,7 @@ dialog:
     task: WakeUp
     text:
       - "Mornin' dawgs! Who wants to get high?"
-      - "Yo my dawg! Wake up! We got a big day of getting loaded ahead of us."
+      - "Yo my dawgs! Wake up! We got a big day of getting loaded ahead of us."
       - "It's too damn early to be this sober, let's get fucked up."
   Sleep:
     task: Sleep

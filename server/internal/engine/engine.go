@@ -403,6 +403,7 @@ func initializeActions() htn.Actions {
 			for _, player := range players {
 				lastGreeted := owner.PlayerLastGreeted(player)
 				if time.Since(lastGreeted) > 5*time.Minute {
+					owner.SetPlayerLastGreeted(player, time.Now())
 					log.Printf("%s issuing greeting to %s", owner.Name, player.Name)
 					msg := fmt.Sprintf("%s! My dawg! Whattup, yo!", player.Name)
 					owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{

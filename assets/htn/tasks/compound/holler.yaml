@@ -1,6 +1,0 @@
-name: Holler
-preconditions:
-  - PlayerInRange
-  - PlayerNotEngaged
-  - Default
-complete: false
