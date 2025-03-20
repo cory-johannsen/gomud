@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-type NPCGenerator struct {
+type NpcGenerator struct {
 	mutex             sync.Mutex
 	npcPool           map[int]*domain.NPC
 	running           bool
@@ -33,8 +33,8 @@ type CharacterLifecycle interface {
 }
 
 func NewNpcGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs,
-	domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator) *NPCGenerator {
-	return &NPCGenerator{
+	domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator) *NpcGenerator {
+	return &NpcGenerator{
 		running:           false,
 		npcPool:           make(map[int]*domain.NPC),
 		Name:              spec.Name,
@@ -49,7 +49,7 @@ func NewNpcGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpe
 	}
 }
 
-func (g *NPCGenerator) Start() error {
+func (g *NpcGenerator) Start() error {
 	log.Printf("Starting generator %s for NPC %s and room %s with minumum %d and maximum %d", g.Name, g.Spec.Name, g.Spec.Room, g.Minimum, g.Maximum)
 	if g.running {
 		return nil
@@ -210,7 +210,7 @@ func initializeDomain() *htn.Domain {
 	return state
 }
 
-func (g *NPCGenerator) Stop() error {
+func (g *NpcGenerator) Stop() error {
 	if !g.running {
 		return nil
 	}

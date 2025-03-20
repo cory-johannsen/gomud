@@ -402,12 +402,15 @@ func initializeActions() htn.Actions {
 			dialog := owner.Dialog
 			players := owner.Room().Players
 			msg := "{TARGET}! My dawg! Whattup, yo!"
+			wakeUpDialog, ok := dialog["Greet"]
+			if !ok {
+				log.Errorf("No Greet dialog for %s", owner.Name)
+			}
 			for _, player := range players {
 				lastGreeted := owner.PlayerLastGreeted(player)
 				if time.Since(lastGreeted) > 5*time.Minute {
 					owner.SetPlayerLastGreeted(player, time.Now())
 					log.Debugf("%s issuing greeting to %s", owner.Name, player.Name)
-					wakeUpDialog, ok := dialog["Greet"]
 					if ok {
 						msg = wakeUpDialog.Text[rand.Intn(len(wakeUpDialog.Text))]
 					}
