@@ -12,8 +12,68 @@ import (
 	"time"
 )
 
+type NpcInitializer interface {
+	Initialize(ctx context.Context, spec *domain.NPCSpec) (*domain.NPC, error)
+}
+
+type NpcInitializers map[string]NpcInitializer
+
+func (i NpcInitializers) GetInitializer(name string) NpcInitializer {
+	init, ok := i[name]
+	if !ok {
+		return i["Default"]
+	}
+	return init
+}
+
+type BaseNpcInitializer struct {
+	Loaders          *loader.Loaders
+	DomainGenerator  *DomainGenerator
+	NPCs             *storage.NPCs
+	PlannerGenerator *PlannerGenerator
+}
+
+func (i *BaseNpcInitializer) Initialize(ctx context.Context, spec *domain.NPCSpec) (*domain.NPC, error) {
+	npcDomain := initializeDomain()
+	i.DomainGenerator.AddDomain(spec.Name, npcDomain)
+
+	// fetch the NPC task graph
+	taskGraph, err := i.Loaders.TaskGraphLoader.GetTaskGraph(spec.Name)
+	if err != nil {
+		return nil, err
+	}
+	// create a new planner for the NPC and add it to the planner generator
+	planner := &htn.Planner{
+		Name:  spec.Name,
+		Tasks: taskGraph,
+	}
+	i.PlannerGenerator.AddPlanner(spec.Name, planner)
+
+	newNPC, err := i.NPCs.CreateNPC(context.Background(), spec)
+	if err != nil {
+		return nil, err
+	}
+	// set the domain owner to the new NPC
+	npcDomain.Owner = newNPC
+
+	// initialize the NPC sensors
+	hodSensor, err := i.Loaders.SensorLoader.GetSensor("HourOfDay")
+	if err != nil {
+		return nil, err
+	}
+	npcDomain.Sensors["HourOfDay"] = hodSensor
+	npcDomain.Sensors["PlayersEngaged"] = &domain.PlayersEngagedSensor{
+		NPC: newNPC,
+	}
+	npcDomain.Sensors["PlayersInRange"] = &domain.PlayersInRangeSensor{
+		NPC: newNPC,
+	}
+	return newNPC, nil
+}
+
 type NpcGenerator struct {
 	mutex             sync.Mutex
+	initializers      NpcInitializers
 	npcPool           map[int]*domain.NPC
 	running           bool
 	loaders           *loader.Loaders
@@ -34,8 +94,17 @@ type CharacterLifecycle interface {
 
 func NewNpcGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs,
 	domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator) *NpcGenerator {
+	initializers := make(NpcInitializers)
+	initializers["Default"] = &BaseNpcInitializer{
+		Loaders:          loaders,
+		DomainGenerator:  domainGenerator,
+		NPCs:             npcs,
+		PlannerGenerator: plannerGenerator,
+	}
+	// TODO: populate the initializers map with NPC custom initializers
 	return &NpcGenerator{
 		running:           false,
+		initializers:      initializers,
 		npcPool:           make(map[int]*domain.NPC),
 		Name:              spec.Name,
 		Spec:              npcSpec,
@@ -66,40 +135,9 @@ func (g *NpcGenerator) Start() error {
 		count := room.NPCCount(g.Spec.Name)
 		if count < g.Minimum {
 			log.Printf("room %s has %d NPCs for generator %s, minimum is %d", room.Name, count, g.Name, g.Minimum)
-			state := initializeDomain()
-			g.domainGenerator.AddDomain(g.Spec.Name, state)
 
-			// fetch the NPC task graph
-			taskGraph, err := g.loaders.TaskGraphLoader.GetTaskGraph(g.Spec.Name)
-			if err != nil {
-				return err
-			}
-			// create a new planner for the NPC and add it to the planner generator
-			planner := &htn.Planner{
-				Name:  g.Spec.Name,
-				Tasks: taskGraph,
-			}
-			g.plannerGenerator.AddPlanner(g.Spec.Name, planner)
-
-			newNPC, err := g.npcs.CreateNPC(context.Background(), g.Spec)
-			if err != nil {
-				return err
-			}
-			// set the state owner to the new NPC
-			state.Owner = newNPC
-
-			// initialize the NPC sensors
-			hodSensor, err := g.loaders.SensorLoader.GetSensor("HourOfDay")
-			if err != nil {
-				return err
-			}
-			state.Sensors["HourOfDay"] = hodSensor
-			state.Sensors["PlayersEngaged"] = &domain.PlayersEngagedSensor{
-				NPC: newNPC,
-			}
-			state.Sensors["PlayersInRange"] = &domain.PlayersInRangeSensor{
-				NPC: newNPC,
-			}
+			initializer := g.initializers.GetInitializer(g.Spec.Name)
+			newNPC, err := initializer.Initialize(context.Background(), g.Spec)
 
 			// Start the NPC running
 			err = newNPC.Start()
@@ -137,7 +175,7 @@ func (g *NpcGenerator) Start() error {
 			if err != nil {
 				return err
 			}
-			// clean up the state and planner
+			// clean up the domain and planner
 			g.domainGenerator.DeleteDomain(toRemove.Name)
 			g.plannerGenerator.DeletePlanner(toRemove.Name)
 		}
