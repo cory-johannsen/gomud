@@ -34,6 +34,14 @@ func NewNpcInitializers(loaders *loader.Loaders, npcs *storage.NPCs, domainGener
 		NPCs:             npcs,
 		PlannerGenerator: plannerGenerator,
 	}
+	initializers["Wayne Dawg"] = &WayneDawgInitializer{
+		BaseNpcInitializer: BaseNpcInitializer{
+			Loaders:          loaders,
+			DomainGenerator:  domainGenerator,
+			NPCs:             npcs,
+			PlannerGenerator: plannerGenerator,
+		},
+	}
 	return initializers
 }
 
@@ -82,6 +90,28 @@ func (i *BaseNpcInitializer) Initialize(ctx context.Context, spec *domain.NPCSpe
 		NPC: newNPC,
 	}
 	return newNPC, nil
+}
+
+type WayneDawgInitializer struct {
+	BaseNpcInitializer
+}
+
+func (i *WayneDawgInitializer) Initialize(ctx context.Context, spec *domain.NPCSpec) (*domain.NPC, error) {
+	instance, err := i.BaseNpcInitializer.Initialize(ctx, spec)
+	if err != nil {
+		return nil, err
+	}
+	instance.Domain.Sensors["Drunkenness"] = &domain.IntoxicationSensor{
+		SobrietySensor: domain.SobrietySensor{
+			NPC:       instance,
+			Substance: "Alcohol",
+		},
+	}
+	instance.Domain.Sensors["Stoned"] = &domain.SobrietySensor{
+		NPC:       instance,
+		Substance: "Weed",
+	}
+	return instance, nil
 }
 
 type NpcGenerator struct {

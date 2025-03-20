@@ -149,6 +149,10 @@ func (n *NPC) SetPlayerLastGreeted(player *Player, t time.Time) {
 	n.playersGreeted[player] = t
 }
 
+func (n *NPC) Sobriety(substance string) float64 {
+	return 1.0
+}
+
 func NewNPC(character *Character, domain *htn.Domain, planner *htn.Planner, dialog Dialog, eventBus eventbus.Bus, tickMillis int) *NPC {
 	return &NPC{
 		Character:      *character,
@@ -201,3 +205,40 @@ func (s *PlayersInRangeSensor) String() string {
 }
 
 var _ htn.Sensor[int] = &PlayersInRangeSensor{}
+
+type SobrietySensor struct {
+	NPC       *NPC
+	Substance string
+}
+
+func (s *SobrietySensor) String() string {
+	val, err := s.Get()
+	if err != nil {
+		return fmt.Sprintf("Sobriety: %s: error", s.Substance)
+	}
+	return fmt.Sprintf("Sobriety: %s: %f", s.Substance, val)
+}
+
+func (s *SobrietySensor) Name() string {
+	return fmt.Sprintf("Sobriety: %s", s.Substance)
+}
+
+func (s *SobrietySensor) Get() (float64, error) {
+	return s.NPC.Sobriety(s.Substance), nil
+}
+
+var _ htn.Sensor[float64] = &SobrietySensor{}
+
+type IntoxicationSensor struct {
+	SobrietySensor
+}
+
+func (s *IntoxicationSensor) Get() (float64, error) {
+	sobriety, err := s.SobrietySensor.Get()
+	if err != nil {
+		return 0, err
+	}
+	return 1.0 - sobriety, nil
+}
+
+var _ htn.Sensor[float64] = &IntoxicationSensor{}
