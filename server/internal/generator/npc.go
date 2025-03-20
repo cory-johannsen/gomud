@@ -26,6 +26,19 @@ func (i NpcInitializers) GetInitializer(name string) NpcInitializer {
 	return init
 }
 
+func NewNpcInitializers(loaders *loader.Loaders, npcs *storage.NPCs, domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator) NpcInitializers {
+	initializers := make(NpcInitializers)
+	initializers["Default"] = &BaseNpcInitializer{
+		Loaders:          loaders,
+		DomainGenerator:  domainGenerator,
+		NPCs:             npcs,
+		PlannerGenerator: plannerGenerator,
+	}
+	return initializers
+}
+
+// BaseNpcInitializer is the default NPC initializer, which creates a standard domain and planner.  This initializer is used when no custom initializer is provided.
+// This initializer sets up the standard sensors for the NPC, including HourOfDay, PlayersEngaged, and PlayersInRange.
 type BaseNpcInitializer struct {
 	Loaders          *loader.Loaders
 	DomainGenerator  *DomainGenerator
@@ -93,15 +106,7 @@ type CharacterLifecycle interface {
 }
 
 func NewNpcGenerator(spec *domain.GeneratorSpec, loaders *loader.Loaders, npcSpec *domain.NPCSpec, npcs *storage.NPCs,
-	domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator) *NpcGenerator {
-	initializers := make(NpcInitializers)
-	initializers["Default"] = &BaseNpcInitializer{
-		Loaders:          loaders,
-		DomainGenerator:  domainGenerator,
-		NPCs:             npcs,
-		PlannerGenerator: plannerGenerator,
-	}
-	// TODO: populate the initializers map with NPC custom initializers
+	domainGenerator *DomainGenerator, plannerGenerator *PlannerGenerator, initializers NpcInitializers) *NpcGenerator {
 	return &NpcGenerator{
 		running:           false,
 		initializers:      initializers,

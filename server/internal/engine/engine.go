@@ -192,13 +192,16 @@ func (s *Server) Start() {
 		panic(err)
 	}
 
+	initializers := generator.NewNpcInitializers(s.loaders, s.npcs, s.domainGenerator, s.plannerGenerator)
+	// TODO: populate the NPC-specific initializers
+
 	// start the generators
 	specs, err := s.loaders.GeneratorLoader.LoadGenerators()
 	if err != nil {
 		panic(err)
 	}
 	for _, spec := range specs {
-		s.startGenerator(spec)
+		s.startGenerator(spec, initializers)
 	}
 
 	log.Printf("Starting server on port %s\n", s.port)
@@ -429,12 +432,12 @@ func initializeActions() htn.Actions {
 	return actions
 }
 
-func (s *Server) startGenerator(spec *domain.GeneratorSpec) {
+func (s *Server) startGenerator(spec *domain.GeneratorSpec, initializers generator.NpcInitializers) {
 	npcSpec, err := s.loaders.NPCLoader.GetNPC(spec.NPC)
 	if err != nil {
 		panic(err)
 	}
-	g := generator.NewNpcGenerator(spec, s.loaders, npcSpec, s.npcs, s.domainGenerator, s.plannerGenerator)
+	g := generator.NewNpcGenerator(spec, s.loaders, npcSpec, s.npcs, s.domainGenerator, s.plannerGenerator, initializers)
 	go func() {
 		err := g.Start()
 		if err != nil {
