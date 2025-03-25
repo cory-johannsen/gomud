@@ -46,6 +46,7 @@ const (
 	StatsProperty               = "stats"
 	SleepingProperty            = "sleeping"
 	TalentsProperty             = "talents"
+	TagsProperty                = "tags"
 	UpbringingProperty          = "upbringing"
 )
 
@@ -209,6 +210,18 @@ func (c Condition) LessSeriousThan(other Condition) bool {
 }
 
 var _ Property = Condition("")
+
+type Tags map[string]string
+
+func (t Tags) String() string {
+	msg := ""
+	for k, v := range t {
+		msg += fmt.Sprintf("%s: %s\n", k, v)
+	}
+	return msg
+}
+
+var _ Property = Tags{}
 
 type CharacterSpec struct {
 	Id   int
@@ -388,6 +401,43 @@ func (c *Character) Stats() *Stats {
 		c.Data[StatsProperty] = &Stats{}
 	}
 	return c.Data[StatsProperty].(*Stats)
+}
+
+func (c *Character) Tags() Tags {
+	tags, ok := c.Data[TagsProperty]
+	if !ok {
+		t := make(Tags)
+		c.Data[TagsProperty] = t
+		return t
+	}
+	return tags.(Tags)
+}
+
+func (c *Character) AddTag(tag string, value string) {
+	tags := c.Tags()
+	tags[tag] = value
+	c.Data[TagsProperty] = tags
+}
+
+func (c *Character) RemoveTag(tag string) {
+	tags := c.Tags()
+	delete(tags, tag)
+	c.Data[TagsProperty] = tags
+}
+
+func (c *Character) HasTag(tag string) bool {
+	tags := c.Tags()
+	_, ok := tags[tag]
+	return ok
+}
+
+func (c *Character) Tag(tag string) *string {
+	tags := c.Tags()
+	t, ok := tags[tag]
+	if !ok {
+		return nil
+	}
+	return &t
 }
 
 func bonusFromStat(stat int) int {

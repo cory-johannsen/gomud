@@ -357,7 +357,7 @@ func initializeActions() htn.Actions {
 	actions := htn.Actions{
 		"Wait": func(state *htn.Domain) error {
 			owner := state.Owner.(*domain.NPC)
-			log.Printf("%s waiting", owner.Name)
+			log.Debugf("%s waiting", owner.Name)
 			return nil
 		},
 		"WakeUp": func(state *htn.Domain) error {
