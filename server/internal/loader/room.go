@@ -11,16 +11,18 @@ import (
 )
 
 type RoomLoader struct {
-	config   *config.Config
-	eventBus eventbus.Bus
-	rooms    map[string]*domain.Room
+	config       *config.Config
+	objectLoader *InteractiveObjectLoader
+	eventBus     eventbus.Bus
+	rooms        map[string]*domain.Room
 }
 
-func NewRoomLoader(cfg *config.Config, eventBus eventbus.Bus) *RoomLoader {
+func NewRoomLoader(cfg *config.Config, objectLoader *InteractiveObjectLoader, eventBus eventbus.Bus) *RoomLoader {
 	return &RoomLoader{
-		config:   cfg,
-		eventBus: eventBus,
-		rooms:    make(map[string]*domain.Room),
+		config:       cfg,
+		objectLoader: objectLoader,
+		eventBus:     eventBus,
+		rooms:        make(map[string]*domain.Room),
 	}
 }
 
@@ -53,7 +55,7 @@ func (l *RoomLoader) LoadRooms() (map[string]*domain.Room, error) {
 			log.Printf("error unmarshalling file %s: %s", name, err)
 			continue
 		}
-		room := domain.NewRoom(spec, l.GetRoom, l.eventBus)
+		room := domain.NewRoom(spec, l.GetRoom, l.objectLoader.GetInteractiveObject, l.eventBus)
 		l.rooms[room.Name] = room
 	}
 	return l.rooms, nil

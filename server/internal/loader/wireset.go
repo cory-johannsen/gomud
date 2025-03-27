@@ -9,7 +9,7 @@ import (
 
 var LoaderSet = wire.NewSet(
 	NewAppearanceLoader, NewAlignmentLoader, NewArchetypeLoader, NewBackgroundLoader, NewDisorderLoader,
-	NewEffectLoader, NewEquipmentLoader, NewInjuryLoader, NewInventoryLoader, NewJobLoader,
+	NewEffectLoader, NewEquipmentLoader, NewInjuryLoader, NewInteractiveObjectLoader, NewInventoryLoader, NewJobLoader,
 	NewQualityLoader, NewRoomLoader, NewSkillLoader,
 	NewTalentLoader, NewTeamLoader, NewTraitLoader, NewUpbringingLoader, NewGeneratorLoader, NewNPCLoader,
 	NewActionLoader, NewConditionLoader, NewMethodLoader, NewSensorLoader, NewTaskLoader, NewTaskGraphLoader)

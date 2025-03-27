@@ -26,6 +26,7 @@ type RoomSpec struct {
 	ID          int64               `yaml:"ItemId"`
 	Name        string              `yaml:"name"`
 	Description string              `yaml:"description"`
+	Objects     []string            `yaml:"objects"`
 	Exits       map[string]ExitSpec `yaml:"exits"`
 }
 
@@ -37,6 +38,7 @@ type Room struct {
 	Description string
 	Players     Players
 	NPCs        RoomNPCs
+	Objects     InteractiveObjects
 	exitSpecs   map[string]ExitSpec
 	exits       Exits
 	resolver    RoomResolver
@@ -62,13 +64,14 @@ type RoomEvent struct {
 
 type RoomEventHandler func(*RoomEvent)
 
-func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room {
+func NewRoom(spec *RoomSpec, resolver RoomResolver, objectResolver InteractiveObjectResolver, eventBus eventbus.Bus) *Room {
 	room := &Room{
 		ID:          spec.ID,
 		Name:        spec.Name,
 		Description: spec.Description,
 		Players:     make(Players),
 		NPCs:        make(RoomNPCs),
+		Objects:     make(InteractiveObjects),
 		exitSpecs:   spec.Exits,
 		exits:       make(Exits),
 		resolver:    resolver,
@@ -84,13 +87,21 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver, eventBus eventbus.Bus) *Room
 		log.Printf("error subscribing to event bus: %s", err)
 		panic(err)
 	}
-	err = eventBus.SubscribeAsync(event.TickChannel, func(tick int64) {
-		log.Debugf("room %s received tick %d", spec.Name, tick)
-		eventBus.Publish(spec.Name, nil, fmt.Sprintf("tick %d", tick))
-	}, false)
-	if err != nil {
-		log.Printf("error subscribing to event bus: %s", err)
-		panic(err)
+	//err = eventBus.SubscribeAsync(event.TickChannel, func(tick int64) {
+	//	log.Debugf("room %s received tick %d", spec.Name, tick)
+	//	eventBus.Publish(spec.Name, nil, fmt.Sprintf("tick %d", tick))
+	//}, false)
+	//if err != nil {
+	//	log.Printf("error subscribing to event bus: %s", err)
+	//	panic(err)
+	//}
+	for _, objectName := range spec.Objects {
+		object, err := objectResolver(objectName)
+		if err != nil {
+			log.Printf("error resolving interactive object: %s", err)
+			continue
+		}
+		room.Objects[objectName] = object
 	}
 
 	return room

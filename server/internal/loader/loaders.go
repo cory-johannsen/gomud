@@ -6,25 +6,26 @@ import (
 )
 
 type Loaders struct {
-	AppearanceLoader *AppearanceLoader
-	AlignmentLoader  *AlignmentLoader
-	ArchetypeLoader  *ArchetypeLoader
-	BackgroundLoader *BackgroundLoader
-	DisorderLoader   *DisorderLoader
-	EffectLoader     *EffectLoader
-	EquipmentLoader  *EquipmentLoader
-	GeneratorLoader  *GeneratorLoader
-	InjuryLoader     *InjuryLoader
-	InventoryLoader  *InventoryLoader
-	JobLoader        *JobLoader
-	NPCLoader        *NPCLoader
-	QualityLoader    *QualityLoader
-	RoomLoader       *RoomLoader
-	SkillLoader      *SkillLoader
-	TalentLoader     *TalentLoader
-	TeamLoader       *TeamLoader
-	TraitLoader      *TraitLoader
-	UpbringingLoader *UpbringingLoader
+	AppearanceLoader        *AppearanceLoader
+	AlignmentLoader         *AlignmentLoader
+	ArchetypeLoader         *ArchetypeLoader
+	BackgroundLoader        *BackgroundLoader
+	DisorderLoader          *DisorderLoader
+	EffectLoader            *EffectLoader
+	EquipmentLoader         *EquipmentLoader
+	GeneratorLoader         *GeneratorLoader
+	InjuryLoader            *InjuryLoader
+	InteractiveObjectLoader *InteractiveObjectLoader
+	InventoryLoader         *InventoryLoader
+	JobLoader               *JobLoader
+	NPCLoader               *NPCLoader
+	QualityLoader           *QualityLoader
+	RoomLoader              *RoomLoader
+	SkillLoader             *SkillLoader
+	TalentLoader            *TalentLoader
+	TeamLoader              *TeamLoader
+	TraitLoader             *TraitLoader
+	UpbringingLoader        *UpbringingLoader
 
 	ActionLoader    *ActionLoader
 	SensorLoader    *SensorLoader
@@ -36,30 +37,31 @@ type Loaders struct {
 
 func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLoader, archetypeLoader *ArchetypeLoader,
 	backgroundLoader *BackgroundLoader, disorderLoader *DisorderLoader, effectLoader *EffectLoader, equipmentLoader *EquipmentLoader,
-	generatorLoader *GeneratorLoader, injuryLoader *InjuryLoader,
+	generatorLoader *GeneratorLoader, injuryLoader *InjuryLoader, interactiveObjectLoader *InteractiveObjectLoader,
 	inventoryLoader *InventoryLoader, jobLoader *JobLoader, npcLoader *NPCLoader, qualityLoader *QualityLoader, roomLoader *RoomLoader, skillLoader *SkillLoader,
 	talentLoader *TalentLoader, traitLoader *TraitLoader, teamLoader *TeamLoader, upbringingLoader *UpbringingLoader,
 	actionLoader *ActionLoader, sensorLoader *SensorLoader, conditionLoader *ConditionLoader, methodLoader *MethodLoader, taskLoader *TaskLoader, taskGraphLoader *TaskGraphLoader) *Loaders {
 	return &Loaders{
-		AppearanceLoader: appearanceLoader,
-		AlignmentLoader:  alignmentLoader,
-		ArchetypeLoader:  archetypeLoader,
-		BackgroundLoader: backgroundLoader,
-		DisorderLoader:   disorderLoader,
-		EffectLoader:     effectLoader,
-		EquipmentLoader:  equipmentLoader,
-		GeneratorLoader:  generatorLoader,
-		InjuryLoader:     injuryLoader,
-		InventoryLoader:  inventoryLoader,
-		JobLoader:        jobLoader,
-		NPCLoader:        npcLoader,
-		QualityLoader:    qualityLoader,
-		RoomLoader:       roomLoader,
-		SkillLoader:      skillLoader,
-		TalentLoader:     talentLoader,
-		TeamLoader:       teamLoader,
-		TraitLoader:      traitLoader,
-		UpbringingLoader: upbringingLoader,
+		AppearanceLoader:        appearanceLoader,
+		AlignmentLoader:         alignmentLoader,
+		ArchetypeLoader:         archetypeLoader,
+		BackgroundLoader:        backgroundLoader,
+		DisorderLoader:          disorderLoader,
+		EffectLoader:            effectLoader,
+		EquipmentLoader:         equipmentLoader,
+		GeneratorLoader:         generatorLoader,
+		InjuryLoader:            injuryLoader,
+		InteractiveObjectLoader: interactiveObjectLoader,
+		InventoryLoader:         inventoryLoader,
+		JobLoader:               jobLoader,
+		NPCLoader:               npcLoader,
+		QualityLoader:           qualityLoader,
+		RoomLoader:              roomLoader,
+		SkillLoader:             skillLoader,
+		TalentLoader:            talentLoader,
+		TeamLoader:              teamLoader,
+		TraitLoader:             traitLoader,
+		UpbringingLoader:        upbringingLoader,
 
 		ActionLoader:    actionLoader,
 		SensorLoader:    sensorLoader,
@@ -144,6 +146,11 @@ func (l *Loaders) Preload(conditions htn.Conditions, actions htn.Actions, sensor
 	}
 	log.Info("loading weapons")
 	_, err = l.EquipmentLoader.LoadWeapons()
+	if err != nil {
+		return err
+	}
+	log.Info("loading interactive objects")
+	_, err = l.InteractiveObjectLoader.LoadInteractiveObjects()
 	if err != nil {
 		return err
 	}
