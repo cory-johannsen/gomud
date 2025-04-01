@@ -1,5 +1,7 @@
 name: Wayne Dawg's Trailer
 description: Wayne Dawg, a grizzled old tweaker, lives in this trailer. It’s covered in rust and oil stains, with a makeshift lab attached to the side. Wayne Dawg is the lowliest of low. A downright dirty dog if there ever was one. This is his trailer, and he’s not one to share.
+objects:
+  - Shitty bed
 exits:
   East:
     direction: East

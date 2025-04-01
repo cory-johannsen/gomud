@@ -548,6 +548,14 @@ func (c *Character) SetSleeping(sleeping bool) {
 	c.Data[SleepingProperty] = &BaseProperty{Val: sleeping}
 }
 
+func (c *Character) IsPlayer() bool {
+	return false
+}
+
+func (c *Character) IsNPC() bool {
+	return false
+}
+
 // Player a Character that is controlled by a user
 type Player struct {
 	Character
@@ -919,4 +927,12 @@ func (p *Player) Prompt() string {
 	}
 	timestamp := fmt.Sprintf("[%02d:%02d]", timeOfDay.Hour, timeOfDay.Minute)
 	return fmt.Sprintf("%s %s [%s, %s]%s ", cyan(timestamp), cyan(player.Name), green(player.Condition()), green(player.Peril().Condition.String()), cyan(">"))
+}
+
+func (p *Player) IsPlayer() bool {
+	return true
+}
+
+func (p *Player) IsNPC() bool {
+	return false
 }

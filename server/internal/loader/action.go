@@ -5,6 +5,8 @@ import (
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
 )
 
+type ActionResolver func(name string) (htn.Action, error)
+
 type ActionLoader struct {
 	config  *config.Config
 	actions htn.Actions
