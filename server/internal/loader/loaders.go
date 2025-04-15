@@ -1,6 +1,7 @@
 package loader
 
 import (
+	"github.com/cory-johannsen/gomud/internal/domain"
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	log "github.com/sirupsen/logrus"
 )
@@ -72,7 +73,7 @@ func NewLoaders(appearanceLoader *AppearanceLoader, alignmentLoader *AlignmentLo
 	}
 }
 
-func (l *Loaders) Preload(conditions htn.Conditions, actions htn.Actions, sensors htn.Sensors) error {
+func (l *Loaders) Preload(conditions htn.Conditions, actions htn.Actions, sensors htn.Sensors, npcResolver domain.NPCResolver) error {
 	log.Println("Pre-loading assets")
 	log.Info("loading alignments")
 	_, err := l.AlignmentLoader.LoadAlignments()
@@ -149,11 +150,6 @@ func (l *Loaders) Preload(conditions htn.Conditions, actions htn.Actions, sensor
 	if err != nil {
 		return err
 	}
-	log.Info("loading interactive objects")
-	_, err = l.InteractiveObjectLoader.LoadInteractiveObjects()
-	if err != nil {
-		return err
-	}
 	log.Info("loading rooms")
 	_, err = l.RoomLoader.LoadRooms()
 	if err != nil {
@@ -166,6 +162,11 @@ func (l *Loaders) Preload(conditions htn.Conditions, actions htn.Actions, sensor
 	}
 	log.Info("loading NPCs")
 	_, err = l.NPCLoader.LoadNPCs()
+	if err != nil {
+		return err
+	}
+	log.Info("loading interactive objects")
+	_, err = l.InteractiveObjectLoader.LoadInteractiveObjects(npcResolver)
 	if err != nil {
 		return err
 	}

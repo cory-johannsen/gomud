@@ -4,6 +4,7 @@
 package loader
 
 import (
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	"github.com/google/wire"
 )
 
@@ -12,4 +13,5 @@ var LoaderSet = wire.NewSet(
 	NewEffectLoader, NewEquipmentLoader, NewInjuryLoader, NewInteractiveObjectLoader, NewInventoryLoader, NewJobLoader,
 	NewQualityLoader, NewRoomLoader, NewSkillLoader,
 	NewTalentLoader, NewTeamLoader, NewTraitLoader, NewUpbringingLoader, NewGeneratorLoader, NewNPCLoader,
-	NewActionLoader, NewConditionLoader, NewMethodLoader, NewSensorLoader, NewTaskLoader, NewTaskGraphLoader)
+	NewActionLoader, wire.Bind(new(ActionResolver), new(*ActionLoader)),
+	NewConditionLoader, NewMethodLoader, NewSensorLoader, NewTaskLoader, NewTaskGraphLoader)

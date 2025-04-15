@@ -87,16 +87,9 @@ func NewRoom(spec *RoomSpec, resolver RoomResolver, objectResolver InteractiveOb
 		log.Printf("error subscribing to event bus: %s", err)
 		panic(err)
 	}
-	//err = eventBus.SubscribeAsync(event.TickChannel, func(tick int64) {
-	//	log.Debugf("room %s received tick %d", spec.Name, tick)
-	//	eventBus.Publish(spec.Name, nil, fmt.Sprintf("tick %d", tick))
-	//}, false)
-	//if err != nil {
-	//	log.Printf("error subscribing to event bus: %s", err)
-	//	panic(err)
-	//}
+
 	for _, objectName := range spec.Objects {
-		object, err := objectResolver(objectName)
+		object, err := objectResolver(objectName, nil)
 		if err != nil {
 			log.Printf("error resolving interactive object: %s", err)
 			continue

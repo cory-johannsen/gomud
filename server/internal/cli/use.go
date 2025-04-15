@@ -112,11 +112,41 @@ func (u *UseHandler) useObject(objectName string, target *string) (string, error
 	return result, nil
 }
 
-func (u *UseHandler) Handle(ctx context.Context, args []string) (string, error) {
-	if len(args) == 0 {
-		return "use what? (skill/item/object)", nil
+func selectUseType(ctx context.Context, state domain.StateProvider) string {
+	green := color.New(color.FgGreen).SprintFunc()
+	cyan := color.New(color.FgCyan).SprintFunc()
+	yellow := color.New(color.FgYellow).SprintFunc()
+	msg := fmt.Sprintf("%s: %s\n%s: %s\n%s: %s\n", green("1. skill"), "Use a skill", cyan("2. item"), "Use an item", yellow("3. object"), "Use an object")
+	player := state().Player()
+	player.Connection.Writeln(msg)
+	response := state().Player().Connection.Read()
+	if len(response) == 0 {
+		return selectUseType(ctx, state)
 	}
-	useType := strings.ToLower(args[0])
+	switch response {
+	case "1", "skill":
+		response = UseSkill
+	case "2", "item":
+		response = UseItem
+	case "3", "object":
+		response = UseObject
+	default:
+		player.Connection.Writeln("invalid selection")
+		return selectUseType(ctx, state)
+	}
+	player.Connection.Writeln("invalid selection")
+	return selectUseType(ctx, state)
+}
+
+func (u *UseHandler) Handle(ctx context.Context, args []string) (string, error) {
+	var useType string
+	if len(args) == 0 {
+		u.stateProvider().Player().Connection.Writeln("use what? (skill/item/object)")
+		useType = selectUseType(ctx, u.stateProvider)
+		return "use what? (skill/item/object)", nil
+	} else {
+		useType = strings.ToLower(args[0])
+	}
 	if len(args) < 2 {
 		if useType == strings.ToLower(UseSkill) {
 			return "use which skill?", nil

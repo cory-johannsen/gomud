@@ -12,25 +12,21 @@ import (
 	"strings"
 )
 
-type NPCResolver func(ctx context.Context, id int) (*domain.NPC, error)
-
 type InteractiveObjectLoader struct {
 	config         *config.Config
 	objects        domain.InteractiveObjects
 	actionResolver ActionResolver
-	npcResolver    NPCResolver
 }
 
-func NewInteractiveObjectLoader(cfg *config.Config, actionResolver ActionResolver, npcResolver NPCResolver) *InteractiveObjectLoader {
+func NewInteractiveObjectLoader(cfg *config.Config, actionResolver ActionResolver) *InteractiveObjectLoader {
 	return &InteractiveObjectLoader{
 		config:         cfg,
 		actionResolver: actionResolver,
-		npcResolver:    npcResolver,
 		objects:        make(domain.InteractiveObjects),
 	}
 }
 
-func (l *InteractiveObjectLoader) LoadInteractiveObjects() (domain.InteractiveObjects, error) {
+func (l *InteractiveObjectLoader) LoadInteractiveObjects(npcResolver domain.NPCResolver) (domain.InteractiveObjects, error) {
 	if len(l.objects) > 0 {
 		return l.objects, nil
 	}
@@ -65,14 +61,14 @@ func (l *InteractiveObjectLoader) LoadInteractiveObjects() (domain.InteractiveOb
 				ActionName: spec.Action,
 			},
 			ActionResolver: l.actionResolver,
-			NPCResolver:    l.npcResolver,
+			NPCResolver:    npcResolver,
 		}
 	}
 	return l.objects, nil
 }
 
-func (l *InteractiveObjectLoader) GetInteractiveObject(name string) (domain.InteractiveObject, error) {
-	objs, err := l.LoadInteractiveObjects()
+func (l *InteractiveObjectLoader) GetInteractiveObject(name string, npcResolver domain.NPCResolver) (domain.InteractiveObject, error) {
+	objs, err := l.LoadInteractiveObjects(npcResolver)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +82,7 @@ func (l *InteractiveObjectLoader) GetInteractiveObject(name string) (domain.Inte
 type ActionInteractiveObject struct {
 	domain.BaseInteractiveObject
 	ActionResolver ActionResolver
-	NPCResolver    NPCResolver
+	NPCResolver    domain.NPCResolver
 }
 
 func (i *ActionInteractiveObject) Interact(gameState *domain.GameState, user *domain.Character, target *string) (string, error) {
@@ -95,12 +91,12 @@ func (i *ActionInteractiveObject) Interact(gameState *domain.GameState, user *do
 	} else {
 		log.Printf("%s is using %s action %s", user.Name, i.ActionName, i.Name())
 	}
-	action, err := i.ActionResolver(i.ObjectName)
+	action, err := i.ActionResolver.GetAction(i.ObjectName)
 	if err != nil {
 		return "", err
 	}
 	if user.IsNPC() {
-		npc, err := i.NPCResolver(context.Background(), *user.Id)
+		npc, err := i.NPCResolver.FetchNPCById(context.Background(), *user.Id)
 		if err != nil {
 			return "", err
 		}

@@ -7,7 +7,7 @@ type InteractiveObject interface {
 	Interact(state *GameState, user *Character, target *string) (string, error)
 }
 
-type InteractiveObjectResolver func(name string) (InteractiveObject, error)
+type InteractiveObjectResolver func(name string, npcResolver NPCResolver) (InteractiveObject, error)
 
 type InteractiveObjects map[string]InteractiveObject
 

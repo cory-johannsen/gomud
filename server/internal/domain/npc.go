@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"context"
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
@@ -59,6 +60,10 @@ type NPCSpec struct {
 }
 
 type NPCSpecs map[string]*NPCSpec
+
+type NPCResolver interface {
+	FetchNPCById(ctx context.Context, id int) (*NPC, error)
+}
 
 type NPC struct {
 	mutex      sync.Mutex

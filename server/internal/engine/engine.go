@@ -187,7 +187,7 @@ func (s *Server) Start() {
 	sensors := s.initializeSensors()
 
 	// preload the assets
-	err := s.loaders.Preload(conditions, actions, sensors)
+	err := s.loaders.Preload(conditions, actions, sensors, s.npcs)
 	if err != nil {
 		panic(err)
 	}
