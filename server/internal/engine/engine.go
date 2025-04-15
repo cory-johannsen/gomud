@@ -2,6 +2,7 @@ package engine
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/cli"
@@ -23,6 +24,18 @@ type PlayerState struct {
 	player  *domain.Player
 	sensors htn.Sensors
 	vars    map[string]domain.Property
+}
+
+func (s *PlayerState) Domain() *htn.Domain {
+	props := make(map[string]any)
+	for k, v := range s.vars {
+		props[k] = v
+	}
+	return &htn.Domain{
+		Owner:      s.player,
+		Sensors:    s.sensors,
+		Properties: props,
+	}
 }
 
 func (s *PlayerState) Player() *domain.Player {
@@ -429,7 +442,15 @@ func initializeActions() htn.Actions {
 			return nil
 		},
 		"Heal": func(state *htn.Domain) error {
-			return nil
+			if npc, ok := state.Owner.(*domain.NPC); ok {
+				log.Printf("healing NPC %s", npc.Name)
+				return nil
+			} else if player, ok := state.Owner.(*domain.Player); ok {
+				log.Printf("healing player %s", player.Name)
+				player.Connection.Writeln("You hit that button and inhale, and soon you are fully healed")
+				return nil
+			}
+			return errors.New("heal action not implemented for this type")
 		},
 	}
 	return actions

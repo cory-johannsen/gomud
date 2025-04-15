@@ -105,7 +105,7 @@ func (u *UseHandler) useObject(objectName string, target *string) (string, error
 	if !ok {
 		return fmt.Sprintf("I don't see a %s here.", objectName), nil
 	}
-	result, err := object.Interact(&state, &player.Character, target)
+	result, err := object.Interact(state, &player.Character, target)
 	if err != nil {
 		return "", err
 	}

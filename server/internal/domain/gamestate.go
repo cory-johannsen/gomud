@@ -6,6 +6,7 @@ type GameState interface {
 	Player() *Player
 	Sensor(string) any
 	Property(string) Property
+	Domain() *htn.Domain
 }
 
 type StateProvider func() GameState

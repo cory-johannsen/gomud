@@ -85,7 +85,7 @@ type ActionInteractiveObject struct {
 	NPCResolver    domain.NPCResolver
 }
 
-func (i *ActionInteractiveObject) Interact(gameState *domain.GameState, user *domain.Character, target *string) (string, error) {
+func (i *ActionInteractiveObject) Interact(gameState domain.GameState, user *domain.Character, target *string) (string, error) {
 	if target != nil {
 		log.Printf("%s is using %s action %s on %s", user.Name, i.Name(), i.ActionName, *target)
 	} else {
@@ -105,12 +105,12 @@ func (i *ActionInteractiveObject) Interact(gameState *domain.GameState, user *do
 			return "", err
 		}
 	} else {
-		err = action(nil)
+		err = action(gameState.Domain())
 		if err != nil {
 			return "", err
 		}
 	}
-	return "ok", nil
+	return "", nil
 }
 
 var _ domain.InteractiveObject = &ActionInteractiveObject{}
