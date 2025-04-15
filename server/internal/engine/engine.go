@@ -428,6 +428,9 @@ func initializeActions() htn.Actions {
 			}
 			return nil
 		},
+		"Heal": func(state *htn.Domain) error {
+			return nil
+		},
 	}
 	return actions
 }

@@ -2,6 +2,7 @@ name: Filth Court
 description: A grimy, trash-strewn courtyard surrounded by run down trailers. The ground is slick with oil and grime, and the air is thick with the stench of decay. The courtyard is a popular hangout for scavengers and drifters, who come to trade and share stories.
 objects:
   - Old busted couch
+  - Penjamin
 exits:
   East:
     direction: East

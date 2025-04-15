@@ -89,9 +89,9 @@ func (i *ActionInteractiveObject) Interact(gameState *domain.GameState, user *do
 	if target != nil {
 		log.Printf("%s is using %s action %s on %s", user.Name, i.Name(), i.ActionName, *target)
 	} else {
-		log.Printf("%s is using %s action %s", user.Name, i.ActionName, i.Name())
+		log.Printf("%s is using %s action %s", user.Name, i.Name(), i.ActionName)
 	}
-	action, err := i.ActionResolver.GetAction(i.ObjectName)
+	action, err := i.ActionResolver.GetAction(i.ActionName)
 	if err != nil {
 		return "", err
 	}
