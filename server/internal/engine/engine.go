@@ -444,13 +444,15 @@ func initializeActions() htn.Actions {
 		"Heal": func(state *htn.Domain) error {
 			if npc, ok := state.Owner.(*domain.NPC); ok {
 				log.Printf("healing NPC %s", npc.Name)
-				return nil
+				npc.Heal()
 			} else if player, ok := state.Owner.(*domain.Player); ok {
 				log.Printf("healing player %s", player.Name)
 				player.Connection.Writeln("You hit that button and inhale, and soon you are fully healed")
-				return nil
+				player.Heal()
+			} else {
+				return errors.New("heal action not implemented for this type")
 			}
-			return errors.New("heal action not implemented for this type")
+			return nil
 		},
 	}
 	return actions

@@ -293,6 +293,23 @@ func (c *Character) Injuries() Injuries {
 	return c.Data[InjuriesProperty].(Injuries)
 }
 
+func (c *Character) AddInjury(injury *Injury) {
+	injuries := c.Injuries()
+	injuries = append(injuries, injury)
+	c.Data[InjuriesProperty] = injuries
+}
+
+func (c *Character) RemoveInjury(injury *Injury) {
+	injuries := c.Injuries()
+	for index, i := range injuries {
+		if i == injury {
+			injuries = append(injuries[:index], injuries[index+1:]...)
+			break
+		}
+	}
+	c.Data[InjuriesProperty] = injuries
+}
+
 func (c *Character) Inventory() *Inventory {
 	return c.Data[InventoryProperty].(*Inventory)
 }
@@ -534,6 +551,19 @@ func (c *Character) Peril() *Peril {
 
 func (c *Character) SetPeril(peril *Peril) {
 	c.Data[PerilProperty] = peril
+}
+
+func (c *Character) Heal() {
+	peril := c.Peril()
+	if peril != nil {
+		peril.Condition = PerilConditionUnhindered
+	}
+	injuries := c.Injuries()
+	if len(injuries) > 0 {
+		for _, injury := range injuries {
+			c.RemoveInjury(injury)
+		}
+	}
 }
 
 func (c *Character) Sleeping() bool {

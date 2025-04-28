@@ -7,6 +7,8 @@ import (
 	"github.com/cory-johannsen/gomud/internal/loader"
 	"github.com/fatih/color"
 	log "github.com/sirupsen/logrus"
+	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -134,38 +136,124 @@ func selectUseType(ctx context.Context, state domain.StateProvider) string {
 		player.Connection.Writeln("invalid selection")
 		return selectUseType(ctx, state)
 	}
-	player.Connection.Writeln("invalid selection")
-	return selectUseType(ctx, state)
+	return response
+}
+
+func selectSkill(skills domain.Skills, state domain.StateProvider) string {
+	green := color.New(color.FgGreen).SprintFunc()
+	player := state().Player()
+	player.Connection.Writeln("use which skill?")
+	playerSkills := player.Skills(skills)
+	sortedSkills := make([]string, 0)
+	for _, s := range playerSkills {
+		if len(s.Skill.Name) > 0 {
+			sortedSkills = append(sortedSkills, s.Skill.Name)
+		}
+	}
+	sort.Strings(sortedSkills)
+	for index, skill := range sortedSkills {
+		msg := fmt.Sprintf("%s: %s", green(index+1), green(skill))
+		player.Connection.Writeln(msg)
+	}
+	response := state().Player().Connection.Read()
+	if len(response) == 0 {
+		return selectSkill(skills, state)
+	}
+	index, err := strconv.Atoi(response)
+	if err != nil {
+		return response
+	}
+	return sortedSkills[index-1]
+}
+
+func selectItem(state domain.StateProvider) string {
+	cyan := color.New(color.FgCyan).SprintFunc()
+	player := state().Player()
+	player.Connection.Writeln("use which item?")
+	inventory := player.Inventory()
+	items := make([]string, 0)
+	if inventory.MainHand() != nil {
+		items = append(items, inventory.MainHand().Name())
+	}
+	if inventory.OffHand() != nil {
+		items = append(items, inventory.OffHand().Name())
+	}
+	for _, item := range inventory.Pack().Items() {
+		items = append(items, item.Name())
+	}
+	for index, item := range items {
+		player.Connection.Writeln(fmt.Sprintf("%s: %s", cyan(index+1), cyan(item)))
+	}
+	response := state().Player().Connection.Read()
+	if len(response) == 0 {
+		return selectItem(state)
+	}
+	index, err := strconv.Atoi(response)
+	if err != nil {
+		return response
+	}
+	return items[index-1]
+}
+
+func selectObject(state domain.StateProvider) string {
+	yellow := color.New(color.FgYellow).SprintFunc()
+	player := state().Player()
+	player.Connection.Writeln("use which object?")
+	objects := make([]string, 0)
+	for _, o := range player.Room().Objects {
+		objects = append(objects, o.Name())
+	}
+	for index, obj := range objects {
+		player.Connection.Writeln(fmt.Sprintf("%s: %s", yellow(index+1), yellow(obj)))
+	}
+	response := state().Player().Connection.Read()
+	index, err := strconv.Atoi(response)
+	if err != nil {
+		return response
+	}
+	return objects[index-1]
+}
+
+func selectTarget(obj string, state domain.StateProvider) *string {
+	player := state().Player()
+	player.Connection.Writeln(fmt.Sprintf("use %s on what? (self, target name)", obj))
+	response := player.Connection.Read()
+	var target *string
+	if len(response) > 0 && response != UseTargetSelf {
+		target = &response
+	}
+	return target
 }
 
 func (u *UseHandler) Handle(ctx context.Context, args []string) (string, error) {
 	var useType string
+	var obj string
 	if len(args) == 0 {
 		u.stateProvider().Player().Connection.Writeln("use what? (skill/item/object)")
 		useType = selectUseType(ctx, u.stateProvider)
-		return "use what? (skill/item/object)", nil
 	} else {
 		useType = strings.ToLower(args[0])
 	}
 	if len(args) < 2 {
 		if useType == strings.ToLower(UseSkill) {
+			skills, err := u.skills.LoadSkills()
+			if err != nil {
+				return "", err
+			}
+			obj = selectSkill(skills, u.stateProvider)
 			return "use which skill?", nil
 		}
 		if useType == strings.ToLower(UseItem) {
-			return "use which item?", nil
+			obj = selectItem(u.stateProvider)
 		}
-		if useType == strings.ToLower(UseItem) {
-			return "use which object?", nil
+		if useType == strings.ToLower(UseObject) {
+			obj = selectObject(u.stateProvider)
 		}
+	} else {
+		obj = strings.Join(args[1:], " ")
 	}
-	obj := strings.Join(args[1:], " ")
 
-	u.stateProvider().Player().Connection.Writeln(fmt.Sprintf("use %s on what? (self, target name)", obj))
-	response := u.stateProvider().Player().Connection.Read()
-	var target *string
-	if len(response) > 0 && response != UseTargetSelf {
-		target = &response
-	}
+	target := selectTarget(obj, u.stateProvider)
 
 	switch useType {
 	case UseSkill:

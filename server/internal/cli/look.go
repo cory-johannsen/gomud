@@ -37,9 +37,10 @@ func Look(player *domain.Player, target *LookTarget) string {
 
 func LookRoom(player *domain.Player, target *domain.Room) string {
 	green := color.New(color.FgGreen).SprintFunc()
+	yellow := color.New(color.FgYellow).SprintFunc()
 	msg := fmt.Sprintf("%s\n\t%s\n\n\tYou see the following items here:\n", target.Name, target.Description)
 	for _, obj := range target.Objects {
-		msg += fmt.Sprintf("\t\t%s\n", green(obj.Name()))
+		msg += fmt.Sprintf("\t\t%s\n", yellow(obj.Name()))
 	}
 	msg += "\n\tExits:\n"
 	for _, exit := range target.Exits() {
