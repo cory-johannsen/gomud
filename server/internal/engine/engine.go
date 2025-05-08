@@ -293,6 +293,62 @@ func initializeConditions() htn.Conditions {
 			return false
 		},
 	}
+	bedAvailable := &htn.FuncCondition{
+		ConditionName: "BedAvailable",
+		Evaluator: func(state *htn.Domain) bool {
+			var owner *domain.Character
+			if npc, ok := state.Owner.(*domain.NPC); ok {
+				owner = &npc.Character
+			} else if player, ok := state.Owner.(*domain.Player); ok {
+				owner = &player.Character
+			}
+			room := owner.Room()
+			for _, obj := range room.Objects {
+				if obj.Type() == domain.ObjectTypeFurniture {
+					if subtype, ok := obj.Tags()[domain.ObjectTagSubtype]; ok {
+						if subtype == domain.ObjectTagSubtypeBed && !obj.Busy() {
+							return true
+						}
+					}
+				}
+			}
+			return false
+		},
+	}
+	bedNotAvailable := &htn.FuncCondition{
+		ConditionName: "BedUnavailable",
+		Evaluator: func(state *htn.Domain) bool {
+			return !bedAvailable.IsMet(state)
+		},
+	}
+	chairAvailable := &htn.FuncCondition{
+		ConditionName: "ChairAvailable",
+		Evaluator: func(state *htn.Domain) bool {
+			var owner *domain.Character
+			if npc, ok := state.Owner.(*domain.NPC); ok {
+				owner = &npc.Character
+			} else if player, ok := state.Owner.(*domain.Player); ok {
+				owner = &player.Character
+			}
+			room := owner.Room()
+			for _, obj := range room.Objects {
+				if obj.Type() == domain.ObjectTypeFurniture {
+					if subtype, ok := obj.Tags()[domain.ObjectTagSubtype]; ok {
+						if subtype == domain.ObjectTagSubtypeChair && !obj.Busy() {
+							return true
+						}
+					}
+				}
+			}
+			return false
+		},
+	}
+	chairNotAvailable := &htn.FuncCondition{
+		ConditionName: "ChairUnavailable",
+		Evaluator: func(state *htn.Domain) bool {
+			return !bedAvailable.IsMet(state)
+		},
+	}
 	conditions := htn.Conditions{
 		"AwakeHours": awakeHours,
 		"Awake":      awake,
@@ -308,6 +364,10 @@ func initializeConditions() htn.Conditions {
 				return !awake.IsMet(state)
 			},
 		},
+		"BedAvailable":     bedAvailable,
+		"BedUnavailable":   bedNotAvailable,
+		"ChairAvailable":   chairAvailable,
+		"ChairUnavailable": chairNotAvailable,
 		"PlayerEngaged": &htn.FuncCondition{
 			ConditionName: "PlayerEngaged",
 			Evaluator: func(state *htn.Domain) bool {
@@ -393,16 +453,16 @@ func initializeActions() htn.Actions {
 			})
 			return nil
 		},
-		"Sleep": func(state *htn.Domain) error {
+		"SleepOnGround": func(state *htn.Domain) error {
 			owner := state.Owner.(*domain.NPC)
 			owner.SetSleeping(true)
 			dialog := owner.Dialog
 			msg := "I'm out."
-			wakeUpDialog, ok := dialog["Sleep"]
+			sleepDialog, ok := dialog["Sleep"]
 			if !ok {
 				log.Errorf("No Sleep dialog for %s", owner.Name)
 			} else {
-				msg = wakeUpDialog.Text[rand.Intn(len(wakeUpDialog.Text))]
+				msg = sleepDialog.Text[rand.Intn(len(sleepDialog.Text))]
 			}
 			log.Printf("%s sleeping", owner.Name)
 			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
@@ -411,6 +471,107 @@ func initializeActions() htn.Actions {
 				Action:    event.RoomEventSay,
 				Args:      []interface{}{msg},
 			})
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    event.RoomEventAction,
+				Args:      []interface{}{"grumbles and lies down on the ground to sleep."},
+			})
+			return nil
+		},
+		"UseBed": func(state *htn.Domain) error {
+			owner := state.Owner.(*domain.NPC)
+			owner.SetSleeping(true)
+			room := owner.Room()
+			var bed domain.InteractiveObject
+			for _, obj := range room.Objects {
+				if !obj.Busy() && obj.Type() == domain.ObjectTypeFurniture {
+					if subtype, ok := obj.Tags()[domain.ObjectTagSubtype]; ok {
+						if subtype == domain.ObjectTagSubtypeBed {
+							bed = obj
+						}
+					}
+				}
+			}
+			dialog := owner.Dialog
+			msg := "I'm out."
+			sleepDialog, ok := dialog["Sleep"]
+			if !ok {
+				log.Errorf("No Sleep dialog for %s", owner.Name)
+			} else {
+				msg = sleepDialog.Text[rand.Intn(len(sleepDialog.Text))]
+			}
+			log.Printf("%s sleeping", owner.Name)
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    event.RoomEventSay,
+				Args:      []interface{}{msg},
+			})
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    event.RoomEventAction,
+				Args:      []interface{}{fmt.Sprintf("flops down onto the %s to sleep.", bed.Name())},
+			})
+			return nil
+		},
+		"UseChair": func(state *htn.Domain) error {
+			owner := state.Owner.(*domain.NPC)
+			owner.SetSleeping(true)
+			room := owner.Room()
+			var chair domain.InteractiveObject
+			for _, obj := range room.Objects {
+				if !obj.Busy() && obj.Type() == domain.ObjectTypeFurniture {
+					if subtype, ok := obj.Tags()[domain.ObjectTagSubtype]; ok {
+						if subtype == domain.ObjectTagSubtypeChair {
+							chair = obj
+						}
+					}
+				}
+			}
+			dialog := owner.Dialog
+			msg := "I'm out."
+			sleepDialog, ok := dialog["Sleep"]
+			if !ok {
+				log.Errorf("No Sleep dialog for %s", owner.Name)
+			} else {
+				msg = sleepDialog.Text[rand.Intn(len(sleepDialog.Text))]
+			}
+			log.Printf("%s sleeping", owner.Name)
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    event.RoomEventSay,
+				Args:      []interface{}{msg},
+			})
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    event.RoomEventAction,
+				Args:      []interface{}{fmt.Sprintf("flops down onto the %s to sleep.", chair.Name())},
+			})
+			return nil
+		},
+		"Sleep": func(state *htn.Domain) error {
+			owner := state.Owner.(*domain.NPC)
+			owner.SetSleeping(true)
+			dialog := owner.Dialog
+			msg := "I'm out."
+			sleepDialog, ok := dialog["Sleep"]
+			if !ok {
+				log.Errorf("No Sleep dialog for %s", owner.Name)
+			} else {
+				msg = sleepDialog.Text[rand.Intn(len(sleepDialog.Text))]
+			}
+			log.Printf("%s sleeping", owner.Name)
+			owner.EventBus.Publish(event.RoomChannel, &domain.RoomEvent{
+				Room:      owner.Room(),
+				Character: &owner.Character,
+				Action:    event.RoomEventSay,
+				Args:      []interface{}{msg},
+			})
+			// find a location to sleep
 			return nil
 		},
 		"Greet": func(state *htn.Domain) error {

@@ -1,0 +1,9 @@
+name: FindBed
+preconditions:
+  - AsleepHours
+  - Awake
+tasks:
+  - UseBed
+  - UseChair
+  - SleepOnGround
+complete: false

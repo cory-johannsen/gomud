@@ -1,6 +1,7 @@
-name: Sleep
+name: UseBed
 preconditions: 
   - AsleepHours
   - Awake
-action: Sleep
+  - BedAvailable
+action: UseBed
 complete: false

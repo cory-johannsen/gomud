@@ -173,7 +173,7 @@ func (l *TaskLoader) loadPrimitiveTask(spec *htn.TaskSpec) (htn.Task, error) {
 			return nil, err
 		}
 		if condition == nil {
-			log.Errorf("condition %s not found", conditionName)
+			log.Errorf("condition %s not found for task %s", conditionName, spec.TaskName)
 			continue
 		}
 		conditions = append(conditions, condition)
@@ -198,7 +198,7 @@ func (l *TaskLoader) loadCompoundTask(spec *htn.TaskSpec) (htn.Task, error) {
 			return nil, err
 		}
 		if method == nil {
-			log.Errorf("method %s not found", methodName)
+			log.Errorf("method %s not found for task %s", methodName, spec.TaskName)
 			continue
 		}
 		methods = append(methods, method)

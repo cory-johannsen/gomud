@@ -85,7 +85,10 @@ type ActionInteractiveObject struct {
 	NPCResolver    domain.NPCResolver
 }
 
-func (i *ActionInteractiveObject) Interact(gameState domain.GameState, user *domain.Character, target *string) (string, error) {
+func (i *ActionInteractiveObject) Interact(gameState domain.GameState, user *domain.Character, target *string, callback domain.InteractionCompleteCallback) (string, error) {
+	i.Mutex.Lock()
+	defer i.Mutex.Unlock()
+	i.ObjectBusy = true
 	if target != nil {
 		log.Printf("%s is using %s action %s on %s", user.Name, i.Name(), i.ActionName, *target)
 	} else {
@@ -93,23 +96,29 @@ func (i *ActionInteractiveObject) Interact(gameState domain.GameState, user *dom
 	}
 	action, err := i.ActionResolver.GetAction(i.ActionName)
 	if err != nil {
+		callback(i, gameState, user, target, "", err)
 		return "", err
 	}
 	if user.IsNPC() {
 		npc, err := i.NPCResolver.FetchNPCById(context.Background(), *user.Id)
 		if err != nil {
+			callback(i, gameState, user, target, "", err)
 			return "", err
 		}
 		err = action(npc.Domain)
 		if err != nil {
+			callback(i, gameState, user, target, "", err)
 			return "", err
 		}
 	} else {
 		err = action(gameState.Domain())
 		if err != nil {
+			callback(i, gameState, user, target, "", err)
 			return "", err
 		}
 	}
+	callback(i, gameState, user, target, "", nil)
+	i.ObjectBusy = false
 	return "", nil
 }
 

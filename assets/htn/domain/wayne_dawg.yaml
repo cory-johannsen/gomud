@@ -4,6 +4,12 @@ root:
   children:
     - task: Sleep
       children:
+        - task: UseBed
+          children:
+        - task: UseChair
+          children:
+        - task: SleepOnGround
+          children:
     - task: Greet
       children:
     - task: Observe

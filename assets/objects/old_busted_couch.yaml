@@ -1,3 +1,5 @@
 name: Old busted couch
 objectType: Furniture
 action: Sleep
+tags:
+  subtype: Chair

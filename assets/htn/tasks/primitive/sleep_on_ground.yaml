@@ -1,0 +1,8 @@
+name: SleepOnGround
+preconditions: 
+  - AsleepHours
+  - Awake
+  - BedUnavailable
+  - ChairUnavailable
+action: SleepOnGround
+complete: false

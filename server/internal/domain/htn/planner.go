@@ -21,6 +21,9 @@ type TaskNode struct {
 
 func (t *TaskNode) Clone() *TaskNode {
 	children := make([]*TaskNode, 0)
+	if t.Children == nil {
+		log.Errorf("clone task node with nil children")
+	}
 	for _, child := range t.Children {
 		children = append(children, child.Clone())
 	}

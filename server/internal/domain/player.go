@@ -635,6 +635,13 @@ func NewPlayer(id *int, name string, password string, data map[string]Property, 
 				log.Errorf("error getting hour of day: %s", err)
 			}
 			p.Connection.Writeln(fmt.Sprintf("\n[%02d:%02d] %s says \"%s\"\n%s", timeOfDay.Hour, timeOfDay.Minute, r.Character.Name, msg, p.Prompt()))
+		case event.RoomEventAction:
+			args := make([]string, 0)
+			for _, arg := range r.Args {
+				args = append(args, arg.(string))
+			}
+			msg := strings.Join(args, " ")
+			p.Connection.Writeln(fmt.Sprintf("%s %s", r.Character.Name, msg))
 		}
 	}, false)
 	if err != nil {

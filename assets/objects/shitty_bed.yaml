@@ -1,3 +1,5 @@
 name: Shitty bed
 objectType: Furniture
 action: Sleep
+tags:
+  subType: Bed

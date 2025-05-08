@@ -1,0 +1,8 @@
+name: UseChair
+preconditions: 
+  - AsleepHours
+  - Awake
+  - BedUnavailable
+  - ChairAvailable
+action: UseChair
+complete: false

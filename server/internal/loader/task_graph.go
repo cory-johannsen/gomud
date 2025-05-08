@@ -54,6 +54,9 @@ func (l *TaskGraphLoader) LoadTaskGraphs() (htn.TaskGraphs, error) {
 			return nil, err
 		}
 		root, err := loadTaskNode(spec.Root, resolvers)
+		if err != nil {
+			return nil, err
+		}
 		l.mutex.Lock()
 		l.taskGraphs[spec.Name] = &htn.TaskGraph{
 			Name: spec.Name,
