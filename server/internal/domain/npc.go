@@ -90,6 +90,7 @@ func (n *NPC) Start() error {
 	if n.running {
 		return nil
 	}
+	tickDuration := time.Duration(n.tickMillis) * time.Millisecond
 	n.mutex.Lock()
 	defer n.mutex.Unlock()
 	n.running = true
@@ -101,6 +102,7 @@ func (n *NPC) Start() error {
 				break
 			}
 			// Plan the next action
+			startTime := time.Now()
 			plan, err := n.Planner.Plan(n.Domain)
 			if err != nil {
 				log.Errorf("error planning NPC action: %v", err)
@@ -108,7 +110,7 @@ func (n *NPC) Start() error {
 			log.Debugf("NPC %s plan: %v", n.Name, plan)
 			// Execute the plan
 			if plan != nil {
-				newDomain, err := htn.Execute(plan, n.Domain)
+				newDomain, err := htn.Execute(plan, n.Domain, tickDuration)
 				if err != nil {
 					log.Errorf("error executing NPC plan: %v", err)
 				}
@@ -118,8 +120,13 @@ func (n *NPC) Start() error {
 					n.mutex.Unlock()
 				}
 			}
+			endTime := time.Now()
+			elapsedTime := endTime.Sub(startTime)
 			// Sleep until the next tick
-			time.Sleep(time.Duration(n.tickMillis) * time.Millisecond)
+			sleepTime := tickDuration - elapsedTime
+			if sleepTime > 0 {
+				time.Sleep(sleepTime)
+			}
 		}
 	}()
 	return nil

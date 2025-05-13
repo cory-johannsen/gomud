@@ -2,6 +2,7 @@ package htn
 
 import (
 	log "github.com/sirupsen/logrus"
+	"time"
 )
 
 type TaskNodeSpec struct {
@@ -110,13 +111,17 @@ func (p *Planner) Plan(domain *Domain) (*Plan, error) {
 	return plan, nil
 }
 
-func Execute(plan *Plan, domain *Domain) (*Domain, error) {
+func Execute(plan *Plan, domain *Domain, cutoff time.Duration) (*Domain, error) {
 	log.Debugf("executing plan %s with %d tasks", plan.Name, len(plan.Tasks))
+	startTime := time.Now()
 	for _, task := range plan.Tasks {
 		log.Debugf("executing task %s", task.Name())
 		_, err := task.Execute(domain)
 		if err != nil {
 			return nil, err
+		}
+		if time.Now().Sub(startTime) > cutoff {
+			break
 		}
 	}
 

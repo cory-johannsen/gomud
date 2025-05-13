@@ -14,14 +14,16 @@ const (
 	ObjectTagSubtypeChair = "Chair"
 )
 
+type InteractionStartingCallback func(obj InteractiveObject, state GameState, user *Character, target *string)
 type InteractionCompleteCallback func(obj InteractiveObject, state GameState, user *Character, target *string, result string, err error)
 
 type InteractiveObject interface {
 	Name() string
 	Type() InteractiveObjectType
 	Tags() Tags
-	Interact(state GameState, user *Character, target *string, callback InteractionCompleteCallback) (string, error)
+	Interact(state GameState, user *Character, target *string, starting InteractionStartingCallback, complete InteractionCompleteCallback) (string, error)
 	Busy() bool
+	SetBusy(busy bool)
 }
 
 type InteractiveObjectResolver func(name string, npcResolver NPCResolver) (InteractiveObject, error)
@@ -46,17 +48,14 @@ type BaseInteractiveObject struct {
 	ActionName string
 }
 
-func (i *BaseInteractiveObject) Interact(state GameState, user *Character, target *string, callback InteractionCompleteCallback) (string, error) {
-	i.Mutex.Lock()
-	defer i.Mutex.Unlock()
-	i.ObjectBusy = true
+func (i *BaseInteractiveObject) Interact(state GameState, user *Character, target *string, starting InteractionStartingCallback, complete InteractionCompleteCallback) (string, error) {
+	starting(i, state, user, target)
 	if target != nil {
 		log.Printf("%s is using %s action %s on %s", user.Name, i.Name(), i.ActionName, *target)
 	} else {
 		log.Printf("%s is using %s action %s", user.Name, i.ActionName, i.Name())
 	}
-	i.ObjectBusy = false
-	callback(i, state, user, target, "Ok", nil)
+	complete(i, state, user, target, "Ok", nil)
 	return "Ok", nil
 }
 
@@ -66,6 +65,12 @@ func (i *BaseInteractiveObject) Name() string {
 
 func (i *BaseInteractiveObject) Busy() bool {
 	return i.ObjectBusy
+}
+
+func (i *BaseInteractiveObject) SetBusy(busy bool) {
+	i.Mutex.Lock()
+	defer i.Mutex.Unlock()
+	i.ObjectBusy = busy
 }
 
 func (i *BaseInteractiveObject) Tags() Tags {
