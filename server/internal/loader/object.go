@@ -6,11 +6,24 @@ import (
 	"fmt"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
+	"github.com/cory-johannsen/gomud/internal/domain/htn"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"os"
+	"reflect"
 	"strings"
+	"sync"
 )
+
+var defaultObjectType = reflect.TypeOf(&ActionInteractiveObject{})
+var actionObjectType = defaultObjectType
+var singleUserObjectType = reflect.TypeOf(&SingleUserInteractiveObject{})
+
+var objectTypes map[string]reflect.Type = map[string]reflect.Type{
+	"Old busted couch": singleUserObjectType,
+	"Shitty bed":       singleUserObjectType,
+	"Penjamin":         actionObjectType,
+}
 
 type InteractiveObjectLoader struct {
 	config         *config.Config
@@ -54,15 +67,40 @@ func (l *InteractiveObjectLoader) LoadInteractiveObjects(npcResolver domain.NPCR
 			continue
 		}
 
-		l.objects[spec.Name] = &ActionInteractiveObject{
-			BaseInteractiveObject: domain.BaseInteractiveObject{
-				ObjectName: spec.Name,
-				ObjectType: domain.InteractiveObjectType(spec.ObjectType),
-				ActionName: spec.Action,
-			},
-			ActionResolver: l.actionResolver,
-			NPCResolver:    npcResolver,
+		objType, ok := objectTypes[name]
+		if !ok {
+			objType = defaultObjectType
 		}
+		var obj domain.InteractiveObject
+		switch objType {
+		case singleUserObjectType:
+			obj = &SingleUserInteractiveObject{
+				barrier: sync.WaitGroup{},
+				ActionInteractiveObject: ActionInteractiveObject{
+					BaseInteractiveObject: domain.BaseInteractiveObject{
+						ObjectName: spec.Name,
+						ObjectType: domain.InteractiveObjectType(spec.ObjectType),
+						ActionName: spec.Action,
+					},
+					ActionResolver: l.actionResolver,
+					NPCResolver:    npcResolver,
+				},
+			}
+		case actionObjectType:
+			fallthrough
+		case defaultObjectType:
+			obj = &ActionInteractiveObject{
+				BaseInteractiveObject: domain.BaseInteractiveObject{
+					ObjectName: spec.Name,
+					ObjectType: domain.InteractiveObjectType(spec.ObjectType),
+					ActionName: spec.Action,
+				},
+				ActionResolver: l.actionResolver,
+				NPCResolver:    npcResolver,
+			}
+		}
+
+		l.objects[spec.Name] = obj
 	}
 	return l.objects, nil
 }
@@ -85,7 +123,7 @@ type ActionInteractiveObject struct {
 	NPCResolver    domain.NPCResolver
 }
 
-func (i *ActionInteractiveObject) Interact(gameState domain.GameState, user *domain.Character, target *string, starting domain.InteractionStartingCallback, complete domain.InteractionCompleteCallback) (string, error) {
+func (i *ActionInteractiveObject) Start(gameState domain.GameState, user *domain.Character, target *string, starting domain.InteractionStartingCallback) (htn.Action, error) {
 	starting(i, gameState, user, target)
 	if target != nil {
 		log.Printf("%s is using %s action %s on %s", user.Name, i.Name(), i.ActionName, *target)
@@ -94,29 +132,69 @@ func (i *ActionInteractiveObject) Interact(gameState domain.GameState, user *dom
 	}
 	action, err := i.ActionResolver.GetAction(i.ActionName)
 	if err != nil {
-		complete(i, gameState, user, target, "", err)
-		return "", err
+		return nil, err
 	}
+	return action, nil
+}
+
+func (i *ActionInteractiveObject) Apply(gameState domain.GameState, user *domain.Character, action htn.Action) (string, error) {
 	if user.IsNPC() {
 		npc, err := i.NPCResolver.FetchNPCById(context.Background(), *user.Id)
 		if err != nil {
-			complete(i, gameState, user, target, "", err)
 			return "", err
 		}
 		err = action(npc.Domain)
 		if err != nil {
-			complete(i, gameState, user, target, "", err)
 			return "", err
 		}
 	} else {
-		err = action(gameState.Domain())
+		err := action(gameState.Domain())
 		if err != nil {
-			complete(i, gameState, user, target, "", err)
 			return "", err
 		}
 	}
-	complete(i, gameState, user, target, "", nil)
 	return "", nil
 }
 
+func (i *ActionInteractiveObject) Interact(gameState domain.GameState, user *domain.Character, target *string, starting domain.InteractionStartingCallback, complete domain.InteractionCompleteCallback) (string, error) {
+	action, err := i.Start(gameState, user, target, starting)
+	if err != nil {
+		complete(i, gameState, user, target, "", err)
+		return "", err
+	}
+	result, err := i.Apply(gameState, user, action)
+	if err != nil {
+		complete(i, gameState, user, target, "", err)
+		return "", err
+	}
+	complete(i, gameState, user, target, result, nil)
+	return result, nil
+}
+
 var _ domain.InteractiveObject = &ActionInteractiveObject{}
+
+type SingleUserInteractiveObject struct {
+	barrier sync.WaitGroup
+	ActionInteractiveObject
+}
+
+func (i *SingleUserInteractiveObject) Interact(gameState domain.GameState, user *domain.Character, target *string, starting domain.InteractionStartingCallback, complete domain.InteractionCompleteCallback) (string, error) {
+	action, err := i.Start(gameState, user, target, starting)
+	if err != nil {
+		complete(i, gameState, user, target, "", err)
+		return "", err
+	}
+	result, err := i.Apply(gameState, user, action)
+	if err != nil {
+		complete(i, gameState, user, target, "", err)
+		return "", err
+	}
+	i.barrier.Add(1)
+	i.barrier.Wait()
+
+	complete(i, gameState, user, target, result, nil)
+	return result, nil
+}
+func (i *SingleUserInteractiveObject) Release() {
+	i.barrier.Done()
+}
