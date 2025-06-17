@@ -24,12 +24,12 @@ func NewRestServer(cfg *config.Config) *RestServer {
 
 func StartRestServer(s *RestServer) error {
 	ctx := context.Background()
-	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
+	mux := runtime.NewServeMux()
 	err := gw.RegisterMudServiceHandlerFromEndpoint(ctx, mux, s.GrpcAddress, opts)
 	if err != nil {
 		return err
 	}
-	log.Printf("REST gateway listening at %s", s.RestAddress)
+	log.Printf("Swagger UI server listening at %s", s.RestAddress)
 	return http.ListenAndServe(s.RestAddress, mux)
 }

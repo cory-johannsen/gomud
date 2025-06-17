@@ -9,6 +9,7 @@ import (
 type Config struct {
 	RestAddress            string `env:"REST_ADDRESS" envDefault:"localhost:8000"`
 	GrpcAddress            string `env:"GRPC_ADRESS" envDefault:"localhost:50051"`
+	SwaggerUIAddress       string `env:"SWAGGER_UI_PORT" envDefault:"localhost:8080"`
 	Port                   string `env:"PORT" envDefault:"7000"`
 	DatabaseHost           string `env:"DATABASE_HOST" envDefault:"localhost"`
 	DatabasePort           string `env:"DATABASE_PORT" envDefault:"5432"`

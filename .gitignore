@@ -27,3 +27,5 @@ db/
 bin/
 /server/mud
 /go_build_cmd_
+/server/dependencies/
+/server/generated/

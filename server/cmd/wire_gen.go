@@ -10,6 +10,7 @@ import (
 	"github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/api/grpc"
 	"github.com/cory-johannsen/gomud/internal/api/rest"
+	"github.com/cory-johannsen/gomud/internal/api/swaggerui"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain/effect"
 	"github.com/cory-johannsen/gomud/internal/engine"
@@ -382,7 +383,8 @@ func InitializeEngine() (*engine.Engine, error) {
 	clock := event.NewClock(bus, configConfig)
 	grpcServer := grpc.NewGrpcServer(configConfig)
 	restServer := rest.NewRestServer(configConfig)
-	server := engine.NewServer(configConfig, database, players, npCs, loaders, playerGenerator, domainGenerator, plannerGenerator, bus, clock, grpcServer, restServer)
+	swaggerUI := swaggerui.NewSwaggerUI(configConfig)
+	server := engine.NewServer(configConfig, database, players, npCs, loaders, playerGenerator, domainGenerator, plannerGenerator, bus, clock, grpcServer, restServer, swaggerUI)
 	engineEngine := engine.NewEngine(configConfig, server, bus)
 	return engineEngine, nil
 }

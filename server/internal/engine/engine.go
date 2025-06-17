@@ -7,6 +7,7 @@ import (
 	eventbus "github.com/asaskevich/EventBus"
 	"github.com/cory-johannsen/gomud/internal/api/grpc"
 	"github.com/cory-johannsen/gomud/internal/api/rest"
+	"github.com/cory-johannsen/gomud/internal/api/swaggerui"
 	"github.com/cory-johannsen/gomud/internal/cli"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
@@ -178,11 +179,12 @@ type Server struct {
 	config           *config.Config
 	grpcServer       *grpc.GrpcServer
 	restServer       *rest.RestServer
+	swaggerServer    *swaggerui.SwaggerUI
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, npcs *storage.NPCs, loaders *loader.Loaders,
 	playerGenerator *generator.PlayerGenerator, stateGenerator *generator.DomainGenerator, plannerGenerator *generator.PlannerGenerator, eventBus eventbus.Bus, clock *event.Clock,
-	grpcServer *grpc.GrpcServer, restServer *rest.RestServer) *Server {
+	grpcServer *grpc.GrpcServer, restServer *rest.RestServer, swaggerServer *swaggerui.SwaggerUI) *Server {
 	return &Server{
 		port:             config.Port,
 		db:               db,
@@ -197,6 +199,7 @@ func NewServer(config *config.Config, db *storage.Database, players *storage.Pla
 		config:           config,
 		grpcServer:       grpcServer,
 		restServer:       restServer,
+		swaggerServer:    swaggerServer,
 	}
 }
 
@@ -235,6 +238,14 @@ func (s *Server) Start() {
 	go func() {
 		log.Printf("Starting rest server on %s\n", s.config.RestAddress)
 		err = rest.StartRestServer(s.restServer)
+		if err != nil {
+			panic(err)
+		}
+	}()
+
+	go func() {
+		log.Printf("Starting swagger UI server on %s\n", s.config.SwaggerUIAddress)
+		err = swaggerui.StartSwaggerUIServer(s.swaggerServer)
 		if err != nil {
 			panic(err)
 		}
