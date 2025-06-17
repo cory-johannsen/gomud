@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	eventbus "github.com/asaskevich/EventBus"
+	"github.com/cory-johannsen/gomud/internal/api/grpc"
+	"github.com/cory-johannsen/gomud/internal/api/rest"
 	"github.com/cory-johannsen/gomud/internal/cli"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain"
@@ -174,10 +176,13 @@ type Server struct {
 	eventBus         eventbus.Bus
 	clock            *event.Clock
 	config           *config.Config
+	grpcServer       *grpc.GrpcServer
+	restServer       *rest.RestServer
 }
 
 func NewServer(config *config.Config, db *storage.Database, players *storage.Players, npcs *storage.NPCs, loaders *loader.Loaders,
-	playerGenerator *generator.PlayerGenerator, stateGenerator *generator.DomainGenerator, plannerGenerator *generator.PlannerGenerator, eventBus eventbus.Bus, clock *event.Clock) *Server {
+	playerGenerator *generator.PlayerGenerator, stateGenerator *generator.DomainGenerator, plannerGenerator *generator.PlannerGenerator, eventBus eventbus.Bus, clock *event.Clock,
+	grpcServer *grpc.GrpcServer, restServer *rest.RestServer) *Server {
 	return &Server{
 		port:             config.Port,
 		db:               db,
@@ -190,6 +195,8 @@ func NewServer(config *config.Config, db *storage.Database, players *storage.Pla
 		eventBus:         eventBus,
 		clock:            clock,
 		config:           config,
+		grpcServer:       grpcServer,
+		restServer:       restServer,
 	}
 }
 
@@ -216,6 +223,22 @@ func (s *Server) Start() {
 	for _, spec := range specs {
 		s.startGenerator(spec, initializers)
 	}
+
+	go func() {
+		log.Printf("Starting grpc server on %s\n", s.config.GrpcAddress)
+		err = grpc.StartGRPCServer(s.grpcServer)
+		if err != nil {
+			panic(err)
+		}
+	}()
+
+	go func() {
+		log.Printf("Starting rest server on %s\n", s.config.RestAddress)
+		err = rest.StartRestServer(s.restServer)
+		if err != nil {
+			panic(err)
+		}
+	}()
 
 	log.Printf("Starting server on port %s\n", s.port)
 	l, err := net.Listen("tcp4", fmt.Sprintf(":%s", s.port))

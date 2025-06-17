@@ -1,0 +1,8 @@
+config_version: 3
+http:
+  rules:
+    -
+      body: "*"
+      post: /api/v1/login
+      selector: mud.MudService.Login
+type: google.api.Service

@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package mud;
 
-option go_package = "mud.api;pb";
+import "google/api/annotations.proto";
+
+option go_package = "mud/api;pb";
 
 message Error {
   string message = 1;
@@ -28,5 +30,10 @@ message LoginResponse {
 }
 
 service MudService {
-  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Login (LoginRequest) returns (LoginResponse){
+    option (google.api.http) = {
+      post: "/v1/login"
+      body: "*"
+    };
+  }
 }

@@ -5,6 +5,8 @@ package main
 
 import (
 	eventbus "github.com/asaskevich/EventBus"
+	"github.com/cory-johannsen/gomud/internal/api/grpc"
+	"github.com/cory-johannsen/gomud/internal/api/rest"
 	"github.com/cory-johannsen/gomud/internal/config"
 	"github.com/cory-johannsen/gomud/internal/domain/effect"
 	"github.com/cory-johannsen/gomud/internal/domain/htn"
@@ -25,6 +27,6 @@ func InitializeEngine() (*engine.Engine, error) {
 		generator.NewPlayerGenerator,
 		generator.NewDomainGenerator, wire.Bind(new(htn.DomainResolver), new(*generator.DomainGenerator)),
 		generator.NewPlannerGenerator, wire.Bind(new(htn.PlannerResolver), new(*generator.PlannerGenerator)),
-		eventbus.New, event.NewClock, engine.NewServer, engine.NewEngine)
+		eventbus.New, event.NewClock, grpc.NewGrpcServer, rest.NewRestServer, engine.NewServer, engine.NewEngine)
 	return &engine.Engine{}, nil
 }
